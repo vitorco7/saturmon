@@ -1,2 +1,1 @@
-docker run --name zabbix-agent1 -e ZBX_HOSTNAME="zabbix-server" -e ZBX_SERVER_HOST="zabbix-server" --network zabbix-docker-72_backend --link zabbix-server:zabbix-server --privileged -d zabbix-agent:ubuntu-7.2-local 
-
+docker run --name zabbix-agent1 -e ZBX_HOSTNAME="zabbix-server" -e ZBX_SERVER_HOST="zabbix-server" --network zabbix-docker-72_backend --privileged --init -d zabbix-agent:ubuntu-7.2-latest
