@@ -184,6 +184,15 @@ networks:
       driver: "${ADD_TOOLS_NETWORK_DRIVER}"
       config:
         - subnet: "${ADD_TOOLS_SUBNET}"
+  cyferino_network:
+    driver: macvlan
+    driver_opts:
+      parent: enp2s0
+    ipam:
+      config:
+        - subnet: "192.168.1.0/24"
+          gateway: 192.168.1.1
+    name: cyferino_network
 
 volumes:
   snmptraps:
