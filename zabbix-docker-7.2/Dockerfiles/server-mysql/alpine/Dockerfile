@@ -29,14 +29,14 @@ ENV ZBX_DB_NAME="dummy_db_name" \
     ZBX_SSLCALOCATION="${ZABBIX_USER_HOME_DIR}/ssl/ssl_ca/"
 
 LABEL org.opencontainers.image.authors="Alexey Pustovalov <alexey.pustovalov@zabbix.com>" \
-      org.opencontainers.image.description="Zabbix server with MySQL database support" \
-      org.opencontainers.image.documentation="https://www.zabbix.com/documentation/${MAJOR_VERSION}/manual/installation/containers" \
-      org.opencontainers.image.licenses="AGPL v3.0" \
-      org.opencontainers.image.source="${ZBX_SOURCES}" \
-      org.opencontainers.image.title="Zabbix server (MySQL)" \
-      org.opencontainers.image.url="https://zabbix.com/" \
-      org.opencontainers.image.vendor="Zabbix SIA" \
-      org.opencontainers.image.version="${ZBX_VERSION}"
+    org.opencontainers.image.description="Zabbix server with MySQL database support" \
+    org.opencontainers.image.documentation="https://www.zabbix.com/documentation/${MAJOR_VERSION}/manual/installation/containers" \
+    org.opencontainers.image.licenses="AGPL v3.0" \
+    org.opencontainers.image.source="${ZBX_SOURCES}" \
+    org.opencontainers.image.title="Zabbix server (MySQL)" \
+    org.opencontainers.image.url="https://zabbix.com/" \
+    org.opencontainers.image.vendor="Zabbix SIA" \
+    org.opencontainers.image.version="${ZBX_VERSION}"
 
 STOPSIGNAL SIGTERM
 
@@ -47,43 +47,43 @@ COPY --from=builder ["/tmp/zabbix-${ZBX_VERSION}-output/server/database/mysql/cr
 
 RUN set -eux && \
     INSTALL_PKGS="bash \
-            fping \
-            traceroute \
-            nmap \
-            tzdata \
-            iputils \
-            openssl \
-            libcap \
-            libcurl \
-            libevent \
-            libldap \
-            libssh \
-            libxml2 \
-            mariadb-client \
-            mariadb-connector-c \
-            net-snmp-agent-libs \
-            openipmi-libs \
-            pcre2 \
-            gzip \
-            unixodbc \
-            zlib" && \
+    fping \
+    traceroute \
+    nmap \
+    tzdata \
+    iputils \
+    openssl \
+    libcap \
+    libcurl \
+    libevent \
+    libldap \
+    libssh \
+    libxml2 \
+    mariadb-client \
+    mariadb-connector-c \
+    net-snmp-agent-libs \
+    openipmi-libs \
+    pcre2 \
+    gzip \
+    unixodbc \
+    zlib" && \
     apk add \
-            --no-cache \
-            --clean-protected \
-        ${INSTALL_PKGS} && \
+    --no-cache \
+    --clean-protected \
+    ${INSTALL_PKGS} && \
     addgroup \
-            --system \
-            --gid 1995 \
-        zabbix && \
+    --system \
+    --gid 1995 \
+    zabbix && \
     adduser \
-            --system \
-            --gecos "Zabbix monitoring system" \
-            --disabled-password \
-            --uid 1997 \
-            --ingroup zabbix \
-            --shell /sbin/nologin \
-            --home ${ZABBIX_USER_HOME_DIR} \
-        zabbix && \
+    --system \
+    --gecos "Zabbix monitoring system" \
+    --disabled-password \
+    --uid 1997 \
+    --ingroup zabbix \
+    --shell /sbin/nologin \
+    --home ${ZABBIX_USER_HOME_DIR} \
+    zabbix && \
     adduser zabbix dialout && \
     chgrp zabbix /usr/bin/nmap && \
     setcap cap_net_raw+eip /usr/bin/nmap && \
@@ -124,4 +124,7 @@ ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
 
 USER 1997
 
+# CMD ["sh", "-c", "/usr/sbin/zabbix_server --foreground -c /etc/zabbix/zabbix_server.conf & /usr/sbin/zabbix_agentd --foreground -c /etc/zabbix/zabbix_agentd.conf && wait"]
+
 CMD ["/usr/sbin/zabbix_server", "--foreground", "-c", "/etc/zabbix/zabbix_server.conf"]
+# CMD ["/usr/sbin/zabbix_agentd", "--foreground", "-c", "/etc/zabbix/zabbix_agentd.conf"]
