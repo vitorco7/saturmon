@@ -38,41 +38,41 @@ services:
     labels:
       com.zabbix.os: "${ALPINE_OS_TAG}"
 
-  zabbix-proxy-sqlite3:
-    extends:
-      file: compose_zabbix_components.yaml
-      service: proxy-sqlite3
-    image: "${ZABBIX_PROXY_SQLITE3_IMAGE}:${ZABBIX_ALPINE_IMAGE_TAG}${ZABBIX_IMAGE_TAG_POSTFIX}"
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-    labels:
-      com.zabbix.os: "${ALPINE_OS_TAG}"
+  # zabbix-proxy-sqlite3:
+  #   extends:
+  #     file: compose_zabbix_components.yaml
+  #     service: proxy-sqlite3
+  #   image: "${ZABBIX_PROXY_SQLITE3_IMAGE}:${ZABBIX_ALPINE_IMAGE_TAG}${ZABBIX_IMAGE_TAG_POSTFIX}"
+  #   volumes:
+  #     - /etc/timezone:/etc/timezone:ro
+  #   labels:
+  #     com.zabbix.os: "${ALPINE_OS_TAG}"
 
-  zabbix-proxy-mysql:
-    extends:
-      file: compose_zabbix_components.yaml
-      service: proxy-mysql
-    image: "${ZABBIX_PROXY_MYSQL_IMAGE}:${ZABBIX_ALPINE_IMAGE_TAG}${ZABBIX_IMAGE_TAG_POSTFIX}"
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-    depends_on:
-      proxy-db-init:
-        condition: service_completed_successfully
-    labels:
-      com.zabbix.os: "${ALPINE_OS_TAG}"
+  # zabbix-proxy-mysql:
+  #   extends:
+  #     file: compose_zabbix_components.yaml
+  #     service: proxy-mysql
+  #   image: "${ZABBIX_PROXY_MYSQL_IMAGE}:${ZABBIX_ALPINE_IMAGE_TAG}${ZABBIX_IMAGE_TAG_POSTFIX}"
+  #   volumes:
+  #     - /etc/timezone:/etc/timezone:ro
+  #   depends_on:
+  #     proxy-db-init:
+  #       condition: service_completed_successfully
+  #   labels:
+  #     com.zabbix.os: "${ALPINE_OS_TAG}"
 
-  zabbix-web-apache-mysql:
-    extends:
-      file: compose_zabbix_components.yaml
-      service: web-apache-mysql
-    image: "${ZABBIX_WEB_APACHE_MYSQL_IMAGE}:${ZABBIX_ALPINE_IMAGE_TAG}${ZABBIX_IMAGE_TAG_POSTFIX}"
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-    depends_on:
-      server-db-init:
-        condition: service_completed_successfully
-    labels:
-      com.zabbix.os: "${ALPINE_OS_TAG}"
+  # zabbix-web-apache-mysql:
+  #   extends:
+  #     file: compose_zabbix_components.yaml
+  #     service: web-apache-mysql
+  #   image: "${ZABBIX_WEB_APACHE_MYSQL_IMAGE}:${ZABBIX_ALPINE_IMAGE_TAG}${ZABBIX_IMAGE_TAG_POSTFIX}"
+  #   volumes:
+  #     - /etc/timezone:/etc/timezone:ro
+  #   depends_on:
+  #     server-db-init:
+  #       condition: service_completed_successfully
+  #   labels:
+  #     com.zabbix.os: "${ALPINE_OS_TAG}"
 
   zabbix-web-nginx-mysql:
     extends:
