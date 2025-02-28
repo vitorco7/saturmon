@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 5s # The interval at which Prometheus will scrape metrics from targets (default is 1m)
+
+scrape_configs:
+  - job_name: "prometheus" # Job to monitor Prometheus itself
+    static_configs:
+      - targets: ["localhost:9090"] # Prometheus UI and API run on port 9090
+
+  - job_name: "simulated_devices" # Job to collect metrics from simulated devices
+    static_configs:
+      - targets:
+          - "device1:9100" # First simulated device exposing metrics on port 9100
+          - "device2:9100" # Second simulated device exposing metrics on port 9100
+          - "device3:9100" # Third simulated device exposing metrics on port 9100
+
+  - job_name: "node_exporter"
+    static_configs:
+      - targets: ["node_exporter:9100"] # Prometheus will scrape Node Exporter at this address
