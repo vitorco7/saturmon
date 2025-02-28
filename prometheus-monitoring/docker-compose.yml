@@ -24,72 +24,81 @@ services:
   # Simulated Device 1 with Embedded Node Exporter
   simulated_device_1:
     container_name: simulated_device_1
-    image: ubuntu
+    image: image_simulated_device_1
+    build:
+      dockerfile: ubuntu-dockerfile
+      context: .
     restart: always
     hostname: device1
-    cpus: "0.3"
-    mem_limit: "1g"
+    cpus: "0.1"
+    mem_limit: "128m"
     networks:
       - devices_network
     ports:
       - "9101:9100" # Exposes Node Exporter from inside this container
-    command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
+    # command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
 
-  # Simulated Device 2 with Embedded Node Exporter
+    # Simulated Device 2 with Embedded Node Exporter
   simulated_device_2:
     container_name: simulated_device_2
-    image: ubuntu
+    image: image_simulated_device_1
+    build:
+      dockerfile: ubuntu-dockerfile
+      context: .
     restart: always
     hostname: device2
-    cpus: "0.4"
-    mem_limit: "1.5g"
+    cpus: "0.2"
+    mem_limit: "256m"
     networks:
       - devices_network
     ports:
       - "9102:9100"
-    command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
+      # command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
 
-  # Simulated Device 3 with Embedded Node Exporter
+      # Simulated Device 3 with Embedded Node Exporter
   simulated_device_3:
     container_name: simulated_device_3
-    image: ubuntu
+    image: image_simulated_device_1
+    build:
+      dockerfile: ubuntu-dockerfile
+      context: .
     restart: always
     hostname: device3
-    cpus: "0.4"
-    mem_limit: "1.5g"
+    cpus: "0.3"
+    mem_limit: "256m"
     networks:
       - devices_network
     ports:
       - "9103:9100"
-    command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
+      #   command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
 
-  # Simulated Device 4 with Embedded Node Exporter
-  simulated_device_4:
-    container_name: simulated_device_4
-    image: ubuntu
-    restart: always
-    hostname: device4
-    cpus: "0.4"
-    mem_limit: "1.5g"
-    networks:
-      - devices_network
-    ports:
-      - "9104:9100"
-    command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
+      # Simulated Device 4 with Embedded Node Exporter
+      # simulated_device_4:
+      #   container_name: simulated_device_4
+      #   image: ubuntu
+      #   restart: always
+      #   hostname: device4
+      #   cpus: "0.1"
+      #   mem_limit: "128m"
+      #   networks:
+      #     - devices_network
+      #   ports:
+      #     - "9104:9100"
+      #   command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
 
-  # Simulated Device 5 with Embedded Node Exporter
-  simulated_device_5:
-    container_name: simulated_device_5
-    image: ubuntu
-    restart: always
-    hostname: device5
-    cpus: "0.3"
-    mem_limit: "1.7g"
-    networks:
-      - devices_network
-    ports:
-      - "9105:9100"
-    command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/download/v1.9.0/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
+      # # Simulated Device 5 with Embedded Node Exporter
+      # simulated_device_5:
+      #   container_name: simulated_device_5
+      #   image: ubuntu
+      #   restart: always
+      #   hostname: device5
+      #   cpus: "0.3"
+      #   mem_limit: "1.7g"
+      #   networks:
+      #     - devices_network
+      #   ports:
+      #     - "9105:9100"
+      #   command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/download/v1.9.0/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
 
 networks:
   devices_network:
