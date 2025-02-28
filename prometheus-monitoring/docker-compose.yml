@@ -20,8 +20,9 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
       - devices_network
-
-  # Simulated Device 1 with Embedded Node Exporter
+    volumes:
+      - grafana_data:/var/lib/grafana
+      # Simulated Device 1 with Embedded Node Exporter
   simulated_device_1:
     container_name: simulated_device_1
     image: ubuntu_device
@@ -123,3 +124,6 @@ services:
 networks:
   devices_network:
     driver: bridge
+
+volumes:
+  grafana_data:
