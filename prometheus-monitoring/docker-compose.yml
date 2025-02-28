@@ -1,0 +1,96 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest # Use the official Prometheus image
+    container_name: prometheus # Assign a name to the Prometheus container
+
+    ports:
+      - "9090:9090" # Map port 9090 to the host
+
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      # Mount the local Prometheus config file inside the container
+
+    networks:
+      - devices_network
+
+    restart: unless-stopped # Restart the container unless manually stopped
+
+  grafana:
+    image: grafana/grafana:latest # Use the official Grafana image
+    container_name: grafana # Assign a name to the Grafana container
+
+    ports:
+      - "3000:3000" # Map port 3000 to the host for the Grafana web interface
+
+    volumes:
+      - ./grafana:/var/lib/grafana # Persist Grafana data (dashboards, settings)
+
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin # Default admin username
+      - GF_SECURITY_ADMIN_PASSWORD=admin # Default admin password (change this!)
+
+    networks:
+      - devices_network
+
+    restart: unless-stopped # Restart Grafana if it crashes
+
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - "9100:9100" # Expose the Node Exporter metrics on port 9100
+    restart: unless-stopped
+
+  simulated_device_1:
+    container_name: simulated_device_1
+    image: ubuntu
+    restart: always
+    hostname: device1
+    cpus: "0.3"
+    mem_limit: "1g"
+    networks:
+      - devices_network
+
+  simulated_device_2:
+    container_name: simulated_device_2
+    image: ubuntu
+    restart: always
+    hostname: device2
+    cpus: "0.4"
+    mem_limit: "1.5g"
+    networks:
+      - devices_network
+
+  simulated_device_3:
+    container_name: simulated_device_3
+    image: ubuntu
+    restart: always
+    hostname: device3
+    cpus: "0.4"
+    mem_limit: "1.5g"
+    networks:
+      - devices_network
+
+  simulated_device_4:
+    container_name: simulated_device_4
+    image: ubuntu
+    restart: always
+    hostname: device4
+    cpus: "0.4"
+    mem_limit: "1.5g"
+    networks:
+      - devices_network
+
+  simulated_device_5:
+    container_name: simulated_device_5
+    image: ubuntu
+    restart: always
+    hostname: device5
+    cpus: "0.3"
+    mem_limit: "1.7g"
+    networks:
+      - devices_network
+
+networks:
+  devices_network:
+    driver: bridge
