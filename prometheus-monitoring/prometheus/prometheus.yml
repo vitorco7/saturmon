@@ -13,5 +13,6 @@ scrape_configs:
           - "simulated_device_1:9100"
           - "simulated_device_2:9100"
           - "simulated_device_3:9100"
-          # - "simulated_device_4:9100"
-          # - "simulated_device_5:9100"
+          - "simulated_device_4:9100"
+          - "simulated_device_5:9100"
+          # - "simulated_device_6:9100"
