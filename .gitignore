@@ -1,0 +1,49 @@
+# Ignore LaTeX auxiliary and log files
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.run.xml
+
+# Ignore temporary and backup files
+*.bak
+*.bkp
+*.swp
+*.swo
+*.tmp
+*.sav
+
+# Ignore TeXShop and TeXWorks editor-specific files
+*.pdfsync
+._*
+Thumbs.db
+Desktop.ini
+
+# Ignore build artifacts
+_build/
+latex.out/
+latex.log/
+
+# # Ignore generated PDFs (optional, remove this if you want to track PDFs)
+# *.pdf
+
+# Ignore VS Code workspace settings (optional)
+.vscode/
+
+# Ignore LaTeX Workshop (VS Code extension) cache files
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.xdy
+*.tdo
