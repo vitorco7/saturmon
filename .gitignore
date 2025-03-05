@@ -11,6 +11,8 @@
 *.bbl
 *.blg
 *.run.xml
+*.syx  # Added syx files
+*.abx  # Added abx files
 
 # Ignore temporary and backup files
 *.bak
