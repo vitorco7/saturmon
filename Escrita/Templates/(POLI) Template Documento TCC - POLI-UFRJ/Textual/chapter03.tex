@@ -1,0 +1,248 @@
+\chapter{Metodologia Proposta}
+\label{chap3}
+
+\section{Lorem Ipsum}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et rutrum tortor. Aenean placerat sed erat at posuere. Praesent a dui augue. Etiam ultrices est in eleifend convallis. Nulla condimentum eleifend nunc, quis commodo nisi imperdiet a. Vestibulum dolor neque, rutrum ac cursus vitae, facilisis et felis. Nam magna massa, molestie ut luctus et, blandit et odio. Vestibulum dignissim, magna quis ultrices convallis, felis sem tempus orci, nec lacinia nibh massa a nulla. Suspendisse potenti. Fusce bibendum tortor quis quam scelerisque sollicitudin. Ut a tempor orci, vel efficitur ante.
+
+\begin{enumerate}
+    \item Para a obtenção de $b_{3gu}^n(t_l)$:
+    
+    \begin{equation}
+    \begin{split}
+        \left[12D_g^n(t_l)/(a_u^n)^2 + \frac{1}{5}\Sigma_{Rg}^n(t_l)\right]b_{3gu}^n(t_l) - \frac{1}{5}\left[\nu\Sigma_{fg}^n(t_l)\sum_{g'=1}^G\chi_{g'}b_{3g'u}^n(t_l)\right. + \\
+        + \left.\sum_{g'=1}^G \Sigma_{g'g}^n(t_l)b_{3g'u}^n(t_l) + \right] = -\frac{1}{3}\left[\Sigma_{Rg}^n(t_l)b_{1gu}^n(t_l) + \nu\Sigma_{fg}^n(t_l)\sum_{g'=1}^G\chi_{g'}b_{1g'u}^n(t_l)\right. + \\
+        \left.+\sum_{g'=1}^G\Sigma_{g'g}^n(t_l)b_{1g'u}^n(t_l)+  +\alpha_{1gu}^n(t_l)\right];
+    \label{chap3:58}
+    \end{split}
+    \end{equation}
+    
+    \item Para a obtenção de $b_{4gu}^n(t_l)$:
+    
+    \begin{equation}
+    \begin{split}
+        \left[12D_g^n(t_l)/(a_u^n)^2 + \frac{3}{35}\Sigma_{Rg}^n(t_l)\right]b_{4gu}^n(t_l) - \frac{3}{35}\left[\nu\Sigma_{fg}^n(t_l)\sum_{g'=1}^G\chi_{g'}b_{4g'u}^n(t_l)\right. + \\
+        \left.+ \sum_{g'=1}^G \Sigma_{g'g}^n(t_l)b_{4g'u}^n(t_l) + \right] = -\frac{1}{5}\left[\Sigma_{Rg}^n(t_l)b_{2gu}^n(t_l) + \nu\Sigma_{fg}^n(t_l)\sum_{g'=1}^G\chi_{g'}b_{2g'u}^n(t_l) \right. + \\
+        +\left.\sum_{g'=1}^G\Sigma_{g'g}^n(t_l)b_{2g'u}^n(t_l)-\alpha_{2gu}^n(t_l) \right].
+    \label{chap3:59}
+    \end{split}        
+    \end{equation}    
+    
+    
+\end{enumerate}
+
+\section{O Cálculo do Parâmetro de Subcriticalidade Utilizando o Método NEM}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et rutrum tortor. Aenean placerat sed erat at posuere. Praesent a dui augue. Etiam ultrices est in eleifend convallis. Nulla condimentum eleifend nunc, quis commodo nisi imperdiet a. Vestibulum dolor neque, rutrum ac cursus vitae, facilisis et felis.
+
+\begin{table}[H]
+\centering
+\caption{Produto dos polinômios de base do NEM.}
+\label{chap3:ksub:table}
+\vspace{0.5cm}
+\begin{tabular}{|>{\centering} m{2cm}|>{\centering} m{2cm}|>{\centering} m{2cm}|>{\centering} m{2cm}|>{\centering\arraybackslash} m{2cm}|}
+\hline
+\diagbox[innerwidth=2cm]{$m$}{$k$}        & \textbf{1}    & \textbf{2}    & \textbf{3}     & \textbf{4}      \\ \hline 
+\textbf{1} & $\frac{1}{3}$ & $0$           & $\frac{1}{5}$  & $0$             \\ \hline 
+\textbf{2} & $0$           & $\frac{1}{5}$ & $0$            & $-\frac{3}{35}$ \\ \hline
+\textbf{3} & $\frac{1}{5}$ & $0$           & $\frac{6}{35}$ & $0$             \\ \hline
+\textbf{4} & $0$           & $0$           & $0$            & $\frac{6}{105}$ \\ \hline
+\end{tabular}
+\end{table}
+
+
+\section{Fluxograma do Algoritmo de Solução do Parâmetro de Subcriticalidade}
+\label{chap3:sec:fluxograma}
+
+A Figura \ref{chap3:fluxograma} In ornare, enim non porta interdum, est lorem volutpat metus, pellentesque pharetra lacus est sed lacus. Vivamus quis magna et justo mattis commodo viverra in tellus. Cras tempor ullamcorper libero vitae tristique. Morbi malesuada posuere tincidunt. Integer accumsan egestas ante eget elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur ac lacinia urna. Vivamus id nunc a nisl tincidunt efficitur eget quis neque. Praesent quis lorem rhoncus, rhoncus dui vel, condimentum dolor. Curabitur condimentum augue dignissim turpis consectetur venenatis.
+
+\begin{figure}[H]
+
+\begin{tikzpicture}[font=\small,thick]
+ 
+% Start block
+\node[draw,
+    rounded rectangle,
+    minimum width=2.5cm,
+    minimum height=1cm] (block1) {Início};
+ 
+% Voltage and Current Measurement
+\node[draw,
+    trapezium, 
+    trapezium left angle = 65,
+    trapezium right angle = 115,
+    trapezium stretches,
+    below= 0.8cm of block1,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block2) { Geometria, $N_i^n{(t_1)}$, $K_{\text{sub}}^\text{Alvo}(t_1)$, $\Delta K_{\text{sub}}^\text{Alvo}$, $L$, $\varepsilon_0$ e $P_\text{Nominal}$ ou $\overline{I}_{s,0}$};
+ 
+% Power and voltage variation
+\node[draw,
+    below=0.8cm of block2,
+    minimum width=2.5cm,
+    minimum height=1cm
+] (block3) { $l=1$};
+
+% Power and voltage variation
+\node[draw,
+    below=0.8cm of block3,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block4) {Cálculo de $\hat{\phi}_g^n(t_l)$ e $\overline{\Psi}_g^{*n}(t_l)$ usando o NEM};
+
+% Voltage and Current Measurement
+\node[draw,
+    trapezium, 
+    trapezium left angle = 65,
+    trapezium right angle = 115,
+    trapezium stretches,
+    left=of block4,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block21) {Dados Nucleares};
+
+% Power and voltage variation
+\node[draw,
+    below=0.8cm of block4,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block5) {Cálculo de $K_{\text{sub}}$};
+    
+% Conditions test
+\node[draw,
+    diamond,
+    below=0.8cm of block5,
+    minimum width=2.5cm,
+    inner sep=0] (block6) {$\left|\frac{K_{\text{sub}}(t_l)}{K_{\text{sub}}^\text{Alvo}(t_l)} -1 \right| \le \varepsilon_0$};
+    
+    
+% Conditions test
+\node[draw,
+    diamond,
+    below=of block6,
+    minimum width=2.5cm,
+    inner sep=0] (block7) {Calcula $P(t_l)$?};   
+
+% Power and voltage variation
+\node[draw,
+    below left=0.5cm of block7,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=4cm
+] (block8) {Cálculo de $\overline{I}_s(t_l)$, se $P(t_l)=P_\text{Nominal}$ é dado};  
+
+% Power and voltage variation
+\node[draw,
+    below right=0.5cm of block7,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3.5cm
+] (block9) {Cálculo de $P(t_l)$, se $\overline{I}_s(t_l)=\overline{I}_{s,0}$ é dado};  
+
+% Power and voltage variation
+\node[draw,
+    right= 1cm of block5,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm,
+    text centered
+] (block17) {Ajuste da Subcriticalidade};  
+
+\node[coordinate,below=1.5cm of block7] (block16) {};
+
+% Conditions test
+\node[draw,
+    diamond,
+    below= of block16,
+    minimum width=2.5cm,
+    inner sep=0] (block10) {$l>L$};
+  
+
+%\node[coordinate,right=0.5cm of block17] (block18) {};
+    
+
+% Power and voltage variation
+\node[draw,
+    right=3.5cm of block10,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block12) {$l=l+1$};
+
+% Power and voltage variation
+\node[draw,
+    above=4cm of block12,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block13) {$K_{\text{sub}}^\text{Alvo}(t_l) = K_{\text{sub}}^\text{Alvo}(t_1) + \frac{t_l}{t_L}\Delta K_\text{sub}^\text{Alvo}$}; 
+
+% Power and voltage variation
+\node[draw,
+    above=0.8cm of block13,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block14) {Calcula $\overline{\phi}_g^n(t_l) = \overline{I}_s(t_l)\hat{\phi}_g^n(t_l)$};    
+
+
+% Power and voltage variation
+\node[draw,
+    above=0.8cm of block14,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block18) {Calcula $N_i^n(t_l)$};    
+    
+% Return block
+\node[draw,
+    rounded rectangle,
+    below=of block10,
+    minimum width=2.5cm,
+    minimum height=1cm,] (block11) {Fim};
+ 
+% \node[coordinate,below=4.35cm of block4] (block12) {};
+ 
+ 
+% Arrows
+\draw[-latex] (block1) edge (block2)
+    (block2) edge (block3)
+    (block3) edge (block4)
+    (block21) edge (block4)
+    (block4) edge (block5)	
+    (block5) edge (block6);
+ 
+\draw[-latex] (block6) -- (block7)
+    node[pos=0.5,fill=white,inner sep=0]{Sim};
+    
+\draw[-latex] (block6) -| (block17)
+    node[pos=0.25,fill=white,inner sep=0]{Não};    
+ 
+\draw[-latex] (block7) -| (block8)
+    node[pos=0.25,fill=white,inner sep=0]{Sim};
+
+\draw[-latex] (block7) -| (block9)
+    node[pos=0.25,fill=white,inner sep=0]{Não};
+
+\draw (block8) |- (block16);
+ 
+\draw (block9) |- (block16);
+
+\draw[-latex] (block16) -- (block10);
+
+\draw[-latex] (block10) -- (block11)
+    node[pos=0.5,fill=white,inner sep=0]{Sim};
+
+\draw[-latex] (block10) -- (block12)
+    node[pos=0.5,fill=white,inner sep=0]{Não};
+
+
+\draw[-latex] (block12) edge (block13)
+              (block13) edge (block14)
+              (block18) |- (block4)
+              (block17) |- (block4)
+              (block14) edge (block18);
+%\draw (block17) -- (block18);              
+ 
+\end{tikzpicture}
+\vspace{-1cm}
+\caption{Fluxograma do algoritmo de solução para determinar o parâmetro $K_{\text{sub}}$.}
+\label{chap3:fluxograma}
+\end{figure}

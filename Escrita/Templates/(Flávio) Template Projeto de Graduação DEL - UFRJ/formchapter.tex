@@ -1,0 +1,12 @@
+\cleardoublepage
+\pagestyle{fancyplain}
+\addtolength{\headwidth}{\marginparsep}
+\renewcommand{\chaptermark}[1]%
+             {\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]%
+             {\markright{\thesection\ #1}}
+\lhead[\fancyplain{}{\bfseries\thepage}]%
+      {\fancyplain{}{\bfseries\rightmark}}
+\rhead[\fancyplain{}{\bfseries\leftmark}]%
+      {\fancyplain{}{\bfseries\thepage}}
+\cfoot{}
