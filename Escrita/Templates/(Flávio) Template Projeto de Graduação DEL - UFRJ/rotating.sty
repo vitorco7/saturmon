@@ -1,0 +1,148 @@
+%% 
+%% This is file `rotating.sty', generated 
+%% on <1994/11/18> with the docstrip utility (1).
+%% 
+%% The original source files were:
+%% 
+%% rotating.dtx  (with options: `package')
+%% Copyright (C) 1994 Sebastian Rahtz and Leonor Barroca. All 
+%% rights reserved. Permission is granted to to customize the 
+%% declarations in this file to serve the needs of your installation. 
+%% However, no permission is granted to distribute a modified version of 
+%% this file under its original name. 
+%% 
+\def\fileversion{2}
+\def\filedate{94/04/15}
+\def\docdate {94/04/15}
+%% File: rotating.dtx Copyright (C) 1994 Sebastian Rahtz and Leonor Barroca
+\ProvidesPackage{rotating}[\filedate\space\fileversion\space SPQR]
+\NeedsTeXFormat{LaTeX2e}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{graphics}}
+\ProcessOptions
+\RequirePackage{graphics}
+\immediate\write\sixt@@n{Style option: rotating
+\fileversion\space <\filedate> (SPQR / LMB)}
+\def\sideways{%
+  \Grot@setangle{90}%
+  \setbox\z@\hbox\bgroup\ignorespaces}
+\def\endsideways{%
+  \unskip\egroup
+  \Grot@x\z@
+  \Grot@y\z@
+  \Grot@box
+}
+\def\turn#1{%
+  \Grot@setangle{#1}%
+  \setbox\z@\hbox\bgroup\ignorespaces}
+\def\endturn{%
+  \unskip\egroup
+  \Grot@x\z@
+  \Grot@y\z@
+  \Grot@box
+}
+\def\rotate#1{%
+  \Grot@setangle{#1}%
+  \setbox\z@\hbox\bgroup\ignorespaces}
+\def\endrotate{%
+  \unskip\egroup
+  \Grot@x\z@
+  \Grot@y\z@
+  \wd0\z@\dp0\z@\ht0\z@
+  \Grot@box
+}
+\def\turnbox#1#2{%
+  \Grot@setangle{#1}%
+  \setbox\z@\hbox{{#2}}%
+  \Grot@x\z@\Grot@y\z@
+  \wd0\z@\dp0\z@\ht0\z@
+  \Grot@box
+}
+\def\@rotfloat#1{\@ifnextchar[{\@xrotfloat{#1}}{%
+\edef\@tempa{\noexpand\@xrotfloat{#1}[\csname fps@#1\endcsname]}\@tempa}}
+\def\@xrotfloat#1[#2]{\ifhmode \@bsphack\@floatpenalty -\@Mii\else
+   \@floatpenalty-\@Miii\fi\def\@captype{#1}\ifinner
+      \@parmoderr\@floatpenalty\z@
+    \else\@next\@currbox\@freelist{\@tempcnta\csname ftype@#1\endcsname
+       \multiply\@tempcnta\@xxxii\advance\@tempcnta\sixt@@n
+       \@tfor \@tempa :=#2\do
+                        {\if\@tempa h\advance\@tempcnta \@ne\fi
+                         \if\@tempa t\advance\@tempcnta \tw@\fi
+                         \if\@tempa b\advance\@tempcnta 4\relax\fi
+                         \if\@tempa p\advance\@tempcnta 8\relax\fi
+         }\global\count\@currbox\@tempcnta}\@fltovf\fi
+    \global\setbox\@currbox\vbox\bgroup
+  \hsize\textheight \@parboxrestore
+ }
+\def\page@L{L}
+\def\end@rotfloat{\par\vskip\z@\egroup%
+   \ifnum\@floatpenalty <\z@
+    \global\setbox\@tempboxa\box\@currbox
+\message{Adding sideways figure on }%
+   \global\setbox\@currbox\vbox to \wd\@tempboxa{%
+   \ifx\rotfloatpage\page@L
+\message{left hand page }%
+    \vfill\centerline{%
+       \hbox to \ht\@tempboxa{\hfill
+          \turnbox{90}{\box\@tempboxa}%
+            }%
+}%
+   \else
+\message{right hand page }%
+    \centerline{%
+       \hbox to \ht\@tempboxa{%
+           \turnbox{-90}{\box\@tempboxa}%
+                  \hfill}%
+               }\vfill
+   \fi
+      }%
+     \@cons\@currlist\@currbox
+     \ifdim \ht\@currbox >\textheight
+        \@warning{Float larger than \string\textheight}%
+        \ht\@currbox\textheight \fi
+     \ifnum\@floatpenalty <-\@Mii
+        \penalty -\@Miv
+        \@tempdima\prevdepth
+        \vbox{}%
+        \prevdepth \@tempdima
+        \penalty\@floatpenalty
+      \else \vadjust{\penalty -\@Miv
+      \vbox{}\penalty\@floatpenalty}\@esphack
+     \fi\fi}
+\def\sidewaysfigure{\let\make@caption\make@rcaption
+\@rotfloat{figure}}
+\let\endsidewaysfigure\end@rotfloat
+\def\sidewaystable{\let\make@caption\make@rcaption
+\@rotfloat{table}}
+\let\endsidewaystable\end@rotfloat
+\long\def\@makercaption#1#2{%
+   \vskip 10\p@
+   \setbox\@tempboxa\hbox{#1: #2}%
+   \ifdim \wd\@tempboxa >\vsize
+       #1: #2\par
+     \else
+       \hbox to\vsize{\hfil\box\@tempboxa\hfil}%
+   \fi}%
+\def\rotcaption{\refstepcounter\@captype\@dblarg{\@rotcaption\@captype}}
+\long\def\@rotcaption#1[#2]#3{%
+\addcontentsline{\csname ext@#1\endcsname}{#1}{%
+ \protect\numberline{\csname the#1\endcsname}{\ignorespaces #2}}%
+  \par
+  \begingroup
+    \@parboxrestore
+    \normalsize
+    \@makerotcaption{\csname fnum@#1\endcsname}{#3}%
+  \endgroup}
+\long\def\@makerotcaption#1#2{%
+ \setbox\@tempboxa\hbox{#1: #2}%
+ \ifdim \wd\@tempboxa > .8\vsize
+    \rotatebox{90}{%
+    \begin{minipage}{.8\textheight}#1 #2\end{minipage}%
+    }\par
+ \else%
+    \rotatebox{90}{\box\@tempboxa}%
+ \fi
+ \hspace{12pt}%
+}
+\endinput
+%% 
+%% End of file `rotating.sty'.

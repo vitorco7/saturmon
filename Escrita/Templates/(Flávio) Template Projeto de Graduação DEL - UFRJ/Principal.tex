@@ -1,0 +1,88 @@
+\documentclass[a4paper,12pt,oneside,openany]{book}	
+\input{TesePack}
+
+\begin{document}
+
+\frontmatter
+\thispagestyle{empty}
+
+\input{Capa}
+
+\pagebreak            
+
+\input{Preambulo}
+
+% Table of Contents
+% ---------------------------------------------------------------
+     \tableofcontents
+% ---------------------------------------------------------------
+% Lista de figuras
+% ---------------------------------------------------------------
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Lista de Figuras}
+\listoffigures
+% ---------------------------------------------------------------
+% Lista de Tabelas
+% ---------------------------------------------------------------
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Lista de Tabelas}
+\listoftables
+
+\mainmatter
+\cleardoublepage
+% ---------------------------------------------------------------
+% Chapter 1 - Introdução
+% ---------------------------------------------------------------
+\chapter{Introdução}
+\label{cap1}
+\input{cap1}
+
+% ---------------------------------------------------------------
+% Chapter 2 - Informações Adicionais
+% ---------------------------------------------------------------
+\chapter{Informações Adicionais}
+\label{cap2}
+\input{cap2}
+
+% ---------------------------------------------------------------
+% Chapter 3 - Conclusões
+% ---------------------------------------------------------------
+\chapter{Conclusões}
+\label{cap3}
+\input{cap3}
+
+% ---------------------------------------------------------------
+% Bibliografia
+% ---------------------------------------------------------------
+\normalsize
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliographystyle{coppe}
+\bibliography{biblio}
+
+% ---------------------------------------------------------------
+% Apêndices 
+% ---------------------------------------------------------------
+   \appendix
+   % ---------------------------------------------------------------
+   % Apêndice A
+   % ---------------------------------------------------------------
+   \chapter{O que é um apêndice}
+   \label{ApendiceA}
+   \input{ApendiceA}
+   % ---------------------------------------------------------------
+   % Apêndice B
+   % ---------------------------------------------------------------
+   \chapter{Encadernação do Projeto de Graduação}
+   \label{ApendiceB}
+   \input{ApendiceB}
+   % ---------------------------------------------------------------
+   % Apêndice C
+   % ---------------------------------------------------------------
+   \chapter{O que é um anexo}
+   \label{ApendiceC}
+   \input{ApendiceC}   
+
+\backmatter
+
+\end{document}
