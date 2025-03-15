@@ -2,7 +2,7 @@ FROM alpine
 
 ENV NODE_EXPORTER_VERSION=1.9.0
 
-RUN apk add --no-cache wget tar
+RUN apk add --no-cache wget stress-ng tar
 
 RUN wget https://github.com/prometheus/node_exporter/releases/download/v$NODE_EXPORTER_VERSION/node_exporter-$NODE_EXPORTER_VERSION.linux-amd64.tar.gz
 
@@ -12,6 +12,10 @@ RUN mv node_exporter-$NODE_EXPORTER_VERSION.linux-amd64/node_exporter /usr/local
 
 RUN rm -rf node_exporter-$NODE_EXPORTER_VERSION.linux-amd64*
 
+COPY user-load-simulator-alpine.sh /usr/local/bin/user-load-simulator-alpine.sh
+
+RUN chmod +x /usr/local/bin/user-load-simulator-alpine.sh
+
 WORKDIR /
 
-CMD ["/usr/local/bin/node_exporter"]
+CMD ["/bin/sh", "-c", "nohup /usr/local/bin/user-load-simulator-alpine.sh & /usr/local/bin/node_exporter"]

@@ -1,9 +1,12 @@
 FROM ubuntu
 
-RUN apt update && apt install -y wget 
+RUN apt update && apt install -y wget stress-ng
 RUN wget https://github.com/prometheus/node_exporter/releases/download/v1.9.0/node_exporter-1.9.0.linux-amd64.tar.gz 
 RUN tar xvfz node_exporter-1.9.0.linux-amd64.tar.gz 
 
+COPY user-load-simulator-ubuntu.sh /usr/local/bin/user-load-simulator-ubuntu.sh
+RUN chmod +x /usr/local/bin/user-load-simulator-ubuntu.sh
+
 WORKDIR /
 
-CMD [ "./node_exporter-1.9.0.linux-amd64/node_exporter" ]
+CMD ["/bin/bash", "-c", "nohup /usr/local/bin/user-load-simulator-ubuntu.sh & ./node_exporter-1.9.0.linux-amd64/node_exporter"]
