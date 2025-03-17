@@ -22,7 +22,7 @@ services:
       - devices_network
     volumes:
       - grafana_data:/var/lib/grafana
-      # Simulated Device 1 with Embedded Node Exporter
+
   simulated_device_1:
     container_name: simulated_device_1
     image: ubuntu_device
@@ -36,10 +36,8 @@ services:
     networks:
       - devices_network
     ports:
-      - "9101:9100" # Exposes Node Exporter from inside this container
-    # command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
+      - "9101:9100"
 
-    # Simulated Device 2 with Embedded Node Exporter
   simulated_device_2:
     container_name: simulated_device_2
     image: ubuntu_device
@@ -54,9 +52,7 @@ services:
       - devices_network
     ports:
       - "9102:9100"
-      # command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
 
-      # Simulated Device 3 with Embedded Node Exporter
   simulated_device_3:
     container_name: simulated_device_3
     image: ubuntu_device
@@ -71,9 +67,7 @@ services:
       - devices_network
     ports:
       - "9103:9100"
-      #   command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
 
-      # Simulated Device 4 with Embedded Node Exporter
   simulated_device_4:
     container_name: simulated_device_4
     image: alpine_device
@@ -88,9 +82,7 @@ services:
       - devices_network
     ports:
       - "9104:9100"
-      #   command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
 
-      # Simulated Device 5 with Embedded Node Exporter
   simulated_device_5:
     container_name: simulated_device_5
     image: alpine_device
@@ -105,21 +97,6 @@ services:
       - devices_network
     ports:
       - "9105:9100"
-      #   command: [ "/bin/bash", "-c", "apt update && apt install -y wget && wget https://github.com/prometheus/node_exporter/releases/download/v1.9.0/node_exporter-linux-amd64.tar.gz && tar xvfz node_exporter-linux-amd64.tar.gz && ./node_exporter-linux-amd64/node_exporter --web.listen-address=:9100" ]
-      # simulated_device_6:
-      #   container_name: simulated_device_6
-      #   image: windows_device
-      #   build:
-      #     dockerfile: windows-dockerfile
-      #     context: .
-      #   restart: always
-      #   hostname: device6
-      #   cpus: "0.2"
-      #   mem_limit: "128m"
-      #   networks:
-      #     - devices_network
-      #   ports:
-      #     - "9106:9100"
 
 networks:
   devices_network:
