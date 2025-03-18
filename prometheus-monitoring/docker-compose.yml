@@ -22,6 +22,7 @@ services:
       - devices_network
     volumes:
       - grafana_data:/var/lib/grafana
+      
   simulated_device_1:
     container_name: simulated_device_1
     image: ubuntu_device
@@ -36,6 +37,14 @@ services:
       - devices_network
     ports:
       - "9101:9100"
+    # Ensure container has its own isolated view of proc and sys
+    read_only: false
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_RESOURCE  # Allow the container to monitor its own resources
 
   simulated_device_2:
     container_name: simulated_device_2
@@ -45,12 +54,20 @@ services:
       context: .
     restart: always
     hostname: device2
-    cpus: "0.2"
+    cpus: "0.2"  
     mem_limit: "256m"
     networks:
       - devices_network
     ports:
       - "9102:9100"
+    read_only: false
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_RESOURCE
+    
   simulated_device_3:
     container_name: simulated_device_3
     image: ubuntu_device
@@ -65,6 +82,14 @@ services:
       - devices_network
     ports:
       - "9103:9100"
+    read_only: false
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_RESOURCE
+    
   simulated_device_4:
     container_name: simulated_device_4
     image: alpine_device
@@ -79,6 +104,14 @@ services:
       - devices_network
     ports:
       - "9104:9100"
+    read_only: false
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_RESOURCE
+    
   simulated_device_5:
     container_name: simulated_device_5
     image: alpine_device
@@ -93,6 +126,13 @@ services:
       - devices_network
     ports:
       - "9105:9100"
+    read_only: false
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_RESOURCE
 
 networks:
   devices_network:

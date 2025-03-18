@@ -18,4 +18,7 @@ RUN chmod +x /usr/local/bin/user-load-simulator-alpine.sh
 
 WORKDIR /
 
-CMD ["/bin/sh", "-c", "nohup /usr/local/bin/user-load-simulator-alpine.sh & /usr/local/bin/node_exporter"]
+# Modified command to isolate container metrics
+# We're explicitly setting which collectors to use and specifying the paths
+# This ensures node_exporter only collects container metrics, not host metrics
+CMD ["/bin/sh", "-c", "nohup /usr/local/bin/user-load-simulator-alpine.sh & /usr/local/bin/node_exporter --collector.disable-defaults --collector.cpu --collector.meminfo --collector.loadavg --collector.filesystem --collector.netdev --path.procfs=/proc --path.sysfs=/sys"]

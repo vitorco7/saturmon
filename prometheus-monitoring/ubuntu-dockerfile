@@ -9,4 +9,4 @@ RUN chmod +x /usr/local/bin/user-load-simulator-ubuntu.sh
 
 WORKDIR /
 
-CMD ["/bin/bash", "-c", "nohup /usr/local/bin/user-load-simulator-ubuntu.sh & ./node_exporter-1.9.0.linux-amd64/node_exporter"]
+CMD ["/bin/bash", "-c", "nohup /usr/local/bin/user-load-simulator-ubuntu.sh & ./node_exporter-1.9.0.linux-amd64/node_exporter --collector.disable-defaults --collector.cpu --collector.meminfo --collector.loadavg --collector.filesystem --collector.netdev --path.procfs=/proc --path.sysfs=/sys"]
