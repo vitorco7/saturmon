@@ -30,69 +30,74 @@ services:
       context: .
     restart: always
     hostname: device1
-    cpus: "0.1"
-    mem_limit: "128m"
-    networks:
-      - devices_network
-    ports:
-      - "9101:9100"
-
-  simulated_device_2:
-    container_name: simulated_device_2
-    image: ubuntu_device
-    build:
-      dockerfile: ubuntu-dockerfile
-      context: .
-    restart: always
-    hostname: device2
-    cpus: "0.2"
-    mem_limit: "256m"
-    networks:
-      - devices_network
-    ports:
-      - "9102:9100"
-  simulated_device_3:
-    container_name: simulated_device_3
-    image: ubuntu_device
-    build:
-      dockerfile: ubuntu-dockerfile
-      context: .
-    restart: always
-    hostname: device3
     cpus: "0.3"
     mem_limit: "256m"
     networks:
       - devices_network
     ports:
-      - "9103:9100"
-  simulated_device_4:
-    container_name: simulated_device_4
-    image: alpine_device
-    build:
-      dockerfile: alpine-dockerfile
-      context: .
-    restart: always
-    hostname: device4
-    cpus: "0.1"
-    mem_limit: "128m"
-    networks:
-      - devices_network
-    ports:
-      - "9104:9100"
-  simulated_device_5:
-    container_name: simulated_device_5
-    image: alpine_device
-    build:
-      dockerfile: alpine-dockerfile
-      context: .
-    restart: always
-    hostname: device5
-    cpus: "0.2"
-    mem_limit: "128m"
-    networks:
-      - devices_network
-    ports:
-      - "9105:9100"
+      - "9273:9273" # Expose Telegraf metrics endpoint
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+  # simulated_device_2:
+  #   container_name: simulated_device_2
+  #   image: ubuntu_device
+  #   build:
+  #     dockerfile: ubuntu-dockerfile
+  #     context: .
+  #   restart: always
+  #   hostname: device2
+  #   cpus: "0.2"
+  #   mem_limit: "256m"
+  #   networks:
+  #     - devices_network
+  #   ports:
+  #     - "9102:9100"
+  # simulated_device_3:
+  #   container_name: simulated_device_3
+  #   image: ubuntu_device
+  #   build:
+  #     dockerfile: ubuntu-dockerfile
+  #     context: .
+  #   restart: always
+  #   hostname: device3
+  #   cpus: "0.3"
+  #   mem_limit: "256m"
+  #   networks:
+  #     - devices_network
+  #   ports:
+  #     - "9103:9100"
+  # simulated_device_4:
+  #   container_name: simulated_device_4
+  #   image: alpine_device
+  #   build:
+  #     dockerfile: alpine-dockerfile
+  #     context: .
+  #   restart: always
+  #   hostname: device4
+  #   cpus: "0.1"
+  #   mem_limit: "128m"
+  #   networks:
+  #     - devices_network
+  #   ports:
+  #     - "9104:9100"
+  # simulated_device_5:
+  #   container_name: simulated_device_5
+  #   image: alpine_device
+  #   build:
+  #     dockerfile: alpine-dockerfile
+  #     context: .
+  #   restart: always
+  #   hostname: device5
+  #   cpus: "0.2"
+  #   mem_limit: "128m"
+  #   networks:
+  #     - devices_network
+  #   ports:
+  #     - "9105:9100"
 
 networks:
   devices_network:
