@@ -36,12 +36,12 @@ services:
       - devices_network
     ports:
       - "9273:9273" # Expose Telegraf metrics endpoint
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 30s
   # simulated_device_2:
   #   container_name: simulated_device_2
   #   image: ubuntu_device

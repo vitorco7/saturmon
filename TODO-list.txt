@@ -9,7 +9,7 @@ Anotações
 Troca do node exporter para o Telegraf. Para telemetria de containers, node não é apropriado. Para todas as simulações, usar Telegraf. Para situações reais, cada situação pode vir a exigir um agente diferente.
 Node exporter é bom para hosts linux, mas nao tem suporte para android ou IoT.
 
-Custos desta troca -> o Telegraf se mostrou mais pesado -> quando rodei o Telegraf no device_1, o device crashava após um tempo. Com o node exporter, não
+Custos desta troca -> o Telegraf se mostrou mais pesado -> quando rodei o Telegraf no device_1, o device crashava após um tempo. Com o node exporter, não. Além disso, o container demora mais para buildar (10.7s). Antes era quase instantâneo.
 
 ----------Embasamento----------
 
