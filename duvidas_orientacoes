@@ -1,4 +1,7 @@
-1 - perguntar dos agentes (telegraf, cAdvisor, node exporter) - quais situações usar
+Orientação 20250325
+
+1 - perguntar dos agentes (telegraf, cAdvisor, node exporter) - quais situações usar -> usar telegraf pela isonomia (para evitar distorções)
 2 - Quais stress tests são interessantes?
-Performar todos (CPU, memória, disco, network) ao mesmo tempo ou separadamente? Qual a carga dos testes?
+Performar todos (CPU, memória, disco, network) ao mesmo tempo ou separadamente? Qual a carga dos testes? -> primeiramente fazer testes individuais, e depois testes agregados com todos.
 3 - terei de falar do zabbix na escrita, mas não tenho tanto embasamento pra justificar a troca. Só não estava confortável/gostando de usar. Não tenho algo muito técnico, não foi feito um estudo comparativo profundo.
+->a usabilidade também é um fator. Se eu estava utilizando e não estava gostando da interface e ou usabilidade, isso é um custo a ser levado em conta
