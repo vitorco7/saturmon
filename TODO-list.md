@@ -10,6 +10,9 @@
 - **Quais stress tests são interessantes?**  
   Performar todos (CPU, memória, disco, network) ao mesmo tempo ou separadamente? Qual a carga dos testes?
 
+![sre_concepts](sre_concepts.png)
+![testers-suggestions](stress_testers.png)
+
 ## Itens para Implementação
 
 1. Alarmes e alertas.
