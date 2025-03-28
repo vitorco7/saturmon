@@ -2,11 +2,29 @@
 
 ## Métricas e Coleta
 
+- **Próximos passos:**
+  1. Ver ferramenta de network para rodar dentro do container
+  2. Medir network load
+  3. Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
+  4. Métricas dispositivo real x dispositivo simulado
+  5. Alarmes e Alertas
+  6. Dispositivo Android e Raspberry
+
+
+
+
+
+
+
+
+
 - **Quais são as métricas interessantes para memória?**  
-  Qual o embasamento da decisão? Implementar a coleta.
-
+  Qual o embasamento da decisão? ✖️
+  Implementar a coleta. ✅
 - **E para CPU? E para network? E para disco?**
-
+CPU, DISK I/O, RAM coletas ✅
+Embasamento teórico ✖️
+Network ✖️
 - **Quais stress tests são interessantes?**  
   Performar todos (CPU, memória, disco, network) ao mesmo tempo ou separadamente? Qual a carga dos testes?
 
