@@ -1,21 +1,25 @@
 FROM alpine
 
-ENV NODE_EXPORTER_VERSION=1.9.0
+# Install basic dependencies
+RUN apk update && apk add --no-cache wget stress-ng gnupg curl bash
 
-RUN apk add --no-cache wget stress-ng tar
+# Install required dependencies for Telegraf
+RUN apk add --no-cache ca-certificates procps lm-sensors tzdata iputils 
 
-RUN wget https://github.com/prometheus/node_exporter/releases/download/v$NODE_EXPORTER_VERSION/node_exporter-$NODE_EXPORTER_VERSION.linux-amd64.tar.gz
+# Install Telegraf directly using the binary package
+RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-1.29.4_linux_amd64.tar.gz && \
+    tar -xzf telegraf-1.29.4_linux_amd64.tar.gz && \
+    cp -r telegraf-1.29.4/* / && \
+    rm -rf telegraf-1.29.4* && \
+    mkdir -p /etc/telegraf
 
-RUN tar -xzf node_exporter-$NODE_EXPORTER_VERSION.linux-amd64.tar.gz
+# Copy configuration files
+COPY telegraf.conf /etc/telegraf/telegraf.conf
+COPY user-load-simulator-ubuntu.sh /usr/local/bin/user-load-simulator.sh
+RUN chmod +x /usr/local/bin/user-load-simulator.sh
 
-RUN mv node_exporter-$NODE_EXPORTER_VERSION.linux-amd64/node_exporter /usr/local/bin/
-
-RUN rm -rf node_exporter-$NODE_EXPORTER_VERSION.linux-amd64*
-
-COPY user-load-simulator-alpine.sh /usr/local/bin/user-load-simulator-alpine.sh
-
-RUN chmod +x /usr/local/bin/user-load-simulator-alpine.sh
-
+# Set working directory
 WORKDIR /
 
-CMD ["/bin/sh", "-c", "nohup /usr/local/bin/user-load-simulator-alpine.sh & /usr/local/bin/node_exporter"]
+# Run the load simulator and Telegraf
+CMD ["/bin/bash", "-c", "/usr/local/bin/user-load-simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]

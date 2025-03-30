@@ -77,34 +77,35 @@ services:
     ports:
       - "9275:9273"
       
-  # simulated_device_4:
-  #   container_name: simulated_device_4
-  #   image: alpine_device
-  #   build:
-  #     dockerfile: alpine-dockerfile
-  #     context: .
-  #   restart: always
-  #   hostname: device4
-  #   cpus: "0.1"
-  #   mem_limit: "128m"
-  #   networks:
-  #     - devices_network
-  #   ports:
-  #     - "9104:9100"
-  # simulated_device_5:
-  #   container_name: simulated_device_5
-  #   image: alpine_device
-  #   build:
-  #     dockerfile: alpine-dockerfile
-  #     context: .
-  #   restart: always
-  #   hostname: device5
-  #   cpus: "0.2"
-  #   mem_limit: "128m"
-  #   networks:
-  #     - devices_network
-  #   ports:
-  #     - "9105:9100"
+  simulated_device_4:
+    container_name: alpine_device_4
+    image: alpine_device
+    build:
+      dockerfile: alpine-dockerfile
+      context: .
+    restart: always
+    hostname: device4
+    cpus: "0.3"
+    mem_limit: "256m"
+    networks:
+      - devices_network
+    ports:
+      - "9276:9273"
+      
+  simulated_device_5:
+    container_name: alpine_device_5
+    image: alpine_device
+    build:
+      dockerfile: alpine-dockerfile
+      context: .
+    restart: always
+    hostname: device5
+    cpus: "0.3"
+    mem_limit: "512m"
+    networks:
+      - devices_network
+    ports:
+      - "9277:9273"
 
 networks:
   devices_network:

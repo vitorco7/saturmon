@@ -3,12 +3,17 @@
 ## Métricas e Coleta
 
 - **Próximos passos:**
-  1. Ver ferramenta de network para rodar dentro do container
-  2. Medir network load
-  3. Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
-  4. Métricas dispositivo real x dispositivo simulado
-  5. Alarmes e Alertas
-  6. Dispositivo Android e Raspberry
+  1. Montar Dash no Grafana com algumas métricas pra observar o comportamento já existente (validar se todos os dados estão idênticos novamente ou se estou monitorando isoladamento/corretamente)
+  2. Simular Raspberry -> instalar telegraf e coletar métricas
+  3. Simular Android -> como fazer o monitoramento?
+
+
+
+
+  - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
+  - Métricas dispositivo real x dispositivo simulado
+  - Alarmes e Alertas
+  - Dispositivo Android e Raspberry
 
 
 
