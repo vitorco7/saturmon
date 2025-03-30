@@ -10,9 +10,9 @@ scrape_configs:
   - job_name: "simulated_devices" # Monitor all simulated devices
     static_configs:
       - targets:
-          - "simulated_device_1:9273"
-          # - "simulated_device_2:9100"
-          # - "simulated_device_3:9100"
+          - "ubuntu_device_1:9273"
+          - "ubuntu_device_2:9273"
+          - "ubuntu_device_3:9273"
           # - "simulated_device_4:9100"
           # - "simulated_device_5:9100"
           # - "simulated_device_6:9100"
