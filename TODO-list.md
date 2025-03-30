@@ -15,7 +15,7 @@
 
 
 
-
+OBS - uma métrica importante seria a temepratura da CPU, mas essa métrica não faz sentido dos containers isolados na simulação
 
 
 - **Quais são as métricas interessantes para memória?**  
