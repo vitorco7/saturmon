@@ -9,6 +9,12 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     networks:
       - devices_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
   grafana:
     container_name: grafana
@@ -22,6 +28,12 @@ services:
       - devices_network
     volumes:
       - grafana_data:/var/lib/grafana
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 45s
+      timeout: 15s
+      retries: 5
+      start_period: 90s
 
   # iperf3:
   #   container_name: iperf3_server
@@ -46,6 +58,11 @@ services:
       - devices_network
     ports:
       - "9273:9273" # Expose Telegraf metrics endpoint
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 20s
+      timeout: 5s
+      retries: 2
 
   simulated_device_2:
     container_name: ubuntu_device_2
@@ -61,6 +78,11 @@ services:
       - devices_network
     ports:
       - "9274:9273"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 20s
+      timeout: 5s
+      retries: 2
 
   simulated_device_3:
     container_name: ubuntu_device_3
@@ -76,6 +98,11 @@ services:
       - devices_network
     ports:
       - "9275:9273"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 20s
+      timeout: 5s
+      retries: 2
       
   simulated_device_4:
     container_name: alpine_device_4
@@ -91,6 +118,11 @@ services:
       - devices_network
     ports:
       - "9276:9273"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 20s
+      timeout: 5s
+      retries: 2
       
   simulated_device_5:
     container_name: alpine_device_5
@@ -106,6 +138,12 @@ services:
       - devices_network
     ports:
       - "9277:9273"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 20s
+      timeout: 5s
+      retries: 2
+
 
 networks:
   devices_network:

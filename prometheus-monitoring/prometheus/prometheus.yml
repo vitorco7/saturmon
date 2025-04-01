@@ -15,4 +15,3 @@ scrape_configs:
           - "ubuntu_device_3:9273"
           - "alpine_device_4:9273"
           - "alpine_device_5:9273"
-          # - "simulated_device_6:9100"
