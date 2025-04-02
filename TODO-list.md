@@ -3,6 +3,21 @@
 ## Métricas e Coleta
 
 - **Próximos passos:**
+  p0 - investigar os gaps nas medições (quem está falhando na coleta do dado? O prometheuis falha na coleta ou o container falha em disponibilizar o dado?)
+
+  p1 - peneirar as métricas do cgroup - quais sao as mais interessantes? pq?
+
+  p2 - Métricas dispositivo real x dispositivo simulado
+
+  p3 - montar o dash do grafana
+
+  p4 - estudo dos virtualizadores e tentar implementar o Raspberry + Telegraf (se der certo, segue para Android)
+  
+  p5 - Alarmes e Alertas
+
+  p6 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
+
+
   1. Montar Dash no Grafana com algumas métricas pra observar o comportamento já existente (validar se todos os dados estão idênticos novamente ou se estou monitorando isoladamento/corretamente)
   2. Simular Raspberry -> instalar telegraf e coletar métricas
   3. Simular Android -> como fazer o monitoramento?

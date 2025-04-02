@@ -1,10 +1,14 @@
 Orientação 20250401
 
 1 - Tenho implementado meu projeto em 2 pcs - Note do trabalho (Ubuntu 20 cgroups v1) e Desktop pessoal (Ubuntu 24 cgroups v2). Essas diferenças de versoes nos cgroups acarreta em problemas de compatibilidade, e adaptar o projeto para lidar com ambas as versoes me preocupa por poder estar introduzindo mais distorções. Exemplo: não sei se o cgroups v1 e v2 lêem da mesma forma e obtém os mesmos dados.
+--> isso é uma observaão importante de se ter quando explicicatar o processo de mediãção
+
 
 2 - Estou lendo sobre o QEMU para simular o Raspberry. Dicas?
+-> se ficar muito difícil, não fazer
 
 
+-> a escolha atende à uma expectativa - Qual é a expectativa? Entao escolho para atender esta expectativa
 
 Orientação 20250325
 
