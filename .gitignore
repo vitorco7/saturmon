@@ -33,8 +33,8 @@ _build/
 latex.out/
 latex.log/
 
-# Ignore generated PDFs (optional, remove this if you want to track PDFs)
-*.pdf
+# # Ignore generated PDFs (optional, remove this if you want to track PDFs)
+# *.pdf
 
 # Ignore VS Code workspace settings (optional)
 .vscode/

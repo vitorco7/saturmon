@@ -1,0 +1,57 @@
+# CPU
+
+When monitoring `cpu.stat` and `cpu.pressure`, here's how to interpret the data:
+
+### `cpu.stat` interpretation:
+
+When you run `cat sys/fs/cgroup/cpu.stat`, you'll see output like:
+```
+usage_usec 2563213
+user_usec 1982324
+system_usec 580889
+nr_periods 12589
+nr_throttled 3254
+throttled_usec 583922
+```
+
+Here's what these values tell you:
+- `usage_usec`: Total CPU time (in microseconds) used by all processes in the cgroup. High values indicate CPU-intensive workloads.
+- `user_usec`: CPU time spent in user mode (application code). If this is high, your application processes are consuming CPU.
+- `system_usec`: CPU time spent in kernel mode (system calls). If this is high, your processes are making many system calls.
+- `nr_periods`: Number of periods that were evaluated for CPU limits.
+- `nr_throttled`: Number of times processes were throttled due to hitting CPU limits. If this number is increasing rapidly, your workload is being constrained by CPU limits.
+- `throttled_usec`: Total time processes were throttled. A high value indicates significant CPU contention.
+
+### `cpu.pressure` interpretation:
+
+The output from `cat sys/fs/cgroup/cpu.pressure` will look like:
+```
+some avg10=0.22 avg60=0.17 avg300=0.12 total=35278
+full avg10=0.15 avg60=0.11 avg300=0.09 total=24156
+```
+
+These metrics indicate CPU contention:
+- `some`: Indicates that at least some tasks are stalled waiting for CPU time
+- `full`: Indicates that all tasks are stalled waiting for CPU time
+
+The averages show percentage of time spent waiting:
+- `avg10`: Average over last 10 seconds (0.22 = 22% of time spent waiting)
+- `avg60`: Average over last 60 seconds
+- `avg300`: Average over last 5 minutes
+- `total`: Total microseconds stalled since boot
+
+### How to use this information:
+
+1. **Detecting heavy processes**:
+   - If `cpu.stat` shows high `usage_usec` values that keep growing faster than other cgroups
+   - If `cpu.pressure` shows high `some` or `full` values (anything above 0.20 or 20% indicates significant pressure)
+
+2. **Understanding the nature of CPU usage**:
+   - High `user_usec` but low `system_usec`: Application code is CPU-intensive
+   - High `system_usec` but lower `user_usec`: Many system calls or kernel operations
+
+3. **Detecting resource constraints**:
+   - Increasing `nr_throttled` and `throttled_usec`: Container is hitting CPU limits
+   - High pressure metrics: Processes are waiting for CPU time regularly
+
+When you see problematic values, you can then check which specific processes are causing the issue by examining the PIDs in `cgroup.procs` and using tools like `ps` or `top` to get more details about those specific processes.
