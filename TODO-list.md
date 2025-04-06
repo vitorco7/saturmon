@@ -17,6 +17,10 @@
 
   p6 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
 
+  p7 - Sugestao - subir um container só com telegraf, configurado para usar o plugin "inputs.docker" para coletar docker metrics para comparar com as métricas dos telegrafs embutidos nos outros containers :
+          Docker metrics
+          [[inputs.docker]]
+            name_override = "container_docker_data"
 
   1. Montar Dash no Grafana com algumas métricas pra observar o comportamento já existente (validar se todos os dados estão idênticos novamente ou se estou monitorando isoladamento/corretamente)
   2. Simular Raspberry -> instalar telegraf e coletar métricas

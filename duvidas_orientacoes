@@ -1,6 +1,12 @@
 Orientação 20250408
 
-Consegui atualizar o cgroups do note do trabalho para a v2
+Consegui atualizar o cgroups do note do trabalho para a v2, permitindo assim rodar meu projeto uniformemente em ambas as máquinas (pessoal e trabalho)
+
+p0 -> preciso analisar com mais calma, mas visto que consegui rodar meu projeto na máquina do trabalho, observei que NÃO tive esse problema de gaps nas medições - minha teoria é que meu desktop possa estar gargalando as medições.
+
+p1 e p2 - Ao invés de continuar lendo sobre quais métricas do cgroups são importantes para escolher quais usar, decidi ver primeiro quais métricas eu consigo a partir de um agente rodando num host real.
+Para isso, botei o Telegraf rodando no notebook do trabalho (ubuntu 20). Problema - decidir qual plugin usar (aparentemente posso usar mais de 1 plugin pra coletar as mesmas métricas. Como escolher? Como não perder muito tempo validando melhor/pior escolha? No momento não tenho uma referência pra validação pra comparar quem é melhor ou pior.)
+Estou analisando um por um por ver que métricas obtenho para ter uma ideia melhor
 
 Orientação 20250401
 
