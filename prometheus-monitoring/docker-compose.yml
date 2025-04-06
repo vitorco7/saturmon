@@ -40,6 +40,27 @@ services:
       retries: 5
       start_period: 90s
 
+  telegraf:
+    container_name: telegraf
+    image: telegraf:latest
+    restart: always
+    user: root
+    volumes:
+        - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+        - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+        - devices_network
+    ports:
+        - "9279:9273"
+    depends_on:
+        - prometheus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s  
+
   # iperf3:
   #   container_name: iperf3_server
   #   image: networkstatic/iperf3
