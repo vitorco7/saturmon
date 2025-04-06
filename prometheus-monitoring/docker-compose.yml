@@ -9,6 +9,11 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     networks:
       - devices_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # command:
+    #   - "--config.file=/etc/prometheus/prometheus.yml"
+    #   - "--web.enable-lifecycle"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9090/-/healthy"]
       interval: 30s

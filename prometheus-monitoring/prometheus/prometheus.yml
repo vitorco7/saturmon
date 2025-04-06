@@ -15,3 +15,8 @@ scrape_configs:
           - "ubuntu_device_3:9273"
           - "alpine_device_4:9273"
           - "alpine_device_5:9273"
+
+  - job_name: "local_host_devices" #Monitor local host devices
+    static_configs:
+      - targets:
+          - "host.docker.internal:9278"
