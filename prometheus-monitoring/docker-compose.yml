@@ -44,14 +44,16 @@ services:
     container_name: telegraf
     image: telegraf:latest
     restart: always
-    user: root
+    user: telegraf:984
+    group_add:
+      - "984"
     volumes:
-        - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
         - /var/run/docker.sock:/var/run/docker.sock
+        - ./telegraf-container-conf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     networks:
         - devices_network
     ports:
-        - "9279:9273"
+        - "9089:9273"
     depends_on:
         - prometheus
     healthcheck:
@@ -83,7 +85,7 @@ services:
     networks:
       - devices_network
     ports:
-      - "9273:9273" # Expose Telegraf metrics endpoint
+      - "9091:9273" # Expose Telegraf metrics endpoint
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
@@ -103,7 +105,7 @@ services:
     networks:
       - devices_network
     ports:
-      - "9274:9273"
+      - "9092:9273"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
@@ -123,7 +125,7 @@ services:
     networks:
       - devices_network
     ports:
-      - "9275:9273"
+      - "9093:9273"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
@@ -143,7 +145,7 @@ services:
     networks:
       - devices_network
     ports:
-      - "9276:9273"
+      - "9094:9273"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
@@ -163,7 +165,7 @@ services:
     networks:
       - devices_network
     ports:
-      - "9277:9273"
+      - "9095:9273"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
