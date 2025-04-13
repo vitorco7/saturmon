@@ -7,11 +7,10 @@ scrape_configs:
   #     - targets:
   #         - "prometheus:9090" # Prometheus itself
 
-  # - job_name: "telegraf"
-  #   static_configs:
-  #     - targets:
-  #         - "telegraf:9273"
-
+  - job_name: "localhost_telegraf"
+    static_configs:
+      - targets:
+          - "host.docker.internal:9273"
 
   - job_name: "simulated_devices" # Monitor all simulated devices
     static_configs:
