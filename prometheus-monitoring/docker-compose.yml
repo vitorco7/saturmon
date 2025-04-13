@@ -49,6 +49,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - devices_network
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s  
+
   # telegraf:
   #   container_name: telegraf
   #   image: telegraf:latest
