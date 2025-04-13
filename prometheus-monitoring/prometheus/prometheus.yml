@@ -2,15 +2,15 @@ global:
   scrape_interval: 5s # Scrape every 5 seconds
 
 scrape_configs:
-  - job_name: "prometheus" # Monitor Prometheus itself
-    static_configs:
-      - targets:
-          - "prometheus:9090" # Prometheus itself
+  # - job_name: "prometheus" # Monitor Prometheus itself
+  #   static_configs:
+  #     - targets:
+  #         - "prometheus:9090" # Prometheus itself
 
-  - job_name: "telegraf"
-    static_configs:
-      - targets:
-          - "telegraf:9273"
+  # - job_name: "telegraf"
+  #   static_configs:
+  #     - targets:
+  #         - "telegraf:9273"
 
 
   - job_name: "simulated_devices" # Monitor all simulated devices
@@ -22,7 +22,8 @@ scrape_configs:
           - "alpine_device_4:9273"
           - "alpine_device_5:9273"
 
-  # - job_name: "local_host_devices" #Monitor local host devices
-  #   static_configs:
-  #     - targets:
-  #         - "host.docker.internal:9278"
+  - job_name: 'docker_stats_exporter'
+    metrics_path: /
+    static_configs:
+      - targets:
+          - "docker_stats:9487"
