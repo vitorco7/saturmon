@@ -1,3 +1,7 @@
+Orientação 20250415
+
+Critério geral utilizado para escolher quais métricas usar -> o mais cross-platform possível. Exemplo: se uma métrica é específica para Linux, é descartada.
+
 Orientação 20250408
 
 Consegui atualizar o cgroups do note do trabalho para a v2, permitindo assim rodar meu projeto uniformemente em ambas as máquinas (pessoal e trabalho) -->importante ter uma observação sobre isso na escrita
