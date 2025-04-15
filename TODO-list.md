@@ -2,6 +2,11 @@
 
 ## Métricas e Coleta
 
+Physical device - tenho quais inputs vou usar, agora falta definir quais medidas vou usar
+
+Virtual device - posso escolher varias coisas do cgroups, mas preciso escolher as medidas -> a dica é escolher medidas que façam overlap com o physical device
+
+
 - **Próximos passos:**
   p0 - investigar os gaps nas medições (quem está falhando na coleta do dado? O prometheuis falha na coleta ou o container falha em disponibilizar o dado?)
 
