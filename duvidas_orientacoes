@@ -1,5 +1,51 @@
 Orientação 20250415
 
+Com as métricas físicas escolhidas, tentar obter as métricas mais equivalentes dos cgroups.(otimizar os outputs do prometheus)
+
+Após definidas as métricas virtuais, analisar os dados obtidos no prometheus (otimização)
+
+Fazer o mesmo para os docker metrics
+
+Com os dados organizados, montar o dash no grafana.
+
+disk
+
+physical_disk_free
+physical_disk_total
+physical_disk_inodes_free
+
+cpu
+physical_cpu_usage_idle
+physical_cpu_usage_iowait
+physical_cpu_usage_system
+physical_cpu_usage_user
+
+disk i/o
+physical_diskio_read_bytes
+physical_diskio_write_bytes
+physical_diskio_io_time
+physical_diskio_io_util
+
+memory
+physical_mem_available
+physical_mem_total
+physical_mem_swap_total
+physical_mem_swap_free
+
+network
+physical_net_bytes_recv
+physical_net_bytes_sent
+physical_net_drop_out
+physical_net_drop_in
+physical_net_err_in
+physical_net_err_out
+
+process
+physical_processes_running
+physical_processes_sleeping
+physical_processes_total
+physical_processes_zombies
+
 Critério geral utilizado para escolher quais métricas usar -> o mais cross-platform possível. Exemplo: se uma métrica é específica para Linux, é descartada.
 
 Physical device - tenho quais inputs vou usar, agora falta definir quais medidas vou usar
