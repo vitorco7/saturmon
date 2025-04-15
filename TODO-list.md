@@ -8,11 +8,11 @@ Virtual device - posso escolher varias coisas do cgroups, mas preciso escolher a
 
 
 - **Próximos passos:**
-  p0 - investigar os gaps nas medições (quem está falhando na coleta do dado? O prometheuis falha na coleta ou o container falha em disponibilizar o dado?)
+  p0 - investigar os gaps nas medições (quem está falhando na coleta do dado? O prometheuis falha na coleta ou o container falha em disponibilizar o dado?) --> era o meu pc bugado
 
   p1 - peneirar as métricas do cgroup - quais sao as mais interessantes? pq?
 
-  p2 - Métricas dispositivo real x dispositivo simulado
+  p2 - Métricas dispositivo real x dispositivo simulado --> Métricas docker metrics x dispositivo simulado
 
   p3 - montar o dash do grafana
 
