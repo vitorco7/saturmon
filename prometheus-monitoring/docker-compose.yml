@@ -2,7 +2,6 @@ services:
   prometheus:
     container_name: prometheus
     image: prom/prometheus
-    # restart: always
     ports:
       - "9090:9090"
     volumes:
@@ -11,9 +10,6 @@ services:
       - devices_network
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    # command:
-    #   - "--config.file=/etc/prometheus/prometheus.yml"
-    #   - "--web.enable-lifecycle"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9090/-/healthy"]
       interval: 30s
@@ -24,7 +20,6 @@ services:
   grafana:
     container_name: grafana
     image: grafana/grafana
-    # restart: always
     ports:
       - "3000:3000"
     environment:
@@ -32,7 +27,7 @@ services:
     networks:
       - devices_network
     volumes:
-      - grafana_data:/var/lib/grafana
+      - ./docker-volumes/grafana/grafana_data:/var/lib/grafana
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 45s
@@ -58,29 +53,6 @@ services:
       retries: 3
       start_period: 30s  
 
-  # telegraf:
-  #   container_name: telegraf
-  #   image: telegraf:latest
-    # restart: always
-  #   user: telegraf:984
-  #   group_add:
-  #     - "984"
-  #   volumes:
-  #       - /var/run/docker.sock:/var/run/docker.sock
-  #       - ./telegraf-container-conf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-  #   networks:
-  #       - devices_network
-  #   ports:
-  #       - "9089:9273"
-  #   depends_on:
-  #       - prometheus
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 3
-  #     start_period: 30s  
-
   # iperf3:
   #   container_name: iperf3_server
   #   image: networkstatic/iperf3
@@ -96,7 +68,6 @@ services:
     build:
       dockerfile: ubuntu-dockerfile
       context: .
-    # restart: always
     hostname: device1
     cpus: "0.3"
     mem_limit: "256m"
@@ -116,7 +87,6 @@ services:
     build:
       dockerfile: ubuntu-dockerfile
       context: .
-    # restart: always
     hostname: device2
     cpus: "0.3"
     mem_limit: "512m"
@@ -136,7 +106,6 @@ services:
     build:
       dockerfile: ubuntu-dockerfile
       context: .
-    # restart: always
     hostname: device3
     cpus: "0.4"
     mem_limit: "256m"
@@ -156,7 +125,6 @@ services:
     build:
       dockerfile: alpine-dockerfile
       context: .
-    # restart: always
     hostname: device4
     cpus: "0.3"
     mem_limit: "256m"
@@ -176,7 +144,6 @@ services:
     build:
       dockerfile: alpine-dockerfile
       context: .
-    # restart: always
     hostname: device5
     cpus: "0.3"
     mem_limit: "512m"
@@ -190,10 +157,6 @@ services:
       timeout: 5s
       retries: 2
 
-
 networks:
   devices_network:
     driver: bridge
-
-volumes:
-  grafana_data:
