@@ -1,10 +1,10 @@
 Orientação 20250415
 
-Com as métricas físicas escolhidas, tentar obter as métricas mais equivalentes dos cgroups.(otimizar os outputs do prometheus)
+OK -> Com as métricas físicas escolhidas, tentar obter as métricas mais equivalentes dos cgroups.(otimizar os outputs do prometheus)
 
-Após definidas as métricas virtuais, analisar os dados obtidos no prometheus (otimização)
+OK -> Após definidas as métricas virtuais, analisar os dados obtidos no prometheus (otimização)
 
-Fazer o mesmo para os docker metrics
+OK -> Fazer o mesmo para os docker metrics
 
 Com os dados organizados, montar o dash no grafana.
 
