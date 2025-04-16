@@ -7,6 +7,8 @@ OK -> Após definidas as métricas virtuais, analisar os dados obtidos no promet
 OK -> Fazer o mesmo para os docker metrics
 
 Com os dados organizados, montar o dash no grafana.
+        - Ajustar Timezone das medidas
+        - Configurar volume do prometheus para persistencia de dados
 
 Com o dash pronto, desenvolver melhor as limitações de hardware
 
