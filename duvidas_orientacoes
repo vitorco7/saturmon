@@ -8,6 +8,8 @@ Fazer o mesmo para os docker metrics
 
 Com os dados organizados, montar o dash no grafana.
 
+Com o dash pronto, desenvolver melhor as limitações de hardware
+
 disk
 
 physical_disk_free
@@ -27,10 +29,10 @@ physical_diskio_io_time
 physical_diskio_io_util
 
 memory
-physical_mem_available
+physical_mem_free
 physical_mem_total
-physical_mem_swap_total
 physical_mem_swap_free
+physical_mem_swap_total
 
 network
 physical_net_bytes_recv

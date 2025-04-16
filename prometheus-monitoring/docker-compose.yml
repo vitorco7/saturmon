@@ -90,7 +90,7 @@ services:
   #   networks:
   #     - devices_network
 
-  simulated_device_1:
+  virtual_device_1:
     container_name: ubuntu_device_1
     image: ubuntu_device
     build:
@@ -103,14 +103,14 @@ services:
     networks:
       - devices_network
     ports:
-      - "9091:9273" # Expose Telegraf metrics endpoint
+      - "9091:9273"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
       timeout: 5s
       retries: 2
 
-  simulated_device_2:
+  virtual_device_2:
     container_name: ubuntu_device_2
     image: ubuntu_device
     build:
@@ -130,7 +130,7 @@ services:
       timeout: 5s
       retries: 2
 
-  simulated_device_3:
+  virtual_device_3:
     container_name: ubuntu_device_3
     image: ubuntu_device
     build:
@@ -150,7 +150,7 @@ services:
       timeout: 5s
       retries: 2
       
-  simulated_device_4:
+  virtual_device_4:
     container_name: alpine_device_4
     image: alpine_device
     build:
@@ -170,7 +170,7 @@ services:
       timeout: 5s
       retries: 2
       
-  simulated_device_5:
+  virtual_device_5:
     container_name: alpine_device_5
     image: alpine_device
     build:

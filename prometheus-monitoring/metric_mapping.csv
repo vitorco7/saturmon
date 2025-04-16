@@ -1,0 +1,29 @@
+Physical Host,Virtual Host (cgroups v2),Notes
+CPU,,
+usage_idle,Calculate via(1 - (user_usec + system_usec)/total_time),Calculate via(1 - (user_usec + system_usec)/total_time)
+usage_iowait,io.stat→wait_usec,I/O delay at cgroup level
+usage_system,cpu.stat→system_usec,Kernel-space CPU time
+usage_user,cpu.stat→user_usec,User-space CPU time
+,,
+MEMORY,,
+free,memory.max-memory.current,Requires calculation
+total,memory.max,Hard limit set for container
+swap_total,memory.swap.max,Swap allowance
+swap_free,memory.swap.max-memory.swap.current,
+,,
+DISK,,
+free,N/A,Requires host-level monitoring
+total,N/A,Requires host-level monitoring
+inodes_free,N/A,Requires host-level monitoring
+,,
+DISK IO,,
+read_bytes,io.stat→rbytes,Per-device basis
+write_bytes,io.stat→wbytes,Per-device basis
+io_time,io.stat→time,Milliseconds spent on I/O
+io_util,Derived:(time / interval_ms) * 100,Requires calculation fromtimefield
+,,
+PROCESS,,
+running,Requiresprocstat+ PID namespace,Not cgroup-native
+sleeping,Requiresprocstat+ PID namespace,Not cgroup-native
+total,Requiresprocstat+ PID namespace,Not cgroup-native
+zombies,Requiresprocstat+ PID namespace,Not cgroup-native
