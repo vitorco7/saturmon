@@ -16,11 +16,12 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9090/-/healthy"]
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:9090/-/healthy"]
       interval: 30s
       timeout: 10s
-      retries: 3
-      start_period: 60s
+      retries: 5
+      start_period: 120s
+
 
   grafana:
     container_name: grafana
@@ -56,11 +57,12 @@ services:
     depends_on:
       - prometheus
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9487/metrics"]
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9487/metrics"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s  
+      start_period: 60s
+
 
   # iperf3:
   #   container_name: iperf3_server
