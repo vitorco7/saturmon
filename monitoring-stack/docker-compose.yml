@@ -5,7 +5,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./volumes/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./volumes/prometheus/metrics:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
@@ -36,9 +36,9 @@ services:
       - devices_network
     volumes:
       - ./volumes/grafana/config/:/var/lib/grafana
-      - ./volumes/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./volumes/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./volumes/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./configs/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./configs/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
     # profiles: ["all"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]

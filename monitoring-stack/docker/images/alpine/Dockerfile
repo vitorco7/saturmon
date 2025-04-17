@@ -14,9 +14,9 @@ RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-1.29.4_linux_am
     mkdir -p /etc/telegraf
 
 # Copy configuration files
-COPY virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
+COPY configs/telegraf/virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
 
-COPY virtual-devices/load_simulator.sh /usr/local/bin/load_simulator.sh
+COPY scripts/load_simulator.sh /usr/local/bin/load_simulator.sh
 
 RUN chmod +x /usr/local/bin/load_simulator.sh
 

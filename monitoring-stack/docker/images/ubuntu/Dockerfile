@@ -10,9 +10,9 @@ RUN echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] h
 
 RUN apt update && apt install -y telegraf
 
-COPY virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
+COPY configs/telegraf/virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
 
-COPY virtual-devices/load_simulator.sh /usr/local/bin/load_simulator.sh
+COPY scripts/load_simulator.sh /usr/local/bin/load_simulator.sh
 
 RUN chmod +x /usr/local/bin/load_simulator.sh
 
