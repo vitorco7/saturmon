@@ -23,3 +23,6 @@ docker inspect <container_name> | jq '.[].State.Health'
 
 # --build --force-recreate ensures fresh image
 docker-compose down && docker-compose up --build --force-recreate
+
+#inspect prometheus metrics size
+du -sh ./volumes/prometheus/metrics
