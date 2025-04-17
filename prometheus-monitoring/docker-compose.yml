@@ -5,7 +5,12 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./volumes/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./volumes/prometheus/metrics:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=15d"
     networks:
       - devices_network
     extra_hosts:
@@ -17,23 +22,23 @@ services:
       retries: 3
       start_period: 60s
 
-  grafana:
-    container_name: grafana
-    image: grafana/grafana
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    networks:
-      - devices_network
-    volumes:
-      - ./docker-volumes/grafana/grafana_data:/var/lib/grafana
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-      interval: 45s
-      timeout: 15s
-      retries: 5
-      start_period: 90s
+  # grafana:
+  #   container_name: grafana
+  #   image: grafana/grafana
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - GF_SECURITY_ADMIN_PASSWORD=admin
+  #   networks:
+  #     - devices_network
+  #   volumes:
+  #     - ./volumes/grafana/config/:/var/lib/grafana
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+  #     interval: 45s
+  #     timeout: 15s
+  #     retries: 5
+  #     start_period: 90s
 
   docker-stats-exporter:
     image: wywywywy/docker_stats_exporter
