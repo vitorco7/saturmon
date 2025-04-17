@@ -14,12 +14,14 @@ RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-1.29.4_linux_am
     mkdir -p /etc/telegraf
 
 # Copy configuration files
-COPY telegraf.conf /etc/telegraf/telegraf.conf
-COPY user-load-simulator-ubuntu.sh /usr/local/bin/user-load-simulator.sh
-RUN chmod +x /usr/local/bin/user-load-simulator.sh
+COPY virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
+
+COPY virtual-devices/load_simulator.sh /usr/local/bin/load_simulator.sh
+
+RUN chmod +x /usr/local/bin/load_simulator.sh
 
 # Set working directory
 WORKDIR /
 
 # Run the load simulator and Telegraf
-CMD ["/bin/bash", "-c", "/usr/local/bin/user-load-simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]
+CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]

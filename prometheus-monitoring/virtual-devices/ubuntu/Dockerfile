@@ -10,13 +10,12 @@ RUN echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] h
 
 RUN apt update && apt install -y telegraf
 
-# RUN apt install -y wget stress-ng telegraf
+COPY virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
 
-COPY telegraf.conf /etc/telegraf/telegraf.conf
+COPY virtual-devices/load_simulator.sh /usr/local/bin/load_simulator.sh
 
-COPY user-load-simulator-ubuntu.sh /usr/local/bin/user-load-simulator-ubuntu.sh
-RUN chmod +x /usr/local/bin/user-load-simulator-ubuntu.sh
+RUN chmod +x /usr/local/bin/load_simulator.sh
 
 WORKDIR /
 
-CMD ["/bin/bash", "-c", "/usr/local/bin/user-load-simulator-ubuntu.sh & telegraf --config /etc/telegraf/telegraf.conf"]
+CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]

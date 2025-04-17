@@ -15,11 +15,11 @@ scrape_configs:
   - job_name: "virtual_hosts" # Monitor all simulated devices
     static_configs:
       - targets:
-          - "ubuntu_device_1:9273"
-          - "ubuntu_device_2:9273"
-          - "ubuntu_device_3:9273"
-          - "alpine_device_4:9273"
-          - "alpine_device_5:9273"
+          - "device_1:9273"
+          - "device_2:9273"
+          - "device_3:9273"
+          - "device_4:9273"
+          - "device_5:9273"
 
   - job_name: 'docker_stats_exporter'
     metrics_path: /

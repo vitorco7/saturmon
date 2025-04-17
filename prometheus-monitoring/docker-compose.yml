@@ -15,6 +15,7 @@ services:
       - devices_network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    # profiles: ["all"]
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:9090/-/healthy"]
       interval: 30s
@@ -38,6 +39,7 @@ services:
       - ./volumes/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./volumes/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./volumes/grafana/dashboards:/var/lib/grafana/dashboards
+    # profiles: ["all"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 45s
@@ -56,6 +58,7 @@ services:
       - devices_network
     depends_on:
       - prometheus
+    # profiles: ["all"]
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:9487/metrics"]
       interval: 30s
@@ -74,10 +77,10 @@ services:
   #     - devices_network
 
   virtual_device_1:
-    container_name: ubuntu_device_1
-    image: ubuntu_device
+    container_name: device_1
+    image: ${UBUNTU_DEVICE_IMG}
     build:
-      dockerfile: ubuntu-dockerfile
+      dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
     hostname: device1
     cpus: "0.3"
@@ -86,6 +89,7 @@ services:
       - devices_network
     ports:
       - "9091:9273"
+    # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
@@ -93,10 +97,10 @@ services:
       retries: 2
 
   virtual_device_2:
-    container_name: ubuntu_device_2
-    image: ubuntu_device
+    container_name: device_2
+    image: ${UBUNTU_DEVICE_IMG}
     build:
-      dockerfile: ubuntu-dockerfile
+      dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
     hostname: device2
     cpus: "0.3"
@@ -105,6 +109,7 @@ services:
       - devices_network
     ports:
       - "9092:9273"
+    # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
@@ -112,10 +117,10 @@ services:
       retries: 2
 
   virtual_device_3:
-    container_name: ubuntu_device_3
-    image: ubuntu_device
+    container_name: device_3
+    image: ${UBUNTU_DEVICE_IMG}
     build:
-      dockerfile: ubuntu-dockerfile
+      dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
     hostname: device3
     cpus: "0.4"
@@ -124,6 +129,7 @@ services:
       - devices_network
     ports:
       - "9093:9273"
+    # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
@@ -131,10 +137,10 @@ services:
       retries: 2
       
   virtual_device_4:
-    container_name: alpine_device_4
-    image: alpine_device
+    container_name: device_4
+    image: ${ALPINE_DEVICE_IMG}
     build:
-      dockerfile: alpine-dockerfile
+      dockerfile: ${ALPINE_DOCKERFILE}
       context: .
     hostname: device4
     cpus: "0.3"
@@ -143,6 +149,7 @@ services:
       - devices_network
     ports:
       - "9094:9273"
+    # profiles: ["all", "alpine"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
@@ -150,10 +157,10 @@ services:
       retries: 2
       
   virtual_device_5:
-    container_name: alpine_device_5
-    image: alpine_device
+    container_name: device_5
+    image: ${ALPINE_DEVICE_IMG}
     build:
-      dockerfile: alpine-dockerfile
+      dockerfile: ${ALPINE_DOCKERFILE}
       context: .
     hostname: device5
     cpus: "0.3"
@@ -162,6 +169,7 @@ services:
       - devices_network
     ports:
       - "9095:9273"
+    # profiles: ["all", "alpine"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 20s
