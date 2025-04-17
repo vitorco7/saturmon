@@ -20,3 +20,6 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 
 # Inspect detailed health status
 docker inspect <container_name> | jq '.[].State.Health'
+
+# --build --force-recreate ensures fresh image
+docker-compose down && docker-compose up --build --force-recreate
