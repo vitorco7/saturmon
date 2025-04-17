@@ -22,23 +22,27 @@ services:
       retries: 3
       start_period: 60s
 
-  # grafana:
-  #   container_name: grafana
-  #   image: grafana/grafana
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - GF_SECURITY_ADMIN_PASSWORD=admin
-  #   networks:
-  #     - devices_network
-  #   volumes:
-  #     - ./volumes/grafana/config/:/var/lib/grafana
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-  #     interval: 45s
-  #     timeout: 15s
-  #     retries: 5
-  #     start_period: 90s
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    user: "472"
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - devices_network
+    volumes:
+      - ./volumes/grafana/config/:/var/lib/grafana
+      - ./volumes/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./volumes/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./volumes/grafana/dashboards:/var/lib/grafana/dashboards
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 45s
+      timeout: 15s
+      retries: 5
+      start_period: 90s
 
   docker-stats-exporter:
     image: wywywywy/docker_stats_exporter

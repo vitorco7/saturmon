@@ -1,5 +1,6 @@
 #Ignore persistant data until I find a better storage sync solutio
 prometheus-monitoring/volumes/prometheus/metrics
+prometheus-monitoring/volumes/grafana/config
 
 # Ignore LaTeX auxiliary and log files
 *.aux
