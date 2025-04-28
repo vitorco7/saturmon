@@ -31,15 +31,15 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - ${GF_SECURITY_ADMIN_PASSWORD}
-      - ${GF_PATHS_PROVISIONING}
+    - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
+    # - ${GF_PATHS_PROVISIONING}
     networks:
       - devices_network
     volumes:
       - ./volumes/grafana/config/:/var/lib/grafana
-      - ./configs/grafana/provisioning/dashboards:/var/lib/grafana/dashboards
+      # - ./volumes/grafana/dashboards:/var/lib/grafana/dashboards
       - ./configs/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./configs/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      # - ./configs/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
     # profiles: ["all"]
     depends_on:
       prometheus:

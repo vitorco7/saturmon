@@ -1,3 +1,15 @@
+Orientação 20250429
+
+Estou tentando evitar ao máximo configurações via interface, tentando fazer tudo "as code", por questões de aprendizagem, versionamento e robustez.
+Por conta disso, estou tentando usar o Grafana VSCode extension para editar dashboards pelo proprio VSCode. Mas bati num erro:
+Failed to save dashboard
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <title>Error</title> </head> <body> <pre>Payload Too Large</pre> </body> </html>
+
+
+O payload de dashboards muito grandes ultrapassa o limite de tamanho de payload da api do grafana ou extensao do vscode.
+
+Toda e qualquer alteração feita via UI do Grafana é salva no grafana/config/grafana.db, uma base SQLite interna do grafana. Como isso fica num volume, há persistencia nos dados. Mas como são dados de runtime, não consigo versionar no git.
+
 Orientação 20250415
 
 OK -> Com as métricas físicas escolhidas, tentar obter as métricas mais equivalentes dos cgroups.(otimizar os outputs do prometheus)
