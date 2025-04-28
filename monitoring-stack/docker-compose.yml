@@ -31,7 +31,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - ${GF_SECURITY_ADMIN_PASSWORD}
+      - ${GF_PATHS_PROVISIONING}
     networks:
       - devices_network
     volumes:
@@ -40,6 +41,9 @@ services:
       - ./configs/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./configs/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
     # profiles: ["all"]
+    depends_on:
+      prometheus:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 45s
@@ -57,7 +61,8 @@ services:
     networks:
       - devices_network
     depends_on:
-      - prometheus
+      prometheus:
+        condition: service_healthy
     # profiles: ["all"]
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:9487/metrics"]
