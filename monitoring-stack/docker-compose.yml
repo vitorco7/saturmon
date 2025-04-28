@@ -51,9 +51,9 @@ services:
       retries: 5
       start_period: 90s
 
-  docker-stats-exporter:
+  docker_metrics:
     image: wywywywy/docker_stats_exporter
-    container_name: docker_stats
+    container_name: docker_metrics
     ports:
       - "9089:9487"
     volumes:

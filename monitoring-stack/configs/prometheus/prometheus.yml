@@ -9,20 +9,31 @@ scrape_configs:
 
   - job_name: "physical_host"
     static_configs:
-      - targets:
-          - "host.docker.internal:9273"
+      - targets: ["host.docker.internal:9273"]
+        labels:
+          alias: "Host Machine"
 
-  - job_name: "virtual_hosts" # Monitor all simulated devices
+  - job_name: "virtual_hosts"
     static_configs:
-      - targets:
-          - "device_1:9273"
-          - "device_2:9273"
-          - "device_3:9273"
-          - "device_4:9273"
-          - "device_5:9273"
+      - targets: ["device_1:9273"]
+        labels:
+          alias: "Ubuntu 1"
+      - targets: ["device_2:9273"]
+        labels:
+          alias: "Ubuntu 2"
+      - targets: ["device_3:9273"]
+        labels:
+          alias: "Ubuntu 3"
+      - targets: ["device_4:9273"]
+        labels:
+          alias: "Alpine 1"
+      - targets: ["device_5:9273"]
+        labels:
+          alias: "Alpine 2"
 
-  - job_name: 'docker_stats_exporter'
+  - job_name: "docker_metrics"
     metrics_path: /
     static_configs:
-      - targets:
-          - "docker_stats:9487"
+      - targets: ["docker_metrics:9487"]
+        labels:
+          alias: "Docker Metrics"
