@@ -37,7 +37,7 @@ services:
       - devices_network
     volumes:
       - ./volumes/grafana/config/:/var/lib/grafana
-      - ./volumes/grafana/dashboards:/var/lib/grafana/dashboards
+      - ./configs/grafana/provisioning/dashboards:/var/lib/grafana/dashboards
       - ./configs/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./configs/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
     # profiles: ["all"]
