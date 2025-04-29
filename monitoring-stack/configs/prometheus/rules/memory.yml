@@ -1,0 +1,21 @@
+groups:
+- name: memory_normalization
+  interval: 1m
+  rules:
+  - record: memory_current
+    expr: |
+      label_replace(
+        physical_mem_used{job="physical_host"},
+        "type", "physical", "", ""
+      )
+    labels:
+      unit: "bytes"
+
+  - record: memory_current
+    expr: |
+      label_replace(
+        container_cgroup_memory_current{job="virtual_hosts"},
+        "type", "virtual", "", ""
+      )
+    labels:
+      unit: "bytes"

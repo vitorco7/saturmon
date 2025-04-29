@@ -1,6 +1,9 @@
 global:
   scrape_interval: 5s # Scrape every 5 seconds
 
+rule_files:
+  - "rules/*.yml"
+
 scrape_configs:
   # - job_name: "prometheus" # Monitor Prometheus itself
   #   static_configs:
