@@ -1,0 +1,32 @@
+1 - Refatorei completamente todos os coletores
+	Telegraf de dispositivos físicos usando plugins específicos para cada tipo de métrica
+	Telegraf de dispositivos virtuais usando inputs.cgroups (ao inves de .exec)
+	Otimizei o código aplicando filtros
+
+2 - Estudo de comparação de métricas 
+	Quais métricas tinham relação 1:1
+	Quais podem ser adquiridas indiretamente via cálculos ou workarounds
+	Quais não possuem nenhum tipo de equivalencia
+	Levantamento de tabela do metric mapping
+	
+3 - Estudo dos docker volumes
+	Refatoramento de volumes
+	Persistencia dos dados coletados (TSDB do Prometheus) - falta uma solução para armazenamento longo prazo e compartilhamento
+
+
+4 - Estudo do Grafana
+	Persistencia de dados - como funciona o armazenamento? Só armazena dados internos (SQLite)
+	Como importar/exportar/sincronizar/trackear dashboards as code
+	Tentei editar o Grafana diretamente pelo VSCode (Grafana VSCode extension) para tentar editar tudo pela propria IDE, facilitando versionamento. No entanto, AO fazer um teste com um dashboard grande, encontrei o erro http Payload Too Large da API. Nao sei se é da api do grafana ou da propria extensao, mas de qualquer forma passei um tempo tentando debugar, mas acabei desistindo.
+	Descobri que o Dashboard  as code não funcionaria pois mesmo conseguindo importar automaticamente dashboards diretamente pro container do Grafana, qualquer edição seria salva no banco de dados SQLite interno do mesmo (o Grafana tem um banco interno para todas as configurações internas e alterações de datasources e dashboards.
+
+	
+5 - Refatoração total da árvore de arquivos do projeto
+	Paths totalmente reestruturados (faxina geral)
+	
+	
+6 - Visualização
+	Como normalizar/pré-processar os dados para melhor utilização dos mesmos nas visualizações do Grafana? Solução encontrada -> Prometheus Recording Rules
+	
+7 - Scaffolding Dashboard Grafana
+	Estou montando o dashboard usando a UI, salvando e exportando o JSON para salvá-lo no projeto e trackeá-lo

@@ -145,7 +145,7 @@
       "gridPos": {
         "h": 7,
         "w": 4,
-        "x": 12,
+        "x": 4,
         "y": 1
       },
       "id": 5,
@@ -182,6 +182,19 @@
       ],
       "title": "Swap Usage %",
       "type": "gauge"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 7,
+      "panels": [],
+      "title": "Temporal Charts",
+      "type": "row"
     },
     {
       "datasource": {
@@ -251,7 +264,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 9
       },
       "id": 2,
       "interval": "5s",
@@ -367,7 +380,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 9
       },
       "id": 6,
       "interval": "5s",
@@ -425,10 +438,10 @@
         "allowCustomValue": false,
         "current": {
           "text": [
-            "All"
+            "virtual_hosts"
           ],
           "value": [
-            "$__all"
+            "virtual_hosts"
           ]
         },
         "definition": "label_values(up, job)",
@@ -450,11 +463,9 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": [
-            "Host Machine"
-          ],
+          "text": "All",
           "value": [
-            "Host Machine"
+            "$__all"
           ]
         },
         "definition": "label_values({job=~\"$job\"}, alias)",
@@ -483,6 +494,6 @@
   "timezone": "browser",
   "title": "(Draft) Resources Monitoring",
   "uid": "bekb70hhnfh8ga",
-  "version": 31,
+  "version": 34,
   "weekStart": "sunday"
 }

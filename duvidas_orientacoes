@@ -1,5 +1,19 @@
 Orientação 20250429
 
+  p0 - montar o dash do grafana
+
+  p1 - Alarmes e Alertas
+
+  p2 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
+
+  p3(opcional) - estudo dos virtualizadores e tentar implementar o Raspberry + Telegraf (se der certo, segue para Android)
+
+
+dashboard cockpit - deixar os gauges à mostra sempre, e os temporais minimzados
+
+fazer o log do banco do prometheus 1x por dia - quebrar em varios arquivos menores (diarios)
+
+
 Estou tentando evitar ao máximo configurações via interface, tentando fazer tudo "as code", por questões de aprendizagem, versionamento e robustez.
 Por conta disso, estou tentando usar o Grafana VSCode extension para editar dashboards pelo proprio VSCode. Mas bati num erro:
 Failed to save dashboard
