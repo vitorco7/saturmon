@@ -6,7 +6,7 @@ usage_system,cpu.stat→system_usec,Kernel-space CPU time
 usage_user,cpu.stat→user_usec,User-space CPU time
 ,,
 MEMORY,,
-free,memory.max-memory.current,Requires calculation
+current,memory.current,
 total,memory.max,Hard limit set for container
 swap_total,memory.swap.max,Swap allowance
 swap_free,memory.swap.max-memory.swap.current,
