@@ -1,4 +1,4 @@
-#Ignore persistant data until I find a better storage sync solutio
+#Ignore persistant data until I find a better storage sync solution
 monitoring-stack/volumes/prometheus/metrics
 monitoring-stack/volumes/grafana/config
 
@@ -53,3 +53,6 @@ latex.log/
 *.ist
 *.xdy
 *.tdo
+
+
+monitoring-stack/docs/.~lock.metric_mapping.csv#

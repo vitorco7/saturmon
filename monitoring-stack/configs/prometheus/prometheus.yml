@@ -1,5 +1,7 @@
 global:
-  scrape_interval: 5s # Scrape every 5 seconds
+  scrape_interval: 5s       # How often Prometheus scrapes targets
+  evaluation_interval: 5s   # How often Prometheus evaluates rules
+  scrape_timeout: 4s        # Timeout for scraping; keep below scrape_interval
 
 rule_files:
   - "rules/*.yml"
