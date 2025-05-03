@@ -1,0 +1,36 @@
+groups:
+- name: cpu_normalization
+  rules:
+    - record: container_cpu_user_percent
+      expr: rate(container_cgroup_cpu_stat_user_usec{job="virtual_hosts"}[15s]) * 100 / 1000000
+      labels:
+        cpu: "container"
+
+    - record: container_cpu_system_percent
+      expr: rate(container_cgroup_cpu_stat_system_usec{job="virtual_hosts"}[15s]) * 100 / 1000000
+      labels:
+        cpu: "container"
+
+    - record: container_cpu_idle_percent
+      expr: rate(container_cgroup_cpu_idle{job="virtual_hosts"}[15s]) * 100 / 1000000
+      labels:
+        cpu: "container"
+
+    - record: cpu_system_load
+      expr: label_replace(container_cpu_system_percent{job="virtual_hosts"}, "cpu", "container", "", "")
+
+    - record: cpu_system_load
+      expr: label_replace(physical_cpu_usage_system{job="physical_host"}, "cpu", "$1", "cpu", "(.*)")
+
+    - record: cpu_user_load
+      expr: label_replace(container_cpu_user_percent{job="virtual_hosts"}, "cpu", "container", "", "")
+
+    - record: cpu_user_load
+      expr: label_replace(physical_cpu_usage_user{job="physical_host"}, "cpu", "$1", "cpu", "(.*)")
+
+    - record: cpu_idle
+      expr: label_replace(physical_cpu_usage_idle{job="physical_host"}, "cpu", "$1", "cpu", "(.*)")
+
+    - record: cpu_idle
+      expr: label_replace(container_cpu_idle_percent{job="virtual_hosts"}, "cpu", "container", "", "")
+    

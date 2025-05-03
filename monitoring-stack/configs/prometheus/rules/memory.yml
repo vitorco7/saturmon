@@ -1,6 +1,5 @@
 groups:
 - name: memory_normalization
-  interval: 1m
   rules:
   - record: memory_current
     expr: |
