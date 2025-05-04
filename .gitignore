@@ -53,5 +53,3 @@ latex.log/
 *.ist
 *.xdy
 *.tdo
-
-monitoring-stack/docs/.~lock.metric_mapping.csv#

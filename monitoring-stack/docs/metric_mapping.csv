@@ -27,3 +27,5 @@ running,Requiresprocstat+ PID namespace,Not cgroup-native
 sleeping,Requiresprocstat+ PID namespace,Not cgroup-native
 total,Requiresprocstat+ PID namespace,Not cgroup-native
 zombies,Requiresprocstat+ PID namespace,Not cgroup-native
+,,
+faltam,inputs.net,
