@@ -29,3 +29,11 @@ total,Requiresprocstat+ PID namespace,Not cgroup-native
 zombies,Requiresprocstat+ PID namespace,Not cgroup-native
 ,,
 faltam,inputs.net,
+,usage_idle,
+,usage_iowait,
+,io_time,
+,io_util,
+,running,
+,sleeping,
+,total,
+,zombies,
