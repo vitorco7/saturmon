@@ -10,7 +10,6 @@ services:
       - ./volumes/prometheus/metrics:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
-      - '--web.enable-admin-api'
       - "--storage.tsdb.path=/prometheus"
       - "--storage.tsdb.retention.time=15d"
     networks:
