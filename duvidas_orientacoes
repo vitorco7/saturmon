@@ -1,10 +1,28 @@
 Orientação 20250506
 
-Avaliar gráficos apresentados
+Consegui adicionar métricas de rede  e processos aos containers!!!
 
-Seria interessante calcular medias nos gráficos Time Series?
+1 - Atualizei a estratégia de coleta de métricas do Docker: agora estou utilizando o plugin inputs.docker diretamente no telegraf.conf do host. Dessa forma, o Telegraf coleta métricas diretamente do socket do Docker daemon (/var/run/docker.sock), garantindo maior precisão, já que os dados vêm da mesma fonte usada pelo próprio Docker para monitoramento. Com isso, obtenho métricas essenciais como uso de CPU, memória, disco (I/O) e rede. Esses dados podem ser usados para comparações qualitativas com as métricas coletadas por Telegrafs rodando dentro dos containers.
 
-Troquei o serviço para coletar docker metrics -> estou utilizando o plugin inputs.docker no proprio telegraf.conf do meu HOST. Ou seja, o telegraf consegue ler diretamente da fonte de scrapping do proprio docker daemon, sendo bastante fiel ao que o proprio docker me forneceria. Com ele, consigo métricas básicas de cpu, mem, diskio e network que podem ser utilizadas numa comparação qualitativa dos dados fornecidos pelos telegrafs integrados os containers.
+Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais? Quando o objetivo era comparar máquinas físicas versus containers, essa comparação qualitativa era justificável. Porém, ao comparar container versus container, será que essa análise ainda se sustenta? Há valor prático em comparar dispositivos virtuais entre si nesses termos?
+
+
+2 - Avaliar gráficos apresentados
+  2.1 - O quão "feio" é o fato de haver gráficos "Physical Hosts Only"?
+  2.2 - Seria interessante calcular medias nos gráficos Time Series?
+  2.3 - Gauge normal ou Bar Gauge?
+  2.4 - No CPU Time Series - Normal ou Stacked?
+
+p0 - montar o dash do grafana{
+  if (comparações qualitativas container x container) != true{
+    dashboard pronto?
+    }
+  else
+    faltam as comparaçoes
+}
+
+  p2 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
+
 
 Configurar smtp server para envio dos alertas por email
 
