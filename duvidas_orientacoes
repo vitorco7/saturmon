@@ -10,6 +10,9 @@ Configurar smtp server para envio dos alertas por email
 
 Configurar Alertas
 
+--> fazer o log do banco do prometheus 1x por dia - quebrar em varios arquivos menores (diarios)
+
+
 Orientação 20250429
 
   p0 - montar o dash do grafana
