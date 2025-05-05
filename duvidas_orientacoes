@@ -1,7 +1,14 @@
 Orientação 20250506
 
-seria interessante calcular medias nos gráficos Time Series?
+Avaliar gráficos apresentados
 
+Seria interessante calcular medias nos gráficos Time Series?
+
+Troquei o serviço para coletar docker metrics -> estou utilizando o plugin inputs.docker no proprio telegraf.conf do meu HOST. Ou seja, o telegraf consegue ler diretamente da fonte de scrapping do proprio docker daemon, sendo bastante fiel ao que o proprio docker me forneceria. Com ele, consigo métricas básicas de cpu, mem, diskio e network que podem ser utilizadas numa comparação qualitativa dos dados fornecidos pelos telegrafs integrados os containers.
+
+Configurar smtp server para envio dos alertas por email
+
+Configurar Alertas
 
 Orientação 20250429
 
