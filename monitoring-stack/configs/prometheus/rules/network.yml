@@ -2,7 +2,7 @@ groups:
 - name: network_normalization
   rules:
   # Virtual (container) metrics
-  - record: network_bytes_recv
+  - record: net_bytes_recv
     expr: |
       label_replace(
         container_net_bytes_recv{job="virtual_hosts"},
@@ -11,7 +11,7 @@ groups:
     labels:
       unit: "bytes"
 
-  - record: network_bytes_sent
+  - record: net_bytes_sent
     expr: |
       label_replace(
         container_net_bytes_sent{job="virtual_hosts"},
@@ -20,7 +20,7 @@ groups:
     labels:
       unit: "bytes"
 
-  - record: network_packets_recv
+  - record: net_packets_recv
     expr: |
       label_replace(
         container_net_packets_recv{job="virtual_hosts"},
@@ -29,7 +29,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_packets_sent
+  - record: net_packets_sent
     expr: |
       label_replace(
         container_net_packets_sent{job="virtual_hosts"},
@@ -38,7 +38,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_dropped_in
+  - record: net_drop_in
     expr: |
       label_replace(
         container_net_drop_in{job="virtual_hosts"},
@@ -47,7 +47,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_dropped_out
+  - record: net_drop_out
     expr: |
       label_replace(
         container_net_drop_out{job="virtual_hosts"},
@@ -56,7 +56,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_errors_in
+  - record: net_err_in
     expr: |
       label_replace(
         container_net_err_in{job="virtual_hosts"},
@@ -65,7 +65,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_errors_out
+  - record: net_err_out
     expr: |
       label_replace(
         container_net_err_out{job="virtual_hosts"},
@@ -75,7 +75,7 @@ groups:
       unit: "packets"
 
   # Physical metrics
-  - record: network_bytes_recv
+  - record: net_bytes_recv
     expr: |
       label_replace(
         physical_net_bytes_recv{job="physical_host"},
@@ -84,7 +84,7 @@ groups:
     labels:
       unit: "bytes"
 
-  - record: network_bytes_sent
+  - record: net_bytes_sent
     expr: |
       label_replace(
         physical_net_bytes_sent{job="physical_host"},
@@ -93,7 +93,7 @@ groups:
     labels:
       unit: "bytes"
 
-  - record: network_packets_recv
+  - record: net_packets_recv
     expr: |
       label_replace(
         physical_net_packets_recv{job="physical_host"},
@@ -102,7 +102,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_packets_sent
+  - record: net_packets_sent
     expr: |
       label_replace(
         physical_net_packets_sent{job="physical_host"},
@@ -111,7 +111,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_dropped_in
+  - record: net_drop_in
     expr: |
       label_replace(
         physical_net_drop_in{job="physical_host"},
@@ -120,7 +120,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_dropped_out
+  - record: net_drop_out
     expr: |
       label_replace(
         physical_net_drop_out{job="physical_host"},
@@ -129,7 +129,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_errors_in
+  - record: net_err_in
     expr: |
       label_replace(
         physical_net_err_in{job="physical_host"},
@@ -138,7 +138,7 @@ groups:
     labels:
       unit: "packets"
 
-  - record: network_errors_out
+  - record: net_err_out
     expr: |
       label_replace(
         physical_net_err_out{job="physical_host"},
