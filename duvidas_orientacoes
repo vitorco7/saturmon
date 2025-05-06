@@ -12,10 +12,34 @@ Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais
   2.2 - Seria interessante calcular medias nos gráficos Time Series?
   2.3 - Gauge normal ou Bar Gauge?
   2.4 - No CPU Time Series - Normal ou Stacked?
+  2.5 - Definir intervalos padrão de pontos nos gŕaficos (cpu e mem a cada 5s?)
+  2.6 - Validações/Observações:
+      ->CPU
+        -Virtual Hosts não tem Total Load ou Other Load (pois preciso da metrica "free" e containers nao tem. Eu ate poderia calcular mas aí teria de coletar varias outras metricas pra fazer um somatorio)
+        - Bar Gauge ou Gauge normal?
+      ->Mem
+        -Usar apenas o Bar Gauge pra diferenciar visualmente dos Gauges do CPU?
+      ->Disk
+        -Time to Full Disk está meio errático
+        -Disk usage de pizza é uma visualização muito ruim. Trocar por outra? Qual?
+      ->Disk I/O
+        -Ter um disclaimer que os Alpine devices não tem I/O metrics
+        -Gráficos de throughput continuam mostrando dados mesmo depois do disco ter sido unmount.
+      ->Network
+        -Dropped & Error Packets sempre zerado... validar se está correto...
+        -Responsividade para timespans não está muito boa?
+        -Bar Gauges Bugados - barras sempre preenchidas
+        -Responsividade aos timespans?
+        -Virtual Hosts Network Inboun Traffic - dados pobres. Investir em outro simulador de carga? 
+      ->Processes
+      ->Trends Over Time
+        -CPU normal ou stacked? (mesmo problema da falta da métrica "free")
+        -Network - Mesmos problemas da seção Network citados acima
+  2.7 - Validar $__intervals e $__ranges nas queries
 
 p0 - montar o dash do grafana{
   if (comparações qualitativas container x container) != true{
-    dashboard pronto?
+    estrutura dashboard pronta?
     }
   else
     faltam as comparaçoes

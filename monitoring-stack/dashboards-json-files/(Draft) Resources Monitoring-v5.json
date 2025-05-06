@@ -198,7 +198,7 @@
               "refId": "A"
             }
           ],
-          "title": "Total Load",
+          "title": "Total Load - Physical Devices Only",
           "type": "gauge"
         },
         {
@@ -375,7 +375,7 @@
             "h": 9,
             "w": 6,
             "x": 4,
-            "y": 10
+            "y": 56
           },
           "id": 27,
           "interval": "5s",
@@ -405,7 +405,7 @@
               "refId": "A"
             }
           ],
-          "title": "Other Load",
+          "title": "Other Load - Physical Devices Only",
           "type": "gauge"
         },
         {
@@ -444,7 +444,7 @@
             "h": 9,
             "w": 6,
             "x": 10,
-            "y": 10
+            "y": 56
           },
           "id": 12,
           "interval": "5s",
@@ -528,7 +528,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 20
+            "y": 66
           },
           "id": 28,
           "interval": "5s",
@@ -613,7 +613,7 @@
             "h": 8,
             "w": 6,
             "x": 6,
-            "y": 20
+            "y": 66
           },
           "id": 1,
           "interval": "5s",
@@ -689,7 +689,7 @@
             "h": 8,
             "w": 6,
             "x": 12,
-            "y": 20
+            "y": 66
           },
           "id": 29,
           "interval": "5s",
@@ -773,7 +773,7 @@
             "h": 8,
             "w": 6,
             "x": 18,
-            "y": 20
+            "y": 66
           },
           "id": 5,
           "interval": "5s",
@@ -847,7 +847,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 28
+            "y": 74
           },
           "id": 8,
           "interval": "5s",
@@ -1011,7 +1011,7 @@
             "h": 10,
             "w": 10,
             "x": 0,
-            "y": 3602
+            "y": 3
           },
           "id": 14,
           "interval": "30s",
@@ -1069,7 +1069,7 @@
             "h": 10,
             "w": 6,
             "x": 10,
-            "y": 3602
+            "y": 3
           },
           "id": 13,
           "interval": "30s",
@@ -1148,7 +1148,7 @@
             "h": 5,
             "w": 8,
             "x": 16,
-            "y": 3602
+            "y": 3
           },
           "id": 16,
           "interval": "30s",
@@ -1209,7 +1209,7 @@
             "h": 5,
             "w": 8,
             "x": 16,
-            "y": 3688
+            "y": 54
           },
           "id": 17,
           "interval": "15m",
@@ -1284,7 +1284,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 4
+            "y": 93
           },
           "id": 20,
           "options": {
@@ -1347,7 +1347,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 4
+            "y": 93
           },
           "id": 23,
           "options": {
@@ -1419,7 +1419,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 12
+            "y": 101
           },
           "id": 32,
           "options": {
@@ -1495,7 +1495,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 12
+            "y": 101
           },
           "id": 31,
           "options": {
@@ -1612,7 +1612,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 4826
+            "y": 5
           },
           "id": 46,
           "interval": "10s",
@@ -1819,7 +1819,7 @@
             "h": 14,
             "w": 4,
             "x": 0,
-            "y": 4835
+            "y": 14
           },
           "id": 40,
           "options": {
@@ -1895,7 +1895,7 @@
             "h": 14,
             "w": 4,
             "x": 4,
-            "y": 4835
+            "y": 14
           },
           "id": 39,
           "interval": "1m",
@@ -1972,7 +1972,7 @@
             "h": 14,
             "w": 4,
             "x": 8,
-            "y": 4835
+            "y": 14
           },
           "id": 43,
           "interval": "10s",
@@ -2048,7 +2048,7 @@
             "h": 14,
             "w": 4,
             "x": 12,
-            "y": 4835
+            "y": 14
           },
           "id": 45,
           "interval": "10s",
@@ -2109,6 +2109,7 @@
                 "mode": "thresholds"
               },
               "mappings": [],
+              "max": 100,
               "thresholds": {
                 "mode": "percentage",
                 "steps": [
@@ -2133,7 +2134,7 @@
             "h": 14,
             "w": 4,
             "x": 16,
-            "y": 4835
+            "y": 14
           },
           "id": 48,
           "interval": "10s",
@@ -2203,6 +2204,7 @@
                 "mode": "thresholds"
               },
               "mappings": [],
+              "max": 100,
               "thresholds": {
                 "mode": "percentage",
                 "steps": [
@@ -2227,7 +2229,7 @@
             "h": 14,
             "w": 4,
             "x": 20,
-            "y": 4835
+            "y": 14
           },
           "id": 47,
           "interval": "10s",
@@ -2334,7 +2336,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 3605
+            "y": 52
           },
           "id": 35,
           "options": {
@@ -2594,7 +2596,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 3607
+            "y": 54
           },
           "id": 10,
           "interval": "5s",
@@ -2725,7 +2727,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 3616
+            "y": 63
           },
           "id": 24,
           "interval": "5s",
@@ -2860,7 +2862,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 3625
+            "y": 72
           },
           "id": 2,
           "interval": "5s",
@@ -2976,7 +2978,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 3625
+            "y": 72
           },
           "id": 6,
           "interval": "5s",
@@ -3084,7 +3086,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 3634
+            "y": 81
           },
           "id": 18,
           "interval": "15s",
@@ -3174,10 +3176,10 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 3634
+            "y": 81
           },
           "id": 19,
-          "interval": "5s",
+          "interval": "1m",
           "options": {
             "legend": {
               "calcs": [],
@@ -3195,10 +3197,13 @@
           "targets": [
             {
               "editorMode": "code",
-              "expr": "rate(diskio_read{job=~\"$job\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"}[5m])\n",
+              "exemplar": false,
+              "expr": "rate(diskio_read{job=~\"$job\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"}[$__interval])",
+              "format": "time_series",
+              "instant": false,
               "legendFormat": "{{alias}}-{{disk_partition}}-Read",
               "range": true,
-              "refId": "A"
+              "refId": "Read"
             },
             {
               "datasource": {
@@ -3206,11 +3211,11 @@
                 "uid": "PBFA97CFB590B2093"
               },
               "editorMode": "code",
-              "expr": "rate(diskio_write{job=~\"$job\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"}[5m])\n",
+              "expr": "rate(diskio_write{job=~\"$job\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"}[$__interval])\n",
               "hide": false,
               "legendFormat": "{{alias}}-{{disk_partition}}-Write",
               "range": true,
-              "refId": "B"
+              "refId": "Write"
             }
           ],
           "title": "Disk Read/Write Over Time",
@@ -3277,7 +3282,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 3643
+            "y": 90
           },
           "id": 21,
           "options": {
@@ -3369,7 +3374,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 3643
+            "y": 90
           },
           "id": 34,
           "options": {
@@ -3509,7 +3514,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 3651
+            "y": 98
           },
           "id": 38,
           "options": {
@@ -3610,7 +3615,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 3651
+            "y": 98
           },
           "id": 42,
           "interval": "2m",
@@ -3719,7 +3724,7 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 3660
+            "y": 107
           },
           "id": 41,
           "interval": "10s",
@@ -3823,7 +3828,7 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 3660
+            "y": 107
           },
           "id": 44,
           "interval": "10s",
@@ -3905,9 +3910,7 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": [
-            "All"
-          ],
+          "text": "All",
           "value": [
             "$__all"
           ]
@@ -3999,7 +4002,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -4013,6 +4016,6 @@
   "timezone": "browser",
   "title": "(Draft) Resources Monitoring",
   "uid": "bekb70hhnfh8ga",
-  "version": 98,
+  "version": 104,
   "weekStart": "sunday"
 }
