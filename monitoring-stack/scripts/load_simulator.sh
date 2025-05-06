@@ -1,7 +1,7 @@
 #!/bin/bash
 
 timestamp() {
-    date --date='TZ="America/Sao_Paulo" now' +"[%Y-%m-%d %H:%M:%S]"
+    date +"[%Y-%m-%d %H:%M:%S]"
 }
 
 while true; do

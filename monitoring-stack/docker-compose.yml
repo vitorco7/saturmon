@@ -8,6 +8,8 @@ services:
       - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./configs/prometheus/rules/:/etc/prometheus/rules/:ro
       - ./volumes/prometheus/metrics:/prometheus
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -46,6 +48,8 @@ services:
     volumes:
       - ./volumes/grafana/config/:/var/lib/grafana
       - ./configs/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     # profiles: ["all"]
     depends_on:
       prometheus:
@@ -68,6 +72,9 @@ services:
     mem_limit: "884m"
     networks:
       - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - "9091:9273"
     # profiles: ["all", "ubuntu"]
@@ -88,6 +95,9 @@ services:
     mem_limit: "768m"
     networks:
       - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - "9092:9273"
     # profiles: ["all", "ubuntu"]
@@ -108,6 +118,9 @@ services:
     mem_limit: "680MB"
     networks:
       - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - "9093:9273"
     # profiles: ["all", "ubuntu"]
@@ -128,6 +141,9 @@ services:
     mem_limit: "721m"
     networks:
       - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - "9094:9273"
     # profiles: ["all", "alpine"]
@@ -148,6 +164,9 @@ services:
     mem_limit: "768m"
     networks:
       - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - "9095:9273"
     # profiles: ["all", "alpine"]
