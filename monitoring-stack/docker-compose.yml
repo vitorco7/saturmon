@@ -64,8 +64,8 @@ services:
       dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
     hostname: device1
-    cpus: "0.3"
-    mem_limit: "256m"
+    cpus: "0.5"
+    mem_limit: "884m"
     networks:
       - devices_network
     ports:
@@ -73,9 +73,9 @@ services:
     # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 20s
-      timeout: 5s
-      retries: 2
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   virtual_device_2:
     container_name: device_2
@@ -84,8 +84,8 @@ services:
       dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
     hostname: device2
-    cpus: "0.3"
-    mem_limit: "512m"
+    cpus: "0.6"
+    mem_limit: "768m"
     networks:
       - devices_network
     ports:
@@ -93,9 +93,9 @@ services:
     # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 20s
-      timeout: 5s
-      retries: 2
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   virtual_device_3:
     container_name: device_3
@@ -104,8 +104,8 @@ services:
       dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
     hostname: device3
-    cpus: "0.4"
-    mem_limit: "256m"
+    cpus: "0.7"
+    mem_limit: "680MB"
     networks:
       - devices_network
     ports:
@@ -113,9 +113,9 @@ services:
     # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 20s
-      timeout: 5s
-      retries: 2
+      interval: 30s
+      timeout: 10s
+      retries: 3
       
   virtual_device_4:
     container_name: device_4
@@ -124,8 +124,8 @@ services:
       dockerfile: ${ALPINE_DOCKERFILE}
       context: .
     hostname: device4
-    cpus: "0.3"
-    mem_limit: "256m"
+    cpus: "0.7"
+    mem_limit: "721m"
     networks:
       - devices_network
     ports:
@@ -133,9 +133,9 @@ services:
     # profiles: ["all", "alpine"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 20s
-      timeout: 5s
-      retries: 2
+      interval: 30s
+      timeout: 10s
+      retries: 3
       
   virtual_device_5:
     container_name: device_5
@@ -144,8 +144,8 @@ services:
       dockerfile: ${ALPINE_DOCKERFILE}
       context: .
     hostname: device5
-    cpus: "0.3"
-    mem_limit: "512m"
+    cpus: "0.6"
+    mem_limit: "768m"
     networks:
       - devices_network
     ports:
@@ -153,9 +153,9 @@ services:
     # profiles: ["all", "alpine"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 20s
-      timeout: 5s
-      retries: 2
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   devices_network:

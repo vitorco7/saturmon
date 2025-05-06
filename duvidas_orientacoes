@@ -21,15 +21,16 @@ p0 - montar o dash do grafana{
     faltam as comparaçoes
 }
 
+3 - Estou com dificuldadas para entender o sincronismo entre as marcações de tempo obtidas nos testes (docker logs) e os pontos nos gráficos.
+
   p2 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
 
-
+----TO DO----
+{
 Configurar smtp server para envio dos alertas por email
-
 Configurar Alertas
-
 --> fazer o log do banco do prometheus 1x por dia - quebrar em varios arquivos menores (diarios)
-
+}
 
 Orientação 20250429
 

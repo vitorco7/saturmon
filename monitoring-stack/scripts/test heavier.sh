@@ -1,7 +1,7 @@
 #!/bin/bash
 
 timestamp() {
-    date --date='TZ="America/Sao_Paulo" now' +"[%Y-%m-%d %H:%M:%S]"
+    date +"[%Y-%m-%d %H:%M:%S]"
 }
 
 while true; do
@@ -13,80 +13,32 @@ while true; do
 
     #### Block 1: Serial Stress Tests ####
 
-    # 1. CPU Tests
-    echo "$(timestamp) [INFO] === Starting CPU Tests ==="
-    
-    # CPU Test
+    # 1. CPU Test
     cpu_workers=$((RANDOM % 3 + 2))   # 2 or 3 workers for moderate load
     echo "$(timestamp) [INFO] [CPU] Workers: $cpu_workers, Duration: $stress_time"
     stress-ng --cpu "$cpu_workers" --timeout "$stress_time"
-    
-    # CPU Cache Stress
-    cpu_cache_workers=$((RANDOM % 3 + 2))
-    echo "$(timestamp) [INFO] [CPU Cache] Workers: $cpu_cache_workers, Duration: $stress_time"
-    stress-ng --cpu-cache "$cpu_cache_workers" --timeout "$stress_time"
-    
-    # CPU Floating Point Stress
-    cpu_float_workers=$((RANDOM % 3 + 2))
-    echo "$(timestamp) [INFO] [CPU Float] Workers: $cpu_float_workers, Duration: $stress_time"
-    stress-ng --cpu-float "$cpu_float_workers" --timeout "$stress_time"
-    
-    # CPU Pipe Stress
-    cpu_pipe_workers=$((RANDOM % 3 + 2))
-    echo "$(timestamp) [INFO] [CPU Pipe] Workers: $cpu_pipe_workers, Duration: $stress_time"
-    stress-ng --cpu-pipe "$cpu_pipe_workers" --timeout "$stress_time"
-    
-    echo "$(timestamp) [INFO] === Completed CPU Tests ==="
 
-    # 2. Memory Tests
-    echo "$(timestamp) [INFO] === Starting Memory Tests ==="
-    
-    # Memory Test
+    # 2. Memory Test
     vm_workers=$((RANDOM % 2 + 1))   # 1 or 2 workers for moderate load
     vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker (25% increase)
     echo "$(timestamp) [INFO] [Memory] Workers: $vm_workers, Bytes per worker: $vm_bytes, Duration: $stress_time"
     stress-ng --vm "$vm_workers" --vm-bytes "$vm_bytes" --timeout "$stress_time"
 
-    echo "$(timestamp) [INFO] === Completed Memory Tests ==="
-
-    # 3. Disk I/O Tests
-    echo "$(timestamp) [INFO] === Starting Disk I/O Tests ==="
-    
-    # Disk I/O Test
+    # 3. Disk I/O Test
     hdd_workers=1
     hdd_bytes=$((RANDOM % 50 + 100))M  # Disk I/O size between 100MB to 150MB
     echo "$(timestamp) [INFO] [Disk I/O] Workers: $hdd_workers, Bytes: $hdd_bytes, Duration: $stress_time"
     stress-ng --hdd "$hdd_workers" --hdd-bytes "$hdd_bytes" --timeout "$stress_time"
 
-    # Random Write Stress
-    echo "$(timestamp) [INFO] [Disk I/O Random Write] Duration: $stress_time"
-    stress-ng --hdd 1 --hdd-opts randwrite --timeout "$stress_time"
-
-    # Disk Bandwidth Stress
-    echo "$(timestamp) [INFO] [Disk Bandwidth] Duration: $stress_time"
-    stress-ng --hdd 1 --hdd-opts bandwidth --timeout "$stress_time"
-
-    echo "$(timestamp) [INFO] === Completed Disk I/O Tests ==="
-
-    # 4. Network Tests
-    echo "$(timestamp) [INFO] === Starting Network Tests ==="
-    
-    # Network Test
+    # 4. Network Test
     net_workers=2   # Increase network load by using 2 workers
     echo "$(timestamp) [INFO] [Network] Workers: $net_workers, Duration: $stress_time"
     stress-ng --sock "$net_workers" --timeout "$stress_time"
 
-    echo "$(timestamp) [INFO] === Completed Network Tests ==="
-
-    # 5. System Tests
-    echo "$(timestamp) [INFO] === Starting System Tests ==="
-    
-    # System Test (e.g., fork)
+    # 5. System Test (e.g., fork)
     system_workers=2   # Increase system load by using 2 workers
     echo "$(timestamp) [INFO] [System] 'Fork' workers: $system_workers, Duration: $stress_time"
     stress-ng --fork "$system_workers" --timeout "$stress_time"
-
-    echo "$(timestamp) [INFO] === Completed System Tests ==="
 
     echo "$(timestamp) [INFO] === Completed Serial Tests, sleeping for $sleep_time seconds ==="
     sleep "$sleep_time"
@@ -114,13 +66,6 @@ while true; do
     stress-ng --hdd 1 --hdd-bytes "$hdd_bytes" --timeout "$stress_time" &
     stress-ng --sock "$net_workers" --timeout "$stress_time" &
     stress-ng --fork "$system_workers" --timeout "$stress_time" &
-
-    # Parallel block with additional tests
-    stress-ng --cpu-cache "$cpu_cache_workers" --timeout "$stress_time" &
-    stress-ng --cpu-float "$cpu_float_workers" --timeout "$stress_time" &
-    stress-ng --cpu-pipe "$cpu_pipe_workers" --timeout "$stress_time" &
-    stress-ng --hdd 1 --hdd-opts randwrite --timeout "$stress_time" &
-    stress-ng --hdd 1 --hdd-opts bandwidth --timeout "$stress_time" &
 
     wait
     echo "$(timestamp) [INFO] === Completed Parallel Tests, sleeping for $sleep_time seconds ==="
