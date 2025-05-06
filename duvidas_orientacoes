@@ -23,14 +23,14 @@ Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais
         -Time to Full Disk está meio errático
         -Disk usage de pizza é uma visualização muito ruim. Trocar por outra? Qual?
       ->Disk I/O
-        -Ter um disclaimer que os Alpine devices não tem I/O metrics
-        -Gráficos de throughput continuam mostrando dados mesmo depois do disco ter sido unmount.
+        #-Ter um disclaimer que os Alpine devices não tem I/O metrics - Adicionado um comentário no row
+        #-Gráficos de throughput continuam mostrando dados mesmo depois do disco ter sido unmount.-> Eles somem depois que passa a janela de tempo (ele mantém o last value quando para de vir dados mas ainda está dentro do timespan)
       ->Network
         -Dropped & Error Packets sempre zerado... validar se está correto...
         -Responsividade para timespans não está muito boa?
         -Bar Gauges Bugados - barras sempre preenchidas
         -Responsividade aos timespans?
-        -Virtual Hosts Network Inboun Traffic - dados pobres. Investir em outro simulador de carga? 
+        -Virtual Hosts Network Inbound Traffic - dados pobres. Investir em outro simulador de carga? 
       ->Processes
       ->Trends Over Time
         -CPU normal ou stacked? (mesmo problema da falta da métrica "free")
