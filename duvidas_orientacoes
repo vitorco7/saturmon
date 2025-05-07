@@ -2,17 +2,18 @@ Orientação 20250506
 
 Consegui adicionar métricas de rede  e processos aos containers!!!
 
-1 - Atualizei a estratégia de coleta de métricas do Docker: agora estou utilizando o plugin inputs.docker diretamente no telegraf.conf do host. Dessa forma, o Telegraf coleta métricas diretamente do socket do Docker daemon (/var/run/docker.sock), garantindo maior precisão, já que os dados vêm da mesma fonte usada pelo próprio Docker para monitoramento. Com isso, obtenho métricas essenciais como uso de CPU, memória, disco (I/O) e rede. Esses dados podem ser usados para comparações qualitativas com as métricas coletadas por Telegrafs rodando dentro dos containers.
+{1 - Atualizei a estratégia de coleta de métricas do Docker: agora estou utilizando o plugin inputs.docker diretamente no telegraf.conf do host. Dessa forma, o Telegraf coleta métricas diretamente do socket do Docker daemon (/var/run/docker.sock), garantindo maior precisão, já que os dados vêm da mesma fonte usada pelo próprio Docker para monitoramento. Com isso, obtenho métricas essenciais como uso de CPU, memória, disco (I/O) e rede. Esses dados podem ser usados para comparações qualitativas com as métricas coletadas por Telegrafs rodando dentro dos containers.
 
 Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais? Quando o objetivo era comparar máquinas físicas versus containers, essa comparação qualitativa era justificável. Porém, ao comparar container versus container, será que essa análise ainda se sustenta? Há valor prático em comparar dispositivos virtuais entre si nesses termos?
 
-
+--> Realmente não faz sentido, logo não é necessário fazer esse levantamento.
+}
 2 - Avaliar gráficos apresentados
   #2.1 - O quão "feio" é o fato de haver gráficos "Physical Hosts Only"? - NAO, TUDO BEM
-  #2.2 - Seria interessante calcular medias nos gráficos Time Series? Nao tem necessidade, pois ja temos muitos dados
+  #2.2 - Seria interessante calcular medias nos gráficos Time Series? Nao tem necessidade, pois ja temos muitos dados, poderia gerar poluição visual
   #2.3 - Gauge normal ou Bar Gauge? Gauge Normal
   #2.4 - No CPU Time Series - Normal ou Stacked? Normal
-  #2.5 - Definir intervalos padrão de pontos nos gŕaficos (cpu e mem a cada 5s?) - Taxa de amostragem padrao do disco pode ser mais longa = 1m. Deixar a opção do usuario de escolher qual a taxa de amostragem (deixar opçoes como 5s, 15s ou 1m, 2m(disk), 5m(disk))
+  2.5 - Definir intervalos padrão de pontos nos gŕaficos (cpu e mem a cada 5s?) - Taxa de amostragem padrao do disco pode ser mais longa = 1m. Deixar a opção do usuario de escolher qual a taxa de amostragem (deixar opçoes como 5s, 15s ou 1m, 2m(disk), 5m(disk))
   2.6 - Validações/Observações:
       ->CPU
         #-Virtual Hosts não tem Total Load ou Other Load (pois preciso da metrica "free" e containers nao tem. Eu ate poderia calcular mas aí teria de coletar varias outras metricas pra fazer um somatorio) - tá OK
@@ -26,18 +27,20 @@ Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais
         #-Ter um disclaimer que os Alpine devices não tem I/O metrics - Adicionado um comentário no row
         #-Gráficos de throughput continuam mostrando dados mesmo depois do disco ter sido unmount.-> Eles somem depois que passa a janela de tempo (ele mantém o last value quando para de vir dados mas ainda está dentro do timespan)
       ->Network
+        -Dropped & Error Packets - qual a unidade deles?
         -Dropped & Error Packets sempre zerado... validar se está correto...
         -Responsividade para timespans não está muito boa?
-        -Bar Gauges Bugados - barras sempre preenchidas
+        #-Bar Gauges Bugados - barras sempre preenchidas
         -Responsividade aos timespans?
-        -Virtual Hosts Network Inbound Traffic - dados pobres. Investir em outro simulador de carga?  - nao precisa, estao ok - validado com o físico
+        #-Virtual Hosts Network Inbound Traffic - dados pobres. Investir em outro simulador de carga?  - nao precisa, estao ok - validado com o físico
       ->Processes
       ->Trends Over Time
-        -CPU normal ou stacked? (mesmo problema da falta da métrica "free")
+        #-CPU normal ou stacked? (mesmo problema da falta da métrica "free") - Normal
         -Network - Mesmos problemas da seção Network citados acima
   2.7 - Validar $__intervals e $__ranges nas queries
+  #2.8 - Permitir a seleção de múltiplas labels -> Usar CTRL+CLICK
 
-p0 - montar o dash do grafana{
+ok - p0 - montar o dash do grafana{
   if (comparações qualitativas container x container) != true{
     estrutura dashboard pronta?
     }
@@ -62,7 +65,7 @@ Orientação 20250429
 
   p1 - Alarmes e Alertas
 
-  #p2 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
+  p2 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos)
 
   p3(opcional) - estudo dos virtualizadores e tentar implementar o Raspberry + Telegraf (se der certo, segue para Android)
 

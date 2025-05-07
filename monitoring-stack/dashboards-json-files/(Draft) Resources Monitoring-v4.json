@@ -29,7 +29,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 9,
+      "id": 49,
       "panels": [
         {
           "datasource": {
@@ -64,8 +64,8 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 18,
-            "w": 4,
+            "h": 4,
+            "w": 3,
             "x": 0,
             "y": 1
           },
@@ -143,364 +143,6 @@
                 "mode": "thresholds"
               },
               "decimals": 1,
-              "mappings": [],
-              "thresholds": {
-                "mode": "percentage",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "#EAB839",
-                    "value": 60
-                  },
-                  {
-                    "color": "red",
-                    "value": 85
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 6,
-            "x": 4,
-            "y": 1
-          },
-          "id": 25,
-          "interval": "5s",
-          "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "(100 - cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"})\nor\nabsent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0",
-              "format": "time_series",
-              "legendFormat": "{{alias}}-{{cpu}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Total Load - Physical Devices Only",
-          "type": "gauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 1,
-              "mappings": [],
-              "thresholds": {
-                "mode": "percentage",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "#EAB839",
-                    "value": 60
-                  },
-                  {
-                    "color": "red",
-                    "value": 85
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 6,
-            "x": 10,
-            "y": 1
-          },
-          "id": 11,
-          "interval": "5s",
-          "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
-              "format": "time_series",
-              "legendFormat": "{{alias}}-{{cpu}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "User Load",
-          "type": "gauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 1,
-              "mappings": [],
-              "thresholds": {
-                "mode": "percentage",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "#EAB839",
-                    "value": 60
-                  },
-                  {
-                    "color": "red",
-                    "value": 85
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 6,
-            "x": 16,
-            "y": 1
-          },
-          "id": 30,
-          "interval": "5s",
-          "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "physical_cpu_usage_iowait{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
-              "format": "time_series",
-              "legendFormat": "{{alias}}-{{cpu}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "I/O Wait - Physical Devices Only",
-          "type": "gauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 1,
-              "mappings": [],
-              "thresholds": {
-                "mode": "percentage",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "#EAB839",
-                    "value": 60
-                  },
-                  {
-                    "color": "red",
-                    "value": 85
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 6,
-            "x": 4,
-            "y": 56
-          },
-          "id": 27,
-          "interval": "5s",
-          "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "# (100 - cpu_idle{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}) - (cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"} + cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"})\n\n(\n  (\n    (100 - cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"})\n    or\n    (absent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0)\n  )\n  -\n  (\n    cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"} +\n    cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}\n  )\n)\nor\nabsent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0\n",
-              "format": "time_series",
-              "legendFormat": "{{alias}}-{{cpu}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Other Load - Physical Devices Only",
-          "type": "gauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 1,
-              "mappings": [],
-              "thresholds": {
-                "mode": "percentage",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "#EAB839",
-                    "value": 60
-                  },
-                  {
-                    "color": "red",
-                    "value": 85
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 6,
-            "x": 10,
-            "y": 56
-          },
-          "id": 12,
-          "interval": "5s",
-          "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
-              "legendFormat": "{{alias}}-{{cpu}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "System Load",
-          "type": "gauge"
-        }
-      ],
-      "title": "CPU",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 1
-      },
-      "id": 3,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 1,
               "fieldMinMax": false,
               "mappings": [],
               "max": 100,
@@ -525,10 +167,10 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 0,
-            "y": 66
+            "h": 4,
+            "w": 3,
+            "x": 3,
+            "y": 1
           },
           "id": 28,
           "interval": "5s",
@@ -610,10 +252,673 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
+            "h": 4,
+            "w": 2,
+            "x": 6,
+            "y": 1
+          },
+          "id": 29,
+          "interval": "5s",
+          "options": {
+            "displayMode": "lcd",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "sizing": "auto",
+            "valueMode": "color"
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "100 * (\n  memory_swap_current{job=~\"$job\", alias=~\"$alias\"}\n  /\n  on(alias, job)\n  memory_swap_max{job=~\"$job\", alias=~\"$alias\"}\n)\n",
+              "instant": false,
+              "legendFormat": "{{alias}} {{name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Swap Usage",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 51,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 8,
+            "y": 1
+          },
+          "id": 24,
+          "interval": "5s",
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "expr": "# 100 - cpu_idle{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
+              "hide": true,
+              "legendFormat": "{{alias}} - Total Load",
+              "range": true,
+              "refId": "Total Load"
+            },
+            {
+              "editorMode": "code",
+              "expr": "cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
+              "hide": false,
+              "legendFormat": "{{alias}} - User Load",
+              "range": true,
+              "refId": "User Load"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "expr": "cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
+              "hide": false,
+              "legendFormat": "{{alias}} - System Load",
+              "range": true,
+              "refId": "Sys Load"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "expr": "\n(\n  (\n    (100 - cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"})\n    or\n    (absent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0)\n  )\n  -\n  (\n    cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"} +\n    cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}\n  )\n)\nor\nabsent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0\n",
+              "hide": false,
+              "legendFormat": "{{alias}} - Other",
+              "range": true,
+              "refId": "Other Load"
+            }
+          ],
+          "title": "CPU Load Over Time - Stacked",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "description": "How busy the partition is",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 60
+                  },
+                  {
+                    "color": "semi-dark-red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 3,
+            "x": 13,
+            "y": 1
+          },
+          "id": 32,
+          "options": {
+            "displayMode": "lcd",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "sizing": "auto",
+            "valueMode": "color"
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "physical_diskio_io_util{job=~\"$job\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} > 0",
+              "legendFormat": "{{alias}}-{{disk_partition}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "I/O Utilization - Physical Devices Only",
+          "type": "bargauge"
+        }
+      ],
+      "title": "Trash",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 9,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 6,
+            "x": 0,
+            "y": 2
+          },
+          "id": 25,
+          "interval": "5s",
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "(100 - cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"})\nor\nabsent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0",
+              "format": "time_series",
+              "legendFormat": "{{alias}}-{{cpu}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Total Load - Physical Devices Only",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
             "w": 6,
             "x": 6,
-            "y": 66
+            "y": 2
+          },
+          "id": 11,
+          "interval": "5s",
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
+              "format": "time_series",
+              "legendFormat": "{{alias}}-{{cpu}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "User Load",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 6,
+            "x": 12,
+            "y": 2
+          },
+          "id": 12,
+          "interval": "5s",
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
+              "legendFormat": "{{alias}}-{{cpu}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "System Load",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 6,
+            "x": 0,
+            "y": 83
+          },
+          "id": 27,
+          "interval": "5s",
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "# (100 - cpu_idle{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}) - (cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"} + cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"})\n\n(\n  (\n    (100 - cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"})\n    or\n    (absent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0)\n  )\n  -\n  (\n    cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"} +\n    cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}\n  )\n)\nor\nabsent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0\n",
+              "format": "time_series",
+              "legendFormat": "{{alias}}-{{cpu}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Other Load - Physical Devices Only",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 6,
+            "x": 6,
+            "y": 83
+          },
+          "id": 30,
+          "interval": "5s",
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "physical_cpu_usage_iowait{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
+              "format": "time_series",
+              "legendFormat": "{{alias}}-{{cpu}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "I/O Wait - Physical Devices Only",
+          "type": "gauge"
+        }
+      ],
+      "title": "CPU",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 3,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "max": 100,
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 60
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 3
           },
           "id": 1,
           "interval": "5s",
@@ -688,92 +993,8 @@
           "gridPos": {
             "h": 8,
             "w": 6,
-            "x": 12,
-            "y": 66
-          },
-          "id": 29,
-          "interval": "5s",
-          "options": {
-            "displayMode": "lcd",
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": false
-            },
-            "maxVizHeight": 300,
-            "minVizHeight": 16,
-            "minVizWidth": 8,
-            "namePlacement": "auto",
-            "orientation": "horizontal",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showUnfilled": true,
-            "sizing": "auto",
-            "valueMode": "color"
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "100 * (\n  memory_swap_current{job=~\"$job\", alias=~\"$alias\"}\n  /\n  on(alias, job)\n  memory_swap_max{job=~\"$job\", alias=~\"$alias\"}\n)\n",
-              "instant": false,
-              "legendFormat": "{{alias}} {{name}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Swap Usage",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 1,
-              "mappings": [],
-              "max": 100,
-              "thresholds": {
-                "mode": "percentage",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "#EAB839",
-                    "value": 60
-                  },
-                  {
-                    "color": "red",
-                    "value": 85
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 18,
-            "y": 66
+            "x": 6,
+            "y": 3
           },
           "id": 5,
           "interval": "5s",
@@ -844,10 +1065,10 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 7,
-            "w": 24,
-            "x": 0,
-            "y": 74
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 3
           },
           "id": 8,
           "interval": "5s",
@@ -969,7 +1190,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 2
+        "y": 3
       },
       "id": 15,
       "panels": [
@@ -1011,7 +1232,7 @@
             "h": 10,
             "w": 10,
             "x": 0,
-            "y": 3
+            "y": 84
           },
           "id": 14,
           "interval": "30s",
@@ -1069,7 +1290,7 @@
             "h": 10,
             "w": 6,
             "x": 10,
-            "y": 3
+            "y": 84
           },
           "id": 13,
           "interval": "30s",
@@ -1148,7 +1369,7 @@
             "h": 5,
             "w": 8,
             "x": 16,
-            "y": 3
+            "y": 84
           },
           "id": 16,
           "interval": "30s",
@@ -1209,7 +1430,7 @@
             "h": 5,
             "w": 8,
             "x": 16,
-            "y": 54
+            "y": 120
           },
           "id": 17,
           "interval": "15m",
@@ -1253,7 +1474,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 3
+        "y": 4
       },
       "id": 22,
       "panels": [
@@ -1282,9 +1503,9 @@
           },
           "gridPos": {
             "h": 8,
-            "w": 12,
+            "w": 5,
             "x": 0,
-            "y": 93
+            "y": 5
           },
           "id": 20,
           "options": {
@@ -1345,9 +1566,9 @@
           },
           "gridPos": {
             "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 93
+            "w": 7,
+            "x": 5,
+            "y": 5
           },
           "id": 23,
           "options": {
@@ -1418,84 +1639,8 @@
           "gridPos": {
             "h": 8,
             "w": 12,
-            "x": 0,
-            "y": 101
-          },
-          "id": 32,
-          "options": {
-            "displayMode": "lcd",
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": false
-            },
-            "maxVizHeight": 300,
-            "minVizHeight": 16,
-            "minVizWidth": 8,
-            "namePlacement": "auto",
-            "orientation": "horizontal",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showUnfilled": true,
-            "sizing": "auto",
-            "valueMode": "color"
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "physical_diskio_io_util{job=~\"$job\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} > 0",
-              "legendFormat": "{{alias}}-{{disk_partition}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "I/O Utilization - Physical Devices Only",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "description": "How busy the partition is",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "percentage",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "#EAB839",
-                    "value": 60
-                  },
-                  {
-                    "color": "semi-dark-red",
-                    "value": 85
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
             "x": 12,
-            "y": 101
+            "y": 5
           },
           "id": 31,
           "options": {
@@ -1527,7 +1672,7 @@
           "type": "gauge"
         }
       ],
-      "title": "Disk I/O",
+      "title": "Disk I/O (Alpine Devices Unavailable)",
       "type": "row"
     },
     {
@@ -1536,262 +1681,10 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 5
       },
       "id": 36,
       "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "left",
-                "cellOptions": {
-                  "type": "auto",
-                  "wrapText": false
-                },
-                "inspect": false,
-                "minWidth": 65
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              }
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Outbound Rate (Mbps)"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 176
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Interface"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 89
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Inbound Rate (Mbps)"
-                },
-                "properties": [
-                  {
-                    "id": "custom.width",
-                    "value": 166
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 24,
-            "x": 0,
-            "y": 5
-          },
-          "id": 46,
-          "interval": "10s",
-          "options": {
-            "cellHeight": "sm",
-            "footer": {
-              "countRows": false,
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
-            },
-            "showHeader": true,
-            "sortBy": [
-              {
-                "desc": false,
-                "displayName": "Dropped In"
-              }
-            ]
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "rate(net_err_in{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
-              "format": "table",
-              "instant": true,
-              "legendFormat": "{{alias}}-{{interface}}-Inbound",
-              "range": false,
-              "refId": "Inbound"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "rate(net_err_out{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
-              "format": "table",
-              "hide": false,
-              "instant": true,
-              "legendFormat": "{{alias}}-{{interface}}-Outbound",
-              "range": false,
-              "refId": "Outbound"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "rate(net_drop_in{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
-              "format": "table",
-              "hide": false,
-              "instant": true,
-              "legendFormat": "{{alias}}-{{interface}}-Outbound",
-              "range": false,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "rate(net_drop_out{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[10s])",
-              "format": "table",
-              "hide": false,
-              "instant": true,
-              "legendFormat": "{{alias}}-{{interface}}-Outbound",
-              "range": false,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "rate(net_bytes_recv{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[10s]) * 8 / 1000000",
-              "format": "table",
-              "hide": false,
-              "instant": true,
-              "legendFormat": "{{alias}}-{{interface}}-Outbound",
-              "range": false,
-              "refId": "C"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "rate(net_bytes_sent{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[10s]) * 8 / 1000000",
-              "format": "table",
-              "hide": false,
-              "instant": true,
-              "legendFormat": "{{alias}}-{{interface}}-Outbound",
-              "range": false,
-              "refId": "D"
-            }
-          ],
-          "title": "Summary",
-          "transformations": [
-            {
-              "id": "joinByField",
-              "options": {
-                "byField": "alias",
-                "mode": "outer"
-              }
-            },
-            {
-              "id": "filterFieldsByName",
-              "options": {
-                "include": {
-                  "names": [
-                    "alias",
-                    "Value #Inbound",
-                    "Value #Outbound",
-                    "Value #B",
-                    "Value #A",
-                    "Value #C",
-                    "Value #D",
-                    "interface"
-                  ]
-                }
-              }
-            },
-            {
-              "id": "organize",
-              "options": {
-                "excludeByName": {
-                  "interface 2": true,
-                  "interface 3": true,
-                  "interface 4": true,
-                  "interface 5": true,
-                  "interface 6": true
-                },
-                "includeByName": {},
-                "indexByName": {
-                  "Value #A": 7,
-                  "Value #B": 6,
-                  "Value #C": 2,
-                  "Value #D": 3,
-                  "Value #Inbound": 4,
-                  "Value #Outbound": 5,
-                  "alias": 0,
-                  "interface 1": 1,
-                  "interface 2": 8,
-                  "interface 3": 9,
-                  "interface 4": 10,
-                  "interface 5": 11,
-                  "interface 6": 12
-                },
-                "renameByName": {
-                  "Value #A": "Dropped Out",
-                  "Value #B": "Dropped In",
-                  "Value #C": "Inbound Rate (Mbps)",
-                  "Value #D": "Outbound Rate (Mbps)",
-                  "Value #Inbound": "Errors In",
-                  "Value #Outbound": "Errors Out",
-                  "alias": "Device",
-                  "interface": "Interface",
-                  "interface 1": "Interface",
-                  "interface 2": "Interface",
-                  "interface 3": "Interface"
-                }
-              }
-            }
-          ],
-          "type": "table"
-        },
         {
           "datasource": {
             "type": "prometheus",
@@ -2287,6 +2180,258 @@
           ],
           "title": "Error Rates",
           "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "left",
+                "cellOptions": {
+                  "type": "auto",
+                  "wrapText": false
+                },
+                "inspect": false,
+                "minWidth": 65
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Outbound Rate (Mbps)"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 176
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Interface"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 89
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Inbound Rate (Mbps)"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 166
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 28
+          },
+          "id": 46,
+          "interval": "10s",
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": false,
+                "displayName": "Dropped In"
+              }
+            ]
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "rate(net_err_in{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
+              "format": "table",
+              "instant": true,
+              "legendFormat": "{{alias}}-{{interface}}-Inbound",
+              "range": false,
+              "refId": "Inbound"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "rate(net_err_out{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "{{alias}}-{{interface}}-Outbound",
+              "range": false,
+              "refId": "Outbound"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "rate(net_drop_in{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "{{alias}}-{{interface}}-Outbound",
+              "range": false,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "rate(net_drop_out{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[10s])",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "{{alias}}-{{interface}}-Outbound",
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "rate(net_bytes_recv{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[10s]) * 8 / 1000000",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "{{alias}}-{{interface}}-Outbound",
+              "range": false,
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "rate(net_bytes_sent{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[10s]) * 8 / 1000000",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "{{alias}}-{{interface}}-Outbound",
+              "range": false,
+              "refId": "D"
+            }
+          ],
+          "title": "Summary",
+          "transformations": [
+            {
+              "id": "joinByField",
+              "options": {
+                "byField": "alias",
+                "mode": "outer"
+              }
+            },
+            {
+              "id": "filterFieldsByName",
+              "options": {
+                "include": {
+                  "names": [
+                    "alias",
+                    "Value #Inbound",
+                    "Value #Outbound",
+                    "Value #B",
+                    "Value #A",
+                    "Value #C",
+                    "Value #D",
+                    "interface"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "interface 2": true,
+                  "interface 3": true,
+                  "interface 4": true,
+                  "interface 5": true,
+                  "interface 6": true
+                },
+                "includeByName": {},
+                "indexByName": {
+                  "Value #A": 7,
+                  "Value #B": 6,
+                  "Value #C": 2,
+                  "Value #D": 3,
+                  "Value #Inbound": 4,
+                  "Value #Outbound": 5,
+                  "alias": 0,
+                  "interface 1": 1,
+                  "interface 2": 8,
+                  "interface 3": 9,
+                  "interface 4": 10,
+                  "interface 5": 11,
+                  "interface 6": 12
+                },
+                "renameByName": {
+                  "Value #A": "Dropped Out",
+                  "Value #B": "Dropped In",
+                  "Value #C": "Inbound Rate (Mbps)",
+                  "Value #D": "Outbound Rate (Mbps)",
+                  "Value #Inbound": "Errors In",
+                  "Value #Outbound": "Errors Out",
+                  "alias": "Device",
+                  "interface": "Interface",
+                  "interface 1": "Interface",
+                  "interface 2": "Interface",
+                  "interface 3": "Interface"
+                }
+              }
+            }
+          ],
+          "type": "table"
         }
       ],
       "title": "Network",
@@ -2298,7 +2443,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "id": 33,
       "panels": [
@@ -2336,7 +2481,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 52
+            "y": 47
           },
           "id": 35,
           "options": {
@@ -2491,19 +2636,6 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 6
-      },
-      "id": 37,
-      "panels": [],
-      "title": "Metrics Validation (Embedded Metrics vs Docker Metrics) ",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
         "y": 7
       },
       "id": 7,
@@ -2596,7 +2728,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 54
+            "y": 459
           },
           "id": 10,
           "interval": "5s",
@@ -2682,137 +2814,6 @@
                 "barAlignment": 0,
                 "barWidthFactor": 0.6,
                 "drawStyle": "line",
-                "fillOpacity": 51,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineStyle": {
-                  "fill": "solid"
-                },
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "normal"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "decimals": 1,
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 24,
-            "x": 0,
-            "y": 63
-          },
-          "id": 24,
-          "interval": "5s",
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "multi",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.6.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "# 100 - cpu_idle{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
-              "hide": true,
-              "legendFormat": "{{alias}} - Total Load",
-              "range": true,
-              "refId": "Total Load"
-            },
-            {
-              "editorMode": "code",
-              "expr": "cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
-              "hide": false,
-              "legendFormat": "{{alias}} - User Load",
-              "range": true,
-              "refId": "User Load"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}",
-              "hide": false,
-              "legendFormat": "{{alias}} - System Load",
-              "range": true,
-              "refId": "Sys Load"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "\n(\n  (\n    (100 - cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"})\n    or\n    (absent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0)\n  )\n  -\n  (\n    cpu_system_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"} +\n    cpu_user_load{job=~\"$job\", alias=~\"$alias\", cpu=~\"$cpu\"}\n  )\n)\nor\nabsent(cpu_idle{job=~\"$job\", job!=\"virtual_hosts\", alias=~\"$alias\", cpu=~\"$cpu\"}) * 0\n",
-              "hide": false,
-              "legendFormat": "{{alias}} - Other",
-              "range": true,
-              "refId": "Other Load"
-            }
-          ],
-          "title": "CPU Load Over Time - Stacked",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
                 "hideFrom": {
@@ -2856,13 +2857,40 @@
               },
               "unit": "bytes"
             },
-            "overrides": []
+            "overrides": [
+              {
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "Alpine 1 - Swap ",
+                      "Alpine 2 - Swap ",
+                      "Ubuntu 1 - Memory "
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": [
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": true
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 72
+            "y": 468
           },
           "id": 2,
           "interval": "5s",
@@ -2978,7 +3006,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 72
+            "y": 468
           },
           "id": 6,
           "interval": "5s",
@@ -3086,7 +3114,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 81
+            "y": 477
           },
           "id": 18,
           "interval": "15s",
@@ -3176,7 +3204,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 81
+            "y": 477
           },
           "id": 19,
           "interval": "1m",
@@ -3282,7 +3310,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 90
+            "y": 486
           },
           "id": 21,
           "options": {
@@ -3374,7 +3402,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 90
+            "y": 486
           },
           "id": 34,
           "options": {
@@ -3514,7 +3542,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 98
+            "y": 494
           },
           "id": 38,
           "options": {
@@ -3615,7 +3643,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 98
+            "y": 494
           },
           "id": 42,
           "interval": "2m",
@@ -3724,7 +3752,7 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 107
+            "y": 503
           },
           "id": 41,
           "interval": "10s",
@@ -3828,7 +3856,7 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 107
+            "y": 503
           },
           "id": 44,
           "interval": "10s",
@@ -3885,10 +3913,10 @@
         "allowCustomValue": false,
         "current": {
           "text": [
-            "virtual_hosts"
+            "physical_host"
           ],
           "value": [
-            "virtual_hosts"
+            "physical_host"
           ]
         },
         "definition": "label_values(up, job)",
@@ -3910,9 +3938,11 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": "All",
+          "text": [
+            "Host Machine"
+          ],
           "value": [
-            "$__all"
+            "Host Machine"
           ]
         },
         "definition": "label_values({job=~\"$job\"}, alias)",
@@ -4002,7 +4032,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -4016,6 +4046,6 @@
   "timezone": "browser",
   "title": "(Draft) Resources Monitoring",
   "uid": "bekb70hhnfh8ga",
-  "version": 104,
+  "version": 108,
   "weekStart": "sunday"
 }
