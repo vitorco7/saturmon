@@ -55,10 +55,10 @@ services:
 
   virtual_device_1:
     container_name: device_1
-    image: ${UBUNTU_DEVICE_IMG}
     build:
       dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
+    image: ${UBUNTU_DEVICE_IMG}
     hostname: device1
     cpus: "0.5"
     mem_limit: "884m"
@@ -78,10 +78,10 @@ services:
 
   virtual_device_2:
     container_name: device_2
-    image: ${UBUNTU_DEVICE_IMG}
     build:
       dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
+    image: ${UBUNTU_DEVICE_IMG}
     hostname: device2
     cpus: "0.6"
     mem_limit: "768m"
@@ -101,10 +101,10 @@ services:
 
   virtual_device_3:
     container_name: device_3
-    image: ${UBUNTU_DEVICE_IMG}
     build:
       dockerfile: ${UBUNTU_DOCKERFILE}
       context: .
+    image: ${UBUNTU_DEVICE_IMG}
     hostname: device3
     cpus: "0.7"
     mem_limit: "680m"
@@ -124,10 +124,10 @@ services:
       
   virtual_device_4:
     container_name: device_4
-    image: ${ALPINE_DEVICE_IMG}
     build:
       dockerfile: ${ALPINE_DOCKERFILE}
       context: .
+    image: ${ALPINE_DEVICE_IMG}
     hostname: device4
     cpus: "0.7"
     mem_limit: "721m"
@@ -147,10 +147,10 @@ services:
       
   virtual_device_5:
     container_name: device_5
-    image: ${ALPINE_DEVICE_IMG}
     build:
       dockerfile: ${ALPINE_DOCKERFILE}
       context: .
+    image: ${ALPINE_DEVICE_IMG}
     hostname: device5
     cpus: "0.6"
     mem_limit: "768m"
