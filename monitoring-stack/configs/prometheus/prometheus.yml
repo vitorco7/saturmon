@@ -18,16 +18,16 @@ scrape_configs:
         labels:
           alias: "Host Machine"
 
-  - job_name: "host_docker_metrics"
-    static_configs:
-      - targets: ["host.docker.internal:9273"]
-        labels:
-          alias: "Host Docker Metrics"
-    metric_relabel_configs:
-      # Only keep Docker metrics
-      - source_labels: [__name__]
-        regex: 'docker_.*'
-        action: keep
+  # - job_name: "host_docker_metrics"
+  #   static_configs:
+  #     - targets: ["host.docker.internal:9273"]
+  #       labels:
+  #         alias: "Host Docker Metrics"
+  #   metric_relabel_configs:
+  #     # Only keep Docker metrics
+  #     - source_labels: [__name__]
+  #       regex: 'docker_.*'
+  #       action: keep
 
   - job_name: "virtual_hosts"
     static_configs:

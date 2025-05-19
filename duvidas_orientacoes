@@ -9,19 +9,19 @@ Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais
 --> Realmente não faz sentido, logo não é necessário fazer esse levantamento.
 }
 2 - Avaliar gráficos apresentados
-  #2.1 - O quão "feio" é o fato de haver gráficos "Physical Hosts Only"? - NAO, TUDO BEM
+  #2.1 - O quão "feio" é o fato de haver gráficos "Physical Hosts Only"? - NAO É FEIO, ESTÁ TUDO BEM
   #2.2 - Seria interessante calcular medias nos gráficos Time Series? Nao tem necessidade, pois ja temos muitos dados, poderia gerar poluição visual
   #2.3 - Gauge normal ou Bar Gauge? Gauge Normal
   #2.4 - No CPU Time Series - Normal ou Stacked? Normal
-  2.5 - Definir intervalos padrão de pontos nos gŕaficos (cpu e mem a cada 5s?) - Taxa de amostragem padrao do disco pode ser mais longa = 1m. Deixar a opção do usuario de escolher qual a taxa de amostragem (deixar opçoes como 5s, 15s ou 1m, 2m(disk), 5m(disk))
-  2.6 - Validações/Observações:
+  #2.5 - Definir intervalos padrão de pontos nos gŕaficos (cpu e mem a cada 5s?) - Taxa de amostragem padrao do disco pode ser mais longa = 1m. Deixar a opção do usuario de escolher qual a taxa de amostragem (deixar opçoes como 5s, 15s ou 1m, 2m(disk), 5m(disk))
+  #2.6 - Validações/Observações:
       ->CPU
         #-Virtual Hosts não tem Total Load ou Other Load (pois preciso da metrica "free" e containers nao tem. Eu ate poderia calcular mas aí teria de coletar varias outras metricas pra fazer um somatorio) - tá OK
         #- Bar Gauge ou Gauge normal? - Normal
       ->Mem
         #-Usar apenas o Bar Gauge pra diferenciar visualmente dos Gauges do CPU? - Normal
       ->Disk
-        -Time to Full Disk está meio errático
+        #-Time to Full Disk está meio errático - avaliar posteriormente no texto
         #-Disk usage de pizza é uma visualização muito ruim. Trocar por outra? Qual? Nao precisa trocar
       ->Disk I/O
         #-Ter um disclaimer que os Alpine devices não tem I/O metrics - Adicionado um comentário no row
@@ -37,10 +37,10 @@ Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais
       ->Trends Over Time
         #-CPU normal ou stacked? (mesmo problema da falta da métrica "free") - Normal
         -Network - Mesmos problemas da seção Network citados acima
-  2.7 - Validar $__intervals e $__ranges nas queries
+  #2.7 - Validar $__intervals e $__ranges nas queries
   #2.8 - Permitir a seleção de múltiplas labels -> Usar CTRL+CLICK
 
-ok - p0 - montar o dash do grafana{
+#ok - p0 - montar o dash do grafana{
   if (comparações qualitativas container x container) != true{
     estrutura dashboard pronta?
     }
@@ -48,9 +48,10 @@ ok - p0 - montar o dash do grafana{
     faltam as comparaçoes
 }
 
-3 - Estou com dificuldadas para entender o sincronismo entre as marcações de tempo obtidas nos testes (docker logs) e os pontos nos gráficos. --> essa reflexao vale a pena acontecer no texto posteriormente
+#ok - 3 - Estou com dificuldadas para entender o sincronismo entre as marcações de tempo obtidas nos testes (docker logs) e os pontos nos gráficos. --> essa reflexao vale a pena acontecer no texto posteriormente
 
-  p2 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos) - estao funcionando perfeitamente na visao MACRO
+
+  #p2 - Configurar os stress tests de acordo com as diretrizes definidas (testes individuais e depois simultaneos) - estao funcionando perfeitamente na visao MACRO
 
 ----TO DO----
 {
