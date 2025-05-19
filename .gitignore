@@ -55,3 +55,4 @@ latex.log/
 *.tdo
 
 monitoring-stack/docs/.~lock.metric_mapping.xlsx#
+.env.secrets
