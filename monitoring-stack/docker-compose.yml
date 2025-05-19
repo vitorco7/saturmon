@@ -1,7 +1,7 @@
 services:
   prometheus:
     container_name: prometheus
-    image: prom/prometheus
+    image: prom/prometheus:v3.3.0
     ports:
       - "9090:9090"
     volumes:
@@ -29,7 +29,7 @@ services:
 
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:11.6.0
     user: "472"
     ports:
       - "3000:3000"
@@ -107,7 +107,7 @@ services:
       context: .
     hostname: device3
     cpus: "0.7"
-    mem_limit: "680MB"
+    mem_limit: "680m"
     networks:
       - devices_network
     volumes:
