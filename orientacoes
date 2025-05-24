@@ -2,7 +2,53 @@ Orientação 20250527
 
 Fiz mais uma tentativa de adicionar um dispositivo Android no monitoramento. No caso, o meu celular. No entanto, tive muitos problemas de permissionamento do sistema. Se eu obtivesse um android rooteado, conseguiria facilmente realizar a aquisição de dados. No entanto, como não tenho acesso a um dispositivo rooteado, não consegui avançar nesse ponto. Aí entramos novamente na tentativa de simular um dispositivo Android rooteado na minha máquina, o que optamos por não fazer.
 
-
+Alertas:
+  - Configurei disparos via email (SMTP server do gmail) + Telegram (bot do telegram) (usando a UI do Grafana)
+  - Quando tentei usar o provisioning/alerting do grafana, o Grafana parou de enviar notificações pelo Telegram (tem algum problema de parsing que causa o erro 400 Bad Request nas tentativas de envio de notificação)
+  - Configurei alertas para os seguintes eventos:
+    - CPU usage acima de 80% por mais de 5 minutos
+    - Memória livre abaixo de 10% por mais de 5 minutos
+    - Disco cheio acima de 90% por mais de 5 minutos
+    - Network errors ou dropped packets acima de 100 por minuto
+  - Configurei alertas para os seguintes eventos de processos:
+    - Número de processos em execução acima de 100 por mais de 5 minutos
+    - Número de processos zumbis acima de 10 por mais de 5 minutos
+  - Configurei alertas para os seguintes eventos de containers:
+    - Uso de CPU de um container acima de 80% por mais de 5 minutos
+    - Memória livre de um container abaixo de 10% por mais de 5 minutos
+    - Disco cheio de um container acima de 90% por mais de 5 minutos
+    - Network errors ou dropped packets de um container acima de 100 por minuto
+  - Configurei alertas para os seguintes eventos de disk I/O:
+    - Latência de leitura acima de 100ms por mais de 5 minutos
+    - Latência de escrita acima de 100ms por mais de 5 minutos
+    - Throughput de leitura abaixo de 1MB/s por mais de 5 minutos
+    - Throughput de escrita abaixo de 1MB/s por mais de 5 minutos
+  - Configurei alertas para os seguintes eventos de disk usage:
+    - Uso de disco acima de 90% por mais de 5 minutos
+    - Inodes usados acima de 90% por mais de 5 minutos
+  - Configurei alertas para os seguintes eventos de disk time to full:
+    - Tempo para disco cheio acima de 1 hora por mais de 5 minutos
+    - Tempo para inodes cheios acima de 1 hora por mais de 5 minutos
+  - Configurei alertas para os seguintes eventos de trends over time:
+    - Tendência de uso de CPU acima de 80% por mais de 5 minutos
+    - Tendência de uso de memória acima de 80% por mais de 5 minutos
+    - Tendência de uso de disco acima de 90% por mais de 5 minutos
+    - Tendência de uso de rede acima de 90% por mais de 5 minutos
+  - Configurei alertas para os seguintes eventos de network:
+    - Latência de rede acima de 100ms por mais de 5 minutos
+    - Throughput de rede abaixo de 1MB/s por mais de 5 minutos
+    - Network errors ou dropped packets acima de 100 por minuto
+  - Configurei alertas para os seguintes eventos de processes:
+    - Número de processos em execução acima de 100 por mais de 5 minutos
+    - Número de processos zumbis acima de 10 por mais de 5 minutos
+    - Uso de CPU de um processo acima de 80% por mais de 5 minutos
+    - Memória livre de um processo abaixo de 10% por mais de 5 minutos
+  - Configurei alertas para os seguintes eventos de containers:
+    - Uso de CPU de um container acima de 80% por mais de 5 minutos
+    - Memória livre de um container abaixo de 10% por mais de 5 minutos
+    - Disco cheio de um container acima de 90% por mais de 5 minutos
+    - Network errors ou dropped packets de um container acima de 100 por minuto
+  - Configurei alertas para os seguintes eventos de disk I/O:
 
 Orientação 20250506
 

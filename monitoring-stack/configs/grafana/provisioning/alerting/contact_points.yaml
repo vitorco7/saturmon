@@ -1,0 +1,10 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: "SRE Managers"
+    receivers:
+      - uid: "managers"
+        type: email
+        settings:
+          addresses: "vcossetti@poli.ufrj.br"
