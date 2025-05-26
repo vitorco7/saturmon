@@ -1,122 +1,122 @@
-# apiVersion: 1
+apiVersion: 1
 
-# groups:
-#   - orgId: 1
-#     name: resource-monitoring-alerts
-#     folder: Resource Monitoring
-#     interval: 1m
-#     rules:
-#       - uid: cpu-user-usage-high
-#         title: CPU User Usage High
-#         condition: A
-#         data:
-#           - refId: A
-#             datasourceUid: PBFA97CFB590B2093
-#             model:
-#               expr: cpu_user_load{job=~"$job", alias=~"$alias", cpu=~"$cpu"}
-#               interval: ""
-#               format: time_series
-#               legendFormat: "{{alias}}-{{cpu}}"
-#               refId: A
-#             relativeTimeRange:
-#               from: 300
-#               to: 0
-#         for: 5m
-#         annotations:
-#           summary: "CPU user usage >= 85% for 5 minutes"
-#         labels:
-#           severity: critical
-#         noDataState: Alerting
-#         execErrState: Alerting
+groups:
+  - orgId: 1
+    name: resource-monitoring-alerts
+    folder: Resource Monitoring
+    interval: 1m
+    rules:
+      - uid: cpu-user-usage-high
+        title: CPU User Usage High
+        condition: A
+        data:
+          - refId: A
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              expr: cpu_user_load{job=~"$job", alias=~"$alias", cpu=~"$cpu"}
+              interval: ""
+              format: time_series
+              legendFormat: "{{alias}}-{{cpu}}"
+              refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+        for: 5m
+        annotations:
+          summary: "CPU user usage >= 85% for 5 minutes"
+        labels:
+          severity: critical
+        noDataState: Alerting
+        execErrState: Alerting
 
-#       - uid: cpu-system-usage-high
-#         title: CPU System Usage High
-#         condition: A
-#         data:
-#           - refId: A
-#             datasourceUid: PBFA97CFB590B2093
-#             model:
-#               expr: cpu_system_load{job=~"$job", alias=~"$alias", cpu=~"$cpu"}
-#               interval: ""
-#               format: time_series
-#               legendFormat: "{{alias}}-{{cpu}}"
-#               refId: A
-#             relativeTimeRange:
-#               from: 300
-#               to: 0
-#         for: 5m
-#         annotations:
-#           summary: "CPU system usage >= 85% for 5 minutes"
-#         labels:
-#           severity: critical
-#         noDataState: Alerting
-#         execErrState: Alerting
+      - uid: cpu-system-usage-high
+        title: CPU System Usage High
+        condition: A
+        data:
+          - refId: A
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              expr: cpu_system_load{job=~"$job", alias=~"$alias", cpu=~"$cpu"}
+              interval: ""
+              format: time_series
+              legendFormat: "{{alias}}-{{cpu}}"
+              refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+        for: 5m
+        annotations:
+          summary: "CPU system usage >= 85% for 5 minutes"
+        labels:
+          severity: critical
+        noDataState: Alerting
+        execErrState: Alerting
 
-#       - uid: cpu-total-usage-high
-#         title: CPU Total Usage High
-#         condition: A
-#         data:
-#           - refId: A
-#             datasourceUid: PBFA97CFB590B2093
-#             model:
-#               expr: (100 - cpu_idle{job=~"$job", job!="virtual_hosts", alias=~"$alias", cpu=~"$cpu"}) or absent(cpu_idle{job=~"$job", job!="virtual_hosts", alias=~"$alias", cpu=~"$cpu"}) * 0
-#               interval: ""
-#               format: time_series
-#               legendFormat: "{{alias}}-{{cpu}}"
-#               refId: A
-#             relativeTimeRange:
-#               from: 300
-#               to: 0
-#         for: 5m
-#         annotations:
-#           summary: "CPU total usage >= 85% for 5 minutes"
-#         labels:
-#           severity: critical
-#         noDataState: Alerting
-#         execErrState: Alerting
+      - uid: cpu-total-usage-high
+        title: CPU Total Usage High
+        condition: A
+        data:
+          - refId: A
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              expr: (100 - cpu_idle{job=~"$job", job!="virtual_hosts", alias=~"$alias", cpu=~"$cpu"}) or absent(cpu_idle{job=~"$job", job!="virtual_hosts", alias=~"$alias", cpu=~"$cpu"}) * 0
+              interval: ""
+              format: time_series
+              legendFormat: "{{alias}}-{{cpu}}"
+              refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+        for: 5m
+        annotations:
+          summary: "CPU total usage >= 85% for 5 minutes"
+        labels:
+          severity: critical
+        noDataState: Alerting
+        execErrState: Alerting
 
-#       - uid: memory-usage-high
-#         title: Memory Usage High
-#         condition: A
-#         data:
-#           - refId: A
-#             datasourceUid: PBFA97CFB590B2093
-#             model:
-#               expr: 100 * (memory_current{job=~"$job", alias=~"$alias"} / on(alias, job) memory_max{job=~"$job", alias=~"$alias"})
-#               interval: ""
-#               format: time_series
-#               legendFormat: "{{alias}} {{name}}"
-#               refId: A
-#             relativeTimeRange:
-#               from: 300
-#               to: 0
-#         for: 5m
-#         annotations:
-#           summary: "Memory usage >= 85% for 5 minutes"
-#         labels:
-#           severity: critical
-#         noDataState: Alerting
-#         execErrState: Alerting
+      - uid: memory-usage-high
+        title: Memory Usage High
+        condition: A
+        data:
+          - refId: A
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              expr: 100 * (memory_current{job=~"$job", alias=~"$alias"} / on(alias, job) memory_max{job=~"$job", alias=~"$alias"})
+              interval: ""
+              format: time_series
+              legendFormat: "{{alias}} {{name}}"
+              refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+        for: 5m
+        annotations:
+          summary: "Memory usage >= 85% for 5 minutes"
+        labels:
+          severity: critical
+        noDataState: Alerting
+        execErrState: Alerting
 
-#       - uid: swap-usage-high
-#         title: Swap Usage High
-#         condition: A
-#         data:
-#           - refId: A
-#             datasourceUid: PBFA97CFB590B2093
-#             model:
-#               expr: 100 * (memory_swap_current{job=~"$job", alias=~"$alias"} / on(alias, job) memory_swap_max{job=~"$job", alias=~"$alias"})
-#               interval: ""
-#               format: time_series
-#               legendFormat: "{{alias}} {{name}}"
-#               refId: A
-#             relativeTimeRange:
-#               from: 300
-#               to: 0
-#         for: 5m
-#         annotations:
-#           summary: "Swap usage >= 85% for 5 minutes"
-#         labels:
-#           severity: critical
-#         noDataState: Alerting
-#         execErrState: Alerting
+      - uid: swap-usage-high
+        title: Swap Usage High
+        condition: A
+        data:
+          - refId: A
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              expr: 100 * (memory_swap_current{job=~"$job", alias=~"$alias"} / on(alias, job) memory_swap_max{job=~"$job", alias=~"$alias"})
+              interval: ""
+              format: time_series
+              legendFormat: "{{alias}} {{name}}"
+              refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+        for: 5m
+        annotations:
+          summary: "Swap usage >= 85% for 5 minutes"
+        labels:
+          severity: critical
+        noDataState: Alerting
+        execErrState: Alerting

@@ -40,10 +40,7 @@ services:
     volumes:
       - ./volumes/grafana/config/:/var/lib/grafana
       - ./configs/grafana/dashboard-json:/etc/grafana/dashboards
-      - ./configs/grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./configs/grafana/provisioning:/etc/grafana/provisioning
-      # - ./configs/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-      # - ./configs/grafana/provisioning/alerting:/etc/grafana/provisioning/alerting
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     # profiles: ["all"]

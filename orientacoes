@@ -4,7 +4,7 @@ Fiz mais uma tentativa de adicionar um dispositivo Android no monitoramento. No 
 
 Alertas:
   - Configurei disparos via email (SMTP server do gmail) + Telegram (bot do telegram) (usando a UI do Grafana)
-  - Quando tentei usar o provisioning/alerting do grafana, o Grafana parou de enviar notificações pelo Telegram (tem algum problema de parsing que causa o erro 400 Bad Request nas tentativas de envio de notificação)
+  - Quando tentei usar o provisioning/alerting do grafana, o Grafana parou de enviar notificações pelo Telegram (tem algum problema de parsing que causa o erro 400 Bad Request nas tentativas de envio de notificação. Eventualmente apareceu um 404 também. Acabei optando por ficar apenas com email)
   - Configurei alertas para os seguintes eventos:
     - CPU usage acima de 80% por mais de 5 minutos
     - Memória livre abaixo de 10% por mais de 5 minutos
