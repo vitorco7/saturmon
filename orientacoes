@@ -26,7 +26,7 @@ Alertas:
       - Redução de todos os maxDataPoints de 43200 para 1000
     O Grafana reduziu significantemente os erros de "Database locked, sleeping then retrying" error="database is locked" retry=1 code="database is locked"
     - Aparentemente, o SQLite não lida bem com leituras concorrentes mais agressivas, ficando a sugestão de que, para projetos maiores, o PostgreSQL seja uma opção mais interessante.
-
+    - Após a introdução de offsets nos alarm rules, aparentemente o erro de "max-retries-reached" foi resolvido. Voltei o auto refresh do dashboard para 5s e o Grafana está rodando bem.
 
 Orientação 20250506
 
