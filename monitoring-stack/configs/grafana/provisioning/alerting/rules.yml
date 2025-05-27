@@ -1,11 +1,11 @@
 apiVersion: 1
 groups:
   #Memory Alerts
-    - orgId: 1
-      name: Memory Alerts
-      folder: Monitoring
-      interval: 10s
-      rules:
+  - orgId: 1
+    name: Memory Alerts
+    folder: Monitoring
+    interval: 10s
+    rules:
         - uid: high-memory-load
           title: High Memory Load
           condition: Alarm Trigger
@@ -197,11 +197,11 @@ groups:
             receiver: SRE-Managers
 
   #CPU Alerts
-    - orgId: 1
-      name: CPU Alerts
-      folder: Monitoring
-      interval: 10s
-      rules:
+  - orgId: 1
+    name: CPU Alerts
+    folder: Monitoring
+    interval: 10s
+    rules:
         - uid: high-cpu-user-load
           title: High CPU User Load
           condition: Alarm Trigger
@@ -475,11 +475,11 @@ groups:
             receiver: SRE-Managers
 
   #Processes Alerts
-    - orgId: 1
-      name: Processes Alerts
-      folder: Monitoring
-      interval: 10s
-      rules:
+  - orgId: 1
+    name: Processes Alerts
+    folder: Monitoring
+    interval: 10s
+    rules:
         - uid: high-zombie-count
           title: High Zombie Processes Count
           condition: Alarm Trigger
@@ -571,11 +571,11 @@ groups:
             receiver: SRE-Managers
 
   #Disk Alerts
-    - orgId: 1
-      name: Disk Alerts
-      folder: Monitoring
-      interval: 30s
-      rules:
+  - orgId: 1
+    name: Disk Alerts
+    folder: Monitoring
+    interval: 30s
+    rules:
         - uid: low-disk-space
           title: Low Partition Space
           condition: Alarm Trigger
