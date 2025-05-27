@@ -91,7 +91,7 @@ groups:
           panelId: 1
           noDataState: NoData
           execErrState: Error
-          for: 20s
+          for: 300s
           annotations:
             __dashboardUid__: bekb70hhnfh8ga
             __panelId__: "1"
@@ -186,7 +186,7 @@ groups:
           panelId: 5
           noDataState: NoData
           execErrState: Error
-          for: 20s
+          for: 300s
           annotations:
             __dashboardUid__: bekb70hhnfh8ga
             __panelId__: "5"
@@ -282,11 +282,11 @@ groups:
           panelId: 11
           noDataState: NoData
           execErrState: Error
-          for: 20s
+          for: 300s
           annotations:
             __dashboardUid__: bekb70hhnfh8ga
             __panelId__: "11"
-            description: Over the last 5 minutes, the average cpu load on "{{labels.alias}}-{{labels.cpu}}"" was above 85%.
+            description: Over the last 5 minutes, the average cpu load on this cpu was above 85%.
             summary: CPU User Load >= 85%
           isPaused: false
           notification_settings:
@@ -372,12 +372,390 @@ groups:
           panelId: 12
           noDataState: NoData
           execErrState: Error
-          for: 20s
+          for: 300s
           annotations:
             __dashboardUid__: bekb70hhnfh8ga
             __panelId__: "12"
             description: Over the last 5 minutes, the average cpu load on this core was above 85%.
             summary: CPU System Load >= 85%
+          isPaused: false
+          notification_settings:
+            receiver: SRE-Managers
+
+        - uid: high-cpu-total-load
+          title: High CPU Total Load
+          condition: Alarm Trigger
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: PBFA97CFB590B2093
+              model:
+                adhocFilters: []
+                datasource:
+                    type: prometheus
+                    uid: PBFA97CFB590B2093
+                editorMode: code
+                exemplar: false
+                expr: |
+                    (100 - cpu_idle{job=~".*", job!="virtual_hosts", alias=~".*", cpu=~".*"})
+                    or
+                    absent(cpu_idle{job=~".*", job!="virtual_hosts", alias=~".*", cpu=~".*"}) * 0
+                format: time_series
+                instant: false
+                interval: ""
+                intervalMs: 5000
+                legendFormat: '{{alias}}-{{cpu}}'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: Avg CPU Total Load
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Avg CPU Total Load
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: mean
+                refId: Avg CPU Total Load
+                type: reduce
+            - refId: Alarm Trigger
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 10
+                        type: gte
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Alarm Trigger
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: Avg CPU Total Load
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: Alarm Trigger
+                type: threshold
+          dashboardUid: bekb70hhnfh8ga
+          panelId: 25
+          noDataState: NoData
+          execErrState: Error
+          for: 300s
+          annotations:
+            __dashboardUid__: bekb70hhnfh8ga
+            __panelId__: "25"
+            description: Over the last 5 minutes, the average cpu load on this cpu was above 85%.
+            summary: CPU Total Load >= 85%
+          isPaused: false
+          notification_settings:
+            receiver: SRE-Managers
+
+  #Processes Alerts
+    - orgId: 1
+      name: Processes Alerts
+      folder: Monitoring
+      interval: 10s
+      rules:
+        - uid: high-zombie-count
+          title: High Zombie Processes Count
+          condition: Alarm Trigger
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: PBFA97CFB590B2093
+              model:
+                adhocFilters: []
+                datasource:
+                    type: prometheus
+                    uid: PBFA97CFB590B2093
+                editorMode: code
+                exemplar: false
+                expr: |
+                    processes_zombies{job=~".*", alias=~".*"}
+                format: time_series
+                instant: false
+                interval: ""
+                intervalMs: 5000
+                legendFormat: '{{alias}}-Zombies'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: Zombie Count
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Zombie Count
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: Zombie Count
+                type: reduce
+            - refId: Alarm Trigger
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 10
+                        type: gte
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Alarm Trigger
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: Zombie Count
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: Alarm Trigger
+                type: threshold
+          dashboardUid: bekb70hhnfh8ga
+          panelId: 35
+          noDataState: NoData
+          execErrState: Error
+          for: 300s
+          annotations:
+            __dashboardUid__: bekb70hhnfh8ga
+            __panelId__: "35"
+            description: Over the last 5 minutes, there were detected more than 10 zombie processes on the system.
+            summary: Zombie Processes Count > 10
+          isPaused: false
+          notification_settings:
+            receiver: SRE-Managers
+
+  #Disk Alerts
+    - orgId: 1
+      name: Disk Alerts
+      folder: Monitoring
+      interval: 30s
+      rules:
+        - uid: low-disk-space
+          title: Low Partition Space
+          condition: Alarm Trigger
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 3600
+                to: 0
+              datasourceUid: PBFA97CFB590B2093
+              model:
+                adhocFilters: []
+                datasource:
+                    type: prometheus
+                    uid: PBFA97CFB590B2093
+                editorMode: code
+                exemplar: false
+                expr: |
+                    100 * (
+                      physical_disk_free{job="physical_host", alias=~".*", disk_partition=~".*"} /
+                      on (job, alias, disk_partition)
+                      physical_disk_total{job="physical_host", alias=~".*", disk_partition=~".*"}
+                    )
+                format: time_series
+                instant: false
+                interval: ""
+                intervalMs: 5000
+                legendFormat: '{{alias}}-{{disk_partition}}'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: Free Disk Space
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Free Disk Space
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: mean
+                refId: Free Disk Space
+                type: reduce
+            - refId: Alarm Trigger
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 15
+                        type: lte
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Alarm Trigger
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: Free Disk Space
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: Alarm Trigger
+                type: threshold
+          dashboardUid: bekb70hhnfh8ga
+          panelId: 14
+          noDataState: NoData
+          execErrState: Error
+          for: 300s
+          annotations:
+            __dashboardUid__: bekb70hhnfh8ga
+            __panelId__: "14"
+            description: Over the last hour,there has been 15% or less free space on this partition.
+            summary: Free Partition Space <= 15%
+          isPaused: false
+          notification_settings:
+            receiver: SRE-Managers
+
+        - uid: high-disk-io
+          title: High Disk I/O
+          condition: Alarm Trigger
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: PBFA97CFB590B2093
+              model:
+                adhocFilters: []
+                datasource:
+                    type: prometheus
+                    uid: PBFA97CFB590B2093
+                editorMode: code
+                exemplar: false
+                expr: |
+                    physical_diskio_io_util{job=~".*", alias=~".*", disk_partition=~".*"}
+                format: time_series
+                instant: false
+                interval: ""
+                intervalMs: 5000
+                legendFormat: '{{alias}}-{{disk_partition}}'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: Disk I/O Load
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Disk I/O Load
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: mean
+                refId: Disk I/O Load
+                type: reduce
+            - refId: Alarm Trigger
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 85
+                        type: gte
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Alarm Trigger
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: Disk I/O Load
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: Alarm Trigger
+                type: threshold
+          dashboardUid: bekb70hhnfh8ga
+          panelId: 31
+          noDataState: NoData
+          execErrState: Error
+          for: 300s
+          annotations:
+            __dashboardUid__: bekb70hhnfh8ga
+            __panelId__: "31"
+            description: Over the last 5 minutes, the average disk i/o was above 85%.
+            summary: Disk I/O Load >= 85%
           isPaused: false
           notification_settings:
             receiver: SRE-Managers

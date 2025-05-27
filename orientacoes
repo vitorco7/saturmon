@@ -7,50 +7,14 @@ Alertas:
   - Quando tentei usar o provisioning/alerting do grafana, o Grafana parou de enviar notificações pelo Telegram (tem algum problema de parsing que causa o erro 400 Bad Request nas tentativas de envio de notificação. Eventualmente apareceu um 404 também. Acabei optando por ficar apenas com email)
   - Ou seja: se configurar pela UI, Telegram funciona. Se configurar via provisioning, não funciona. Pela UI teria de configurar manualmente em todo reset. Pelo provisioning tudo já sobe pré-configurado.
   - Configurei alertas para os seguintes eventos:
-    - CPU usage acima de 80% por mais de 5 minutos
-    - Memória livre abaixo de 10% por mais de 5 minutos
-    - Disco cheio acima de 90% por mais de 5 minutos
-    - Network errors ou dropped packets acima de 100 por minuto
-  - Configurei alertas para os seguintes eventos de processos:
-    - Número de processos em execução acima de 100 por mais de 5 minutos
-    - Número de processos zumbis acima de 10 por mais de 5 minutos
-  - Configurei alertas para os seguintes eventos de containers:
-    - Uso de CPU de um container acima de 80% por mais de 5 minutos
-    - Memória livre de um container abaixo de 10% por mais de 5 minutos
-    - Disco cheio de um container acima de 90% por mais de 5 minutos
-    - Network errors ou dropped packets de um container acima de 100 por minuto
-  - Configurei alertas para os seguintes eventos de disk I/O:
-    - Latência de leitura acima de 100ms por mais de 5 minutos
-    - Latência de escrita acima de 100ms por mais de 5 minutos
-    - Throughput de leitura abaixo de 1MB/s por mais de 5 minutos
-    - Throughput de escrita abaixo de 1MB/s por mais de 5 minutos
-  - Configurei alertas para os seguintes eventos de disk usage:
-    - Uso de disco acima de 90% por mais de 5 minutos
-    - Inodes usados acima de 90% por mais de 5 minutos
-  - Configurei alertas para os seguintes eventos de disk time to full:
-    - Tempo para disco cheio acima de 1 hora por mais de 5 minutos
-    - Tempo para inodes cheios acima de 1 hora por mais de 5 minutos
-  - Configurei alertas para os seguintes eventos de trends over time:
-    - Tendência de uso de CPU acima de 80% por mais de 5 minutos
-    - Tendência de uso de memória acima de 80% por mais de 5 minutos
-    - Tendência de uso de disco acima de 90% por mais de 5 minutos
-    - Tendência de uso de rede acima de 90% por mais de 5 minutos
-  - Configurei alertas para os seguintes eventos de network:
-    - Latência de rede acima de 100ms por mais de 5 minutos
-    - Throughput de rede abaixo de 1MB/s por mais de 5 minutos
-    - Network errors ou dropped packets acima de 100 por minuto
-  - Configurei alertas para os seguintes eventos de processes:
-    - Número de processos em execução acima de 100 por mais de 5 minutos
-    - Número de processos zumbis acima de 10 por mais de 5 minutos
-    - Uso de CPU de um processo acima de 80% por mais de 5 minutos
-    - Memória livre de um processo abaixo de 10% por mais de 5 minutos
-  - Configurei alertas para os seguintes eventos de containers:
-    - Uso de CPU de um container acima de 80% por mais de 5 minutos
-    - Memória livre de um container abaixo de 10% por mais de 5 minutos
-    - Disco cheio de um container acima de 90% por mais de 5 minutos
-    - Network errors ou dropped packets de um container acima de 100 por minuto
-  - Configurei alertas para os seguintes eventos de disk I/O:
+    - Se CPU, Memória ou Disk I/O Util tiverem uma média de uso acima de 85% por mais de 5 minutos, dispara um alerta. O Grafana coleta amostras a cada 10s(evaluation interval).
+    - Se alguma partição do disco estiver com menos de 15% de espaço livre, dispara um alerta. Isso é verificado numa janela de tempo de 1 hora, com amostras a cada 30s.
+    - Processos Zumbis - com amostras a cada 10s, se nos últimos 5 minutos houver mais de 10 processos zumbis, dispara um alerta.
+    - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?
+    - Observei um erro de 5% no gauge Disk Free host machine sdb2 (comparei com o disk manager do ubuntu).
 
+
+    
 Orientação 20250506
 
 Consegui adicionar métricas de rede  e processos aos containers!!!
