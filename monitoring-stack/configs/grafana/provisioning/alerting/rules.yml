@@ -1,5 +1,6 @@
 apiVersion: 1
 groups:
+  #Memory Alerts
     - orgId: 1
       name: Memory Alerts
       folder: Monitoring
@@ -36,7 +37,7 @@ groups:
                 maxDataPoints: 43200
                 range: true
                 refId: A
-            - refId: Avg Memory
+            - refId: Avg Memory Load
               datasourceUid: __expr__
               model:
                 conditions:
@@ -47,7 +48,7 @@ groups:
                         type: and
                       query:
                         params:
-                            - Avg Memory
+                            - Avg Memory Load
                       reducer:
                         params: []
                         type: last
@@ -59,7 +60,7 @@ groups:
                 intervalMs: 1000
                 maxDataPoints: 43200
                 reducer: mean
-                refId: Avg Memory
+                refId: Avg Memory Load
                 type: reduce
             - refId: Alarm Trigger
               datasourceUid: __expr__
@@ -81,7 +82,7 @@ groups:
                 datasource:
                     type: __expr__
                     uid: __expr__
-                expression: Avg Memory
+                expression: Avg Memory Load
                 intervalMs: 1000
                 maxDataPoints: 43200
                 refId: Alarm Trigger
@@ -191,6 +192,192 @@ groups:
             __panelId__: "5"
             description: Over the last 5 minutes, the average memory swap load was above 85% of the maximum swap memory.
             summary: Memory Swap Load >= 85%
+          isPaused: false
+          notification_settings:
+            receiver: SRE-Managers
+
+  #CPU Alerts
+    - orgId: 1
+      name: CPU Alerts
+      folder: Monitoring
+      interval: 10s
+      rules:
+        - uid: high-cpu-user-load
+          title: High CPU User Load
+          condition: Alarm Trigger
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: PBFA97CFB590B2093
+              model:
+                adhocFilters: []
+                datasource:
+                    type: prometheus
+                    uid: PBFA97CFB590B2093
+                editorMode: code
+                exemplar: false
+                expr: |
+                    cpu_user_load{job=~".*", alias=~".*", cpu=~".*"}
+                format: time_series
+                instant: false
+                interval: ""
+                intervalMs: 5000
+                legendFormat: '{{alias}}-{{cpu}}'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: Avg CPU User Load
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Avg CPU User Load
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: mean
+                refId: Avg CPU User Load
+                type: reduce
+            - refId: Alarm Trigger
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 10
+                        type: gte
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Alarm Trigger
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: Avg CPU User Load
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: Alarm Trigger
+                type: threshold
+          dashboardUid: bekb70hhnfh8ga
+          panelId: 11
+          noDataState: NoData
+          execErrState: Error
+          for: 20s
+          annotations:
+            __dashboardUid__: bekb70hhnfh8ga
+            __panelId__: "11"
+            description: Over the last 5 minutes, the average cpu load on "{{labels.alias}}-{{labels.cpu}}"" was above 85%.
+            summary: CPU User Load >= 85%
+          isPaused: false
+          notification_settings:
+            receiver: SRE-Managers
+
+        - uid: high-cpu-system-load
+          title: High CPU System Load
+          condition: Alarm Trigger
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: PBFA97CFB590B2093
+              model:
+                adhocFilters: []
+                datasource:
+                    type: prometheus
+                    uid: PBFA97CFB590B2093
+                editorMode: code
+                exemplar: false
+                expr: |
+                    cpu_system_load{job=~".*", alias=~".*", cpu=~".*"}
+                format: time_series
+                instant: false
+                interval: ""
+                intervalMs: 5000
+                legendFormat: '{{alias}}-{{cpu}}'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: Avg CPU System Load
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Avg CPU System Load
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: mean
+                refId: Avg CPU System Load
+                type: reduce
+            - refId: Alarm Trigger
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 10
+                        type: gte
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - Alarm Trigger
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: Avg CPU System Load
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: Alarm Trigger
+                type: threshold
+          dashboardUid: bekb70hhnfh8ga
+          panelId: 12
+          noDataState: NoData
+          execErrState: Error
+          for: 20s
+          annotations:
+            __dashboardUid__: bekb70hhnfh8ga
+            __panelId__: "12"
+            description: Over the last 5 minutes, the average cpu load on this core was above 85%.
+            summary: CPU System Load >= 85%
           isPaused: false
           notification_settings:
             receiver: SRE-Managers
