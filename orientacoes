@@ -11,8 +11,14 @@ Alertas:
     - Se alguma partição do disco estiver com menos de 15% de espaço livre, dispara um alerta. Isso é verificado numa janela de tempo de 1 hora, com amostras a cada 30s.
     - Processos Zumbis - com amostras a cada 10s, se nos últimos 5 minutos houver mais de 10 processos zumbis, dispara um alerta.
     - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?
-    - Observei um erro de 5% no gauge Disk Free host machine sdb2 (comparei com o disk manager do ubuntu).
+    - Observei um erro de ~5% no gauge Disk Free host machine sdb2 (comparei com o disk manager do ubuntu).
 
+  - Observação interessante: após adicionar todos os alertas, o SQLite do Grafana começou a apresentar erros de max-retries-reached. 
+    {
+      logger=context userId=0 orgId=0 uname= t=2025-05-27T12:27:52.177483761-03:00 level=error msg="Request Completed" method=GET path=/api/search status=500 remote_addr=172.18.0.1 time_ms=5011 duration=5.011170382s size=114 referer="http://localhost:3000/?from=now-6h&orgId=1&timezone=browser&to=now" handler=/api/search/ status_source=server errorReason=InternalError errorMessageID=sqlstore.max-retries-reached error="retry 1: database is locked"
+    }
+    - Eu assumi que isso tenha sido causado pela quantidades de api-requests. Aumentar o tempo de auto refresh do dashboard de 5s para 15s parece ter mitigado o problema, mas ele ainda existe. Mas uma coisa que achei curiosa foi o fato de que o erro só começou a acontecer depois que adicionei os alertas. Antes disso, o Grafana estava rodando bem com auto refresh de 5s. 
+    - Parece que as configurações atuais já estão forçando o limite do SQLite quanto à escrita concorrente. Como seguir? Tentar otimizar os alertas? Realizar um estudo para melhora de performance da stack? Lembro que eu tinha achado o SQLite uma opção interessante pela leveza, mas visto esta situação, uma migração para o PostgreSQL talvez fosse interessante, mas não pretendo realizá-la neste projeto. Talvez acrescentar a sugestão posteriormente no texto? 
 
     
 Orientação 20250506
