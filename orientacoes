@@ -1,6 +1,13 @@
 Orientação 20250527
 
+-> fechar o network
+-> fechar o disk
+-> refazer o capitulo 1
+-> capitulo 2 -> scaffolding do capítulo-> levantamento dos fundamentos téoricos (embasamento superficial das ferramentas utilizadas no projeto. Pode falar do zabbix tbm, mas nao precisa dar tanto atençao a ele).
+
+
 Fiz mais uma tentativa de adicionar um dispositivo Android no monitoramento. No caso, o meu celular. No entanto, tive muitos problemas de permissionamento do sistema. Se eu obtivesse um android rooteado, conseguiria facilmente realizar a aquisição de dados. No entanto, como não tenho acesso a um dispositivo rooteado, não consegui avançar nesse ponto. Aí entramos novamente na tentativa de simular um dispositivo Android rooteado na minha máquina, o que optamos por não fazer.
+]--> Detalhar no texto minhas aventuras tentando incluir o Android no monitoramento, as dificuldades enfrentadas e a decisão de não prosseguir com a simulação de um dispositivo Android rooteado.
 
 Alertas:
   - Configurei disparos via email (SMTP server do gmail) + Telegram (bot do telegram) (usando a UI do Grafana)
@@ -10,8 +17,9 @@ Alertas:
     - Se CPU, Memória ou Disk I/O Util tiverem uma média de uso acima de 85% por mais de 5 minutos, dispara um alerta. O Grafana coleta amostras a cada 10s(evaluation interval).
     - Se alguma partição do disco estiver com menos de 15% de espaço livre, dispara um alerta. Isso é verificado numa janela de tempo de 1 hora, com amostras a cada 30s.
     - Processos Zumbis - com amostras a cada 10s, se nos últimos 5 minutos houver mais de 10 processos zumbis, dispara um alerta.
-    - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?
-    - Observei um erro de ~5% no gauge Disk Free host machine sdb2 (comparei com o disk manager do ubuntu).
+    - Observei um erro de ~5% no gauge Disk Free host machine sdb2 (comparei com o disk manager do ubuntu). ---> Tentar obter essa métrica pelo terminal usando outros apps para fazer uma paridade. Obs: essas diferenças de espaço podem se dar ao permissionamento de pastas (permission denied)
+    - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?]--> Ter um melhor embasamento (tentar novamente seja para fazer funcionar, seja para justificar o pq nao funcionar)
+
 
   - Observação interessante: após adicionar todos os alertas, o SQLite do Grafana começou a apresentar erros de max-retries-reached. 
     {
@@ -26,7 +34,7 @@ Alertas:
       - Redução de todos os maxDataPoints de 43200 para 1000
     O Grafana reduziu significantemente os erros de "Database locked, sleeping then retrying" error="database is locked" retry=1 code="database is locked"
     - Aparentemente, o SQLite não lida bem com leituras concorrentes mais agressivas, ficando a sugestão de que, para projetos maiores, o PostgreSQL seja uma opção mais interessante.
-    - Após a introdução de offsets nos alarm rules, aparentemente o erro de "max-retries-reached" foi resolvido. Voltei o auto refresh do dashboard para 5s e o Grafana está rodando bem.
+    - Após a introdução de offsets nos alarm rules, aparentemente o erro de "max-retries-reached" mitigado ainda mais, mas ainda persiste. Nota-se que se trata de um gargalo de concorrência do próprio SQLite. Voltei o auto refresh do dashboard para 5s e o Grafana está rodando bem.
 
 Orientação 20250506
 
