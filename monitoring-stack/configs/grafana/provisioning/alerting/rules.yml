@@ -68,7 +68,7 @@ groups:
                 conditions:
                     - evaluator:
                         params:
-                            - 10
+                            - 85
                         type: gte
                       operator:
                         type: and
@@ -163,7 +163,7 @@ groups:
                 conditions:
                     - evaluator:
                         params:
-                            - 0.2
+                            - 85
                         type: gte
                       operator:
                         type: and
@@ -259,7 +259,7 @@ groups:
                 conditions:
                     - evaluator:
                         params:
-                            - 10
+                            - 85
                         type: gte
                       operator:
                         type: and
@@ -349,7 +349,7 @@ groups:
                 conditions:
                     - evaluator:
                         params:
-                            - 10
+                            - 85
                         type: gte
                       operator:
                         type: and
@@ -441,7 +441,7 @@ groups:
                 conditions:
                     - evaluator:
                         params:
-                            - 10
+                            - 85
                         type: gte
                       operator:
                         type: and
