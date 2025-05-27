@@ -4,7 +4,8 @@ groups:
   - orgId: 1
     name: Memory Alerts
     folder: Monitoring
-    interval: 10s
+    interval: 1m
+    evaluation_offset: 0s
     rules:
         - uid: high-memory-load
           title: High Memory Load
@@ -34,7 +35,7 @@ groups:
                 interval: ""
                 intervalMs: 5000
                 legendFormat: '{{alias}} {{name}}'
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 range: true
                 refId: A
             - refId: Avg Memory Load
@@ -58,7 +59,7 @@ groups:
                     uid: __expr__
                 expression: A
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 reducer: mean
                 refId: Avg Memory Load
                 type: reduce
@@ -84,7 +85,7 @@ groups:
                     uid: __expr__
                 expression: Avg Memory Load
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 refId: Alarm Trigger
                 type: threshold
           dashboardUid: bekb70hhnfh8ga
@@ -129,7 +130,7 @@ groups:
                 interval: ""
                 intervalMs: 5000
                 legendFormat: '{{alias}} {{name}}'
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 range: true
                 refId: A
             - refId: Avg Swap Load
@@ -153,7 +154,7 @@ groups:
                     uid: __expr__
                 expression: A
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 reducer: mean
                 refId: Avg Swap Load
                 type: reduce
@@ -179,7 +180,7 @@ groups:
                     uid: __expr__
                 expression: Avg Swap Load
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 refId: Alarm Trigger
                 type: threshold
           dashboardUid: bekb70hhnfh8ga
@@ -200,7 +201,8 @@ groups:
   - orgId: 1
     name: CPU Alerts
     folder: Monitoring
-    interval: 10s
+    interval: 30s
+    evaluation_offset: 10s
     rules:
         - uid: high-cpu-user-load
           title: High CPU User Load
@@ -225,7 +227,7 @@ groups:
                 interval: ""
                 intervalMs: 5000
                 legendFormat: '{{alias}}-{{cpu}}'
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 range: true
                 refId: A
             - refId: Avg CPU User Load
@@ -249,7 +251,7 @@ groups:
                     uid: __expr__
                 expression: A
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 reducer: mean
                 refId: Avg CPU User Load
                 type: reduce
@@ -275,7 +277,7 @@ groups:
                     uid: __expr__
                 expression: Avg CPU User Load
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 refId: Alarm Trigger
                 type: threshold
           dashboardUid: bekb70hhnfh8ga
@@ -315,7 +317,7 @@ groups:
                 interval: ""
                 intervalMs: 5000
                 legendFormat: '{{alias}}-{{cpu}}'
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 range: true
                 refId: A
             - refId: Avg CPU System Load
@@ -339,7 +341,7 @@ groups:
                     uid: __expr__
                 expression: A
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 reducer: mean
                 refId: Avg CPU System Load
                 type: reduce
@@ -365,7 +367,7 @@ groups:
                     uid: __expr__
                 expression: Avg CPU System Load
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 refId: Alarm Trigger
                 type: threshold
           dashboardUid: bekb70hhnfh8ga
@@ -399,15 +401,15 @@ groups:
                 editorMode: code
                 exemplar: false
                 expr: |
-                    (100 - cpu_idle{job=~".*", job!="virtual_hosts", alias=~".*", cpu=~".*"})
+                    (100 - cpu_idle{job!="virtual_hosts", alias=~".*", cpu=~".*"})
                     or
-                    absent(cpu_idle{job=~".*", job!="virtual_hosts", alias=~".*", cpu=~".*"}) * 0
+                    absent(cpu_idle{job!="virtual_hosts", alias=~".*", cpu=~".*"}) * 0
                 format: time_series
                 instant: false
                 interval: ""
                 intervalMs: 5000
                 legendFormat: '{{alias}}-{{cpu}}'
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 range: true
                 refId: A
             - refId: Avg CPU Total Load
@@ -431,7 +433,7 @@ groups:
                     uid: __expr__
                 expression: A
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 reducer: mean
                 refId: Avg CPU Total Load
                 type: reduce
@@ -457,7 +459,7 @@ groups:
                     uid: __expr__
                 expression: Avg CPU Total Load
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 refId: Alarm Trigger
                 type: threshold
           dashboardUid: bekb70hhnfh8ga
@@ -478,7 +480,8 @@ groups:
   - orgId: 1
     name: Processes Alerts
     folder: Monitoring
-    interval: 10s
+    interval: 1m
+    evaluation_offset: 20s
     rules:
         - uid: high-zombie-count
           title: High Zombie Processes Count
@@ -503,7 +506,7 @@ groups:
                 interval: ""
                 intervalMs: 5000
                 legendFormat: '{{alias}}-Zombies'
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 range: true
                 refId: A
             - refId: Zombie Count
@@ -527,7 +530,7 @@ groups:
                     uid: __expr__
                 expression: A
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 reducer: last
                 refId: Zombie Count
                 type: reduce
@@ -553,7 +556,7 @@ groups:
                     uid: __expr__
                 expression: Zombie Count
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 refId: Alarm Trigger
                 type: threshold
           dashboardUid: bekb70hhnfh8ga
@@ -574,7 +577,8 @@ groups:
   - orgId: 1
     name: Disk Alerts
     folder: Monitoring
-    interval: 30s
+    interval: 1m
+    evaluation_offset: 25s
     rules:
         - uid: low-disk-space
           title: Low Partition Space
@@ -603,7 +607,7 @@ groups:
                 interval: ""
                 intervalMs: 5000
                 legendFormat: '{{alias}}-{{disk_partition}}'
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 range: true
                 refId: A
             - refId: Free Disk Space
@@ -627,7 +631,7 @@ groups:
                     uid: __expr__
                 expression: A
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 reducer: mean
                 refId: Free Disk Space
                 type: reduce
@@ -653,7 +657,7 @@ groups:
                     uid: __expr__
                 expression: Free Disk Space
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 refId: Alarm Trigger
                 type: threshold
           dashboardUid: bekb70hhnfh8ga
@@ -693,7 +697,7 @@ groups:
                 interval: ""
                 intervalMs: 5000
                 legendFormat: '{{alias}}-{{disk_partition}}'
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 range: true
                 refId: A
             - refId: Disk I/O Load
@@ -717,7 +721,7 @@ groups:
                     uid: __expr__
                 expression: A
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 reducer: mean
                 refId: Disk I/O Load
                 type: reduce
@@ -743,7 +747,7 @@ groups:
                     uid: __expr__
                 expression: Disk I/O Load
                 intervalMs: 1000
-                maxDataPoints: 43200
+                maxDataPoints: 1000
                 refId: Alarm Trigger
                 type: threshold
           dashboardUid: bekb70hhnfh8ga

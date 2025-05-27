@@ -18,9 +18,16 @@ Alertas:
       logger=context userId=0 orgId=0 uname= t=2025-05-27T12:27:52.177483761-03:00 level=error msg="Request Completed" method=GET path=/api/search status=500 remote_addr=172.18.0.1 time_ms=5011 duration=5.011170382s size=114 referer="http://localhost:3000/?from=now-6h&orgId=1&timezone=browser&to=now" handler=/api/search/ status_source=server errorReason=InternalError errorMessageID=sqlstore.max-retries-reached error="retry 1: database is locked"
     }
     - Eu assumi que isso tenha sido causado pela quantidades de api-requests. Aumentar o tempo de auto refresh do dashboard de 5s para 15s parece ter mitigado o problema, mas ele ainda existe. Mas uma coisa que achei curiosa foi o fato de que o erro só começou a acontecer depois que adicionei os alertas. Antes disso, o Grafana estava rodando bem com auto refresh de 5s. 
-    - Parece que as configurações atuais já estão forçando o limite do SQLite quanto à escrita concorrente. Como seguir? Tentar otimizar os alertas? Realizar um estudo para melhora de performance da stack? Lembro que eu tinha achado o SQLite uma opção interessante pela leveza, mas visto esta situação, uma migração para o PostgreSQL talvez fosse interessante, mas não pretendo realizá-la neste projeto. Talvez acrescentar a sugestão posteriormente no texto? 
+    - Parece que as configurações atuais já estão forçando o limite do SQLite quanto à escrita concorrente. Como seguir? Tentar otimizar os alertas? Realizar um estudo para melhora de performance da stack? Lembro que eu tinha achado o SQLite uma opção interessante pela leveza, mas visto esta situação, uma migração para o PostgreSQL talvez fosse interessante, mas não pretendo realizá-la neste projeto. Talvez acrescentar a sugestão posteriormente no texto?
+    - De fato, o problema eram as leituras concorrentes agressivas dos alertas. Ao longo das adições das regras, fui percebendo que o Grafana vinha apresentando certa lentidão. Ao reduzir:
+      - CPU evaluation interval de 10s para 30s
+      - Memory e Processes evaluation interval de 10s para 1m
+      - Disk evaluation interval de 30s para 1m
+      - Redução de todos os maxDataPoints de 43200 para 1000
+    O Grafana reduziu significantemente os erros de "Database locked, sleeping then retrying" error="database is locked" retry=1 code="database is locked"
+    - Aparentemente, o SQLite não lida bem com leituras concorrentes mais agressivas, ficando a sugestão de que, para projetos maiores, o PostgreSQL seja uma opção mais interessante.
 
-    
+
 Orientação 20250506
 
 Consegui adicionar métricas de rede  e processos aos containers!!!
