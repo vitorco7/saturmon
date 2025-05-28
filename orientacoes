@@ -1,3 +1,57 @@
+Orientação 20250528
+-> fechar o network
+  
+
+-> fechar o disk
+
+  -> Observei um erro de ~5% no gauge Disk Free host machine sdb2 (comparei com o disk manager do ubuntu). ---> Tentar obter essa métrica pelo terminal usando outros apps para fazer uma paridade. Obs: essas diferenças de espaço podem se dar ao permissionamento de pastas (permission denied)
+
+  -Abordagem:
+    1 - Como o inputs.disk do telegraf obtém estas métricas?
+    O telegraf obtém estas métricas a partir do /proc filesystem
+    https://github.com/influxdata/telegraf/blob/release-1.34/plugins/inputs/disk/README.md
+
+    The used_percent field is calculated by used / (used + free) and not used / total as the unix df command does it. See wikipedia - df for more details.
+    
+    2 - A partir disso, que outros meios posso utilizar para ler tais métricas na mesma fonte do inputs.disk do telegraf?
+      The "df" (disk free) command is the most reliable tool to check filesystem space usage on Unix/Linux systems.
+    3 - Realizando a leitura das métricas a partir da mesma fonte e utilizando meios diferentes, houve disparidade nos dados obtidos?
+      {
+        Rodando "df -h /dev/sdb2" no terminal:
+        Filesystem                Size  Used Avail Use%
+        Mounted on/dev/sdb2       234G  169G   53G  77% /
+
+        Used% v1-> Fazendo Used/Size -> 169/234 * 100 = 72,222222222%. Um erro de ~5% do próprio Use% do "df"
+
+        Free% v1-> Fazendo Avail/Size -> 53/234 * 100 = 22,64957265%.
+
+        Used% v2-> Fazendo 100 - Free% v1 = 100 - 22,64957265% = 77,35042735%. Bate com o valor obtido do "df -h /dev/sdb2"
+
+        Free% v2-> Fazendo 100 - Used% v1 = 100 - 72,222222222% = 27,777777778%. Diferença de ~5% do Free% v1
+      }
+      {
+        Conferindo os valores do telegraf:
+         Used% v1 -> {
+         Used/Size -> 100 * 168.44/233.18 -> 72.23%
+         PromQL => 100*(physical_disk_used{disk_partition="sdb2"} / physical_disk_total{disk_partition="sdb2"}) = 72.23%
+         } -> bate com Used% v1 do "df -h /dev/sdb2"
+
+         Free% v1 -> {
+          Free/Size -> 100 * 52.82/233.18 -> 22,65%
+          PromQL => 100*(physical_disk_free{disk_partition="sdb2"} / physical_disk_total{disk_partition="sdb2"}) = 22.65%
+          } -> bate com Free% v1 do "df -h /dev/sdb2"
+         }
+      }
+      {
+        Valores presentes no app "Disks" do ubuntu
+        Size - 256
+        Free - 70
+        72,8% Full
+        Device /dev/sdb2
+      }
+      
+      A única conclusão concreta que consigo tirar é que os valores do telegraf são coerentes, visto que são praticamente idênticos aos do "df -h /dev/sdb2". No entanto, não consigo chegar à uma conclusão sobre qual versão do cálculo de Used% e Free% é a mais correta.
+
 Orientação 20250527
 
 -> fechar o network
