@@ -1,6 +1,10 @@
 Orientação 20250528
--> fechar o network
-  
+  -> fechar o network
+      - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?]--> Ter um melhor embasamento (tentar novamente seja para fazer funcionar, seja para justificar o pq nao funcionar)
+
+  -> Abordagem
+    
+
 
 -> fechar o disk
 
@@ -16,7 +20,52 @@ Orientação 20250528
     2 - A partir disso, que outros meios posso utilizar para ler tais métricas na mesma fonte do inputs.disk do telegraf?
       The "df" (disk free) command is the most reliable tool to check filesystem space usage on Unix/Linux systems.
     3 - Realizando a leitura das métricas a partir da mesma fonte e utilizando meios diferentes, houve disparidade nos dados obtidos?
+      -------Cálculos corretos-------{
       {
+        Rodando "df -h /dev/sdb2" no terminal:
+        Filesystem                Size  Used Avail Use%
+        Mounted on/dev/sdb2       234G  169G   53G  77% /
+
+        Used% -> 100 * (Used / (Used + Free)) = 100 * (169 / (169 + 53)) = 100 * (169 / 222) = 100 * 0.76036036036 = 76.04%
+        Free% -> 100 * (Free / (Used + Free)) = 100 * (53 / (169 + 53)) = 100 * (53 / 222) = 100 * 0.23873873873 = 23.87%
+      }
+      {
+        Conferindo os valores do telegraf:
+         Used -> 168.8 
+         PromQL => (physical_disk_used{disk_partition="sdb2"} / (1024 * 1024 * 1024))
+
+         Free -> 52.46
+         PromQL => (physical_disk_free{disk_partition="sdb2"} / (1024 * 1024 * 1024))
+        
+        Used% = 100 * (168.8 / (168.8 + 52.46)) = 100 * (168.8 / 221.26) = 100 * 0.762 = 76.2%
+        Free% = 100 * (52.46 / (168.8 + 52.46)) = 100 * (52.46 / 221.26) = 100 * 0.237 = 23.7%
+      }
+      {
+        Valores presentes no app "Disks" do ubuntu
+        Size - 256
+        Free - 69
+        72,9% Full
+        Device /dev/sdb2
+      }
+      {
+      Conclusão -> os valores de referência são os do "df -h". Ele não utiliza o espaço total em disco como denominador, mas sim a soma do espaço usado e do espaço livre. Essa abordagem é intencional e difere de simplesmente usar o total de blocos reportado, porque:
+
+        O campo total reportado pelos sistemas de arquivos pode incluir blocos reservados para o superusuário (root) ou para metadados do sistema de arquivos, que não estão disponíveis para usuários comuns.
+
+        A soma de usado + disponível reflete apenas os blocos que estão realmente acessíveis para usuários que não são root, fornecendo uma visão mais precisa do espaço utilizável.
+
+      Ajustando a fórmula com os valores obtidos pelo inputs.disk do telegraf, chegamos a valores muito mais próximos do "df -h":
+        df -h
+        Used% = 76.04%
+        Free% = 23.87%
+
+        Telegraf
+        Used% = 76.02%
+        Free% = 23.7%
+
+      Os valores obtidos pelo app Disks do ubuntu serão desconsiderados, pois utilizam outras bibliotecas e ferramentas, introduzindo outras distorções nos dados.
+      }
+      -------Cálculos errados-------{
         Rodando "df -h /dev/sdb2" no terminal:
         Filesystem                Size  Used Avail Use%
         Mounted on/dev/sdb2       234G  169G   53G  77% /
@@ -28,6 +77,8 @@ Orientação 20250528
         Used% v2-> Fazendo 100 - Free% v1 = 100 - 22,64957265% = 77,35042735%. Bate com o valor obtido do "df -h /dev/sdb2"
 
         Free% v2-> Fazendo 100 - Used% v1 = 100 - 72,222222222% = 27,777777778%. Diferença de ~5% do Free% v1
+
+
       }
       {
         Conferindo os valores do telegraf:
