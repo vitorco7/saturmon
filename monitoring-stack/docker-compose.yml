@@ -61,7 +61,7 @@ services:
       context: .
     image: ${UBUNTU_DEVICE_IMG}
     hostname: device1
-    cpus: "0.5"
+    cpus: "0.6"
     mem_limit: "1024m"
     networks:
       - devices_network
@@ -130,7 +130,7 @@ services:
       context: .
     image: ${ALPINE_DEVICE_IMG}
     hostname: device4
-    cpus: "0.6"
+    cpus: "0.5"
     mem_limit: "886m"
     networks:
       - devices_network
@@ -153,7 +153,7 @@ services:
       context: .
     image: ${ALPINE_DEVICE_IMG}
     hostname: device5
-    cpus: "0.7"
+    cpus: "0.6"
     mem_limit: "750m"
     networks:
       - devices_network
@@ -178,11 +178,48 @@ services:
       - "5201:5201"
     networks:
       - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     healthcheck:
       test: ["CMD", "pgrep", "iperf3"]
       interval: 30s
       timeout: 10s
       retries: 3
+
+  # chaosblade:
+  #   image: chaosbladeio/chaosblade-tool:latest
+  #   container_name: chaosblade
+  #   privileged: true
+  #   networks:
+  #     - devices_network
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   stdin_open: true
+  #   tty: true
+
+  # pumba:
+  #   image: gaiaadm/pumba:latest
+  #   container_name: pumba
+  #   command: >
+  #     --log-level info netem --tc-image gaiadocker/iproute2
+  #     --duration 45s
+  #     loss --percent 20
+  #     device_1 device_2 device_3 device_4 device_5
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /etc/timezone:/etc/timezone:ro
+  #     - /etc/localtime:/etc/localtime:ro
+  #   networks:
+  #     - devices_network
+  #   cap_add:
+  #     - NET_ADMIN
+  #   depends_on:
+  #     - virtual_device_1
+  #     - virtual_device_2
+  #     - virtual_device_3
+  #     - virtual_device_4
+  #     - virtual_device_5
 
 networks:
   devices_network:

@@ -24,17 +24,17 @@ while true; do
     # CPU Cache Stress
     cpu_cache_workers=$((RANDOM % 3 + 2))
     echo "$(timestamp) [INFO] [CPU Cache] Workers: $cpu_cache_workers, Duration: $stress_time"
-    stress-ng --cpu-cache "$cpu_cache_workers" --timeout "$stress_time"
+    stress-ng --cache "$cpu_cache_workers" --timeout "$stress_time"
     
     # CPU Floating Point Stress
     cpu_float_workers=$((RANDOM % 3 + 2))
     echo "$(timestamp) [INFO] [CPU Float] Workers: $cpu_float_workers, Duration: $stress_time"
-    stress-ng --cpu-float "$cpu_float_workers" --timeout "$stress_time"
+    stress-ng --matrix "$cpu_float_workers" --timeout "$stress_time"
     
     # CPU Pipe Stress
     cpu_pipe_workers=$((RANDOM % 3 + 2))
     echo "$(timestamp) [INFO] [CPU Pipe] Workers: $cpu_pipe_workers, Duration: $stress_time"
-    stress-ng --cpu-pipe "$cpu_pipe_workers" --timeout "$stress_time"
+    stress-ng --pipe "$cpu_pipe_workers" --timeout "$stress_time"
     
     echo "$(timestamp) [INFO] === Completed CPU Tests ==="
 
@@ -60,11 +60,11 @@ while true; do
 
     # Random Write Stress
     echo "$(timestamp) [INFO] [Disk I/O Random Write] Duration: $stress_time"
-    stress-ng --hdd 1 --hdd-opts randwrite --timeout "$stress_time"
+    stress-ng --hdd 1 --hdd-opts wr-rnd --timeout "$stress_time"
 
     # Disk Bandwidth Stress
     echo "$(timestamp) [INFO] [Disk Bandwidth] Duration: $stress_time"
-    stress-ng --hdd 1 --hdd-opts bandwidth --timeout "$stress_time"
+    stress-ng --hdd 1 --hdd-opts wr-seq --timeout "$stress_time"
 
     echo "$(timestamp) [INFO] === Completed Disk I/O Tests ==="
 
@@ -119,11 +119,11 @@ while true; do
     stress-ng --fork "$system_workers" --timeout "$stress_time" &
 
     # Parallel block with additional tests
-    stress-ng --cpu-cache "$cpu_cache_workers" --timeout "$stress_time" &
-    stress-ng --cpu-float "$cpu_float_workers" --timeout "$stress_time" &
-    stress-ng --cpu-pipe "$cpu_pipe_workers" --timeout "$stress_time" &
-    stress-ng --hdd 1 --hdd-opts randwrite --timeout "$stress_time" &
-    stress-ng --hdd 1 --hdd-opts bandwidth --timeout "$stress_time" &
+    stress-ng --cache "$cpu_cache_workers" --timeout "$stress_time" &
+    stress-ng --matrix "$cpu_float_workers" --timeout "$stress_time" &
+    stress-ng --pipe "$cpu_pipe_workers" --timeout "$stress_time" &
+    stress-ng --hdd 1 --hdd-opts wr-rnd --timeout "$stress_time" &
+    stress-ng --hdd 1 --hdd-opts wr-seq --timeout "$stress_time" &
 
     # Run iperf3 client test to iperf3 server (parallel)
     iperf3 -c iperf3 -t 5 || echo "iperf3 test failed (parallel)" &

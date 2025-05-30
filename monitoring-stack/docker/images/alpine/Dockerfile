@@ -1,7 +1,7 @@
 FROM alpine:3.21.3
 
 # Install basic dependencies
-RUN apk update && apk add --no-cache wget stress-ng gnupg curl bash iperf3 
+RUN apk update && apk add --no-cache wget stress-ng gnupg curl bash iperf3
 
 # Install required dependencies for Telegraf
 RUN apk add --no-cache ca-certificates procps lm-sensors tzdata iputils 
