@@ -85,7 +85,7 @@ services:
     image: ${UBUNTU_DEVICE_IMG}
     hostname: device2
     cpus: "0.6"
-    mem_limit: "886m"
+    mem_limit: "900m"
     networks:
       - devices_network
     volumes:
@@ -108,7 +108,7 @@ services:
     image: ${UBUNTU_DEVICE_IMG}
     hostname: device3
     cpus: "0.7"
-    mem_limit: "768m"
+    mem_limit: "800m"
     networks:
       - devices_network
     volumes:
