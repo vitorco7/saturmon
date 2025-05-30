@@ -74,7 +74,10 @@ while true; do
     # Network Test
     net_workers=2   # Increase network load by using 2 workers
     echo "$(timestamp) [INFO] [Network] Workers: $net_workers, Duration: $stress_time"
-    stress-ng --sock "$net_workers" --timeout "$stress_time"
+    # stress-ng --sock "$net_workers" --timeout "$stress_time"
+
+    # Run iperf3 client test to iperf3 server
+    iperf3 -c iperf3 -t 5 || echo "iperf3 test failed"
 
     echo "$(timestamp) [INFO] === Completed Network Tests ==="
 
@@ -121,6 +124,9 @@ while true; do
     stress-ng --cpu-pipe "$cpu_pipe_workers" --timeout "$stress_time" &
     stress-ng --hdd 1 --hdd-opts randwrite --timeout "$stress_time" &
     stress-ng --hdd 1 --hdd-opts bandwidth --timeout "$stress_time" &
+
+    # Run iperf3 client test to iperf3 server (parallel)
+    iperf3 -c iperf3 -t 5 || echo "iperf3 test failed (parallel)" &
 
     wait
     echo "$(timestamp) [INFO] === Completed Parallel Tests, sleeping for $sleep_time seconds ==="

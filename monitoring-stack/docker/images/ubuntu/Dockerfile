@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 
-RUN apt update && apt install -y wget stress-ng gnupg curl
+RUN apt update && apt install -y wget stress-ng gnupg curl iperf3
 
 RUN wget -q https://repos.influxdata.com/influxdata-archive_compat.key
 
