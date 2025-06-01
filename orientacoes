@@ -8,7 +8,7 @@ Orientação 20250528
     - Conclusão
     - Referências
 
-  -> Nerfei ainda mais os alarm rules numa tentativa de reduzir os erros de "max-retries-reached" do SQLite do Grafana.
+  -> Nerfei ainda mais os alarm rules numa tentativa de reduzir os erros de "max-retries-reached" do SQLite do Grafana., mas o gargalo ainda persiste.
 
   -> fechar o network
       - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?]--> Ter um melhor embasamento (tentar novamente seja para fazer funcionar, seja para justificar o pq nao funcionar)
@@ -17,8 +17,17 @@ Orientação 20250528
       - Introdução de uma ferramenta nova no stack -> um novo container rodando Iperf3, induzindo cargas de inbound e outbound nos containers linux. Com esta ferramenta consegui gerar tráfego de rede entre os containers, permitindo a coleta de métricas de inbound e outbound traffic.
         Nota-se que os valores de outbound são de ordem muito mais que os de inbound. Uma possível explicação é que os containers linux tem limitações de cpu e ram, o que pode limitar suas capacidades de processamento de pacotes. Na escrita do texto, ao mencionar este ponto, irei realizar e apresentar testes mais aprofundados, com o objetivo de validar ou refutar essa hipótese.
       ====#TODO====
-      - Quanto aos network chaos tests: [relatar tentativas com pumba, chaosblade e iptables. Relatar que o inputs.net lê do path procfs/net/dev, que é um path que não é afetado por essas ferramentas de chaos engineering]
+      - Quanto aos network chaos tests: [relatar tentativas com pumba, chaosblade e iptables. Relatar que o inputs.net lê do path procfs/net/dev, que é um path que não é afetado por essas ferramentas de chaos engineering. 
+          Pumba - não consegui nem fazer o pumba realizar os testes nos containers.
+          Chaosblade - foi muito mais promissor, consegui rodar e conectar aos containers com facilidade. Aparentemente, ele estava realizando os testes com sucesso, mas não tive observabilidade destes testes, pois o Chaosblade usa a ferramenta "tc"+"netem" por debaixo dos panos para realizar os testes. Mais infos no pdf em /docs.
+            No, there is no official Telegraf network plugin that can directly observe or report the effects of network chaos testing (such as packet loss, delay, or corruption) introduced by tools like tc netem, pumba, or chaosblade at the application or kernel queueing discipline (qdisc) level.
+            Why?
+            inputs.net and similar plugins (like inputs.system, inputs.docker, inputs.procstat) collect metrics from dev or Docker stats, which only reflect interface-level statistics (hardware/driver drops/errors), not software-induced chaos at the qdisc or firewall level.
+            tc netem manipulates packets at the qdisc layer, and its effects are not reflected in dev counters.
+          iptables - mesmo problema do tc netem.
+          ]
       https://github.com/influxdata/telegraf/blob/master/plugins/inputs/net/README.md
+      
 
 
 -> fechar o disk
