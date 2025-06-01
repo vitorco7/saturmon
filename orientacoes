@@ -8,7 +8,9 @@ Orientação 20250528
     - Conclusão
     - Referências
 
-  -> Nerfei ainda mais os alarm rules numa tentativa de reduzir os erros de "max-retries-reached" do SQLite do Grafana., mas o gargalo ainda persiste.
+  -> Nerfei ainda mais os alarm rules numa tentativa de reduzir os erros de "max-retries-reached" do SQLite do Grafana., mas o gargalo ainda persiste. 
+    - AlertStatesDataLayer
+      Unexpected alert rules response
 
   -> fechar o network
       - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?]--> Ter um melhor embasamento (tentar novamente seja para fazer funcionar, seja para justificar o pq nao funcionar)
