@@ -122,7 +122,7 @@ groups:
                 100 * (
                   memory_swap_current{job=~".*", alias=~".*"}
                   /
-                  on(alias, job)300
+                  on(alias, job)
                   memory_swap_max{job=~".*", alias=~".*"}
                 )
               format: time_series

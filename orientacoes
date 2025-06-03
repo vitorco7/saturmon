@@ -1,16 +1,28 @@
-Orientação 20250528
-  -> Fechei o capítulo 1, com as seguintes seções:
-    - Introdução
+Orientação 20250603
+  -> Capítulo 1 - Introdução, com as seguintes seções:
+    - Tema
+      - 1 linha para qual é o assunto que estou abordando
+      - 1 linha sobre o problema que eu quero resolver
     - Objetivos
+      - O que eu quero fazer?
     - Metodologia
-    - Abordagem
-    - Resultados
-    - Conclusão
-    - Referências
+      - Como? Descreve como eu fiz a solução
+    - Justificativa
+      - Por que? Por que o assunto é importante?
+    - Descrição
+      - Seria um apontamento geral dos assuntos dos próximos capítulos
+
+  -> Capítulo 2, com as seguintes seções:
+    - Mencionar as ferramentas e técnicas existentes para monitoramento de containers, como Zabbix, Prometheus, Grafana, Telegraf, cAdvisor, Node Exporter, etc.
+    - Agrupar as ferramentas em categorias, como:
+      - Ferramentas de coleta de métricas
+      - Ferramentas de visualização de métricas
+      - Ferramentas de alerta e notificação
 
   -> Nerfei ainda mais os alarm rules numa tentativa de reduzir os erros de "max-retries-reached" do SQLite do Grafana., mas o gargalo ainda persiste. 
     - AlertStatesDataLayer
       Unexpected alert rules response
+    - Experimentei remover completamente os alert rules e o problema desaparece. De fato as leituras concorrentes das queries do dashboard + queries do alert rules causam gargalos no SQLite do Grafana.
 
   -> fechar o network
       - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?]--> Ter um melhor embasamento (tentar novamente seja para fazer funcionar, seja para justificar o pq nao funcionar)
