@@ -23,6 +23,7 @@ Orientação 20250603
     - AlertStatesDataLayer
       Unexpected alert rules response
     - Experimentei remover completamente os alert rules e o problema desaparece. De fato as leituras concorrentes das queries do dashboard + queries do alert rules causam gargalos no SQLite do Grafana.
+    -> POssível correção: o gargalo não é por conta das leituras concorrentes das queries do dashboard + queries do alert rules, mas sim pq enquanto as queries do dash rodam diretamente pelo TSDB do Prometheus, as queries dos alert rules rodam pelo SQLite do Grafana, que não lida bem com leituras concorrentes mais agressivas.
 
   -> fechar o network
       - Ficou faltando configurar alertas para packet drops e errors na rede, mas não consegui produzir dados com estas métricas. Como seguir?]--> Ter um melhor embasamento (tentar novamente seja para fazer funcionar, seja para justificar o pq nao funcionar)
