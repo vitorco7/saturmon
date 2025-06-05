@@ -1,3 +1,14 @@
+Orientação 20250610
+
+  ->No fim das contas, optei por substituir o SQLite do Grafana pelo PostgreSQL, visto que os database locks estavam constantes e o Grafana chegou a crashar diversas vezes hoje (04/06/2025). Após migrar para o PostgreSQL (o que foi bem tranquilo), o problema foi definitivamente resolvido e o Grafana está com uma performance excelente. Aproveitei para voltar os alarmes para as configurações originais.
+    Alert Type	  interval	evaluation_offset	relativeTimeRange	for
+    Memory/Swap	  1m	        20s	                5m             5m
+    CPU	          1m	        30s	                5m             5m
+    Processes	    1m	        40s	                5m             5m
+    Disk Space	  3m	        60s	                1h             20m
+    Disk I/O	    3m	        60s	                5m             10m
+
+
 Orientação 20250603
   -> Capítulo 1 - Introdução, com as seguintes seções:
     - Tema
