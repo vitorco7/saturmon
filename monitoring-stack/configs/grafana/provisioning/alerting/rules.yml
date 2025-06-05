@@ -4,8 +4,8 @@ groups:
   - orgId: 1
     name: Memory Alerts
     folder: Monitoring
-    interval: 2m                # was 1m
-    evaluation_offset: 0s
+    interval: 1m                # Faster detection, Postgres can handle it
+    evaluation_offset: 20s      # Stagger evaluations to reduce spikes
     rules:
       - uid: high-memory-load
         title: High Memory Load
@@ -92,7 +92,7 @@ groups:
         panelId: 1
         noDataState: NoData
         execErrState: Error
-        for: 600s               # was 300s
+        for: 300s               # was 600s, reduce from 600s to 5m for faster alerting
         annotations:
           __dashboardUid__: bekb70hhnfh8ga
           __panelId__: "1"
@@ -187,7 +187,7 @@ groups:
         panelId: 5
         noDataState: NoData
         execErrState: Error
-        for: 600s               # was 300s
+        for: 300s               # was 600s, reduce from 600s to 5m for faster alerting
         annotations:
           __dashboardUid__: bekb70hhnfh8ga
           __panelId__: "5"
@@ -201,8 +201,8 @@ groups:
   - orgId: 1
     name: CPU Alerts
     folder: Monitoring
-    interval: 1m                # was 30s
-    evaluation_offset: 30s      # was 10s
+    interval: 1m                # Faster detection
+    evaluation_offset: 30s      # Stagger evaluations
     rules:
       - uid: high-cpu-user-load
         title: High CPU User Load
@@ -284,7 +284,7 @@ groups:
         panelId: 11
         noDataState: NoData
         execErrState: Error
-        for: 600s               # was 300s
+        for: 300s               # was 600s, reduce from 600s to 5m
         annotations:
           __dashboardUid__: bekb70hhnfh8ga
           __panelId__: "11"
@@ -374,7 +374,7 @@ groups:
         panelId: 12
         noDataState: NoData
         execErrState: Error
-        for: 600s               # was 300s
+        for: 300s               # was 600s, reduce from 600s to 5m
         annotations:
           __dashboardUid__: bekb70hhnfh8ga
           __panelId__: "12"
@@ -466,7 +466,7 @@ groups:
         panelId: 25
         noDataState: NoData
         execErrState: Error
-        for: 600s               # was 300s
+        for: 300s               # was 600s, reduce from 600s to 5m
         annotations:
           __dashboardUid__: bekb70hhnfh8ga
           __panelId__: "25"
@@ -480,8 +480,8 @@ groups:
   - orgId: 1
     name: Processes Alerts
     folder: Monitoring
-    interval: 2m                # was 1m
-    evaluation_offset: 60s      # was 20s
+    interval: 1m
+    evaluation_offset: 40s
     rules:
       - uid: high-zombie-count
         title: High Zombie Processes Count
@@ -563,7 +563,7 @@ groups:
         panelId: 35
         noDataState: NoData
         execErrState: Error
-        for: 600s               # was 300s
+        for: 300s               # was 600s, reduce from 600s to 5m
         annotations:
           __dashboardUid__: bekb70hhnfh8ga
           __panelId__: "35"
@@ -577,8 +577,8 @@ groups:
   - orgId: 1
     name: Disk Alerts
     folder: Monitoring
-    interval: 5m                # was 2m
-    evaluation_offset: 120s     # was 90s
+    interval: 3m                # Disk changes slower, but can be more responsive now
+    evaluation_offset: 60s
     rules:
       - uid: low-disk-space
         title: Low Partition Space
@@ -665,7 +665,7 @@ groups:
         panelId: 14
         noDataState: NoData
         execErrState: Error
-        for: 1800s              # was 1200s (now 30 minutes)
+        for: 1200s              # was 1800s, reduce from 1800s to 20m
         annotations:
           __dashboardUid__: bekb70hhnfh8ga
           __panelId__: "14"
@@ -755,7 +755,7 @@ groups:
         panelId: 31
         noDataState: NoData
         execErrState: Error
-        for: 1200s              # was 600s (now 20 minutes)
+        for: 600s               # was 1200s, reduce from 1200s to 10m
         annotations:
           __dashboardUid__: bekb70hhnfh8ga
           __panelId__: "31"
