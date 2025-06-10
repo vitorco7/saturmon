@@ -1,4 +1,58 @@
+Orientação 20250617
+
+
 Orientação 20250610
+  -> Capítulo 1 - Introdução, com as seguintes seções:
+
+    - Tema
+      - 1 linha para qual é o assunto que estou abordando
+      - 1 linha sobre o problema que eu quero resolver
+
+    - Delimitação
+      - O que me impede de dar passos maiores? Limitadores do projeto. No meu caso, a indisponibilidade de usar dispositivos físicos para coleta de dados e ter de usar containers.
+      - Outro limitador foi o fato de certas métricas estarem disponíveis apenas nos dispositivos físicos, como disk metrics. Algumas métricas não estariam disponiveis nos containers.
+
+    - Justificativa
+      - Por que? Por que o assunto é importante?
+
+    - Objetivos
+      - O que eu quero fazer? Qual o objetivo geral(o que eu quero fazer)?
+      - Objetivos específicos (milestones):
+        - Levantar as estapas principais do projeto, ir quebrando o projeto em pequenas etapas.
+ 
+    - Metodologia
+      - Como? Descreve como eu fiz a solução
+      - Como eu chego nos objetivos/milestones?
+
+    - Descrição
+      - Seria um apontamento geral dos assuntos dos próximos capítulos
+
+  -> Capítulo 2, com as seguintes seções:
+    - Mencionar as ferramentas e técnicas existentes para monitoramento de containers, como Zabbix, Prometheus, Grafana, Telegraf, cAdvisor, Node Exporter, etc.
+    - Agrupar as ferramentas em categorias, como:
+      - Ferramentas de coleta de métricas
+      - Ferramentas de visualização de métricas
+      - Ferramentas de alerta e notificação
+
+    - Lembrar que não são as minhas decisões de projeto, e sim sa ferramentas que existem no mercado e que são utilizadas para monitoramento.
+
+    - Exemplo de seções:
+    - Métricas de interesse
+      - CPU
+      - Memória
+      - Disco
+      - I/O
+      - Rede
+      - Processos
+    - Ferramentas de coleta de métricas - Uma seção de "Agentes de monitoramento"
+    - Framework scraping dos dados dos Agentes
+      - Zabbix
+      - Prometheus
+    - Frameworks de visualização
+    - Framework alertas/notificações de métricas
+    - Trabalhos relacionados
+
+    - O capítulo 2 é a fundamentação teórica do projeto, onde eu vou explicar as ferramentas que eu escolhi e por que eu escolhi elas.
 
   ->No fim das contas, optei por substituir o SQLite do Grafana pelo PostgreSQL, visto que os database locks estavam constantes e o Grafana chegou a crashar diversas vezes hoje (04/06/2025). Após migrar para o PostgreSQL (o que foi bem tranquilo), o problema foi definitivamente resolvido e o Grafana está com uma performance excelente. Aproveitei para voltar os alarmes para as configurações originais.
     Alert Type	  interval	evaluation_offset	relativeTimeRange	for
