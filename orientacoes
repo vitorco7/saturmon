@@ -61,8 +61,7 @@ Orientação 20250610
     Processes	    1m	        40s	                5m             5m
     Disk Space	  3m	        60s	                1h             20m
     Disk I/O	    3m	        60s	                5m             10m
-
-
+  ->É importante escrever sobre essa experiência - que por conta das minhas escolhas de projeto (como usar o provisioning do Grafana e o TSDB do Prometheus), foi extremamente fácil migrar do SQLite para o PostgreSQL, e que essa migração resolveu os problemas de performance do Grafana.
 Orientação 20250603
   -> Capítulo 1 - Introdução, com as seguintes seções:
     - Tema
