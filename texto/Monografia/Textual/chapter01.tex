@@ -5,6 +5,7 @@
 Este projeto propõe o desenvolvimento de uma solução voltada ao monitoramento da saturação de recursos em dispositivos conectados a uma rede de computadores. Fundamentado exclusivamente em ferramentas de código aberto e na adoção do paradigma de Infraestrutura como Código (IaC), privilegia-se escalabilidade e replicabilidade nos processos de coleta, monitoramento e visualização de métricas. Assim, facilita-se a observabilidade da utilização do hardware dos dispositivos monitorados, com objetivo de auxiliar na administração e manutenção da infraestrutura da rede, seja ela corporativa ou doméstica.
 
 \section{Delimitação}
+\label{section:Delimitação}
 
 A solução destaca-se em versatilidade, podendo ser empregada em diferentes cenários. Ela contempla desde o monitoramento de dispositivos em infraestruturas de TI tradicionais — como servidores, roteadores, switches e storages — até o acompanhamento de equipamentos em ambientes domésticos, incluindo computadores pessoais, smartphones, dispositivos de Internet das Coisas (IoT) ou até mesmo dispositivos Edge.
 
@@ -28,12 +29,18 @@ Em síntese, ao integrar os princípios de saturação de SRE, Infraestrutura co
 
 \section{Objetivos}
 
-O objetivo central deste projeto é o desenvolvimento de uma solução completa de monitoramento de saturação completa, capaz de coletar, armazenar e visualizar métricas de dispositivos numa rede, além de gerar alertas e notificações sempre que determinadas condições críticas forem detectadas.
+O objetivo central deste projeto é o desenvolvimento de uma solução completa de monitoramento de saturação completa, capaz de coletar, armazenar e visualizar métricas de dispositivos numa rede, além de gerar alertas e notificações sempre que determinadas condições críticas forem detectadas. A solução deve ser facilmente adaptável a diferentes contextos, com arquitetura flexível, passível de ser reproduzida, ampliada e mantida de forma eficiente, além de utilizar apenas ferramentas de código aberto, garantindo a acessibilidade.
 
-Para atingir esse objetivo, torna-se fundamental identificar quais métricas são mais relevantes para o monitoramento de saturação, selecionar o software de coleta mais adequado, definir o framework responsável pela captação dos dados, como armazená-los e como visualizá-los de forma eficiente. Além disso, é imprescindível a implementação de mecanismos de alerta e notificação que permitam a atuação rápida dos responsáveis cabíveis.
+Para alcançar esse objetivo, é fundamental definir quais métricas são mais relevantes para o monitoramento de saturação, selecionar os softwares de coleta mais adequados, estabelecer o framework responsável pela captação e processamento dos dados, bem como determinar estratégias eficientes para o armazenamento e a visualização das informações. Além disso, é imprescindível a implementação de mecanismos de alerta e notificação que permitam a atuação rápida dos responsáveis cabíveis. Por fim, todo o processo deve ser estruturado de modo a assegurar portabilidade, escalabilidade, replicabilidade e versionamento, alinhando-se às melhores práticas de gestão de infraestrutura contemporânea.
 
 \section{Metodologia}
 
+No desenvolvimento deste trabalho, inicialmente foram avaliadas ferramentas de virtualização, coleta, armazenamento e visualização de dados e métricas, priorizando aquelas que atendessem aos objetivos propostos, apresentassem ampla documentação, ecossistema consolidado, recursos de automação, facilidade de uso e integração eficiente entre si.
 
+Com isso em mãos, todos os serviços necessários à implementação foram virtualizados utilizando contêineres Docker, incluindo aqueles destinados à simulação dos dispositivos monitorados(dispositivos virtuais). Cada dispositivo virtual recebeu restrições de recursos de hardware diferentes, a fim de simular máquinas diferentes, diferentes distribuições de Linux, uma instância dedicada e isolada do software coletor(agente), além de softwares executados periodicamente via shell scripts para realização de testes de estresse e carga, com o objetivo de simular cenários de saturação e gerar dados relevantes para análise.
+
+Após a seleção dessas ferramentas, foram definidas as métricas mais relevantes para o monitoramento da saturação dos dispositivos, bem como os softwares de coleta mais adequados para captá-las, sempre considerando as limitações e restrições estabelecidas no escopo do projeto (ver seção \ref{section:Delimitação}).
+
+Os agentes foram configurados para expor as métricas coletadas por meio de endpoints HTTP, possibilitando que o software de coleta centralizado capturasse, processasse e armazenasse os dados em um banco de dados. Esse repositório serviu de fonte para o framework de visualização, que disponibilizou dashboards interativos. Por fim, no mesmo ambiente, foram implementados mecanismos de alerta e notificação, responsáveis pelo envio automático de e-mails sempre que condições de disparo são atentidas.
 
 \section{Descrição}
