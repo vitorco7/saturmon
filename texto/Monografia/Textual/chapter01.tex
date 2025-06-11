@@ -2,7 +2,7 @@
 
 \section{Tema}
 
-Este projeto trata do desenvolvimento de uma solução para o monitoramento da saturação de dispositivos conectados a uma rede de computadores. Utilizando-se apenas de ferramentas de código aberto, e com uma abordagem de Infraestrutura como Código, privilegia-se escalabilidade e replicabilidade na coleta, monitoramento e visualização de métricas, facilitando a observabilidade da utilização do hardware dos dispositivos monitorados, com objetivo de auxiliar na administração e manutenção da infraestrutura da rede, seja ela corporativa ou doméstica.
+Este projeto propõe o desenvolvimento de uma solução voltada ao monitoramento da saturação de recursos em dispositivos conectados a uma rede de computadores. Fundamentado exclusivamente em ferramentas de código aberto e na adoção do paradigma de Infraestrutura como Código (IaC), privilegia-se escalabilidade e replicabilidade nos processos de coleta, monitoramento e visualização de métricas. Assim, facilita-se a observabilidade da utilização do hardware dos dispositivos monitorados, com objetivo de auxiliar na administração e manutenção da infraestrutura da rede, seja ela corporativa ou doméstica.
 
 \section{Delimitação}
 
@@ -14,25 +14,18 @@ Além dos dispositivos simulados, incluiu-se também um computador físico, com 
 
 Como consequência das limitações impostas, inviabilizou-se a coleta de determinadas métricas dos dispositivos virtuais, especialmente aquelas relacionadas ao armazenamento, como espaço disponível e operações de entrada e saída (I/O) em disco.
 
-
 \section{Justificativa}
+
+A relevância deste projeto reside na sua capacidade em atender uma crescente demanda por soluções de monitoramento eficazes, acessíveis, replicáveis e escaláveis de dispositivos conectados em redes heterogêneas. Ao empregar exclusivamente ferramentas de código aberto, a proposta democratiza o acesso a práticas avançadas de monitoramento, eliminando restrições impostas por soluções proprietárias e promovendo a adoção de padrões abertos e interoperáveis.
+
+Sob a ótica da Engenharia de Confiabilidade de Sites (SRE), destaca-se o conceito de saturação, que se refere à aproximação dos limites de capacidade de um recurso, como CPU, memória, armazenamento ou largura de banda.  A detecção proativa da saturação é fundamental para evitar falhas, degradações de desempenho e impactos negativos na experiência do usuário. O projeto oferece uma estrutura robusta para a identificação dessas condições, por meio da coleta contínua e sistemática de métricas relevantes, possibilitando a implementação de ações preventivas e corretivas antes que o sistema atinja um estado crítico.
+
+A adoção do paradigma de Infraestrutura como Código (IaC) constitui outro pilar central da proposta. Ao automatizar a definição, o provisionamento e o gerenciamento da infraestrutura de monitoramento por meio de código, o projeto assegura reprodutibilidade, versionamento e portabilidade, além de minimizar erros humanos e aumentar a eficiência operacional. Essa abordagem não só facilita a implantação da solução em múltiplos ambientes — sejam eles físicos, virtuais ou em nuvem —, como também favorece a manutenção e a evolução contínua da infraestrutura monitorada, alinhando-se às melhores práticas contemporâneas de gestão de TI.
+
+Por fim, o foco em observabilidade amplia a capacidade de compreensão do comportamento dos sistemas monitorados. Diferentemente do simples monitoramento, a observabilidade oferece uma visão holística e integrada dos dados coletados, permitindo a identificação proativa de anomalias, gargalos e tendências de saturação. Isso subsidia decisões informadas, baseadas em dados, e contribui para a otimização contínua do desempenho e da confiabilidade da infraestrutura de rede.
+
+Em síntese, ao integrar os princípios de saturação de SRE, Infraestrutura como Código e observabilidade, este projeto não apenas supre uma lacuna técnica relevante, mas também promove a disseminação de práticas modernas e eficientes de gestão de redes, em consonância com as demandas atuais por transparência, automação e sustentabilidade operacional.
+
 \section{Objetivos}
 \section{Metodologia}
 \section{Descrição}
-
-Aenean purus arcu, auctor sed interdum vel, feugiat a lacus. Fusce nec nibh quis ipsum maximus finibus in at nulla. In non ultricies felis, ac interdum mi. Fusce eu congue sem. Nam congue aliquam libero, nec bibendum mi sollicitudin non. Suspendisse cursus ligula vitae nunc finibus, sed eleifend enim vestibulum. Proin facilisis leo rhoncus nisl hendrerit interdum. Aenean est ligula, gravida eget nunc et, vehicula pharetra dui. In eu massa egestas, auctor ante non, consequat odio. (\cite{alvim2007}).
-
-Curabitur rhoncus blandit ipsum, id consequat urna venenatis id. Aliquam ex nisi, vestibulum quis tellus quis, ultricies egestas orci. Donec eu libero dui. Integer elementum felis et ligula congue rutrum. Sed a feugiat purus, eu rutrum massa. Vestibulum commodo elit id ornare pharetra. Pellentesque at pretium diam. Morbi sit amet placerat justo. Cras id nulla eros. Donec iaculis ligula eu gravida porttitor. Vestibulum tristique dapibus arcu porta euismod. Ut bibendum at nunc et interdum. In egestas pretium lacus, ut aliquet ipsum ultrices quis. Morbi euismod justo arcu, consequat sagittis orci aliquam in. Vivamus dignissim, libero vel accumsan viverra, odio erat venenatis sapien, a gravida quam neque vitae nisi.(\cite{mme2020}). 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{Imagens/chap01/loren-ipsum-cover.jpg}
-    \caption{Maecenas viverra convallis sem, id imperdiet neque rhoncus et. Ut vel mi erat. Nam quam arcu, mollis sodales felis at, sagittis iaculis lectus.}
-    \label{fig:lorem_ipsum}
-\end{figure}
-
-\section{Organização do TCC}
-
-In ornare, enim non porta interdum no Capítulo \ref{chap2},est lorem volutpat metus, pellentesque pharetra lacus est sed lacus. Vivamus quis magna et justo mattis commodo viverra in tellus. (Apêndice \ref{apendice}).
-
-Aliquam convallis mauris sit amet elementum condimentum. Vestibulum eget tellus massa. Aenean nisl tortor, consequat ac lacus maximus, hendrerit consequat purus. Fusce aliquam, leo vel dictum molestie, lorem nibh aliquam diam, sit amet accumsan justo ante sit amet tellus no Capítulo \ref{chap6}.
