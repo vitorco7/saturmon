@@ -39,7 +39,7 @@ latex.out/
 latex.log/
 
 # # Ignore generated PDFs (optional, remove this if you want to track PDFs)
-# *.pdf
+*.pdf
 
 # Ignore VS Code workspace settings (optional)
 .vscode/
