@@ -7,7 +7,7 @@ services:
     volumes:
       - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./configs/prometheus/rules/:/etc/prometheus/rules/:ro
-      - ./configs/prometheus/alertmanager/alertmanager.yml:/etc/prometheus/alertmanager/alertmanager.yml:ro
+      # - ./configs/prometheus/alertmanager/alertmanager.yml:/etc/prometheus/alertmanager/alertmanager.yml:ro
       - ./volumes/prometheus/metrics:/prometheus
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -44,7 +44,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     env_file:
-      - .env.secrets
+      - .env_test_branches.secrets
     networks:
       - devices_network
     healthcheck:
@@ -63,7 +63,7 @@ services:
       - "3000:3000"
     env_file:
       - .env
-      - .env.secrets
+      - .env_test_branches.secrets
     networks:
       - devices_network
     volumes:
