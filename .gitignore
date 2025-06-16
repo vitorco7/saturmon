@@ -58,3 +58,4 @@ latex.log/
 monitoring-stack/docs/.~lock.metric_mapping.xlsx#
 .env.secrets
 texto/fichamentos
+monitoring-stack/.env_test_branches.secrets
