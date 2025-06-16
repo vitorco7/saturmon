@@ -1,5 +1,18 @@
 Orientação 20250617
 
+  - Praticamente traduzi as regras de alarmes e políticas de notificações dos ymls do Grafana para yml do Prometheus, levantei um container separado para o Alertmanager e configurei o Prometheus para enviar os alertas para o Alertmanager.
+  - Tive dificuldade de fazer o Alertmanager rodar puxando a imagem direto do Docker Hub, pois é uma imagem bastante minimizada que estava com muitas dificuldades de lidar com referenciamento de variáveis dos arquivos .env. Como julgo uma medida de segurança importante (estaria, por exemplo, vazando a senha do smtp server do gmail), não quis deixar nada hardcoded e contornei o problema subindo um outro container Alpine e instalando o Alertmanager nele. Precisei criar um arquivo template para as configurações do Alertmanager e substituir as variáveis referenciadas em tempo de execução do docker compose utilizando um outro script que roda o comando envsubs via entrypoint do container. Se não tivesse ocorrido esse problema de referenciamento de variável, a integração com o Prometheus teria sido praticamente instantânea.
+  - O Alertmanager é o serviço de alarmes oficial do Prometheus e ambos são muito otimizados para trabalhar juntos.
+
+  -> Grafana + PostgreSQL versus Prometheus + Alertmanager; um resumo
+    - Grafana+PostgreSQL foi fácil de configurar, mas não é tão performático e escalável quanto Prometheus+Alertmanager.
+    
+    - De forma geral, para projetos de alta performance (granularidades <30s e muita escrita concorrente) a opção definitiva é Prometheus+Alertmanager;
+
+    - Para projetos menores, Grafana+PostgreSQL é suficientemente satisfatório.
+
+    - Porém, não realizei estudos comparativos de utilização de recursos para melhor definir a que momento um passa a valer mais a pena que o outro em cada escopo.
+
 
 Orientação 20250610
   -> Capítulo 1 - Introdução, com as seguintes seções:
