@@ -1,0 +1,114 @@
+groups:
+  # Memory Alerts
+  - name: memory_alerts
+    interval: 10s
+    rules:
+      - alert: HighMemoryLoad
+        expr: |
+          100 * (
+            memory_current{job=~".*", alias=~".*"} /
+            on(alias, job) memory_max{job=~".*", alias=~".*"}
+          ) >= 5
+        for: 1m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "Memory load >= 85%"
+          description: "Over the last 5 minutes, the average memory load was above 85% of the maximum memory on {{ $labels.alias }}."
+
+      - alert: HighMemorySwapLoad
+        expr: |
+          100 * (
+            memory_swap_current{job=~".*", alias=~".*"} /
+            on(alias, job) memory_swap_max{job=~".*", alias=~".*"}
+          ) >= 85
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "Memory Swap Load >= 85%"
+          description: "Over the last 5 minutes, the average memory swap load was above 85% of the maximum swap memory on {{ $labels.alias }}."
+
+  # CPU Alerts
+  - name: cpu_alerts
+    interval: 60s
+    rules:
+      - alert: HighCPUUserLoad
+        expr: cpu_user_load{job=~".*", alias=~".*", cpu=~".*"} >= 85
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "CPU User Load >= 85%"
+          description: "Over the last 5 minutes, the average cpu load on {{ $labels.alias }}-{{ $labels.cpu }} was above 85%."
+
+      - alert: HighCPUSystemLoad
+        expr: cpu_system_load{job=~".*", alias=~".*", cpu=~".*"} >= 85
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "CPU System Load >= 85%"
+          description: "Over the last 5 minutes, the average cpu load on {{ $labels.alias }}-{{ $labels.cpu }} was above 85%."
+
+      - alert: HighCPUTotalLoad
+        expr: |
+          (100 - cpu_idle{job!="virtual_hosts", alias=~".*", cpu=~".*"}) >= 85
+          or
+          (absent(cpu_idle{job!="virtual_hosts", alias=~".*", cpu=~".*"}) and on() vector(85))
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "CPU Total Load >= 85%"
+          description: "Over the last 5 minutes, the average cpu load on {{ $labels.alias }}-{{ $labels.cpu }} was above 85%."
+
+  # Process Alerts
+  - name: process_alerts
+    interval: 60s
+    rules:
+      - alert: HighZombieProcessCount
+        expr: processes_zombies{job=~".*", alias=~".*"} >= 10
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "Zombie Processes Count > 10"
+          description: "Over the last 5 minutes, there were detected more than 10 zombie processes on {{ $labels.alias }}."
+
+  # Disk Alerts
+  - name: disk_alerts
+    interval: 180s
+    rules:
+      - alert: LowPartitionSpace
+        expr: |
+          100 * (
+            physical_disk_free{job="physical_host", alias=~".*", disk_partition=~".*"} /
+            on(job, alias, disk_partition) (
+              physical_disk_free{job="physical_host", alias=~".*", disk_partition=~".*"} +
+              physical_disk_used{job="physical_host", alias=~".*", disk_partition=~".*"}
+            )
+          ) <= 15
+        for: 20m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Free Partition Space <= 15%"
+          description: "Over the last hour, there has been 15% or less free space on {{ $labels.alias }}-{{ $labels.disk_partition }}."
+
+      - alert: HighDiskIO
+        expr: physical_diskio_io_util{job=~".*", alias=~".*", disk_partition=~".*"} >= 85
+        for: 10m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "Disk I/O Load >= 85%"
+          description: "Over the last 5 minutes, the average disk i/o was above 85% on {{ $labels.alias }}-{{ $labels.disk_partition }}."

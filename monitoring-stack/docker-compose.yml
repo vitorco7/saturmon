@@ -7,6 +7,7 @@ services:
     volumes:
       - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./configs/prometheus/rules/:/etc/prometheus/rules/:ro
+      - ./configs/prometheus/alertmanager/alertmanager.yml:/etc/prometheus/alertmanager/alertmanager.yml:ro
       - ./volumes/prometheus/metrics:/prometheus
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
@@ -18,6 +19,9 @@ services:
       - devices_network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    depends_on:
+      alertmanager:
+        condition: service_healthy
     # profiles: ["all"]
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/ready"]
@@ -25,6 +29,31 @@ services:
       timeout: 3s
       retries: 10
       start_period: 0s
+
+  alertmanager:
+    container_name: alertmanager
+    build:
+      dockerfile: ${ALERTMANAGER_DOCKERFILE}
+      context: .
+    image: ${ALERTMANAGER_IMG}
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./configs/prometheus/alertmanager/alertmanager.yml.template:/etc/alertmanager/alertmanager.yml.template:ro
+      - ./volumes/alertmanager:/alertmanager
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env.secrets
+    networks:
+      - devices_network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9093/-/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
 
   grafana:
     container_name: grafana
@@ -40,7 +69,7 @@ services:
     volumes:
       - ./volumes/grafana/config/:/var/lib/grafana
       - ./configs/grafana/dashboard-json:/etc/grafana/dashboards
-      - ./configs/grafana/provisioning:/etc/grafana/provisioning
+      # - ./configs/grafana/provisioning:/etc/grafana/provisioning
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     # profiles: ["all"]
