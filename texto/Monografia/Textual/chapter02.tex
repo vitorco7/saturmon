@@ -1,19 +1,55 @@
 \chapter{Fundamentação Teórica}
 \label{chap2}
 
-Placeholder
+    % - Mencionar as ferramentas e técnicas existentes para monitoramento
+
+    % - Lembrar que não são as minhas decisões de projeto, e sim sa ferramentas que existem no mercado e que são utilizadas para monitoramento.
+
+    % - Trabalhos relacionados
+
+    % - O capítulo 2 é a fundamentação teórica do projeto, onde eu vou explicar as ferramentas que eu escolhi e por que eu escolhi elas.
+
+Escrever sobre a importância do monitoramento e observabilidade, usando artigos e referências que falam sobre o assunto.
+
+Discorrer sobre SRE e saturação, para definir o escopo deste trabalho.
+
+Discorrer sobre IaC
+
+Talvez incluir um diagrama de blocos com as ferramentas e como elas se relacionam? Ou isso é mais para o capítulo 3?
 
 \section{Hardware}
-Placeholder
+A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na Seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
 
-\subsection{NUC}
-Placeholder
+Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa (desktops), ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
+
+A seguir, serão apresentadas algumas opções de hardware avaliadas para compor a plataforma de monitoramento.
+
+\subsection{Next Unit of Computing (NUC)}
+
+O Intel NUC (\textit{Next Unit of Computing}) configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de desktops convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
+
+O NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura ARM. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
+
+Outro ponto relevante é o suporte a recursos de hardware mais robustos em comparação aos computadores de placa única. O NUC permite configurações com processadores de maior desempenho, maior quantidade de memória RAM, opções avançadas de armazenamento, como unidades SSD NVMe, interfaces modernas de conectividade e em alguns casos até mesmo placas gráficas dedicadas. Tais características tornam o dispositivo apto a lidar com cargas de trabalho mais exigentes, especialmente em situações que demandam coleta intensiva de métricas ou visualização analítica em tempo real.
+
+Dessa forma, o Intel NUC pode ser compreendido como uma solução intermediária entre os computadores de placa única, como o Raspberry Pi e o Orange Pi, e os desktops tradicionais, reunindo portabilidade e desempenho em um único equipamento.
 
 \subsection{Raspberry Pi}
-Placeholder
+
+O Raspberry Pi é uma família de computadores de placa única (SBC — \textit{Single-Board Computer}) desenvolvida pela Raspberry Pi Foundation, no Reino Unido, em colaboração com a Broadcom. Sua arquitetura baseia-se em processadores ARM e adota o conceito de \textit{system-on-a-chip} (SoC), integrando CPU, GPU e memória RAM em uma única placa. Essa integração favorece a eficiência energética e a redução de custos, características que tornam o dispositivo especialmente atrativo para aplicações embarcadas, automação residencial, robótica, projetos de Internet das Coisas (IoT) e experimentação em ambientes educacionais e industriais.
+
+A compatibilidade do Raspberry Pi com uma ampla gama de sistemas operacionais baseados em Linux — como Raspberry Pi OS, Ubuntu e Debian — amplia suas possibilidades de uso, permitindo desde tarefas cotidianas, como navegação web e execução de aplicações de escritório, até a implementação de servidores, clusters de computação e plataformas de monitoramento de redes. A ausência de armazenamento interno é suprida pelo uso de cartões microSD, que funcionam tanto para o sistema operacional quanto para o armazenamento de dados. Embora essa solução seja prática e econômica, o desempenho de leitura e escrita dos cartões microSD pode ser um fator limitante, especialmente em aplicações que demandam operações intensivas de I/O.
+
+Apesar de suas vantagens, o Raspberry Pi apresenta restrições que devem ser consideradas no planejamento de sistemas mais exigentes. Entre elas, destacam-se o desempenho modesto da CPU em tarefas altamente paralelas, a limitação de memória RAM — que varia conforme o modelo — e a já mencionada dependência do armazenamento em microSD, que pode impactar negativamente a velocidade e a durabilidade em cenários de uso intensivo. Ainda assim, a combinação de baixo custo, versatilidade e vasta documentação faz do Raspberry Pi uma plataforma amplamente adotada em projetos experimentais, educacionais e de prototipagem, mesmo que não alcance o desempenho de computadores convencionais baseados em arquitetura x86.
+
+No entanto, vale mencionar que, em modelos mais recentes há suporte para boot via USB, permitindo o uso de SSDs externos, além da expansão do limite de memória RAM para até 16GB no caso do Raspberry Pi 5. 
 
 \subsection{Orange Pi}
-Placeholder
+
+O Orange Pi é outra família de SBC, desenvolvida por fabricantes independentes, geralmente sediados na China, com base na arquitetura ARM. A proposta central da plataforma é fornecer alternativas ao Raspberry Pi com diferentes combinações de processador, memória e conectividade, visando atender a uma variedade maior de aplicações e faixas de preço.
+
+Em termos de especificações técnicas, os modelos da família Orange Pi apresentam ampla diversidade de configurações, permitindo a seleção do um modelo mais adequado às demandas de processamento, rede ou armazenamento exigidas. Porém, essa diversidade também implica em desafios. Um dos principais refere-se à compatibilidade com sistemas operacionais: nem todos os modelos contam com suporte oficial ou com imagens Linux estáveis e amplamente testadas. Em muitos casos, é necessário recorrer a distribuições mantidas pela comunidade ou adaptadas por terceiros, o que pode comprometer a confiabilidade e a manutenção a longo prazo do ambiente de produção. Além disso, a documentação oficial tende a ser limitada, dificultando a resolução de problemas em comparação com plataformas mais consolidadas, como o Raspberry Pi.
+
 
 \section{Sistemas Operacionais}
 Placeholder
