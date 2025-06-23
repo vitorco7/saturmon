@@ -1,6 +1,5 @@
 \chapter{Fundamentação Teórica}
 \label{chap2}
-
     % - Mencionar as ferramentas e técnicas existentes para monitoramento
 
     % - Lembrar que não são as minhas decisões de projeto, e sim sa ferramentas que existem no mercado e que são utilizadas para monitoramento.
@@ -9,15 +8,21 @@
 
     % - O capítulo 2 é a fundamentação teórica do projeto, onde eu vou explicar as ferramentas que eu escolhi e por que eu escolhi elas.
 
+
 Escrever sobre a importância do monitoramento e observabilidade, usando artigos e referências que falam sobre o assunto.
 
 Discorrer sobre SRE e saturação, para definir o escopo deste trabalho.
 
 Discorrer sobre IaC
 
+Discorrer sobre software abertos, ferramentas de código aberto
+
+
 Talvez incluir um diagrama de blocos com as ferramentas e como elas se relacionam? Ou isso é mais para o capítulo 3?
 
 \section{Hardware}
+\label{section:Hardware}
+
 A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na Seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
 
 Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa (desktops), ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
@@ -25,6 +30,7 @@ Por outro lado, o uso de máquinas físicas tradicionais, como computadores de m
 A seguir, serão apresentadas algumas opções de hardware avaliadas para compor a plataforma de monitoramento.
 
 \subsection{Next Unit of Computing (NUC)}
+\label{subsection:NUC}
 
 O Intel NUC (\textit{Next Unit of Computing}) configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de desktops convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
 
@@ -35,6 +41,7 @@ Outro ponto relevante é o suporte a recursos de hardware mais robustos em compa
 Dessa forma, o Intel NUC pode ser compreendido como uma solução intermediária entre os computadores de placa única, como o Raspberry Pi e o Orange Pi, e os desktops tradicionais, reunindo portabilidade e desempenho em um único equipamento.
 
 \subsection{Raspberry Pi}
+\label{subsection:RaspberryPi}
 
 O Raspberry Pi é uma família de computadores de placa única (SBC — \textit{Single-Board Computer}) desenvolvida pela Raspberry Pi Foundation, no Reino Unido, em colaboração com a Broadcom. Sua arquitetura baseia-se em processadores ARM e adota o conceito de \textit{system-on-a-chip} (SoC), integrando CPU, GPU e memória RAM em uma única placa. Essa integração favorece a eficiência energética e a redução de custos, características que tornam o dispositivo especialmente atrativo para aplicações embarcadas, automação residencial, robótica, projetos de Internet das Coisas (IoT) e experimentação em ambientes educacionais e industriais.
 
@@ -45,6 +52,7 @@ Apesar de suas vantagens, o Raspberry Pi apresenta restrições que devem ser co
 No entanto, vale mencionar que, em modelos mais recentes há suporte para boot via USB, permitindo o uso de SSDs externos, além da expansão do limite de memória RAM para até 16GB no caso do Raspberry Pi 5. 
 
 \subsection{Orange Pi}
+\label{subsection:OrangePi}
 
 O Orange Pi é outra família de SBC, desenvolvida por fabricantes independentes, geralmente sediados na China, com base na arquitetura ARM. A proposta central da plataforma é fornecer alternativas ao Raspberry Pi com diferentes combinações de processador, memória e conectividade, visando atender a uma variedade maior de aplicações e faixas de preço.
 
@@ -52,19 +60,75 @@ Em termos de especificações técnicas, os modelos da família Orange Pi aprese
 
 
 \section{Sistemas Operacionais}
-Placeholder
+\label{section:SistemasOperacionais}
+
+Como mencionado anteriormente,\todo[inlinewidth=1]{redigir a intro do capitulo para referenciá-la aqui} o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, distribuições de Linux foram avaliadas para melhor se compreender qual delas melhor atende aos requisitos do projeto.
 
 \subsection{Ubuntu}
-Placeholder
+\label{subsection:Ubuntu}
+
+O Ubuntu é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica acessível (\textit{GNOME}), suporte extenso a pacotes --- sistemas de pacotes \textit{DEB} e \textit{SNAP} e o gerenciador \textit{APT(Advanced Package Tool)} ---  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
+
+Baseado no Debian, o Ubuntu oferece compatibilidade com múltiplas arquiteturas, incluindo x86-64 e ARM, o que permite sua instalação em uma ampla variedade de dispositivos — desde computadores convencionais até plataformas embarcadas e servidores compactos, como o Raspberry Pi e o Intel NUC. A distribuição disponibiliza um conjunto abrangente de pacotes pré-compilados por meio de repositórios oficiais, utilizando o gerenciador de pacotes , o que facilita a instalação de ferramentas relacionadas a monitoramento, virtualização e automação de sistemas.
+
+No entanto, sua versão padrão, o Ubuntu Desktop, por incluir uma interface gráfica completa e diversos serviços em segundo plano voltados ao uso geral, o que pode resultar em um maior consumo de recursos computacionais. Em dispositivos com restrições de memória e processamento, essa sobrecarga pode comprometer o desempenho geral do sistema, tornando essa versão menos indicada para ambientes com recursos limitados, sendo interessante a avaliação de variantes Linux mais enxutas e minimalistas.
 
 \subsection{Ubuntu Server}
-Placeholder
+\label{subsection:UbuntuServer}
+
+O Ubuntu Server é uma variante da distribuição Ubuntu voltada especificamente para ambientes de servidores, caracterizando-se pela ausência de interface gráfica padrão e pela ênfase em desempenho, estabilidade e economia de recursos. Assim como a versão Desktop, é baseada no Debian e mantida pela Canonical Ltd., mantendo compatibilidade com as arquiteturas x86-64 e ARM, como citado na subseção anterior.
+
+Por adotar uma abordagem minimalista, o Ubuntu Server consome menos recursos de memória e processamento que o Ubuntu Desktop. Essa característica torna-o apropriado para dispositivos de hardware limitado, como \textit{SBCs} e vantajoso para implantações em larga escala, nas quais a redução de sobrecarga do sistema operacional é desejável.
+
+Possuindo um ecossistema consolidado, com ampla disponibilidade de pacotes nos repositórios oficiais, suporte nativo a tecnologias amplamente utilizadas em infraestrutura e sua compatibilidade com ferramentas de automação (facilitando a adoção de práticas \textit{IaC}), essa distribuição representa uma opção eficiente para o projeto.
 
 \subsection{Rocky Linux}
-Placeholder
+\label{subsection:RockyLinux}
+
+O Rocky Linux é uma distribuição Linux comunitária desenvolvida como sucessora direta do CentOS, após a descontinuação do suporte oficial deste pela Red Hat. Desenvolvida e mantida sob coordenação da Rocky Enterprise Software Foundation, o projeto tem como objetivo principal oferecer compatibilidade binária total (1:1) com o Red Hat Enterprise Linux (RHEL). Essa compatibilidade estende-se não apenas aos pacotes do sistema, mas também ao gerenciamento de serviços, recursos de segurança e estrutura de diretórios, tornando-o uma alternativa sem custos de licenciamento para organizações e projetos que dependem do ecossistema RHEL.
+
+Em termos de arquitetura, o Rocky Linux oferece suporte abrangente a múltiplas plataformas, dentre elas x86-64 e ARM, arquiteturas relevantes para este projeto. Já em termos de gerenciamento de pacotes, o Rocky Linux utiliza o \textit{DNF (Dandified YUM)}, que é compatível com os repositórios do RHEL e do CentOS, permitindo fácil acesso a uma vasta gama de softwares e ferramentas.
+
+Com sua estabilidade, suporte a longo prazo \textit{LTS}, compatibilidade com ferramentas consolidadas no mercado e suporte nativo à tecnologias de virtualização e contêineres, o Rocky Linux mostra-se uma sólida opção de sistema operacional para aplicação no projeto.
 
 \subsection{Raspberry Pi OS}
-Placeholder
+\label{subsection:RaspberryPiOS}
+
+O Raspberry Pi OS, anteriormente conhecido como Raspbian, é a distribuição Linux oficial mantida pela Raspberry Pi Foundation, projetada especificamente para uso nos computadores de placa única (SBCs) da linha Raspberry Pi. Baseada no Debian, essa distribuição é otimizada para arquitetura ARM e visa oferecer uma experiência estável, leve e compatível com o conjunto de hardware embarcado disponível nesses dispositivos.
+
+Assim como o Ubuntu, o Raspberry Pi OS está disponível em diferentes versões, incluindo uma variante com ambiente gráfico completo (\textit{Raspberry Pi OS with desktop}) e uma versão reduzida, voltada para servidores e sistemas embarcados (\textit{Raspberry Pi OS Lite}), o que implica nas mesmas vantagens mencionadas em \ref{subsection:UbuntuServer}.
+
+No que diz respeito ao gerenciamento de pacotes, o Raspberry Pi OS também utiliza o gerenciador \textit{APT}, herdado do Debian, com acesso aos repositórios oficiais da distribuição base. Entretanto, incorpora ajustes e otimizações voltadas ao hardware do Raspberry Pi, como a configuração prévia de parâmetros de inicialização (\textit{boot}) via cartão SD e ajustes de desempenho voltados à compatibilidade com os periféricos e interfaces do dispositivo.
+
+Uma funcionalidade de destaque é a ferramenta \textit{raspi-config}, que permite a configuração de parâmetros críticos do sistema — como overclock, interfaces de hardware, permissões e expansão do sistema de arquivos — por meio de uma interface simplificada. Esse recurso reduz a necessidade de intervenção manual em arquivos de configuração, facilitando a administração em ambientes com múltiplas unidades implantadas ou em cenários de manutenção remota.
+
+Apesar dessas vantagens, é importante considerar algumas limitações. O Raspberry Pi OS é projetado exclusivamente para os dispositivos da linha Raspberry Pi, o que restringe sua portabilidade para outras arquiteturas. Além disso, por priorizar estabilidade e compatibilidade com o hardware, o sistema tende a disponibilizar versões mais conservadoras de determinados pacotes, o que pode representar um obstáculo em projetos que demandem funcionalidades recentes ou maior flexibilidade de configuração, como observado em distribuições de propósito geral, como Ubuntu ou Rocky Linux.
+
+\begin{table}[H]
+\centering
+\caption{Requisitos mínimos das distribuições analisadas}
+\label{tab:requisitos-minimos}
+\begin{tabular}{@{}c c c c@{}}
+\toprule
+\textbf{SO} & \textbf{CPU} & \textbf{RAM} & \textbf{Armazenamento} \\
+\midrule
+Ubuntu Desktop 25.04 & 2\,GHz dual-core & 4\,GB & 25\,GB \\
+Ubuntu Server 25.04 & 1\,GHz & 1\,GB & 2{,}5\,GB \\
+Rocky Linux 10 & 1\,GHz & 1\,GB & 10\,GB \\
+Rocky Linux 10 (sem GUI) & 1\,GHz & 2\,GB & 40\,GB \\
+Rasp. Pi OS Lite & Depende* & Depende* & 16\,GB (SD**) \\
+Rasp. Pi OS Desktop & Depende* & Depende* & 32\,GB (SD**) \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize
+
+* Estes requisitos do Raspberry Pi OS variam conforme o modelo do hardware utilizado.
+
+** Cartão de memória microSD.
+\end{flushleft}
+\end{table}
+
 
 \section{Virtualização e Conteinerização}
 Placeholder
