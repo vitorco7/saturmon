@@ -9,13 +9,13 @@
     % - O capítulo 2 é a fundamentação teórica do projeto, onde eu vou explicar as ferramentas que eu escolhi e por que eu escolhi elas.
 
 
-Escrever sobre a importância do monitoramento e observabilidade, usando artigos e referências que falam sobre o assunto.
+Escrever sobre a importância do monitoramento e observabilidade, usando artigos e referências que falem do assunto.
 
-Discorrer sobre SRE e saturação, para definir o escopo deste trabalho.
+Discorrer sobre SRE e saturação, definindo o escopo deste trabalho.
 
-Discorrer sobre IaC
+Discorrer sobre IaC.
 
-Discorrer sobre software abertos, ferramentas de código aberto
+Discorrer sobre software abertos, ferramentas de código aberto.
 
 
 Talvez incluir um diagrama de blocos com as ferramentas e como elas se relacionam? Ou isso é mais para o capítulo 3?
@@ -62,7 +62,7 @@ Em termos de especificações técnicas, os modelos da família Orange Pi aprese
 \section{Sistemas Operacionais}
 \label{section:SistemasOperacionais}
 
-Como mencionado anteriormente,\todo[inlinewidth=1]{redigir a intro do capitulo para referenciá-la aqui} o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, distribuições de Linux foram avaliadas para melhor se compreender qual delas melhor atende aos requisitos do projeto.
+Como mencionado anteriormente,\todo[inlinewidth=1]{redigir a intro do capitulo para referenciá-la aqui} o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, as seguintes distribuições Linux foram consideradas para o projeto.
 
 \subsection{Ubuntu}
 \label{subsection:Ubuntu}
@@ -116,8 +116,8 @@ Ubuntu Desktop 25.04 & 2\,GHz dual-core & 4\,GB & 25\,GB \\
 Ubuntu Server 25.04 & 1\,GHz & 1\,GB & 2{,}5\,GB \\
 Rocky Linux 10 & 1\,GHz & 1\,GB & 10\,GB \\
 Rocky Linux 10 (sem GUI) & 1\,GHz & 2\,GB & 40\,GB \\
-Rasp. Pi OS Lite & Depende* & Depende* & 16\,GB (SD**) \\
-Rasp. Pi OS Desktop & Depende* & Depende* & 32\,GB (SD**) \\
+Rasp. Pi OS Lite & * & * & 16\,GB (SD**) \\
+Rasp. Pi OS Desktop & * & * & 32\,GB (SD**) \\
 \bottomrule
 \end{tabular}
 \begin{flushleft}
@@ -131,32 +131,80 @@ Rasp. Pi OS Desktop & Depende* & Depende* & 32\,GB (SD**) \\
 
 
 \section{Virtualização e Conteinerização}
-Placeholder
+\label{section:Virtualizacao}
+
+A virtualização desempenha um papel essencial neste trabalho por dois motivos principais. Primeiramente, conforme discutido na Seção \ref{section:Delimitação}, a indisponibilidade de equipamentos motivou a adoção de técnicas de virtualização para simular diferentes dispositivos, permitindo a criação de um ambiente de testes controlado e replicável utilizando uma úniac máquina física como base. 
+
+Em segundo lugar, a conteinerização dos softwares de monitoramento e coleta de métricas contribui diretamente para a portabilidade, escalabilidade, automação e manutenção da solução desenvolvida. Ao encapsular os serviços em contêineres independentes, é possível garantir maior uniformidade entre ambientes de desenvolvimento e produção, além de alinhar a implementação aos princípios da IaC.
+
+Na sequência, são apresentadas as tecnologias consideradas durante o desenvolvimento do projeto, indo desde virtualização tradicional (máquinas virtuais/hipervisores completos) até soluções de conteinerização.
 
 \subsection{Oracle VirtualBox}
-Placeholder
+\label{subsection:VirtualBox}
 
-\subsection{VMware Workstation}
-Placeholder
+O Oracle VirtualBox é um software de virtualização de código aberto, amplamente utilizado para criar e gerenciar máquinas virtuais (VMs) em diversas plataformas, incluindo Windows, macOS, Linux e Solaris. Mantido pela Oracle Corporation, o VirtualBox permite a criação de ambientes virtuais completos, nos quais é possível instalar e executar sistemas operacionais distintos de forma isolada, sobre o mesmo hardware físico.
+
+A ferramenta é compatível com múltiplos sistemas operacionais hospedeiros (Windows, Linux, macOS) e suporta uma ampla gama de sistemas convidados, como diversas distribuições Linux, versões do Windows e sistemas BSD. Além disso, o VirtualBox oferece suporte a recursos avançados, como snapshots (pontos de restauração), compartilhamento de pastas entre o host e as VMs, e suporte a dispositivos USB.
+
+Embora útil para simular ambientes heterogêneos, sua principal limitação reside na necessidade de um hipervisor completo, implicando num maior consumo de recursos do sistema em comparação com soluções de conteinerização. Além disso, a configuração e o gerenciamento de máquinas virtuais podem ser mais complexos, especialmente em cenários que exigem alta escalabilidade ou automação extensiva.
+
+\subsection{VMware Workstation Player}
+\label{subsection:VMware-Player}
+
+O VMware Workstation Player, também conhecido como VMware Player, é um hipervisor gratuito para uso pessoal e mantido pela VMware Inc., disponível para sistemas hospedeiros Windows e Linux. Ele permite a execução de apenas uma máquina virtual por vez e não possui funcionalidades avançadas de gerenciamento, como snapshots, clones ou integração com redes virtuais complexas.
+
+O suporte à múltiplas máquinas virtuais simultâneas e ferramentas avançadas de virtualização são recursos disponíveis apenas na versão VMware Workstation Pro, que no momento da implementação deste projeto, não era gratuita. Sendo assim, o VMware Workstation Player é limitado demais para as necessidades deste projeto.
 
 \subsection{Docker}
-Placeholder
+\label{subsection:Docker}
+
+O Docker é uma plataforma de conteinerização que introduziu um paradigma mais leve para empacotamento e distribuição de aplicações, virtualizando o sistema operacional em vez do hardware subjacente. Fundamenta-se em mecanismos nativos do kernel Linux — namespaces, cgroups e union file systems — para isolar processos e controlar a alocação de recursos.
+
+A principal unidade no Docker é a imagem, que representa o conjunto de camadas de arquivos e instruções necessárias para construir um contêiner. A partir dessas imagens, é possível iniciar instâncias isoladas de software, com comportamento idêntico em diferentes ambientes, garantindo portabilidade e consistência, pondo fim à famosa frase "mas na minha máquina funciona".
+
+Com imagens imutáveis e a capacidade de versionamento, o Docker facilita a automação de implantações, a escalabilidade horizontal e a replicação de ambientes. Além disso, o Docker Hub oferece um repositório público para compartilhamento de imagens pré-construídas, permitindo que desenvolvedores acessem e utilizem aplicações prontas para uso.
+
+Além das imagens pré-construídas, o Docker também permite a criação de imagens personalizadas por meio de arquivos \textit{Dockerfile}, que definem as etapas necessárias para construir uma imagem personalizada. Esses arquivos contêm instruções para instalar dependências, copiar arquivos, definir variáveis de ambiente e configurar o contêiner. 
+
 
 \subsection{Docker Compose}
-Placeholder
+\label{subsection:DockerCompose}
+
+Ao utilizar apenas a interface de linha de comando do Docker, cada contêiner deve ser criado individualmente mediante comandos \verb|docker run| ou \verb|docker create|, nos quais todos os parâmetros (portas, volumes, redes, variáveis de ambiente) precisam ser especificados manualmente. A mesma lógica se aplica à criação de redes e volumes, cujo gerenciamento isolado torna-se pouco escalável à medida que a quantidade de contêineres aumenta.
+
+O Docker Compose, mantido oficialmente pela Docker Inc., surgiu precisamente para abstrair essa complexidade. Trata-se de uma ferramenta orquestradora complementar ao Docker, que descreve aplicações multi-contêiner por meio de um arquivo declarativo \verb|docker-compose.yml| (ou simplesmente \verb|compose.yml|) escrito em YAML. Nesse manifesto podem ser definidos, de forma unificada:
+
+\begin{itemize}
+\item \textbf{Serviços}: os contêineres que compõem a aplicação;
+\item \textbf{Redes}: topologias de comunicação internas entre serviços;
+\item \textbf{Volumes}: áreas de persistência de dados compartilhadas ou exclusivas;
+\item \textbf{Variáveis de ambiente, políticas de reinicialização, limitações de recursos}, entre outras configurações.
+\end{itemize}
+
+Com um único comando (\verb|docker compose up|), o Compose instancia toda a pilha descrita, garantindo que dependências sejam criadas na ordem correta e que os serviços passem a se comunicar por meio de DNS interno. Embora não seja um orquestrador distribuído como o Kubernetes, o Compose simplifica significativamente o ciclo de vida de aplicações em um único host, sendo amplamente empregado em desenvolvimento local, testes de integração contínua e pequenas implantações.
+
+O uso de arquivos YAML insere-se no paradigma de \textit{IaC}: toda a configuração da infraestrutura torna-se texto declarativo versionável, revisável e reproduzível, eliminando a fragilidade de procedimentos manuais ou scripts ad-hoc e facilitando a automação em pipelines de CI/CD.
+
 
 \section{Métricas de Interesse}
-Placeholder
+\label{section:Metricas}
 
 \subsection{CPU}
+\label{subsection:CPU}
 Placeholder
 \subsection{Memória}
+\label{subsection:Memoria}
 Placeholder
+
 \subsection{Disco}
+\label{subsection:Disco}
+
 Placeholder
 \subsection{Rede}
+\label{subsection:Rede}
 Placeholder
 \subsection{Processos}
+\label{subsection:Processos}
 Placeholder
 
 \section{Agentes, Exportadores e Auxiliadores}
