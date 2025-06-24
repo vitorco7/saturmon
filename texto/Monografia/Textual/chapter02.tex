@@ -23,18 +23,18 @@ Talvez incluir um diagrama de blocos com as ferramentas e como elas se relaciona
 \section{Hardware}
 \label{section:Hardware}
 
-A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na Seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
+A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na Seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, podem causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
 
 Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa (desktops), ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
 
-A seguir, serão apresentadas algumas opções de hardware avaliadas para compor a plataforma de monitoramento.
+A seguir, serão apresentadas algumas opções de hardware avaliadas para compor uma plataforma de monitoramento.
 
 \subsection{Next Unit of Computing (NUC)}
 \label{subsection:NUC}
 
 O Intel NUC (\textit{Next Unit of Computing}) configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de desktops convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
 
-O NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura ARM. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
+No NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura ARM. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
 
 Outro ponto relevante é o suporte a recursos de hardware mais robustos em comparação aos computadores de placa única. O NUC permite configurações com processadores de maior desempenho, maior quantidade de memória RAM, opções avançadas de armazenamento, como unidades SSD NVMe, interfaces modernas de conectividade e em alguns casos até mesmo placas gráficas dedicadas. Tais características tornam o dispositivo apto a lidar com cargas de trabalho mais exigentes, especialmente em situações que demandam coleta intensiva de métricas ou visualização analítica em tempo real.
 
@@ -66,7 +66,33 @@ Além disso, a documentação oficial tende a ser limitada, dificultando a resol
 \section{Sistemas Operacionais}
 \label{section:SistemasOperacionais}
 
-Como mencionado no início deste capítulo, o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, as seguintes distribuições Linux foram consideradas para o projeto.
+Como mencionado no início deste capítulo, o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, \textcolor{red}{
+    foram consideradas as seguintes distribuições Linux. Abaixo, a tabela \ref{tab:requisitos-minimos} apresenta um comparativo dos requisitos de hardware mínimos para cada sistema operacional.
+}
+\begin{table}[H]
+\centering
+\caption{Requisitos mínimos das distribuições analisadas}
+\label{tab:requisitos-minimos}
+\begin{tabular}{@{}c c c c@{}}
+\toprule
+\textbf{SO} & \textbf{CPU} & \textbf{RAM} & \textbf{Armazenamento} \\
+\midrule
+Ubuntu Desktop 25.04 & 2\,GHz dual-core & 4\,GB & 25\,GB \\
+Ubuntu Server 25.04 & 1\,GHz & 1\,GB & 2{,}5\,GB \\
+Rocky Linux 10 & 1\,GHz & 1\,GB & 10\,GB \\
+Rocky Linux 10 (sem GUI) & 1\,GHz & 2\,GB & 40\,GB \\
+Rasp. Pi OS Lite & * & * & 16\,GB (SD**) \\
+Rasp. Pi OS Desktop & * & * & 32\,GB (SD**) \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize
+
+* Estes requisitos do Raspberry Pi OS variam conforme o modelo do hardware utilizado.
+
+** Cartão de memória microSD.
+\end{flushleft}
+\end{table}
 
 \subsection{Ubuntu}
 \label{subsection:Ubuntu}
@@ -108,40 +134,20 @@ Uma funcionalidade de destaque é a ferramenta \textit{raspi-config}, que permit
 
 Apesar dessas vantagens, é importante considerar algumas limitações. O Raspberry Pi OS é projetado exclusivamente para os dispositivos da linha Raspberry Pi, o que restringe sua portabilidade para outras arquiteturas. Além disso, por priorizar estabilidade e compatibilidade com o hardware, o sistema tende a disponibilizar versões mais conservadoras de determinados pacotes, o que pode representar um obstáculo em projetos que demandem funcionalidades recentes ou maior flexibilidade de configuração, como observado em distribuições de propósito geral, como Ubuntu ou Rocky Linux.
 
-\begin{table}[H]
-\centering
-\caption{Requisitos mínimos das distribuições analisadas}
-\label{tab:requisitos-minimos}
-\begin{tabular}{@{}c c c c@{}}
-\toprule
-\textbf{SO} & \textbf{CPU} & \textbf{RAM} & \textbf{Armazenamento} \\
-\midrule
-Ubuntu Desktop 25.04 & 2\,GHz dual-core & 4\,GB & 25\,GB \\
-Ubuntu Server 25.04 & 1\,GHz & 1\,GB & 2{,}5\,GB \\
-Rocky Linux 10 & 1\,GHz & 1\,GB & 10\,GB \\
-Rocky Linux 10 (sem GUI) & 1\,GHz & 2\,GB & 40\,GB \\
-Rasp. Pi OS Lite & * & * & 16\,GB (SD**) \\
-Rasp. Pi OS Desktop & * & * & 32\,GB (SD**) \\
-\bottomrule
-\end{tabular}
-\begin{flushleft}
-\footnotesize
-
-* Estes requisitos do Raspberry Pi OS variam conforme o modelo do hardware utilizado.
-
-** Cartão de memória microSD.
-\end{flushleft}
-\end{table}
-
-
 \section{Virtualização e Conteinerização}
 \label{section:Virtualizacao}
 
-A virtualização desempenha um papel essencial neste trabalho por dois motivos principais. Primeiramente, conforme discutido na Seção \ref{section:Delimitação}, a indisponibilidade de equipamentos motivou a adoção de técnicas de virtualização para simular diferentes dispositivos, permitindo a criação de um ambiente de testes controlado e replicável utilizando uma úniac máquina física como base. 
+% ### Os comentarios abaixo vao para o cap3 ###
+% A virtualização desempenha um papel essencial neste trabalho por dois motivos principais. Primeiramente, conforme discutido na Seção \ref{section:Delimitação}, a indisponibilidade de equipamentos motivou a adoção de técnicas de virtualização para simular diferentes dispositivos, permitindo a criação de um ambiente de testes controlado e replicável utilizando uma úniac máquina física como base. 
 
-Em segundo lugar, a conteinerização dos softwares de monitoramento e coleta de métricas contribui diretamente para a portabilidade, escalabilidade, automação e manutenção da solução desenvolvida. Ao encapsular os serviços em contêineres independentes, é possível garantir maior uniformidade entre ambientes de desenvolvimento e produção, além de alinhar a implementação aos princípios da IaC.
+% Em segundo lugar, a conteinerização dos softwares de monitoramento e coleta de métricas contribui diretamente para a portabilidade, escalabilidade, automação e manutenção da solução desenvolvida. Ao encapsular os serviços em contêineres independentes, é possível garantir maior uniformidade entre ambientes de desenvolvimento e produção, além de alinhar a implementação aos princípios da IaC.
 
-Na sequência, são apresentadas as tecnologias consideradas durante o desenvolvimento do projeto, indo desde virtualização tradicional (máquinas virtuais/hipervisores completos) até soluções de conteinerização.
+
+\textcolor{red}{
+    Nesta seção serão apresentadas as ferramentas para solução de abstração do projeto. Algumas representam uma abordagem tradicional, com máquinas virtuais e hipervisores completos, enquanto outras trazem uma abordagem mais moderna, trazendo soluções de conteinerização.
+}
+
+% Nesta seção são apresentadas ferramentas consideradas durante o desenvolvimento do projeto, indo desde virtualização tradicional (máquinas virtuais/hipervisores completos) até soluções de conteinerização.
 
 \subsection{Oracle VirtualBox}
 \label{subsection:VirtualBox}
