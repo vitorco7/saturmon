@@ -56,13 +56,17 @@ No entanto, vale mencionar que, em modelos mais recentes há suporte para boot v
 
 O Orange Pi é outra família de SBC, desenvolvida por fabricantes independentes, geralmente sediados na China, com base na arquitetura ARM. A proposta central da plataforma é fornecer alternativas ao Raspberry Pi com diferentes combinações de processador, memória e conectividade, visando atender a uma variedade maior de aplicações e faixas de preço.
 
-Em termos de especificações técnicas, os modelos da família Orange Pi apresentam ampla diversidade de configurações, permitindo a seleção do um modelo mais adequado às demandas de processamento, rede ou armazenamento exigidas. Porém, essa diversidade também implica em desafios. Um dos principais refere-se à compatibilidade com sistemas operacionais: nem todos os modelos contam com suporte oficial ou com imagens Linux estáveis e amplamente testadas. Em muitos casos, é necessário recorrer a distribuições mantidas pela comunidade ou adaptadas por terceiros, o que pode comprometer a confiabilidade e a manutenção a longo prazo do ambiente de produção. Além disso, a documentação oficial tende a ser limitada, dificultando a resolução de problemas em comparação com plataformas mais consolidadas, como o Raspberry Pi.
+Em termos de especificações técnicas, os modelos da família Orange Pi apresentam ampla diversidade de configurações, permitindo a seleção do um modelo mais adequado às demandas de processamento, rede ou armazenamento exigidas.
+
+Porém, essa diversidade também implica em desafios. Um dos principais refere-se à compatibilidade com sistemas operacionais: nem todos os modelos contam com suporte oficial ou com imagens Linux estáveis e amplamente testadas. Em muitos casos, é necessário recorrer a distribuições mantidas pela comunidade ou adaptadas por terceiros, o que pode comprometer a confiabilidade e a manutenção a longo prazo do ambiente de produção.
+
+Além disso, a documentação oficial tende a ser limitada, dificultando a resolução de problemas em comparação com plataformas mais consolidadas, como o Raspberry Pi.
 
 
 \section{Sistemas Operacionais}
 \label{section:SistemasOperacionais}
 
-Como mencionado anteriormente,\todo[inlinewidth=1]{redigir a intro do capitulo para referenciá-la aqui} o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, as seguintes distribuições Linux foram consideradas para o projeto.
+Como mencionado no início deste capítulo, o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, as seguintes distribuições Linux foram consideradas para o projeto.
 
 \subsection{Ubuntu}
 \label{subsection:Ubuntu}
@@ -164,8 +168,9 @@ A principal unidade no Docker é a imagem, que representa o conjunto de camadas 
 
 Com imagens imutáveis e a capacidade de versionamento, o Docker facilita a automação de implantações, a escalabilidade horizontal e a replicação de ambientes. Além disso, o Docker Hub oferece um repositório público para compartilhamento de imagens pré-construídas, permitindo que desenvolvedores acessem e utilizem aplicações prontas para uso.
 
-Além das imagens pré-construídas, o Docker também permite a criação de imagens personalizadas por meio de arquivos \textit{Dockerfile}, que definem as etapas necessárias para construir uma imagem personalizada. Esses arquivos contêm instruções para instalar dependências, copiar arquivos, definir variáveis de ambiente e configurar o contêiner. 
+Além das imagens pré-construídas, o Docker também permite a criação de imagens personalizadas por meio de arquivos \textit{Dockerfile}, que definem as etapas necessárias para construir uma imagem personalizada. Esses arquivos contêm instruções para instalar dependências, copiar arquivos, definir variáveis de ambiente e configurar o contêiner.
 
+A partir de uma imagem, basta executar um comando como \verb|docker run| para iniciar um contêiner, sem a necessidade de instalar o conteúdo da imagem diretamente no sistema operacional hospedeiro. Essa abordagem reduz significativamente a sobrecarga de recursos em comparação com máquinas virtuais tradicionais.
 
 \subsection{Docker Compose}
 \label{subsection:DockerCompose}
@@ -189,9 +194,13 @@ O uso de arquivos YAML insere-se no paradigma de \textit{IaC}: toda a configura�
 \section{Métricas de Interesse}
 \label{section:Metricas}
 
+No cenário de monitoramento existem diversas métricas e grandezas a serem observadas para garantir a saúde do sistema. No entanto, como discutido no início do capítulo, este trabalho delimita o escopo de monitoramento a métricas referentes à saturação de recursos do ambiente a ser monitorado. Dito isso, o projeto dá foco à monitoria de CPU, memória RAM, disco, rede e processos. 
+
 \subsection{CPU}
 \label{subsection:CPU}
+
 Placeholder
+
 \subsection{Memória}
 \label{subsection:Memoria}
 Placeholder
