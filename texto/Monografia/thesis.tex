@@ -52,15 +52,16 @@
   \maketitle
 
   \frontmatter
-  % \include{Pre-textual/dedic}
-  % \include{Pre-textual/thanks}
-  % \include{Pre-textual/resumo}
-  % \include{Pre-textual/abstract}
-  % \tableofcontents
-  % \listoffigures
-  % \listoftables
-  % \printlosymbols
-  \printloabbreviations
+  \include{Pre-textual/dedic}
+  \include{Pre-textual/thanks}
+  \include{Pre-textual/resumo}
+  \include{Pre-textual/abstract}
+  \renewcommand{\indexname}{Lista de Siglas}
+  \printloabbreviations  \printloabbreviations
+  \tableofcontents
+  \listoffigures
+  \listoftables
+  \printlosymbols
 
   \mainmatter
     \include{Textual/chapter01}
