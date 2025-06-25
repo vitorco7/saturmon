@@ -17,6 +17,11 @@ Discorrer sobre IaC.
 
 Discorrer sobre software abertos, ferramentas de código aberto.
 
+\cite{alvim2007} \cite{belo2022} \cite{BrainVoyager06}
+
+
+\cite{Papadimitriou04}
+
 
 Talvez incluir um diagrama de blocos com as ferramentas e como elas se relacionam? Ou isso é mais para o capítulo 3?
 
@@ -32,7 +37,7 @@ A seguir, serão apresentadas algumas opções de hardware avaliadas para compor
 \subsection{Next Unit of Computing (NUC)}
 \label{subsection:NUC}
 
-O Intel NUC (\textit{Next Unit of Computing}) configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de desktops convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
+O Intel NUC \textit{(Next Unit of Computing)} configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de desktops convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
 
 No NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura ARM. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
 
@@ -97,7 +102,7 @@ Rasp. Pi OS Desktop & * & * & 32\,GB (SD**) \\
 \subsection{Ubuntu}
 \label{subsection:Ubuntu}
 
-O Ubuntu é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica acessível (\textit{GNOME}), suporte extenso a pacotes --- sistemas de pacotes \textit{DEB} e \textit{SNAP} e o gerenciador \textit{APT(Advanced Package Tool)} ---  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
+O Ubuntu é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica, suporte extenso a pacotes --- sistemas de pacotes \textcolor{red}{deb e snap} e o gerenciador APT\textit{(Advanced Package Tool)} ---  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
 
 Baseado no Debian, o Ubuntu oferece compatibilidade com múltiplas arquiteturas, incluindo x86-64 e ARM, o que permite sua instalação em uma ampla variedade de dispositivos — desde computadores convencionais até plataformas embarcadas e servidores compactos, como o Raspberry Pi e o Intel NUC. A distribuição disponibiliza um conjunto abrangente de pacotes pré-compilados por meio de repositórios oficiais, utilizando o gerenciador de pacotes , o que facilita a instalação de ferramentas relacionadas a monitoramento, virtualização e automação de sistemas.
 
@@ -108,27 +113,27 @@ No entanto, sua versão padrão, o Ubuntu Desktop, por incluir uma interface gr�
 
 O Ubuntu Server é uma variante da distribuição Ubuntu voltada especificamente para ambientes de servidores, caracterizando-se pela ausência de interface gráfica padrão e pela ênfase em desempenho, estabilidade e economia de recursos. Assim como a versão Desktop, é baseada no Debian e mantida pela Canonical Ltd., mantendo compatibilidade com as arquiteturas x86-64 e ARM, como citado na subseção anterior.
 
-Por adotar uma abordagem minimalista, o Ubuntu Server consome menos recursos de memória e processamento que o Ubuntu Desktop. Essa característica torna-o apropriado para dispositivos de hardware limitado, como \textit{SBCs} e vantajoso para implantações em larga escala, nas quais a redução de sobrecarga do sistema operacional é desejável.
+Por adotar uma abordagem minimalista, o Ubuntu Server consome menos recursos de memória e processamento que o Ubuntu Desktop. Essa característica torna-o apropriado para dispositivos de hardware limitado, como SBCs e vantajoso para implantações em larga escala, nas quais a redução de sobrecarga do sistema operacional é desejável.
 
-Possuindo um ecossistema consolidado, com ampla disponibilidade de pacotes nos repositórios oficiais, suporte nativo a tecnologias amplamente utilizadas em infraestrutura e sua compatibilidade com ferramentas de automação (facilitando a adoção de práticas \textit{IaC}), essa distribuição representa uma opção eficiente para o projeto.
+Possuindo um ecossistema consolidado, com ampla disponibilidade de pacotes nos repositórios oficiais, suporte nativo a tecnologias amplamente utilizadas em infraestrutura e sua compatibilidade com ferramentas de automação (facilitando a adoção de práticas IaC), essa distribuição representa uma opção eficiente para o projeto.
 
 \subsection{Rocky Linux}
 \label{subsection:RockyLinux}
 
 O Rocky Linux é uma distribuição Linux comunitária desenvolvida como sucessora direta do CentOS, após a descontinuação do suporte oficial deste pela Red Hat. Desenvolvida e mantida sob coordenação da Rocky Enterprise Software Foundation, o projeto tem como objetivo principal oferecer compatibilidade binária total (1:1) com o Red Hat Enterprise Linux (RHEL). Essa compatibilidade estende-se não apenas aos pacotes do sistema, mas também ao gerenciamento de serviços, recursos de segurança e estrutura de diretórios, tornando-o uma alternativa sem custos de licenciamento para organizações e projetos que dependem do ecossistema RHEL.
 
-Em termos de arquitetura, o Rocky Linux oferece suporte abrangente a múltiplas plataformas, dentre elas x86-64 e ARM, arquiteturas relevantes para este projeto. Já em termos de gerenciamento de pacotes, o Rocky Linux utiliza o \textit{DNF (Dandified YUM)}, que é compatível com os repositórios do RHEL e do CentOS, permitindo fácil acesso a uma vasta gama de softwares e ferramentas.
+Em termos de arquitetura, o Rocky Linux oferece suporte abrangente a múltiplas plataformas, dentre elas x86-64 e ARM, arquiteturas relevantes para este projeto. Já em termos de gerenciamento de pacotes, o Rocky Linux utiliza o DNF\textit{(Dandified YUM)}, que é compatível com os repositórios do RHEL e do CentOS, permitindo fácil acesso a uma vasta gama de softwares e ferramentas.
 
-Com sua estabilidade, suporte a longo prazo \textit{LTS}, compatibilidade com ferramentas consolidadas no mercado e suporte nativo à tecnologias de virtualização e contêineres, o Rocky Linux mostra-se uma sólida opção de sistema operacional para aplicação no projeto.
+Com sua estabilidade, suporte a longo prazo LTS \textit{(Long Term Support)}, compatibilidade com ferramentas consolidadas no mercado e suporte nativo à tecnologias de virtualização e contêineres, o Rocky Linux mostra-se uma sólida opção de sistema operacional para aplicação no projeto.
 
 \subsection{Raspberry Pi OS}
 \label{subsection:RaspberryPiOS}
 
 O Raspberry Pi OS, anteriormente conhecido como Raspbian, é a distribuição Linux oficial mantida pela Raspberry Pi Foundation, projetada especificamente para uso nos computadores de placa única (SBCs) da linha Raspberry Pi. Baseada no Debian, essa distribuição é otimizada para arquitetura ARM e visa oferecer uma experiência estável, leve e compatível com o conjunto de hardware embarcado disponível nesses dispositivos.
 
-Assim como o Ubuntu, o Raspberry Pi OS está disponível em diferentes versões, incluindo uma variante com ambiente gráfico completo (\textit{Raspberry Pi OS with desktop}) e uma versão reduzida, voltada para servidores e sistemas embarcados (\textit{Raspberry Pi OS Lite}), o que implica nas mesmas vantagens mencionadas em \ref{subsection:UbuntuServer}.
+Assim como o Ubuntu, o Raspberry Pi OS está disponível em diferentes versões, incluindo uma variante com ambiente gráfico completo (Raspberry Pi OS \textit{with desktop}) e uma versão reduzida, voltada para servidores e sistemas embarcados (Raspberry Pi OS Lite), o que implica nas mesmas vantagens mencionadas em \ref{subsection:UbuntuServer}.
 
-No que diz respeito ao gerenciamento de pacotes, o Raspberry Pi OS também utiliza o gerenciador \textit{APT}, herdado do Debian, com acesso aos repositórios oficiais da distribuição base. Entretanto, incorpora ajustes e otimizações voltadas ao hardware do Raspberry Pi, como a configuração prévia de parâmetros de inicialização (\textit{boot}) via cartão SD e ajustes de desempenho voltados à compatibilidade com os periféricos e interfaces do dispositivo.
+No que diz respeito ao gerenciamento de pacotes, o Raspberry Pi OS também utiliza o gerenciador APT, herdado do Debian, com acesso aos repositórios oficiais da distribuição base. Entretanto, incorpora ajustes e otimizações voltadas ao hardware do Raspberry Pi, como a configuração prévia de parâmetros de inicialização (\textit{boot}) via cartão SD e ajustes de desempenho voltados à compatibilidade com os periféricos e interfaces do dispositivo.
 
 Uma funcionalidade de destaque é a ferramenta \textit{raspi-config}, que permite a configuração de parâmetros críticos do sistema — como overclock, interfaces de hardware, permissões e expansão do sistema de arquivos — por meio de uma interface simplificada. Esse recurso reduz a necessidade de intervenção manual em arquivos de configuração, facilitando a administração em ambientes com múltiplas unidades implantadas ou em cenários de manutenção remota.
 
@@ -174,7 +179,7 @@ A principal unidade no Docker é a imagem, que representa o conjunto de camadas 
 
 Com imagens imutáveis e a capacidade de versionamento, o Docker facilita a automação de implantações, a escalabilidade horizontal e a replicação de ambientes. Além disso, o Docker Hub oferece um repositório público para compartilhamento de imagens pré-construídas, permitindo que desenvolvedores acessem e utilizem aplicações prontas para uso.
 
-Além das imagens pré-construídas, o Docker também permite a criação de imagens personalizadas por meio de arquivos \textit{Dockerfile}, que definem as etapas necessárias para construir uma imagem personalizada. Esses arquivos contêm instruções para instalar dependências, copiar arquivos, definir variáveis de ambiente e configurar o contêiner.
+Além das imagens pré-construídas, o Docker também permite a criação de imagens personalizadas por meio de arquivos Dockerfile, que definem as etapas necessárias para construir uma imagem personalizada. Esses arquivos contêm instruções para instalar dependências, copiar arquivos, definir variáveis de ambiente e configurar o contêiner.
 
 A partir de uma imagem, basta executar um comando como \verb|docker run| para iniciar um contêiner, sem a necessidade de instalar o conteúdo da imagem diretamente no sistema operacional hospedeiro. Essa abordagem reduz significativamente a sobrecarga de recursos em comparação com máquinas virtuais tradicionais.
 
@@ -194,7 +199,7 @@ O Docker Compose, mantido oficialmente pela Docker Inc., surgiu precisamente par
 
 Com um único comando (\verb|docker compose up|), o Compose instancia toda a pilha descrita, garantindo que dependências sejam criadas na ordem correta e que os serviços passem a se comunicar por meio de DNS interno. Embora não seja um orquestrador distribuído como o Kubernetes, o Compose simplifica significativamente o ciclo de vida de aplicações em um único host, sendo amplamente empregado em desenvolvimento local, testes de integração contínua e pequenas implantações.
 
-O uso de arquivos YAML insere-se no paradigma de \textit{IaC}: toda a configuração da infraestrutura torna-se texto declarativo versionável, revisável e reproduzível, eliminando a fragilidade de procedimentos manuais ou scripts ad-hoc e facilitando a automação em pipelines de CI/CD.
+O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da infraestrutura torna-se texto declarativo versionável, revisável e reproduzível, eliminando a fragilidade de procedimentos manuais ou scripts ad-hoc e facilitando a automação em pipelines de CI/CD.
 
 
 \section{Métricas de Interesse}
