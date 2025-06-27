@@ -7,7 +7,6 @@
     % - Trabalhos relacionados
 
     % - O capítulo 2 é a fundamentação teórica do projeto, onde eu vou explicar as ferramentas que eu escolhi e por que eu escolhi elas.
-This project uses \abbrev{AI}{Artificial Intelligence}AI and \abbrev{ML}{Machine Learning}ML techniques.
 
 Escrever sobre a importância do monitoramento e observabilidade, usando artigos e referências que falem do assunto.
 
@@ -17,12 +16,6 @@ Discorrer sobre IaC.
 
 Discorrer sobre software abertos, ferramentas de código aberto.
 
-\cite{alvim2007} \cite{belo2022} \cite{BrainVoyager06}
-
-
-\cite{Papadimitriou04}
-
-
 Talvez incluir um diagrama de blocos com as ferramentas e como elas se relacionam? Ou isso é mais para o capítulo 3?
 
 \section{Hardware}
@@ -30,25 +23,25 @@ Talvez incluir um diagrama de blocos com as ferramentas e como elas se relaciona
 
 A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na Seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, podem causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
 
-Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa (desktops), ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
+Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa \foreign{(desktops)}, ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
 
 A seguir, serão apresentadas algumas opções de hardware avaliadas para compor uma plataforma de monitoramento.
 
 \subsection{Next Unit of Computing (NUC)}
 \label{subsection:NUC}
 
-O Intel NUC \textit{(Next Unit of Computing)} configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de desktops convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
+O Intel \foreign{Next Unit of Computing} (NUC)\abbrev{NUC}{\foreign{Next Unit of Computing}} \citep{nuc2025} configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de \foreign{desktops} convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
 
-No NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura ARM. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
+No NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura \textcolor{red}{Advanced RISC Machine} (ARM)\abbrev{ARM}{\foreign{Advanced RISC Machine}}. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
 
-Outro ponto relevante é o suporte a recursos de hardware mais robustos em comparação aos computadores de placa única. O NUC permite configurações com processadores de maior desempenho, maior quantidade de memória RAM, opções avançadas de armazenamento, como unidades SSD NVMe, interfaces modernas de conectividade e em alguns casos até mesmo placas gráficas dedicadas. Tais características tornam o dispositivo apto a lidar com cargas de trabalho mais exigentes, especialmente em situações que demandam coleta intensiva de métricas ou visualização analítica em tempo real.
+Outro ponto relevante é o suporte a recursos de hardware mais robustos em comparação aos computadores de placa única. O NUC permite configurações com processadores de maior desempenho, maior quantidade de memória \textcolor{red}{\foreign{Random Access Memory}} (RAM)\abbrev{RAM}{\foreign{Random Access Memory}}, opções avançadas de armazenamento, como unidades \textcolor{red}{\foreign{Solid State Drive} (SSD)} NVMe, interfaces modernas de conectividade e em alguns casos até mesmo placas gráficas dedicadas. Tais características tornam o dispositivo apto a lidar com cargas de trabalho mais exigentes, especialmente em situações que demandam coleta intensiva de métricas ou visualização analítica em tempo real.
 
-Dessa forma, o Intel NUC pode ser compreendido como uma solução intermediária entre os computadores de placa única, como o Raspberry Pi e o Orange Pi, e os desktops tradicionais, reunindo portabilidade e desempenho em um único equipamento.
+Dessa forma, o Intel NUC pode ser compreendido como uma solução intermediária entre os computadores de placa única, como o Raspberry Pi e o Orange Pi, e os \foreign{desktops} tradicionais, reunindo portabilidade e desempenho em um único equipamento.
 
 \subsection{Raspberry Pi}
 \label{subsection:RaspberryPi}
 
-O Raspberry Pi é uma família de computadores de placa única (SBC — \textit{Single-Board Computer}) desenvolvida pela Raspberry Pi Foundation, no Reino Unido, em colaboração com a Broadcom. Sua arquitetura baseia-se em processadores ARM e adota o conceito de \textit{system-on-a-chip} (SoC), integrando CPU, GPU e memória RAM em uma única placa. Essa integração favorece a eficiência energética e a redução de custos, características que tornam o dispositivo especialmente atrativo para aplicações embarcadas, automação residencial, robótica, projetos de Internet das Coisas (IoT) e experimentação em ambientes educacionais e industriais.
+O Raspberry Pi \citep{raspihw2025} é uma família de computadores de placa única (SBC)\abbrev{SBC}{\foreign{Single-Board Computer}} desenvolvida pela Raspberry Pi Foundation, no Reino Unido, em colaboração com a Broadcom. Sua arquitetura baseia-se em processadores ARM e adota o conceito de \textcolor{red}{sistema em um chip} (SoC)\abbrev{SoC}{\foreign{system-on-a-chip}}, integrando CPU, \textcolor{red}{unidade de processamento gráfico} (GPU)\abbrev{GPU}{\foreign{Graphics Processing Unit}} e memória RAM em uma única placa. Essa integração favorece a eficiência energética e a redução de custos, características que tornam o dispositivo especialmente atrativo para aplicações embarcadas, automação residencial, robótica, projetos de Internet das Coisas (IoT) e experimentação em ambientes educacionais e industriais.
 
 A compatibilidade do Raspberry Pi com uma ampla gama de sistemas operacionais baseados em Linux — como Raspberry Pi OS, Ubuntu e Debian — amplia suas possibilidades de uso, permitindo desde tarefas cotidianas, como navegação web e execução de aplicações de escritório, até a implementação de servidores, clusters de computação e plataformas de monitoramento de redes. A ausência de armazenamento interno é suprida pelo uso de cartões microSD, que funcionam tanto para o sistema operacional quanto para o armazenamento de dados. Embora essa solução seja prática e econômica, o desempenho de leitura e escrita dos cartões microSD pode ser um fator limitante, especialmente em aplicações que demandam operações intensivas de I/O.
 
@@ -59,13 +52,11 @@ No entanto, vale mencionar que, em modelos mais recentes há suporte para boot v
 \subsection{Orange Pi}
 \label{subsection:OrangePi}
 
-O Orange Pi é outra família de SBC, desenvolvida por fabricantes independentes, geralmente sediados na China, com base na arquitetura ARM. A proposta central da plataforma é fornecer alternativas ao Raspberry Pi com diferentes combinações de processador, memória e conectividade, visando atender a uma variedade maior de aplicações e faixas de preço.
+O Orange Pi \citep{orangepihw2025} é outra família de SBC, desenvolvida por fabricantes independentes, geralmente sediados na China, com base na arquitetura ARM. A proposta central da plataforma é fornecer alternativas ao Raspberry Pi com diferentes combinações de processador, memória e conectividade, visando atender a uma variedade maior de aplicações e faixas de preço.
 
 Em termos de especificações técnicas, os modelos da família Orange Pi apresentam ampla diversidade de configurações, permitindo a seleção do um modelo mais adequado às demandas de processamento, rede ou armazenamento exigidas.
 
-Porém, essa diversidade também implica em desafios. Um dos principais refere-se à compatibilidade com sistemas operacionais: nem todos os modelos contam com suporte oficial ou com imagens Linux estáveis e amplamente testadas. Em muitos casos, é necessário recorrer a distribuições mantidas pela comunidade ou adaptadas por terceiros, o que pode comprometer a confiabilidade e a manutenção a longo prazo do ambiente de produção.
-
-Além disso, a documentação oficial tende a ser limitada, dificultando a resolução de problemas em comparação com plataformas mais consolidadas, como o Raspberry Pi.
+Porém, essa diversidade também implica em desafios. Um dos principais refere-se à compatibilidade com sistemas operacionais: nem todos os modelos contam com suporte oficial ou com imagens Linux estáveis e amplamente testadas. Em muitos casos, é necessário recorrer a distribuições mantidas pela comunidade ou adaptadas por terceiros, o que pode comprometer a confiabilidade e a manutenção a longo prazo.
 
 
 \section{Sistemas Operacionais}
@@ -102,7 +93,7 @@ Rasp. Pi OS Desktop & * & * & 32\,GB (SD**) \\
 \subsection{Ubuntu}
 \label{subsection:Ubuntu}
 
-O Ubuntu é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica, suporte extenso a pacotes --- sistemas de pacotes \textcolor{red}{deb e snap} e o gerenciador APT\textit{(Advanced Package Tool)} ---  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
+O Ubuntu \citep{ubuntudsktp2025} é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica, suporte extenso a pacotes --- sistemas de pacotes \textcolor{red}{\foreign{deb}} e \textcolor{red}{\foreign{snap}} e o gerenciador \foreign{Advanced Package Tool} (APT)\abbrev{APT}{\foreign{Advanced Package Tool}} ---  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
 
 Baseado no Debian, o Ubuntu oferece compatibilidade com múltiplas arquiteturas, incluindo x86-64 e ARM, o que permite sua instalação em uma ampla variedade de dispositivos — desde computadores convencionais até plataformas embarcadas e servidores compactos, como o Raspberry Pi e o Intel NUC. A distribuição disponibiliza um conjunto abrangente de pacotes pré-compilados por meio de repositórios oficiais, utilizando o gerenciador de pacotes , o que facilita a instalação de ferramentas relacionadas a monitoramento, virtualização e automação de sistemas.
 
@@ -111,7 +102,7 @@ No entanto, sua versão padrão, o Ubuntu Desktop, por incluir uma interface gr�
 \subsection{Ubuntu Server}
 \label{subsection:UbuntuServer}
 
-O Ubuntu Server é uma variante da distribuição Ubuntu voltada especificamente para ambientes de servidores, caracterizando-se pela ausência de interface gráfica padrão e pela ênfase em desempenho, estabilidade e economia de recursos. Assim como a versão Desktop, é baseada no Debian e mantida pela Canonical Ltd., mantendo compatibilidade com as arquiteturas x86-64 e ARM, como citado na subseção anterior.
+O Ubuntu Server \citep{ubuntusrvr2025} é uma variante da distribuição Ubuntu voltada especificamente para ambientes de servidores, caracterizando-se pela ausência de interface gráfica padrão e pela ênfase em desempenho, estabilidade e economia de recursos. Assim como a versão Desktop, é baseada no Debian e mantida pela Canonical Ltd., mantendo compatibilidade com as arquiteturas x86-64 e ARM, como citado na subseção anterior.
 
 Por adotar uma abordagem minimalista, o Ubuntu Server consome menos recursos de memória e processamento que o Ubuntu Desktop. Essa característica torna-o apropriado para dispositivos de hardware limitado, como SBCs e vantajoso para implantações em larga escala, nas quais a redução de sobrecarga do sistema operacional é desejável.
 
@@ -120,22 +111,22 @@ Possuindo um ecossistema consolidado, com ampla disponibilidade de pacotes nos r
 \subsection{Rocky Linux}
 \label{subsection:RockyLinux}
 
-O Rocky Linux é uma distribuição Linux comunitária desenvolvida como sucessora direta do CentOS, após a descontinuação do suporte oficial deste pela Red Hat. Desenvolvida e mantida sob coordenação da Rocky Enterprise Software Foundation, o projeto tem como objetivo principal oferecer compatibilidade binária total (1:1) com o Red Hat Enterprise Linux (RHEL). Essa compatibilidade estende-se não apenas aos pacotes do sistema, mas também ao gerenciamento de serviços, recursos de segurança e estrutura de diretórios, tornando-o uma alternativa sem custos de licenciamento para organizações e projetos que dependem do ecossistema RHEL.
+O Rocky Linux \citep{rocky2025} é uma distribuição Linux comunitária desenvolvida como sucessora direta do CentOS, após a descontinuação do suporte oficial deste pela Red Hat. Desenvolvida e mantida sob coordenação da Rocky Enterprise Software Foundation, o projeto tem como objetivo principal oferecer compatibilidade binária total (1:1) com o Red Hat Enterprise Linux (RHEL). Essa compatibilidade estende-se não apenas aos pacotes do sistema, mas também ao gerenciamento de serviços, recursos de segurança e estrutura de diretórios, tornando-o uma alternativa sem custos de licenciamento para organizações e projetos que dependem do ecossistema RHEL.
 
-Em termos de arquitetura, o Rocky Linux oferece suporte abrangente a múltiplas plataformas, dentre elas x86-64 e ARM, arquiteturas relevantes para este projeto. Já em termos de gerenciamento de pacotes, o Rocky Linux utiliza o DNF\textit{(Dandified YUM)}, que é compatível com os repositórios do RHEL e do CentOS, permitindo fácil acesso a uma vasta gama de softwares e ferramentas.
+Em termos de arquitetura, o Rocky Linux oferece suporte abrangente a múltiplas plataformas, dentre elas x86-64 e ARM, arquiteturas relevantes para este projeto. Já em termos de gerenciamento de pacotes, o Rocky Linux utiliza o \foreign{(Dandified YUM)} (DNF)\abbrev{DNF}{\foreign{Dandified YUM}}, que é compatível com os repositórios do RHEL e do CentOS, permitindo fácil acesso a uma vasta gama de softwares e ferramentas.
 
-Com sua estabilidade, suporte a longo prazo LTS \textit{(Long Term Support)}, compatibilidade com ferramentas consolidadas no mercado e suporte nativo à tecnologias de virtualização e contêineres, o Rocky Linux mostra-se uma sólida opção de sistema operacional para aplicação no projeto.
+Com sua estabilidade, suporte a longo prazo (LTS)\abbrev{LTS}{\foreign{Long Term Support}}, compatibilidade com ferramentas consolidadas no mercado e suporte nativo à tecnologias de virtualização e contêineres, o Rocky Linux mostra-se uma sólida opção de sistema operacional para aplicação no projeto.
 
 \subsection{Raspberry Pi OS}
 \label{subsection:RaspberryPiOS}
 
-O Raspberry Pi OS, anteriormente conhecido como Raspbian, é a distribuição Linux oficial mantida pela Raspberry Pi Foundation, projetada especificamente para uso nos computadores de placa única (SBCs) da linha Raspberry Pi. Baseada no Debian, essa distribuição é otimizada para arquitetura ARM e visa oferecer uma experiência estável, leve e compatível com o conjunto de hardware embarcado disponível nesses dispositivos.
+O Raspberry Pi OS \citep{raspisftwr2025}, anteriormente conhecido como Raspbian, é a distribuição Linux oficial mantida pela Raspberry Pi Foundation, projetada especificamente para uso nos computadores de placa única (SBCs) da linha Raspberry Pi. Baseada no Debian, essa distribuição é otimizada para arquitetura ARM e visa oferecer uma experiência estável, leve e compatível com o conjunto de hardware embarcado disponível nesses dispositivos.
 
-Assim como o Ubuntu, o Raspberry Pi OS está disponível em diferentes versões, incluindo uma variante com ambiente gráfico completo (Raspberry Pi OS \textit{with desktop}) e uma versão reduzida, voltada para servidores e sistemas embarcados (Raspberry Pi OS Lite), o que implica nas mesmas vantagens mencionadas em \ref{subsection:UbuntuServer}.
+Assim como o Ubuntu, o Raspberry Pi OS está disponível em diferentes versões, incluindo uma variante com ambiente gráfico completo (Raspberry Pi OS \foreign{with desktop}) e uma versão reduzida, voltada para servidores e sistemas embarcados (Raspberry Pi OS Lite), o que implica nas mesmas vantagens mencionadas em \ref{subsection:UbuntuServer}.
 
-No que diz respeito ao gerenciamento de pacotes, o Raspberry Pi OS também utiliza o gerenciador APT, herdado do Debian, com acesso aos repositórios oficiais da distribuição base. Entretanto, incorpora ajustes e otimizações voltadas ao hardware do Raspberry Pi, como a configuração prévia de parâmetros de inicialização (\textit{boot}) via cartão SD e ajustes de desempenho voltados à compatibilidade com os periféricos e interfaces do dispositivo.
+No que diz respeito ao gerenciamento de pacotes, o Raspberry Pi OS também utiliza o gerenciador APT, herdado do Debian, com acesso aos repositórios oficiais da distribuição base. Entretanto, incorpora ajustes e otimizações voltadas ao hardware do Raspberry Pi, como a configuração prévia de parâmetros de inicialização (\foreign{boot}) via cartão SD e ajustes de desempenho voltados à compatibilidade com os periféricos e interfaces do dispositivo.
 
-Uma funcionalidade de destaque é a ferramenta \textit{raspi-config}, que permite a configuração de parâmetros críticos do sistema — como overclock, interfaces de hardware, permissões e expansão do sistema de arquivos — por meio de uma interface simplificada. Esse recurso reduz a necessidade de intervenção manual em arquivos de configuração, facilitando a administração em ambientes com múltiplas unidades implantadas ou em cenários de manutenção remota.
+Uma funcionalidade de destaque é a ferramenta \foreign{raspi-config}, que permite a configuração de parâmetros críticos do sistema — como \foreign{overclock}, interfaces de hardware, permissões e expansão do sistema de arquivos — por meio de uma interface simplificada. Esse recurso reduz a necessidade de intervenção manual em arquivos de configuração, facilitando a administração em ambientes com múltiplas unidades implantadas ou em cenários de manutenção remota.
 
 Apesar dessas vantagens, é importante considerar algumas limitações. O Raspberry Pi OS é projetado exclusivamente para os dispositivos da linha Raspberry Pi, o que restringe sua portabilidade para outras arquiteturas. Além disso, por priorizar estabilidade e compatibilidade com o hardware, o sistema tende a disponibilizar versões mais conservadoras de determinados pacotes, o que pode representar um obstáculo em projetos que demandem funcionalidades recentes ou maior flexibilidade de configuração, como observado em distribuições de propósito geral, como Ubuntu ou Rocky Linux.
 
@@ -143,13 +134,15 @@ Apesar dessas vantagens, é importante considerar algumas limitações. O Raspbe
 \label{section:Virtualizacao}
 
 % ### Os comentarios abaixo vao para o cap3 ###
+
+%!@@!#$@#$#@$@#$@
 % A virtualização desempenha um papel essencial neste trabalho por dois motivos principais. Primeiramente, conforme discutido na Seção \ref{section:Delimitação}, a indisponibilidade de equipamentos motivou a adoção de técnicas de virtualização para simular diferentes dispositivos, permitindo a criação de um ambiente de testes controlado e replicável utilizando uma úniac máquina física como base. 
 
 % Em segundo lugar, a conteinerização dos softwares de monitoramento e coleta de métricas contribui diretamente para a portabilidade, escalabilidade, automação e manutenção da solução desenvolvida. Ao encapsular os serviços em contêineres independentes, é possível garantir maior uniformidade entre ambientes de desenvolvimento e produção, além de alinhar a implementação aos princípios da IaC.
 
 
 \textcolor{red}{
-    Nesta seção serão apresentadas as ferramentas para solução de abstração do projeto. Algumas representam uma abordagem tradicional, com máquinas virtuais e hipervisores completos, enquanto outras trazem uma abordagem mais moderna, trazendo soluções de conteinerização.
+    Nesta seção serão apresentadas as ferramentas de abstração. Algumas representam uma abordagem tradicional, com máquinas virtuais e hipervisores completos, enquanto outras trazem uma abordagem mais moderna, trazendo soluções de conteinerização.
 }
 
 % Nesta seção são apresentadas ferramentas consideradas durante o desenvolvimento do projeto, indo desde virtualização tradicional (máquinas virtuais/hipervisores completos) até soluções de conteinerização.
@@ -157,23 +150,23 @@ Apesar dessas vantagens, é importante considerar algumas limitações. O Raspbe
 \subsection{Oracle VirtualBox}
 \label{subsection:VirtualBox}
 
-O Oracle VirtualBox é um software de virtualização de código aberto, amplamente utilizado para criar e gerenciar máquinas virtuais (VMs) em diversas plataformas, incluindo Windows, macOS, Linux e Solaris. Mantido pela Oracle Corporation, o VirtualBox permite a criação de ambientes virtuais completos, nos quais é possível instalar e executar sistemas operacionais distintos de forma isolada, sobre o mesmo hardware físico.
+O Oracle VirtualBox \citep{virtualbox2025} é um software de virtualização de código aberto, amplamente utilizado para criar e gerenciar máquinas virtuais (VMs)\abbrev{VM}{\foreign{Virtual Machine}} em diversas plataformas, incluindo Windows, macOS, Linux e Solaris. Mantido pela Oracle Corporation, o VirtualBox permite a criação de ambientes virtuais completos, nos quais é possível instalar e executar sistemas operacionais distintos de forma isolada, sobre o mesmo hardware físico.
 
-A ferramenta é compatível com múltiplos sistemas operacionais hospedeiros (Windows, Linux, macOS) e suporta uma ampla gama de sistemas convidados, como diversas distribuições Linux, versões do Windows e sistemas BSD. Além disso, o VirtualBox oferece suporte a recursos avançados, como snapshots (pontos de restauração), compartilhamento de pastas entre o host e as VMs, e suporte a dispositivos USB.
+A ferramenta é compatível com múltiplos sistemas operacionais hospedeiros (Windows, Linux, macOS) e suporta uma ampla gama de sistemas convidados, como diversas distribuições Linux, versões do Windows e sistemas BSD\abbrev{BSD}{\foreign{Berkeley Software Distribution}}. Além disso, o VirtualBox oferece suporte a recursos avançados, como \foreign{snapshots} (pontos de restauração), compartilhamento de pastas entre o \foreign{host} e as VMs, e suporte a dispositivos USB\abbrev{USB}{\foreign{Universal Serial Bus}}.
 
 Embora útil para simular ambientes heterogêneos, sua principal limitação reside na necessidade de um hipervisor completo, implicando num maior consumo de recursos do sistema em comparação com soluções de conteinerização. Além disso, a configuração e o gerenciamento de máquinas virtuais podem ser mais complexos, especialmente em cenários que exigem alta escalabilidade ou automação extensiva.
 
 \subsection{VMware Workstation Player}
 \label{subsection:VMware-Player}
 
-O VMware Workstation Player, também conhecido como VMware Player, é um hipervisor gratuito para uso pessoal e mantido pela VMware Inc., disponível para sistemas hospedeiros Windows e Linux. Ele permite a execução de apenas uma máquina virtual por vez e não possui funcionalidades avançadas de gerenciamento, como snapshots, clones ou integração com redes virtuais complexas.
+O VMware Workstation Player \citep{vmwareplayer2025}, também conhecido como VMware Player, é um hipervisor gratuito para uso pessoal e mantido pela VMware Inc., disponível para sistemas hospedeiros Windows e Linux. Ele permite a execução de apenas uma máquina virtual por vez e não possui funcionalidades avançadas de gerenciamento, como \foreign{snapshots}, clones ou integração com redes virtuais complexas.
 
-O suporte à múltiplas máquinas virtuais simultâneas e ferramentas avançadas de virtualização são recursos disponíveis apenas na versão VMware Workstation Pro, que no momento da implementação deste projeto, não era gratuita. Sendo assim, o VMware Workstation Player é limitado demais para as necessidades deste projeto.
+O suporte à múltiplas máquinas virtuais simultâneas e ferramentas avançadas de virtualização são recursos disponíveis apenas na versão VMware Workstation Pro, que no momento da implementação deste projeto, não era gratuita.
 
 \subsection{Docker}
 \label{subsection:Docker}
 
-O Docker é uma plataforma de conteinerização que introduziu um paradigma mais leve para empacotamento e distribuição de aplicações, virtualizando o sistema operacional em vez do hardware subjacente. Fundamenta-se em mecanismos nativos do kernel Linux — namespaces, cgroups e union file systems — para isolar processos e controlar a alocação de recursos.
+O Docker \citep{docker2025} é uma plataforma de conteinerização que introduziu um paradigma mais leve para empacotamento e distribuição de aplicações, virtualizando o sistema operacional em vez do hardware subjacente. Fundamenta-se em mecanismos nativos do \foreign{kernel} Linux — \foreign{namespaces}, \foreign{cgroups} e \foreign{union file systems} — para isolar processos e controlar a alocação de recursos.
 
 A principal unidade no Docker é a imagem, que representa o conjunto de camadas de arquivos e instruções necessárias para construir um contêiner. A partir dessas imagens, é possível iniciar instâncias isoladas de software, com comportamento idêntico em diferentes ambientes, garantindo portabilidade e consistência, pondo fim à famosa frase "mas na minha máquina funciona".
 
@@ -188,7 +181,7 @@ A partir de uma imagem, basta executar um comando como \verb|docker run| para in
 
 Ao utilizar apenas a interface de linha de comando do Docker, cada contêiner deve ser criado individualmente mediante comandos \verb|docker run| ou \verb|docker create|, nos quais todos os parâmetros (portas, volumes, redes, variáveis de ambiente) precisam ser especificados manualmente. A mesma lógica se aplica à criação de redes e volumes, cujo gerenciamento isolado torna-se pouco escalável à medida que a quantidade de contêineres aumenta.
 
-O Docker Compose, mantido oficialmente pela Docker Inc., surgiu precisamente para abstrair essa complexidade. Trata-se de uma ferramenta orquestradora complementar ao Docker, que descreve aplicações multi-contêiner por meio de um arquivo declarativo \verb|docker-compose.yml| (ou simplesmente \verb|compose.yml|) escrito em YAML. Nesse manifesto podem ser definidos, de forma unificada:
+O Docker Compose \citep{dockercmpse2025}, mantido oficialmente pela Docker Inc., surgiu precisamente para abstrair essa complexidade. Trata-se de uma ferramenta orquestradora complementar ao Docker, que descreve aplicações multi-contêiner por meio de um arquivo declarativo \verb|docker-compose.yml| (ou simplesmente \verb|compose.yml|) escrito em YAML\abbrev{YAML}{\foreign{Yet Another Markup Language}}. Nesse manifesto podem ser definidos, de forma unificada:
 
 \begin{itemize}
 \item \textbf{Serviços}: os contêineres que compõem a aplicação;
@@ -197,9 +190,9 @@ O Docker Compose, mantido oficialmente pela Docker Inc., surgiu precisamente par
 \item \textbf{Variáveis de ambiente, políticas de reinicialização, limitações de recursos}, entre outras configurações.
 \end{itemize}
 
-Com um único comando (\verb|docker compose up|), o Compose instancia toda a pilha descrita, garantindo que dependências sejam criadas na ordem correta e que os serviços passem a se comunicar por meio de DNS interno. Embora não seja um orquestrador distribuído como o Kubernetes, o Compose simplifica significativamente o ciclo de vida de aplicações em um único host, sendo amplamente empregado em desenvolvimento local, testes de integração contínua e pequenas implantações.
+Com um único comando (\verb|docker compose up|), o Compose instancia toda a pilha descrita, garantindo que dependências sejam criadas na ordem correta e que os serviços passem a se comunicar por meio de DNS\abbrev{DNS}{\foreign{Domain Name System}} interno. Embora não seja um orquestrador distribuído como o Kubernetes, o Compose simplifica significativamente o ciclo de vida de aplicações em um único \foreign{host}, sendo amplamente empregado em desenvolvimento local, testes de integração contínua e pequenas implantações.
 
-O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da infraestrutura torna-se texto declarativo versionável, revisável e reproduzível, eliminando a fragilidade de procedimentos manuais ou scripts ad-hoc e facilitando a automação em pipelines de CI/CD.
+O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da infraestrutura torna-se texto declarativo versionável, revisável e reproduzível, eliminando a fragilidade de procedimentos manuais ou \foreign{scripts ad-hoc} e facilitando a automação em \foreign{pipelines} de \textcolor{red}{Integração Contínua e Entrega/Implantação Contínua (CI/CD)\abbrev{CI/CD}{\foreign{Continuous Integration and Continuous Delivery/Deployment}}.}
 
 
 \section{Métricas de Interesse}
