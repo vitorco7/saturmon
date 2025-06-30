@@ -21,7 +21,7 @@ Talvez incluir um diagrama de blocos com as ferramentas e como elas se relaciona
 \section{Hardware}
 \label{section:Hardware}
 
-A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na Seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, podem causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
+A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, podem causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
 
 Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa \foreign{(desktops)}, ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
 
@@ -415,20 +415,66 @@ A facilidade de indexação por texto, suporte ao modelo híbrido objeto-relacio
 
 }
 
-\section{Visualização de Dados}
-\label{section:VisualizacaoDados}
+\section{Visualização das Métricas}
+\label{section:VisualizacaoMetricas}
 
-Placeholder
+{\color{red}
+
+Após a coleta de métricas e o processamento dos respectivos dados, torna-se necessário encontrar meios eficazes de visualizar graficamente os resultados obtidos, permitindo uma interpretação mais intuitiva das informações apresentadas pelo sistema de monitoramento.
+
+Uma abordagem amplamente adotada para essa finalidade é a utilização de painéis interativos (\foreign{dashboards}) que combinam diferentes tipos de gráficos, medidores e indicadores visuais, proporcionando elevado grau de customização e auxiliando os usuários em análises e tomadas de decisão baseadas em dados. Estes painéis agregam métricas em visualizações unificadas, facilitando a identificação de padrões, tendências e anomalias nos sistemas monitorados
+
+A seguir, apresentam-se três soluções de visualização: a interface web integrada do Zabbix (Zabbix UI) \abbrev{UI}{\foreign{User Interface}}, a interface web embutida (\foreign{Expression Browser}) do Prometheus  e o Grafana, uma plataforma especializada na visualização de dados e métricas provenientes de fontes externas.
+
+}
 
 \subsection{Zabbix UI}
 \label{subsection:ZabbixUI}
 
-Placeholder
+{\color{red}
+
+A Zabbix UI \citep{zabbix2025} é a interface gráfica nativa fornecida pelo próprio sistema Zabbix, desenvolvida em PHP e acessível via navegador web, que oferece uma experiência centralizada para gerenciamento completo do sistema de monitoramento, integrando funcionalidades de configuração, análise e apresentação de dados em um único ambiente.
+
+A interface organiza os dados de maneira estruturada, com seções dedicadas para visualizações analíticas, registros de eventos, \foreign{dashboards} configuráveis e mapas de rede. Os gráficos são gerados diretamente com base nas métricas coletadas e armazenadas no banco de dados relacional subjacente.
+
+A plataforma disponibiliza recursos avançados como mapas de rede que permitem visualização topológica da infraestrutura monitorada, com elementos representados por ícones que se destacam visualmente quando problemas ocorrem. O sistema de \foreign{thresholds} visuais possibilita configuração de alertas por cores, facilitando a identificação rápida de condições críticas. Adicionalmente, a interface suporta monitoramento web sintético através de cenários baseados em etapas, permitindo verificação de funcionalidade e tempo de resposta de aplicações web.
+
+Embora não ofereça o mesmo nível de flexibilidade visual e personalização avançada de plataformas especializadas como o Grafana, a Zabbix UI apresenta integração total com os recursos internos do sistema, eliminando a necessidade de configuração adicional ou dependências externas.
+}
+
+\subsection{Prometheus Expression Browser}
+\label{subsection:PrometheusExpressionBrowser}
+
+{\color{red}
+
+O Prometheus dispõe de uma interface web embutida conhecida como \foreign{Expression Browser} \citep{promexpbrwsr2025}, cujo principal propósito é permitir a consulta direta de métricas por meio da linguagem PromQL. Essa interface serve como ferramenta básica para inspeção e depuração de séries temporais coletadas pelo Prometheus, sendo especialmente útil durante o desenvolvimento de consultas e na validação da integridade dos dados recebidos.
+
+Por meio dessa interface, é possível realizar buscas manuais de métricas, aplicar filtros com base em \textit{labels}, realizar agregações, calcular taxas e derivadas, entre outras operações matemáticas compatíveis com PromQL. A ferramenta oferece duas visualizações principais: uma aba \foreign{Table} que exibe resultados em formato tabular com timestamps e valores correspondentes, e uma aba \foreign{Graph} que gera gráficos temporais básicos para análise visual. Usuários podem navegar através do histórico temporal modificando o tempo de avaliação através de controles dedicados, permitindo análise retrospectiva de métricas
+
+Apesar de sua utilidade técnica e da baixa complexidade de uso, o \foreign{Expression Browser} não foi projetado para monitoramento contínuo, tampouco para a construção de painéis interativos complexos. Dessa forma, seu papel se restringe majoritariamente à verificação pontual de métricas e à formulação de expressões que posteriormente serão integradas em ferramentas de visualização mais avançadas, como o Grafana.
+
+}
 
 \subsection{Grafana}
 \label{subsection:Grafana}
 
-Placeholder
+{\color{red}
+
+O Grafana \citep{grafana2025} é uma plataforma de código aberto especializada em visualização interativa de dados e análise, desenvolvida pela Grafana Labs. A arquitetura do Grafana é baseada em um modelo \foreign{front-end/back-end}, implementado em TypeScript e Go respectivamente, proporcionando performance otimizada e escalabilidade.
+
+A plataforma suporta diversos \foreign{plugins} de fontes de dados, incluindo sistemas de séries temporais (Prometheus, InfluxDB, Graphite), bancos relacionais (MySQL, PostgreSQL, SQL Server), soluções de observabilidade (Elasticsearch, Splunk) e APIs customizadas, permitindo consolidação de informações heterogêneas em visualizações coesas.
+
+O sistema de painéis do Grafana oferece uma ampla gama de visualizações, desde gráficos temporais tradicionais até mapas geoespaciais, \foreign{heatmaps}, gráficos 3D e canvas personalizáveis.
+
+Cada painel pode ser configurado com consultas específicas na linguagem da fonte de dados correspondente, transformações de dados avançadas, alertas baseados em limiares (\foreign{thresholds}) e anotações contextuais. O editor de consultas fornece suporte nativo a PromQL para fontes Prometheus, incluindo funcionalidades como \foreign{query building} assistido, explicação passo a passo de operações e modelos de consultas pré-definidos.
+
+Entre os recursos avançados destacam-se o sistema de variáveis de \foreign{dashboard} para criação de painéis dinâmicos, \foreign{Public Dashboards} para compartilhamento sem necessidade de autenticação, correlações entre diferentes fontes de dados, e \foreign{Scenes} para integração de dashboards em aplicações customizadas.
+
+O Grafana também oferece capacidades de IaC através da funcionalidade de provisionamento (\foreign{provisioning}) automatizado via arquivos JSON/YAML\abbrev{JSON}{JavaScript Object Notation}, APIs REST abrangentes para automação, e integração com pipelines de CI/CD.
+
+Sua arquitetura baseada em \foreign{plugins} e sua interface web responsiva o tornam uma ferramenta altamente extensível e adaptável a diferentes cenários. A separação entre a origem dos dados e sua visualização permite que o Grafana atue como camada de apresentação unificada para múltiplos sistemas de monitoramento, consolidando visualmente informações coletadas por diferentes ferramentas.
+
+}
 
 \section{Simuladores de Carga}
 \label{section:SimuladoresCarga}
