@@ -350,7 +350,7 @@ O \foreign{Time Series Database} (TSDB) interno representa uma das principais in
 
 O modelo de dados do Prometheus é baseado em métricas multidimensionais, onde cada série temporal é identificada por um nome de métrica e um conjunto de labels (pares chave-valor) que fornecem contexto adicional. Este modelo permite consultas flexíveis e agregações complexas através do PromQL, uma linguagem de consulta especializada que suporta operações matemáticas, estatísticas e análises temporais. A capacidade de correlacionar múltiplas métricas e calcular taxas, percentis e médias móveis torna o Prometheus especialmente adequado para análise de saturação e detecção de anomalias.
 
-Outro diferencial do Prometheus é seu suporte a mecanismos de descoberta automática de serviços (\textit{service discovery}), permitindo integração nativa com plataformas como Kubernetes, DNS e provedores de nuvem. Esta característica, combinada com o modelo pull, oferece maior resilência a falhas de rede e permite que o Prometheus mantenha uma visão centralizada dos alvos de monitoramento mesmo em topologias complexas.
+Outro diferencial do Prometheus é seu suporte a mecanismos de descoberta automática de serviços (\foreign{service discovery}), permitindo integração nativa com plataformas como Kubernetes, DNS e provedores de nuvem. Esta característica, combinada com o modelo pull, oferece maior resilência a falhas de rede e permite que o Prometheus mantenha uma visão centralizada dos alvos de monitoramento mesmo em topologias complexas.
 
 Diferentemente do Zabbix, que conta com uma interface web nativa para configurações, as configurações do Prometheus devem ser feitas diretamente via arquivos YAML. Para um experiência gráfica mais completa, vê-se necessária a integração de outras ferramentas, como por exemplo o Grafana, que é a aplicação recomendada oficialmente.
 
@@ -360,27 +360,60 @@ Diferentemente do Zabbix, que conta com uma interface web nativa para configura�
 \section{Bancos de Dados}
 \label{section:BancosDados}
 
-Placeholder
+{\color{red}
+
+Os bancos de dados são outro componente fundamental em arquiteturas de monitoramento, uma vez que são responsáveis por armazenar informações críticas como métricas coletadas, eventos, \foreign{logs}, configurações e histórico de alertas. A escolha adequada do sistema de gerenciamento de banco de dados impacta diretamente o desempenho, a escalabilidade e a confiabilidade da solução implementada.
+
+No contexto deste projeto, a natureza das informações coletadas — predominantemente séries temporais — exige a avaliação de diferentes abordagens de armazenamento, incluindo bancos de dados relacionais tradicionais e soluções especializadas em dados temporais. As subseções a seguir apresentam os bancos de dados analisados para o projeto, destacando suas principais características.
+
+}
 
 \subsection{MySQL}
 \label{subsection:MySQL}
 
-Placeholder
+{\color{red}
+
+O MySQL \citep{mysql2025} é um sistema de gerenciamento de banco de dados relacional de código aberto, mantido pela Oracle Corporation e amplamente adotado em soluções comerciais e de código aberto. Fundamentado no modelo relacional e na linguagem SQL, organiza as informações em tabelas com esquemas definidos, o que o torna adequado para o armazenamento de dados estruturados, tais como configurações, usuários e registros históricos de eventos.
+
+Em cenários de monitoramento, o MySQL apresenta vantagens quando há necessidade de consultas complexas envolvendo múltiplas junções, geração de relatórios analíticos e integração com ferramentas de inteligência de negócio. Entretanto, por se tratar de um banco relacional tradicional, seu desempenho em operações de escrita intensiva e concorrente pode ser inferior ao de soluções especializadas em séries temporais. Nesses casos, torna-se recomendável a aplicação de técnicas de otimização — como particionamento de tabelas, uso de índices adequados e ajustes de parâmetros de \foreign{buffer} — para atender a ambientes com alta frequência de ingestão de métricas.
+}
 
 \subsection{Time Series DataBase (TSDB)}
 \label{subsection:TSDB}
 
-Placeholder
+{\color{red}
+
+Time Series Database (TSDB) \citep{tigerdata2024} refere-se a uma categoria especializada de sistemas de banco de dados otimizados para armazenar, consultar e analisar dados organizados cronologicamente. Diferentemente dos bancos relacionais tradicionais, os TSDBs são otimizados para cargas de trabalho caracterizadas por inserções sequenciais de alta frequência, consultas baseadas em intervalos temporais e operações de agregação temporal.
+
+A arquitetura típica de um TSDB incorpora otimizações específicas para dados temporais, como mencionado na subseção \ref{subsection:Prometheus}. Entre os principais representantes dessa categoria, destacam-se o InfluxDB — com sua linguagem de consulta InfluxQL e suporte nativo a \textit{tags} para metadados —, o TimescaleDB — uma extensão do PostgreSQL que preserva compatibilidade com SQL padrão —, e o Prometheus TSDB (interno ao sistema de monitoramento homônimo).
+
+A adoção de TSDBs é especialmente recomendada em arquiteturas \foreign{cloud-native}, sistemas distribuídos e ambientes com geração contínua de dados métricos em alta frequência.
+
+}
 
 \subsection{SQLite}
 \label{subsection:SQLite}
 
-Placeholder
+{\color{red}
+
+O SQLite \citep{sqlite2025} é um sistema de gerenciamento de banco de dados relacional leve e embarcado, cuja principal característica é sua implementação como uma biblioteca em linguagem C, que opera de forma integrada à aplicação, dispensando a necessidade de um processo servidor separado. Todos os dados são armazenados em um único arquivo local, e a linguagem SQL é plenamente suportada, o que favorece sua adoção em aplicações embarcadas, ambientes de testes ou soluções de pequeno porte que requerem simplicidade na configuração e baixo consumo de recursos.
+
+Contudo, sua arquitetura impõe limitações importantes no que se refere à concorrência de escritas simultâneas, desempenho sob cargas elevadas e escalabilidade. Tais restrições tornam o SQLite pouco adequado para cenários de monitoramento intensivo, nos quais há alta taxa de ingestão de métricas ou múltipos agentes escrevendo em paralelo, como ocorre em arquiteturas centralizadas e distribuídas de observabilidade.
+
+}
 
 \subsection{PostgreSQL}
 \label{subsection:PostgreSQL}
 
-Placeholder
+{\color{red}
+
+O PostgreSQL \citep{postgresql2025} é um sistema de gerenciamento de banco de dados objeto-relacional de código aberto desenvolvido continuamente há mais de trinta e cinco anos. Com origem no projeto POSTGRES da Universidade de Berkeley (1986) e atualmente mantido pelo PostgreSQL Global Development Group, é reconhecido por sua conformidade com os padrões SQL, extensibilidade e confiabilidade em ambientes corporativos.
+
+Para monitoramento de infraestrutura, o PostgreSQL oferece recursos interessantes através de suas capacidades analíticas avançadas, incluindo agregações complexas, análises estatísticas nativas e suporte a extensões especializadas como TimescaleDB \citep{timescaledb2025} para otimização de séries temporais. O sistema \verb|pg_stat_activity| permite monitoramento detalhado de consultas ativas, enquanto extensões como \verb|pg_cron| facilitam automação de tarefas de manutenção e coleta de dados. A flexibilidade de tipos de dados e a robustez transacional tornam o PostgreSQL adequado para ambientes que demandam integridade de dados, consultas analíticas complexas e integração com múltiplas fontes de dados.
+
+A facilidade de indexação por texto, suporte ao modelo híbrido objeto-relacional e capacidade de processamento em diversos sistemas operacionais ampliam sua aplicabilidade em cenários heterogêneos de monitoramento.
+
+}
 
 \section{Visualização de Dados}
 \label{section:VisualizacaoDados}
