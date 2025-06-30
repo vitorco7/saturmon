@@ -266,20 +266,96 @@ Placeholder
 
 Placeholder
 
-\section{Motores de Processamento de Dados}
-\label{section:MotoresProcessamento}
+\section{Sistemas de Monitoramento}
+\label{section:SistemasMonitoramento}
 
-Placeholder
+
+{\color{red}
+
+    Os sistemas de monitoramento representam o núcleo da infraestrutura de observabilidade em um ambiente computacional. São responsáveis por coletar, armazenar, processar e disponibilizar métricas provenientes de dispositivos e serviços monitorados, exercendo influência direta sobre o desempenho, a confiabilidade e a capacidade analítica da solução implementada.
+
+    No contexto específico deste projeto — voltado à análise de saturação de recursos — o sistema de monitoramento deve ser capaz de lidar eficientemente com grandes volumes de dados temporais, oferecendo suporte à ingestão contínua de métricas, armazenamento histórico, consulta expressiva, visualização em tempo real e detecção de comportamentos anômalos. Além disso, mecanismos de alerta e integração com outros componentes da stack são essenciais para garantir resposta proativa diante de eventos críticos.
+
+    Esta seção apresenta duas abordagens arquiteturais distintas e consolidadas, que representam paradigmas complementares no monitoramento de infraestrutura: o Zabbix, com uma abordagem tradicional e integrada, e o Prometheus, baseado em séries temporais e voltado a ambientes dinâmicos e conteinerizados. Na sequência apresentam-se tabelas comparativas de ambos.
+
+}
+
+\begin{table}[H]
+\centering
+\caption{Zabbix - Requisitos recomendados por porte de instalação}
+\label{tab:requisitos-zabbix}
+\begin{tabular}{@{}p{4cm} p{3cm} p{2.5cm} p{2.5cm}@{}}
+\toprule
+\textbf{Porte da instalação Zabbix} & \textbf{Métricas monitoradas} & \textbf{CPU cores} & \textbf{Memória (GiB)} \\
+\midrule
+Pequeno     & 1.000       & 2   & 8   \\
+Médio       & 10.000      & 4   & 16  \\
+Grande       & 100.000     & 16  & 64  \\
+Muito grande & 1.000.000 & 32  & 96  \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize
+
+Nota: A documentação oficial do Prometheus não disponibiliza as informações necessárias para inclusão do mesmo nesta tabela. 
+
+\end{flushleft}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Comparativo técnico entre Zabbix e Prometheus}
+\label{tab:comparativo-zabbix-prometheus}
+\begin{tabular}{@{}p{4cm} p{5.3cm} p{5.3cm}@{}}
+\toprule
+\textbf{Critério} & \textbf{Zabbix} & \textbf{Prometheus} \\
+\midrule
+Arquitetura & Monolítica cliente-servidor & Microsserviços distribuídos \\
+Modelo de coleta & Pull, Push, SNMP, SSH, etc. & Pull via HTTP \\
+Base de dados & Relacional (MySQL, PostgreSQL, etc.) & TSDB interno \\
+Linguagem de consulta & Interface gráfica web & PromQL \\
+Agentes/exportadores & Agentes Zabbix v1/v2, proxies, SNMP, etc. & node\_exporter, cAdvisor, Telegraf, etc. \\
+Gestão de alertas & Interface gráfica web & Regras em PromQL com envio via Alertmanager \\
+Interface nativa & Interface gráfica web & Recomenda-se integração com o Grafana \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 
 \subsection{Zabbix}
 \label{subsection:Zabbix}
 
-Placeholder
+{\color{red}
 
+O Zabbix é uma plataforma de monitoramento de código aberto, mantida pela Zabbix LLC \citep{zabbix2025}, que oferece uma solução completa para supervisão de infraestrutura de TI, incluindo servidores, dispositivos de rede, máquinas virtuais, aplicações e serviços. Desenvolvida em C e PHP, adota uma arquitetura monolítica cliente-servidor composta por quatro componentes principais: agentes, servidor, banco de dados e interface web.
+
+O servidor Zabbix funciona como o elo central do sistema: coleta métricas, avalia condições de gatilho, gera eventos e dispara notificações. Todas as informações de configuração, métricas e históricos são armazenadas em um banco de dados relacional — MySQL, PostgreSQL, Oracle ou SQLite. Em implementações de maior escala, proxies Zabbix podem ser empregados para atuar como intermediários, coletando dados localmente e armazenando-os em \foreign{buffer} antes de repassá-los ao servidor, o que reduz a carga de comunicação sobre o núcleo central.
+
+Os agentes Zabbix, instalados nos dispositivos monitorados, coletam informações sobre uso de CPU, memória, disco, rede e outros parâmetros configurados. A coleta pode ocorrer de forma passiva — quando o servidor solicita métricas — ou ativa — quando o próprio agente envia dados conforme agendado. Além disso, o Zabbix suporta monitoramento sem agente via SSH/Telnet\abbrev{SSH}{\foreign{Secure Shell}}\abbrev{Telnet}{\foreign{Telecommunication Network}}, protocolos SNMP\abbrev{SNMP}{Simple Network Management Protocol}, IPMI\abbrev{IPMI}{Intelligent Platform Management Interface} e JMX\abbrev{JMX}{\foreign{Java Management Extensions}}, e integrações com APIs RESTful\abbrev{API}{\foreign{Application Programming Interface}}, ampliando seu alcance a equipamentos e serviços que não permitem a instalação de software local.
+
+Para simplificar a configuração em ambientes heterogêneos, o Zabbix dispõe de recursos de descoberta automática e de templates padronizados, permitindo replicar ajustes e métricas em múltiplos dispositivos de forma consistente. A interface web, por sua vez, oferece dashboards personalizáveis, relatórios históricos e ferramentas de análise, além de ser o meio principal de configurações e personalizações do servidor, consolidando em um único painel todas as funcionalidades essenciais à observabilidade e ao gerenciamento proativo da infraestrutura.
+
+}
 \subsection{Prometheus}
 \label{subsection:Prometheus}
 
-Placeholder
+{\color{red}
+
+O Prometheus \citep{prometheus2025} é um sistema de monitoramento e alerta de código aberto desenvolvido inicialmente pela SoundCloud, mas atulamente não possui um "proprietário". Trata-se de um projeto independente mantido por uma comunidade de contribuidores com uma governança formalizada pela Cloud Native Computing Foundation (CNCF)\abbrev{CNCF}{Cloud Native Computing Foundation}. Projetado para atender aos desafios de ambientes \foreign{cloud-native} e arquiteturas baseadas em microsserviços, o Prometheus adota um paradigma distinto do monitoramento tradicional, estruturando-se em torno do modelo de coleta ativa (\foreign{pull}) e do armazenamento eficiente de séries temporais.
+
+A arquitetura do Prometheus é composta por diversos componentes especializados que operam de forma distribuída. O servidor Prometheus constitui o componente central, responsável por descobrir alvos de monitoramento, coletar métricas através de \foreign{scraping} HTTP\abbrev{HTTP}{\foreign{Hypertext Transfer Protocol}}, armazenar dados em sua base de dados de séries temporais (TSDB)\abbrev{TSDB}{\foreign{Time Series Database}} interna e disponibilizar esses dados para consultas via PromQL (Prometheus Query Language). Os exportadores funcionam como intermediários, traduzindo métricas de sistemas existentes (MySQL, PostgreSQL, servidores web, sistemas operacionais) para o formato de exposição do Prometheus. O Alertmanager opera como serviço separado, recebendo alertas do servidor Prometheus e gerenciando seu roteamento, agrupamento e entrega através de múltiplos canais de notificação.
+
+O \foreign{Time Series Database} (TSDB) interno representa uma das principais inovações do Prometheus. Otimizado especificamente para dados de séries temporais, o TSDB utiliza técnicas de compressão (\foreign{delta encoding, double-delta encoding, bitpacking}) para reduzir o uso em disco. A arquitetura do TSDB separa dados recentes (\foreign{head block} em memória) de dados históricos (blocos persistentes em disco), garantindo acesso rápido a métricas atuais enquanto mantém eficiência para consultas históricas. O \foreign{write-ahead log} (WAL)\abbrev{WAL}{\foreign{Write-Ahead Log}} garante durabilidade dos dados, enquanto políticas de retenção automáticas (padrão de 15 dias) controlam o uso de armazenamento.
+
+O modelo de dados do Prometheus é baseado em métricas multidimensionais, onde cada série temporal é identificada por um nome de métrica e um conjunto de labels (pares chave-valor) que fornecem contexto adicional. Este modelo permite consultas flexíveis e agregações complexas através do PromQL, uma linguagem de consulta especializada que suporta operações matemáticas, estatísticas e análises temporais. A capacidade de correlacionar múltiplas métricas e calcular taxas, percentis e médias móveis torna o Prometheus especialmente adequado para análise de saturação e detecção de anomalias.
+
+Outro diferencial do Prometheus é seu suporte a mecanismos de descoberta automática de serviços (\textit{service discovery}), permitindo integração nativa com plataformas como Kubernetes, DNS e provedores de nuvem. Esta característica, combinada com o modelo pull, oferece maior resilência a falhas de rede e permite que o Prometheus mantenha uma visão centralizada dos alvos de monitoramento mesmo em topologias complexas.
+
+Diferentemente do Zabbix, que conta com uma interface web nativa para configurações, as configurações do Prometheus devem ser feitas diretamente via arquivos YAML. Para um experiência gráfica mais completa, vê-se necessária a integração de outras ferramentas, como por exemplo o Grafana, que é a aplicação recomendada oficialmente.
+
+}
+
 
 \section{Bancos de Dados}
 \label{section:BancosDados}
