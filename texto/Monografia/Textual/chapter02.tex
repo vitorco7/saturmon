@@ -24,16 +24,16 @@ A seguir, serão apresentadas algumas opções de hardware avaliadas para compor
 
 O Intel \foreign{Next Unit of Computing} (NUC)\abbrev{NUC}{\foreign{Next Unit of Computing}} \citep{nuc2025} configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de \foreign{desktops} convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
 
-No NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura \textcolor{red}{Advanced RISC Machine} (ARM)\abbrev{ARM}{\foreign{Advanced RISC Machine}}. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
+No NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura Advanced RISC Machine (ARM)\abbrev{ARM}{\foreign{Advanced RISC Machine}}. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
 
-Outro ponto relevante é o suporte a recursos de hardware mais robustos em comparação aos computadores de placa única. O NUC permite configurações com processadores de maior desempenho, maior quantidade de memória \textcolor{red}{\foreign{Random Access Memory}} (RAM)\abbrev{RAM}{\foreign{Random Access Memory}}, opções avançadas de armazenamento, como unidades \textcolor{red}{\foreign{Solid State Drive} (SSD)} NVMe, interfaces modernas de conectividade e em alguns casos até mesmo placas gráficas dedicadas. Tais características tornam o dispositivo apto a lidar com cargas de trabalho mais exigentes, especialmente em situações que demandam coleta intensiva de métricas ou visualização analítica em tempo real.
+Outro ponto relevante é o suporte a recursos de hardware mais robustos em comparação aos computadores de placa única. O NUC permite configurações com processadores de maior desempenho, maior quantidade de memória \foreign{Random Access Memory} (RAM)\abbrev{RAM}{\foreign{Random Access Memory}}, opções avançadas de armazenamento, como unidades \foreign{Solid State Drive} (SSD) NVMe, interfaces modernas de conectividade e em alguns casos até mesmo placas gráficas dedicadas. Tais características tornam o dispositivo apto a lidar com cargas de trabalho mais exigentes, especialmente em situações que demandam coleta intensiva de métricas ou visualização analítica em tempo real.
 
 Dessa forma, o Intel NUC pode ser compreendido como uma solução intermediária entre os computadores de placa única, como o Raspberry Pi e o Orange Pi, e os \foreign{desktops} tradicionais, reunindo portabilidade e desempenho em um único equipamento.
 
 \subsection{Raspberry Pi}
 \label{subsection:RaspberryPi}
 
-O Raspberry Pi \citep{raspihw2025} é uma família de computadores de placa única (SBC)\abbrev{SBC}{\foreign{Single-Board Computer}} desenvolvida pela Raspberry Pi Foundation, no Reino Unido, em colaboração com a Broadcom. Sua arquitetura baseia-se em processadores ARM e adota o conceito de \textcolor{red}{sistema em um chip} (SoC)\abbrev{SoC}{\foreign{system-on-a-chip}}, integrando CPU, \textcolor{red}{unidade de processamento gráfico} (GPU)\abbrev{GPU}{\foreign{Graphics Processing Unit}} e memória RAM em uma única placa. Essa integração favorece a eficiência energética e a redução de custos, características que tornam o dispositivo especialmente atrativo para aplicações embarcadas, automação residencial, robótica, projetos de Internet das Coisas (IoT) e experimentação em ambientes educacionais e industriais.
+O Raspberry Pi \citep{raspihw2025} é uma família de computadores de placa única (SBC)\abbrev{SBC}{\foreign{Single-Board Computer}} desenvolvida pela Raspberry Pi Foundation, no Reino Unido, em colaboração com a Broadcom. Sua arquitetura baseia-se em processadores ARM e adota o conceito de sistema em um chip (SoC)\abbrev{SoC}{\foreign{system-on-a-chip}}, integrando CPU, unidade de processamento gráfico (GPU)\abbrev{GPU}{\foreign{Graphics Processing Unit}} e memória RAM em uma única placa. Essa integração favorece a eficiência energética e a redução de custos, características que tornam o dispositivo especialmente atrativo para aplicações embarcadas, automação residencial, robótica, projetos de Internet das Coisas (IoT) e experimentação em ambientes educacionais e industriais.
 
 A compatibilidade do Raspberry Pi com uma ampla gama de sistemas operacionais baseados em Linux — como Raspberry Pi OS, Ubuntu e Debian — amplia suas possibilidades de uso, permitindo desde tarefas cotidianas, como navegação web e execução de aplicações de escritório, até a implementação de servidores, clusters de computação e plataformas de monitoramento de redes. A ausência de armazenamento interno é suprida pelo uso de cartões microSD, que funcionam tanto para o sistema operacional quanto para o armazenamento de dados. Embora essa solução seja prática e econômica, o desempenho de leitura e escrita dos cartões microSD pode ser um fator limitante, especialmente em aplicações que demandam operações intensivas de I/O.
 
@@ -54,9 +54,9 @@ Porém, essa diversidade também implica em desafios. Um dos principais refere-s
 \section{Sistemas Operacionais}
 \label{section:SistemasOperacionais}
 
-Como mencionado no início deste capítulo, o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, \textcolor{red}{
-    foram consideradas distribuições Linux. A seguir, a tabela \ref{tab:requisitos-minimos} apresenta um comparativo dos requisitos de hardware mínimos para cada sistema operacional.
-}
+Como mencionado no início deste capítulo, o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, 
+foram consideradas distribuições Linux. A seguir, a tabela \ref{tab:requisitos-minimos} apresenta um comparativo dos requisitos de hardware mínimos para cada sistema operacional.
+
 \begin{table}[H]
 \centering
 \caption{Requisitos mínimos das distribuições analisadas}
@@ -85,7 +85,7 @@ Rasp. Pi OS Desktop & * & * & 32\,GB (SD**) \\
 \subsection{Ubuntu}
 \label{subsection:Ubuntu}
 
-O Ubuntu \citep{ubuntudsktp2025} é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica, suporte extenso a pacotes --- sistemas de pacotes \textcolor{red}{\foreign{deb}} e \textcolor{red}{\foreign{snap}} e o gerenciador \foreign{Advanced Package Tool} (APT)\abbrev{APT}{\foreign{Advanced Package Tool}} ---  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
+O Ubuntu \citep{ubuntudsktp2025} é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica, suporte extenso a pacotes --- sistemas de pacotes \foreign{deb} e \foreign{snap} e o gerenciador \foreign{Advanced Package Tool} (APT)\abbrev{APT}{\foreign{Advanced Package Tool}} ---  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
 
 Baseado no Debian, o Ubuntu oferece compatibilidade com múltiplas arquiteturas, incluindo x86-64 e ARM, o que permite sua instalação em uma ampla variedade de dispositivos — desde computadores convencionais até plataformas embarcadas e servidores compactos, como o Raspberry Pi e o Intel NUC. A distribuição disponibiliza um conjunto abrangente de pacotes pré-compilados por meio de repositórios oficiais, utilizando o gerenciador de pacotes , o que facilita a instalação de ferramentas relacionadas a monitoramento, virtualização e automação de sistemas.
 
@@ -133,11 +133,7 @@ Apesar dessas vantagens, é importante considerar algumas limitações. O Raspbe
 % Em segundo lugar, a conteinerização dos softwares de monitoramento e coleta de métricas contribui diretamente para a portabilidade, escalabilidade, automação e manutenção da solução desenvolvida. Ao encapsular os serviços em contêineres independentes, é possível garantir maior uniformidade entre ambientes de desenvolvimento e produção, além de alinhar a implementação aos princípios da IaC.
 
 
-\textcolor{red}{
-    Nesta seção serão apresentadas as ferramentas de abstração. Algumas representam uma abordagem tradicional, com máquinas virtuais e hipervisores completos, enquanto outras trazem uma abordagem mais moderna, trazendo soluções de conteinerização.
-}
-
-% Nesta seção são apresentadas ferramentas consideradas durante o desenvolvimento do projeto, indo desde virtualização tradicional (máquinas virtuais/hipervisores completos) até soluções de conteinerização.
+Nesta seção serão apresentadas as ferramentas de abstração. Algumas representam uma abordagem tradicional, com máquinas virtuais e hipervisores completos, enquanto outras trazem uma abordagem mais moderna, trazendo soluções de conteinerização.
 
 \subsection{Oracle VirtualBox}
 \label{subsection:VirtualBox}
@@ -184,7 +180,7 @@ O Docker Compose \citep{dockercmpse2025}, mantido oficialmente pela Docker Inc.,
 
 Com um único comando (\verb|docker compose up|), o Compose instancia toda a pilha descrita, garantindo que dependências sejam criadas na ordem correta e que os serviços passem a se comunicar por meio de DNS\abbrev{DNS}{\foreign{Domain Name System}} interno. Embora não seja um orquestrador distribuído como o Kubernetes, o Compose simplifica significativamente o ciclo de vida de aplicações em um único \foreign{host}, sendo amplamente empregado em desenvolvimento local, testes de integração contínua e pequenas implantações.
 
-O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da infraestrutura torna-se texto declarativo versionável, revisável e reproduzível, eliminando a fragilidade de procedimentos manuais ou \foreign{scripts ad-hoc} e facilitando a automação em \foreign{pipelines} de \textcolor{red}{Integração Contínua e Entrega/Implantação Contínua (CI/CD)\abbrev{CI/CD}{\foreign{Continuous Integration and Continuous Delivery/Deployment}}.}
+O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da infraestrutura torna-se texto declarativo versionável, revisável e reproduzível, eliminando a fragilidade de procedimentos manuais ou \foreign{scripts ad-hoc} e facilitando a automação em \foreign{pipelines} de Integração Contínua e Entrega/Implantação Contínua (CI/CD)\abbrev{CI/CD}{\foreign{Continuous Integration and Continuous Delivery/Deployment}}.
 
 
 \section{Métricas de Interesse}
@@ -261,16 +257,11 @@ Placeholder
 \section{Sistemas de Monitoramento}
 \label{section:SistemasMonitoramento}
 
+Os sistemas de monitoramento representam o núcleo da infraestrutura de observabilidade em um ambiente computacional. São responsáveis por coletar, armazenar, processar e disponibilizar métricas provenientes de dispositivos e serviços monitorados, exercendo influência direta sobre o desempenho, a confiabilidade e a capacidade analítica da solução implementada.
 
-{\color{red}
+No contexto específico deste projeto — voltado à análise de saturação de recursos — o sistema de monitoramento deve ser capaz de lidar eficientemente com grandes volumes de dados temporais, oferecendo suporte à ingestão contínua de métricas, armazenamento histórico, consulta expressiva, visualização em tempo real e detecção de comportamentos anômalos. Além disso, mecanismos de alerta e integração com outros componentes da stack são essenciais para garantir resposta proativa diante de eventos críticos.
 
-    Os sistemas de monitoramento representam o núcleo da infraestrutura de observabilidade em um ambiente computacional. São responsáveis por coletar, armazenar, processar e disponibilizar métricas provenientes de dispositivos e serviços monitorados, exercendo influência direta sobre o desempenho, a confiabilidade e a capacidade analítica da solução implementada.
-
-    No contexto específico deste projeto — voltado à análise de saturação de recursos — o sistema de monitoramento deve ser capaz de lidar eficientemente com grandes volumes de dados temporais, oferecendo suporte à ingestão contínua de métricas, armazenamento histórico, consulta expressiva, visualização em tempo real e detecção de comportamentos anômalos. Além disso, mecanismos de alerta e integração com outros componentes da stack são essenciais para garantir resposta proativa diante de eventos críticos.
-
-    Esta seção apresenta duas abordagens arquiteturais distintas e consolidadas, que representam paradigmas complementares no monitoramento de infraestrutura: o Zabbix, com uma abordagem tradicional e integrada, e o Prometheus, baseado em séries temporais e voltado a ambientes dinâmicos e conteinerizados. Na sequência apresentam-se tabelas comparativas de ambos.
-
-}
+Esta seção apresenta duas abordagens arquiteturais distintas e consolidadas, que representam paradigmas complementares no monitoramento de infraestrutura: o Zabbix, com uma abordagem tradicional e integrada, e o Prometheus, baseado em séries temporais e voltado a ambientes dinâmicos e conteinerizados. Na sequência apresentam-se tabelas comparativas de ambos.
 
 \begin{table}[H]
 \centering
@@ -318,8 +309,6 @@ Interface nativa & Interface gráfica web & Recomenda-se integração com o Graf
 \subsection{Zabbix}
 \label{subsection:Zabbix}
 
-{\color{red}
-
 O Zabbix é uma plataforma de monitoramento de código aberto, mantida pela Zabbix LLC \citep{zabbix2025}, que oferece uma solução completa para supervisão de infraestrutura de TI, incluindo servidores, dispositivos de rede, máquinas virtuais, aplicações e serviços. Desenvolvida em C e PHP, adota uma arquitetura monolítica cliente-servidor composta por quatro componentes principais: agentes, servidor, banco de dados e interface web.
 
 O servidor Zabbix funciona como o elo central do sistema: coleta métricas, avalia condições de gatilho, gera eventos e dispara notificações. Todas as informações de configuração, métricas e históricos são armazenadas em um banco de dados relacional — MySQL, PostgreSQL, Oracle ou SQLite. Em implementações de maior escala, proxies Zabbix podem ser empregados para atuar como intermediários, coletando dados localmente e armazenando-os em \foreign{buffer} antes de repassá-los ao servidor, o que reduz a carga de comunicação sobre o núcleo central.
@@ -328,11 +317,8 @@ Os agentes Zabbix, instalados nos dispositivos monitorados, coletam informaçõe
 
 Para simplificar a configuração em ambientes heterogêneos, o Zabbix dispõe de recursos de descoberta automática e de templates padronizados, permitindo replicar ajustes e métricas em múltiplos dispositivos de forma consistente. A interface web, por sua vez, oferece dashboards personalizáveis, relatórios históricos e ferramentas de análise, além de ser o meio principal de configurações e personalizações do servidor, consolidando em um único painel todas as funcionalidades essenciais à observabilidade e ao gerenciamento proativo da infraestrutura.
 
-}
 \subsection{Prometheus}
 \label{subsection:Prometheus}
-
-{\color{red}
 
 O Prometheus \citep{prometheus2025} é um sistema de monitoramento e alerta de código aberto desenvolvido inicialmente pela SoundCloud, mas atulamente não possui um "proprietário". Trata-se de um projeto independente mantido por uma comunidade de contribuidores com uma governança formalizada pela Cloud Native Computing Foundation (CNCF)\abbrev{CNCF}{Cloud Native Computing Foundation}. Projetado para atender aos desafios de ambientes \foreign{cloud-native} e arquiteturas baseadas em microsserviços, o Prometheus adota um paradigma distinto do monitoramento tradicional, estruturando-se em torno do modelo de coleta ativa (\foreign{pull}) e do armazenamento eficiente de séries temporais.
 
@@ -346,34 +332,22 @@ Outro diferencial do Prometheus é seu suporte a mecanismos de descoberta autom�
 
 Diferentemente do Zabbix, que conta com uma interface web nativa para configurações, as configurações do Prometheus devem ser feitas diretamente via arquivos YAML. Para um experiência gráfica mais completa, vê-se necessária a integração de outras ferramentas, como por exemplo o Grafana, que é a aplicação recomendada oficialmente.
 
-}
-
-
 \section{Bancos de Dados}
 \label{section:BancosDados}
-
-{\color{red}
 
 Os bancos de dados são outro componente fundamental em arquiteturas de monitoramento, uma vez que são responsáveis por armazenar informações críticas como métricas coletadas, eventos, \foreign{logs}, configurações e histórico de alertas. A escolha adequada do sistema de gerenciamento de banco de dados impacta diretamente o desempenho, a escalabilidade e a confiabilidade da solução implementada.
 
 No contexto deste projeto, a natureza das informações coletadas — predominantemente séries temporais — exige a avaliação de diferentes abordagens de armazenamento, incluindo bancos de dados relacionais tradicionais e soluções especializadas em dados temporais. As subseções a seguir apresentam os bancos de dados analisados para o projeto, destacando suas principais características.
 
-}
-
 \subsection{MySQL}
 \label{subsection:MySQL}
-
-{\color{red}
 
 O MySQL \citep{mysql2025} é um sistema de gerenciamento de banco de dados relacional de código aberto, mantido pela Oracle Corporation e amplamente adotado em soluções comerciais e de código aberto. Fundamentado no modelo relacional e na linguagem SQL, organiza as informações em tabelas com esquemas definidos, o que o torna adequado para o armazenamento de dados estruturados, tais como configurações, usuários e registros históricos de eventos.
 
 Em cenários de monitoramento, o MySQL apresenta vantagens quando há necessidade de consultas complexas envolvendo múltiplas junções, geração de relatórios analíticos e integração com ferramentas de inteligência de negócio. Entretanto, por se tratar de um banco relacional tradicional, seu desempenho em operações de escrita intensiva e concorrente pode ser inferior ao de soluções especializadas em séries temporais. Nesses casos, torna-se recomendável a aplicação de técnicas de otimização — como particionamento de tabelas, uso de índices adequados e ajustes de parâmetros de \foreign{buffer} — para atender a ambientes com alta frequência de ingestão de métricas.
-}
 
 \subsection{Time Series DataBase (TSDB)}
 \label{subsection:TSDB}
-
-{\color{red}
 
 Time Series Database (TSDB) \citep{tigerdata2024} refere-se a uma categoria especializada de sistemas de banco de dados otimizados para armazenar, consultar e analisar dados organizados cronologicamente. Diferentemente dos bancos relacionais tradicionais, os TSDBs são otimizados para cargas de trabalho caracterizadas por inserções sequenciais de alta frequência, consultas baseadas em intervalos temporais e operações de agregação temporal.
 
@@ -381,23 +355,15 @@ A arquitetura típica de um TSDB incorpora otimizações específicas para dados
 
 A adoção de TSDBs é especialmente recomendada em arquiteturas \foreign{cloud-native}, sistemas distribuídos e ambientes com geração contínua de dados métricos em alta frequência.
 
-}
-
 \subsection{SQLite}
 \label{subsection:SQLite}
-
-{\color{red}
 
 O SQLite \citep{sqlite2025} é um sistema de gerenciamento de banco de dados relacional leve e embarcado, cuja principal característica é sua implementação como uma biblioteca em linguagem C, que opera de forma integrada à aplicação, dispensando a necessidade de um processo servidor separado. Todos os dados são armazenados em um único arquivo local, e a linguagem SQL é plenamente suportada, o que favorece sua adoção em aplicações embarcadas, ambientes de testes ou soluções de pequeno porte que requerem simplicidade na configuração e baixo consumo de recursos.
 
 Contudo, sua arquitetura impõe limitações importantes no que se refere à concorrência de escritas simultâneas, desempenho sob cargas elevadas e escalabilidade. Tais restrições tornam o SQLite pouco adequado para cenários de monitoramento intensivo, nos quais há alta taxa de ingestão de métricas ou múltipos agentes escrevendo em paralelo, como ocorre em arquiteturas centralizadas e distribuídas de observabilidade.
 
-}
-
 \subsection{PostgreSQL}
 \label{subsection:PostgreSQL}
-
-{\color{red}
 
 O PostgreSQL \citep{postgresql2025} é um sistema de gerenciamento de banco de dados objeto-relacional de código aberto desenvolvido continuamente há mais de trinta e cinco anos. Com origem no projeto POSTGRES da Universidade de Berkeley (1986) e atualmente mantido pelo PostgreSQL Global Development Group, é reconhecido por sua conformidade com os padrões SQL, extensibilidade e confiabilidade em ambientes corporativos.
 
@@ -405,12 +371,8 @@ Para monitoramento de infraestrutura, o PostgreSQL oferece recursos interessante
 
 A facilidade de indexação por texto, suporte ao modelo híbrido objeto-relacional e capacidade de processamento em diversos sistemas operacionais ampliam sua aplicabilidade em cenários heterogêneos de monitoramento.
 
-}
-
 \section{Visualização das Métricas}
 \label{section:VisualizacaoMetricas}
-
-{\color{red}
 
 Após a coleta de métricas e o processamento dos respectivos dados, torna-se necessário encontrar meios eficazes de visualizar graficamente os resultados obtidos, permitindo uma interpretação mais intuitiva das informações apresentadas pelo sistema de monitoramento.
 
@@ -418,12 +380,8 @@ Uma abordagem amplamente adotada para essa finalidade é a utilização de pain�
 
 A seguir, apresentam-se três soluções de visualização: a interface web integrada do Zabbix (Zabbix UI) \abbrev{UI}{\foreign{User Interface}}, a interface web embutida (\foreign{Expression Browser}) do Prometheus  e o Grafana, uma plataforma especializada na visualização de dados e métricas provenientes de fontes externas.
 
-}
-
 \subsection{Zabbix UI}
 \label{subsection:ZabbixUI}
-
-{\color{red}
 
 A Zabbix UI \citep{zabbix2025} é a interface gráfica nativa fornecida pelo próprio sistema Zabbix, desenvolvida em PHP e acessível via navegador web, que oferece uma experiência centralizada para gerenciamento completo do sistema de monitoramento, integrando funcionalidades de configuração, análise e apresentação de dados em um único ambiente.
 
@@ -432,12 +390,9 @@ A interface organiza os dados de maneira estruturada, com seções dedicadas par
 A plataforma disponibiliza recursos avançados como mapas de rede que permitem visualização topológica da infraestrutura monitorada, com elementos representados por ícones que se destacam visualmente quando problemas ocorrem. O sistema de \foreign{thresholds} visuais possibilita configuração de alertas por cores, facilitando a identificação rápida de condições críticas. Adicionalmente, a interface suporta monitoramento web sintético através de cenários baseados em etapas, permitindo verificação de funcionalidade e tempo de resposta de aplicações web.
 
 Embora não ofereça o mesmo nível de flexibilidade visual e personalização avançada de plataformas especializadas como o Grafana, a Zabbix UI apresenta integração total com os recursos internos do sistema, eliminando a necessidade de configuração adicional ou dependências externas.
-}
 
 \subsection{Prometheus Expression Browser}
 \label{subsection:PrometheusExpressionBrowser}
-
-{\color{red}
 
 O Prometheus dispõe de uma interface web embutida conhecida como \foreign{Expression Browser} \citep{promexpbrwsr2025}, cujo principal propósito é permitir a consulta direta de métricas por meio da linguagem PromQL. Essa interface serve como ferramenta básica para inspeção e depuração de séries temporais coletadas pelo Prometheus, sendo especialmente útil durante o desenvolvimento de consultas e na validação da integridade dos dados recebidos.
 
@@ -445,12 +400,8 @@ Por meio dessa interface, é possível realizar buscas manuais de métricas, apl
 
 Apesar de sua utilidade técnica e da baixa complexidade de uso, o \foreign{Expression Browser} não foi projetado para monitoramento contínuo, tampouco para a construção de painéis interativos complexos. Dessa forma, seu papel se restringe majoritariamente à verificação pontual de métricas e à formulação de expressões que posteriormente serão integradas em ferramentas de visualização mais avançadas, como o Grafana.
 
-}
-
 \subsection{Grafana}
 \label{subsection:Grafana}
-
-{\color{red}
 
 O Grafana \citep{grafana2025} é uma plataforma de código aberto especializada em visualização interativa de dados e análise, desenvolvida pela Grafana Labs. A arquitetura do Grafana é baseada em um modelo \foreign{front-end/back-end}, implementado em TypeScript e Go respectivamente, proporcionando performance otimizada e escalabilidade.
 
@@ -466,35 +417,22 @@ O Grafana também oferece capacidades de IaC através da funcionalidade de provi
 
 Sua arquitetura baseada em \foreign{plugins} e sua interface web responsiva o tornam uma ferramenta altamente extensível e adaptável a diferentes cenários. A separação entre a origem dos dados e sua visualização permite que o Grafana atue como camada de apresentação unificada para múltiplos sistemas de monitoramento, consolidando visualmente informações coletadas por diferentes ferramentas.
 
-}
-
 \section{Simuladores de Carga}
 \label{section:SimuladoresCarga}
-
-{\color{red}
 
 Para a avaliação da robustez e desempenho dos sistemas monitorados, especialmente em cenários de saturação de recursos, é necessário induzir artificialmente condições de carga que reflitam situações reais de estresse. Simuladores de carga cumprem esse papel, permitindo a geração controlada de uso intensivo de CPU, memória, disco, rede e outros recursos do sistema.
 
 Essas ferramentas são amplamente empregadas em testes de tolerância a falhas, validação de métricas de observabilidade, e experimentos de \foreign{benchmarking}.
 
-}
-
 \subsection{Stress-ng}
 \label{subsection:StressNG}
-
-{\color{red}
 
 O stress-ng \citep{stressng2025} é uma ferramenta de código aberto projetada para gerar carga sintética sobre os principais componentes de um sistema operacional, incluindo CPU, memória, disco, I/O e chamadas de sistema. Desenvolvido inicialmente por Colin King, o stress-ng é amplamente utilizado em testes de estresse para kernels Linux e benchmarks de infraestrutura.
 
 A ferramenta permite configurar o número de workers (processos de carga), duração dos testes e tipo de carga aplicada, além de oferecer modos de estresse diferentes \foreign{stressors}, que abrangem desde operações aritméticas até simulações de falhas de hardware. Seu uso é comum em ambientes virtualizados e conteinerizados por ser leve, scriptável e altamente configurável.
 
-
-}
-
 \subsection{Iperf3}
 \label{subsection:Iperf3}
-
-{\color{red}
 
 O iperf3 \citep{iperf32025} é uma ferramenta especializada na geração e medição de tráfego de rede. Desenvolvido pelo Energy Sciences Network e Lawrence Berkeley National Laboratory. Baseado em arquitetura cliente-servidor, suporta protocolos TCP\abbrev{TCP}{\foreign{Transmission Control Protocol}}, UDP\abbrev{UDP}{\foreign{User Datagram Protocol}} e SCTP\abbrev{SCTP}{Stream Control Transmission Protocol}, bem como modos de \foreign{zero-copy} e saída em formato JSON.
 
@@ -502,13 +440,8 @@ Por meio de parâmetros configuráveis (tamanho de \foreign{buffer}, duração d
 
 Por permitir configurar tanto o lado cliente quanto servidor, o iperf3 é adequado para testar enlaces ponto-a-ponto, identificar gargalos de rede e simular sobrecargas em interfaces de rede. Em projetos de monitoramento, sua utilização é relevante para validar a responsividade de exportadores e a capacidade do sistema em lidar com grandes volumes de tráfego.
     
-
-}
-
 \subsection{Chaos Blade}
 \label{subsection:ChaosBlade}
-
-{\color{red}
 
 O ChaosBlade \citep{chaosblade2025} é um kit de ferramentas de engenharia de caos de código aberto, originado na Alibaba e mantido pela comunidade MonkeyKing, que permite injetar falhas controladas em sistemas distribuídos conforme modelos de caos engineering.
 
@@ -516,22 +449,14 @@ A CLI do ChaosBlade oferece comandos para criar, destruir e consultar experiment
 
 Com suporte a cenários de aplicação Java e C/C++, bem como experimentos em plataformas nativas de nuvem, o ChaosBlade auxilia a avaliação de resiliência de aplicações e infraestruturas, verificando estratégias de recuperação automática e tolerância a falhas.
     
-
-}
-
 \subsection{Pumba}
 \label{subsection:Pumba}
-
-{\color{red}
 
 O Pumba \citep{pumba2025} é outra ferramenta de engenharia de caos, só que voltada especificamente para o ecossistema Docker, de uso via linha de comando, que injeta falhas em contêineres por meio da API Docker e utilitários de rede como \texttt{tc} e \texttt{netem}.
 
 Entre suas funcionalidades, destacam-se: parada, reinício ou término forçado de contêineres; simulação de falhas de rede (atrasos, perda de pacotes, limitação de banda); stress de CPU, memória e I/O dentro de contêineres; e cenários predefinidos de caos.
 
 O Pumba também suporta agendamento de experimentos, segmentação por rótulos e geração de relatórios de métricas durante os testes. Sua integração nativa com Docker e compatibilidade com pipelines de CI/CD tornam-o uma escolha prática para avaliar a robustez de aplicações conteinerizadas em ambientes de orquestração como Kubernetes.
-    
-
-}
 
 \section{Alertas e Notificações}
 \label{section:AlertasNotificacoes}
