@@ -1,5 +1,29 @@
 Orientação 20250701
 
+Modificiar a formatação de citaçaõ para o padrao [1] (Padrao IEEE) (Manhatan)
+
+  Discussões Iniciais do Capítulo 3:
+    1) Abordagem Preliminar
+    Qual OS? Rocky, Rasp OS, Ubuntu
+    QUal hardware?NUC ou Raspberry
+    Qual motor? Zabbix
+    Qual interface? Zabbix UI ou Grafana?
+
+
+    2) Descrição MACRO da Arquitetura da Solução
+    Descrição da Arquitetura Final
+
+    3) Infraestrutura
+    As escolhas de OS, container, o que foi construido, como foi construido, aplicações a serem instaladas
+    Falar o que instalou
+
+    4) Agentes (pode virar uma subseção de 3)
+
+    5) Discussão sobre as métricas
+
+    6) Aplicação de monitoramento
+    Mostrar os comportamentos, desempenho/performance/problemas e correções, e escolha de graficos/usabilidade do dashboard, alertas e notificações
+
 
 
 Orientação 20250624
