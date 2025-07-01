@@ -1,22 +1,14 @@
 \chapter{Fundamentação Teórica}
 \label{chap2}
-    % - Mencionar as ferramentas e técnicas existentes para monitoramento
 
-    % - Lembrar que não são as minhas decisões de projeto, e sim sa ferramentas que existem no mercado e que são utilizadas para monitoramento.
+1 - Escrever sobre a importância do monitoramento e observabilidade, usando artigos e referências que falem do assunto.
 
-    % - Trabalhos relacionados
+2 - Discorrer sobre SRE e saturação, definindo o escopo deste trabalho.
 
-    % - O capítulo 2 é a fundamentação teórica do projeto, onde eu vou explicar as ferramentas que eu escolhi e por que eu escolhi elas.
+3 - Discorrer sobre IaC.
 
-Escrever sobre a importância do monitoramento e observabilidade, usando artigos e referências que falem do assunto.
+4 - Discorrer sobre software abertos, ferramentas de código aberto.
 
-Discorrer sobre SRE e saturação, definindo o escopo deste trabalho.
-
-Discorrer sobre IaC.
-
-Discorrer sobre software abertos, ferramentas de código aberto.
-
-Talvez incluir um diagrama de blocos com as ferramentas e como elas se relacionam? Ou isso é mais para o capítulo 3?
 
 \section{Hardware}
 \label{section:Hardware}
@@ -63,7 +55,7 @@ Porém, essa diversidade também implica em desafios. Um dos principais refere-s
 \label{section:SistemasOperacionais}
 
 Como mencionado no início deste capítulo, o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, \textcolor{red}{
-    foram consideradas as seguintes distribuições Linux. Abaixo, a tabela \ref{tab:requisitos-minimos} apresenta um comparativo dos requisitos de hardware mínimos para cada sistema operacional.
+    foram consideradas distribuições Linux. A seguir, a tabela \ref{tab:requisitos-minimos} apresenta um comparativo dos requisitos de hardware mínimos para cada sistema operacional.
 }
 \begin{table}[H]
 \centering
@@ -332,7 +324,7 @@ O Zabbix é uma plataforma de monitoramento de código aberto, mantida pela Zabb
 
 O servidor Zabbix funciona como o elo central do sistema: coleta métricas, avalia condições de gatilho, gera eventos e dispara notificações. Todas as informações de configuração, métricas e históricos são armazenadas em um banco de dados relacional — MySQL, PostgreSQL, Oracle ou SQLite. Em implementações de maior escala, proxies Zabbix podem ser empregados para atuar como intermediários, coletando dados localmente e armazenando-os em \foreign{buffer} antes de repassá-los ao servidor, o que reduz a carga de comunicação sobre o núcleo central.
 
-Os agentes Zabbix, instalados nos dispositivos monitorados, coletam informações sobre uso de CPU, memória, disco, rede e outros parâmetros configurados. A coleta pode ocorrer de forma passiva — quando o servidor solicita métricas — ou ativa — quando o próprio agente envia dados conforme agendado. Além disso, o Zabbix suporta monitoramento sem agente via SSH/Telnet\abbrev{SSH}{\foreign{Secure Shell}}\abbrev{Telnet}{\foreign{Telecommunication Network}}, protocolos SNMP\abbrev{SNMP}{Simple Network Management Protocol}, IPMI\abbrev{IPMI}{Intelligent Platform Management Interface} e JMX\abbrev{JMX}{\foreign{Java Management Extensions}}, e integrações com APIs RESTful\abbrev{API}{\foreign{Application Programming Interface}}, ampliando seu alcance a equipamentos e serviços que não permitem a instalação de software local.
+Os agentes Zabbix, instalados nos dispositivos monitorados, coletam informações sobre uso de CPU, memória, disco, rede e outros parâmetros configurados. A coleta pode ocorrer de forma passiva — quando o servidor solicita métricas — ou ativa — quando o próprio agente envia dados conforme agendado. Além disso, o Zabbix suporta monitoramento sem agente via SSH/Telnet\abbrev{SSH}{\foreign{Secure Shell}}\abbrev{Telnet}{\foreign{Telecommunication Network}}, protocolos SNMP\abbrev{SNMP}{\foreign{Simple Network Management Protocol}}, IPMI\abbrev{IPMI}{\foreign{Intelligent Platform Management Interface}} e JMX\abbrev{JMX}{\foreign{Java Management Extensions}}, e integrações com APIs RESTful\abbrev{API}{\foreign{Application Programming Interface}}, ampliando seu alcance a equipamentos e serviços que não permitem a instalação de software local.
 
 Para simplificar a configuração em ambientes heterogêneos, o Zabbix dispõe de recursos de descoberta automática e de templates padronizados, permitindo replicar ajustes e métricas em múltiplos dispositivos de forma consistente. A interface web, por sua vez, oferece dashboards personalizáveis, relatórios históricos e ferramentas de análise, além de ser o meio principal de configurações e personalizações do servidor, consolidando em um único painel todas as funcionalidades essenciais à observabilidade e ao gerenciamento proativo da infraestrutura.
 
@@ -385,7 +377,7 @@ Em cenários de monitoramento, o MySQL apresenta vantagens quando há necessidad
 
 Time Series Database (TSDB) \citep{tigerdata2024} refere-se a uma categoria especializada de sistemas de banco de dados otimizados para armazenar, consultar e analisar dados organizados cronologicamente. Diferentemente dos bancos relacionais tradicionais, os TSDBs são otimizados para cargas de trabalho caracterizadas por inserções sequenciais de alta frequência, consultas baseadas em intervalos temporais e operações de agregação temporal.
 
-A arquitetura típica de um TSDB incorpora otimizações específicas para dados temporais, como mencionado na subseção \ref{subsection:Prometheus}. Entre os principais representantes dessa categoria, destacam-se o InfluxDB — com sua linguagem de consulta InfluxQL e suporte nativo a \textit{tags} para metadados —, o TimescaleDB — uma extensão do PostgreSQL que preserva compatibilidade com SQL padrão —, e o Prometheus TSDB (interno ao sistema de monitoramento homônimo).
+A arquitetura típica de um TSDB incorpora otimizações específicas para dados temporais, como mencionado na subseção \ref{subsection:Prometheus}. Entre os principais representantes dessa categoria, destacam-se o InfluxDB — com sua linguagem de consulta InfluxQL e suporte nativo a \foreign{tags} para metadados —, o TimescaleDB — uma extensão do PostgreSQL que preserva compatibilidade com SQL padrão —, e o Prometheus TSDB (interno ao sistema de monitoramento homônimo).
 
 A adoção de TSDBs é especialmente recomendada em arquiteturas \foreign{cloud-native}, sistemas distribuídos e ambientes com geração contínua de dados métricos em alta frequência.
 
@@ -449,7 +441,7 @@ Embora não ofereça o mesmo nível de flexibilidade visual e personalização a
 
 O Prometheus dispõe de uma interface web embutida conhecida como \foreign{Expression Browser} \citep{promexpbrwsr2025}, cujo principal propósito é permitir a consulta direta de métricas por meio da linguagem PromQL. Essa interface serve como ferramenta básica para inspeção e depuração de séries temporais coletadas pelo Prometheus, sendo especialmente útil durante o desenvolvimento de consultas e na validação da integridade dos dados recebidos.
 
-Por meio dessa interface, é possível realizar buscas manuais de métricas, aplicar filtros com base em \textit{labels}, realizar agregações, calcular taxas e derivadas, entre outras operações matemáticas compatíveis com PromQL. A ferramenta oferece duas visualizações principais: uma aba \foreign{Table} que exibe resultados em formato tabular com timestamps e valores correspondentes, e uma aba \foreign{Graph} que gera gráficos temporais básicos para análise visual. Usuários podem navegar através do histórico temporal modificando o tempo de avaliação através de controles dedicados, permitindo análise retrospectiva de métricas
+Por meio dessa interface, é possível realizar buscas manuais de métricas, aplicar filtros com base em \foreign{labels}, realizar agregações, calcular taxas e derivadas, entre outras operações matemáticas compatíveis com PromQL. A ferramenta oferece duas visualizações principais: uma aba \foreign{Table} que exibe resultados em formato tabular com timestamps e valores correspondentes, e uma aba \foreign{Graph} que gera gráficos temporais básicos para análise visual. Usuários podem navegar através do histórico temporal modificando o tempo de avaliação através de controles dedicados, permitindo análise retrospectiva de métricas
 
 Apesar de sua utilidade técnica e da baixa complexidade de uso, o \foreign{Expression Browser} não foi projetado para monitoramento contínuo, tampouco para a construção de painéis interativos complexos. Dessa forma, seu papel se restringe majoritariamente à verificação pontual de métricas e à formulação de expressões que posteriormente serão integradas em ferramentas de visualização mais avançadas, como o Grafana.
 
@@ -470,7 +462,7 @@ Cada painel pode ser configurado com consultas específicas na linguagem da font
 
 Entre os recursos avançados destacam-se o sistema de variáveis de \foreign{dashboard} para criação de painéis dinâmicos, \foreign{Public Dashboards} para compartilhamento sem necessidade de autenticação, correlações entre diferentes fontes de dados, e \foreign{Scenes} para integração de dashboards em aplicações customizadas.
 
-O Grafana também oferece capacidades de IaC através da funcionalidade de provisionamento (\foreign{provisioning}) automatizado via arquivos JSON/YAML\abbrev{JSON}{JavaScript Object Notation}, APIs REST abrangentes para automação, e integração com pipelines de CI/CD.
+O Grafana também oferece capacidades de IaC através da funcionalidade de provisionamento (\foreign{provisioning}) automatizado via arquivos JSON/YAML\abbrev{JSON}{\foreign{JavaScript Object Notation}}, APIs REST abrangentes para automação, e integração com pipelines de CI/CD.
 
 Sua arquitetura baseada em \foreign{plugins} e sua interface web responsiva o tornam uma ferramenta altamente extensível e adaptável a diferentes cenários. A separação entre a origem dos dados e sua visualização permite que o Grafana atue como camada de apresentação unificada para múltiplos sistemas de monitoramento, consolidando visualmente informações coletadas por diferentes ferramentas.
 
@@ -479,27 +471,67 @@ Sua arquitetura baseada em \foreign{plugins} e sua interface web responsiva o to
 \section{Simuladores de Carga}
 \label{section:SimuladoresCarga}
 
-Placeholder
+{\color{red}
+
+Para a avaliação da robustez e desempenho dos sistemas monitorados, especialmente em cenários de saturação de recursos, é necessário induzir artificialmente condições de carga que reflitam situações reais de estresse. Simuladores de carga cumprem esse papel, permitindo a geração controlada de uso intensivo de CPU, memória, disco, rede e outros recursos do sistema.
+
+Essas ferramentas são amplamente empregadas em testes de tolerância a falhas, validação de métricas de observabilidade, e experimentos de \foreign{benchmarking}.
+
+}
 
 \subsection{Stress-ng}
 \label{subsection:StressNG}
 
-Placeholder
+{\color{red}
+
+O stress-ng \citep{stressng2025} é uma ferramenta de código aberto projetada para gerar carga sintética sobre os principais componentes de um sistema operacional, incluindo CPU, memória, disco, I/O e chamadas de sistema. Desenvolvido inicialmente por Colin King, o stress-ng é amplamente utilizado em testes de estresse para kernels Linux e benchmarks de infraestrutura.
+
+A ferramenta permite configurar o número de workers (processos de carga), duração dos testes e tipo de carga aplicada, além de oferecer modos de estresse diferentes \foreign{stressors}, que abrangem desde operações aritméticas até simulações de falhas de hardware. Seu uso é comum em ambientes virtualizados e conteinerizados por ser leve, scriptável e altamente configurável.
+
+
+}
 
 \subsection{Iperf3}
 \label{subsection:Iperf3}
 
-Placeholder
+{\color{red}
+
+O iperf3 \citep{iperf32025} é uma ferramenta especializada na geração e medição de tráfego de rede. Desenvolvido pelo Energy Sciences Network e Lawrence Berkeley National Laboratory. Baseado em arquitetura cliente-servidor, suporta protocolos TCP\abbrev{TCP}{\foreign{Transmission Control Protocol}}, UDP\abbrev{UDP}{\foreign{User Datagram Protocol}} e SCTP\abbrev{SCTP}{Stream Control Transmission Protocol}, bem como modos de \foreign{zero-copy} e saída em formato JSON.
+
+Por meio de parâmetros configuráveis (tamanho de \foreign{buffer}, duração do teste, número de fluxos paralelos), o iperf3 reporta vazão, perda de pacotes, \foreign{jitter} e latência, sendo amplamente utilizado para \foreign{benchmarking} de links em LAN\abbrev{LAN}{Local Area Network}, WAN\abbrev{WAN}{Wide Area Network} e ambientes em nuvem. Sua implementação simples e independente de bibliotecas externas facilita a integração em \foreign{scripts} de automação e pipelines de CI/CD para validação contínua da performance de rede.
+
+Por permitir configurar tanto o lado cliente quanto servidor, o iperf3 é adequado para testar enlaces ponto-a-ponto, identificar gargalos de rede e simular sobrecargas em interfaces de rede. Em projetos de monitoramento, sua utilização é relevante para validar a responsividade de exportadores e a capacidade do sistema em lidar com grandes volumes de tráfego.
+    
+
+}
 
 \subsection{Chaos Blade}
 \label{subsection:ChaosBlade}
 
-Placeholder
+{\color{red}
+
+O ChaosBlade \citep{chaosblade2025} é um kit de ferramentas de engenharia de caos de código aberto, originado na Alibaba e mantido pela comunidade MonkeyKing, que permite injetar falhas controladas em sistemas distribuídos conforme modelos de caos engineering.
+
+A CLI do ChaosBlade oferece comandos para criar, destruir e consultar experimentos — por exemplo, limitação de CPU, consumo intensivo de memória, introdução de latência ou perda de pacotes na rede, finalização de processos e simulação de falhas em contêineres e instâncias Kubernetes.
+
+Com suporte a cenários de aplicação Java e C/C++, bem como experimentos em plataformas nativas de nuvem, o ChaosBlade auxilia a avaliação de resiliência de aplicações e infraestruturas, verificando estratégias de recuperação automática e tolerância a falhas.
+    
+
+}
 
 \subsection{Pumba}
 \label{subsection:Pumba}
 
-Placeholder
+{\color{red}
+
+O Pumba \citep{pumba2025} é outra ferramenta de engenharia de caos, só que voltada especificamente para o ecossistema Docker, de uso via linha de comando, que injeta falhas em contêineres por meio da API Docker e utilitários de rede como \texttt{tc} e \texttt{netem}.
+
+Entre suas funcionalidades, destacam-se: parada, reinício ou término forçado de contêineres; simulação de falhas de rede (atrasos, perda de pacotes, limitação de banda); stress de CPU, memória e I/O dentro de contêineres; e cenários predefinidos de caos.
+
+O Pumba também suporta agendamento de experimentos, segmentação por rótulos e geração de relatórios de métricas durante os testes. Sua integração nativa com Docker e compatibilidade com pipelines de CI/CD tornam-o uma escolha prática para avaliar a robustez de aplicações conteinerizadas em ambientes de orquestração como Kubernetes.
+    
+
+}
 
 \section{Alertas e Notificações}
 \label{section:AlertasNotificacoes}
