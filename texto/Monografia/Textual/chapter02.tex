@@ -186,27 +186,107 @@ O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da i
 \section{Métricas de Interesse}
 \label{section:Metricas}
 
-No cenário de monitoramento existem diversas métricas e grandezas a serem observadas para garantir a saúde do sistema. No entanto, como discutido no início do capítulo, este trabalho delimita o escopo de monitoramento a métricas referentes à saturação de recursos do ambiente a ser monitorado. Dito isso, o projeto dá foco à monitoria de CPU, memória RAM, disco, rede e processos. 
+No cenário de monitoramento existem diversas métricas e grandezas a serem observadas para garantir a saúde do sistema. No entanto, como discutido no início do capítulo, este trabalho delimita o escopo de monitoramento a métricas referentes à saturação de recursos do ambiente a ser monitorado. \textcolor{red}{Isto é, na identificação de pontos de estrangulamento (gargalos) que comprometam a capacidade de resposta do sistema.} Dito isso, o projeto dá foco à monitoria de CPU, memória RAM, disco, rede e processos.
 
+\textcolor{red}{Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo.
+}
 \subsection{CPU}
 \label{subsection:CPU}
 
-Placeholder
+{\color{red}
+
+As métricas de utilização da CPU são fundamentadas na medição de tempo. Conforme discutido por Harris-Birtill e Harris-Birtill \citep{harris-birtill2021}, o tempo computacional necessário para a execução de uma tarefa constitui uma métrica essencial para avaliar a performance de sistemas computacionais, especialmente no que diz respeito à sua capacidade de atender a restrições temporais específicas. Em arquiteturas sequenciais, nas quais apenas uma instrução é processada por vez, a quantificação e categorização do tempo consumido por diferentes tipos de tarefas (usuário, sistema, ocioso, interrupções, entre outros) tornam-se fundamentais para o diagnóstico de desempenho e a detecção de situações de saturação.
+
+\begin{itemize}
+\item \textbf{user\_load}: tempo em que a CPU esteve executando processos no espaço do usuário, ou seja, aplicações não relacionadas ao sistema operacional;
+
+\item \textbf{sys\_load}: tempo destinado à execução de processos no espaço do \foreign{kernel}, geralmente relacionado a chamadas de sistema e operações internas;
+
+\item \textbf{iowait}: tempo durante o qual a CPU permaneceu ociosa aguardando a finalização de operações de I/O, como leitura e escrita em disco. Valores elevados podem indicar degradação/saturação dos discos;
+
+\item \textbf{idle\_time}: tempo em que a CPU não estava realizando nenhuma atividade, indicando inatividade total do processador/núcleo naquele intervalo de tempo. Valores próximos de 0 podem indicar saturação da CPU.
+\end{itemize}
+
+\begin{flushleft}
+\footnotesize \textit{Observação:} as métricas de CPU citadas acima são fornecidas pelo sistema em porcentagem (\%).
+\end{flushleft}
+
+}
 
 \subsection{Memória}
 \label{subsection:Memoria}
-Placeholder
+
+{\color{red}
+A memória RAM é um recurso volátil, quantificado em \foreign{bytes}, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso à dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
+
+Durante a execução de uma aplicação, o sistema operacional transfere os dados e instruções correspondentes do disco de armazenamento para a RAM, de modo que a CPU possa acessá-los de forma eficiente. Quanto maior a quantidade de memória RAM disponível, maior é a capacidade do sistema de manter múltiplos processos ativos simultaneamente, minimizando a necessidade de acessos ao disco e, consequentemente, otimizando o desempenho geral.
+
+Entretanto, quando a quantidade de aplicações ou processos em execução excede a capacidade da RAM física disponível, o sistema pode sofrer degradação de desempenho, instabilidade e falhas em serviços. Em situações críticas, o sistema operacional pode recorrer à finalização forçada de processos para liberar memória — um mecanismo conhecido como \foreign{Out-of-Memory Killer} (OOM-Killer)\abbrev{OOM}{\foreign{Out of Memory}}.
+
+Para mitigar tais situações, o sistema operacional recorre à utilização de memória de troca (\foreign{swap memory}) (em \foreign{bytes}), que consiste em uma área disco de armazenamento para funcionar como uma extensão virtual da RAM. Embora o uso de \foreign{swap} permita continuar a execução dos processos mesmo após o esgotamento da memória física, seu desempenho é consideravelmente inferior, podendo resultar em lentidão perceptível do sistema.
+
+Valores de carga elevados na memória de troca são indicativos de degradação do sistema e saturação da memória RAM.
+
+\begin{table}[H]
+\centering
+\caption{Comparativo entre Memória RAM e Memória de Troca (Swap)}
+\label{tab:comparativo-ram-swap}
+\begin{tabular}{@{}p{4cm} p{5.5cm} p{5.5cm}@{}}
+\toprule
+\textbf{Aspecto} & \textbf{RAM} & \textbf{Swap} \\
+\midrule
+Localização & Chips físicos de memória na placa-mãe & Espaço reservado em disco rígido ou SSD \\
+Velocidade & Extremamente rápida (nanosegundos) & Mais lenta (milissegundos) \\
+Volatilidade & Volátil — os dados são perdidos ao desligar o sistema & Não volátil — os dados persistem mesmo sem energia \\
+Finalidade & Memória de trabalho principal para processos ativos & Memória de transbordo(\foreign{overflow})/backup para dados inativos \\
+Padrão de acesso & Acesso direto pela CPU & Acessada por meio de operações de I/O em disco \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+}
 
 \subsection{Disco}
 \label{subsection:Disco}
 
-Placeholder
+{\color{red}
+
+O subsistema de armazenamento também é alvo de saturações, especialmente em cenários que envolvem grandes volumes de leitura e escrita, como bancos de dados ou aplicações de alta taxa de transferência (\foreign{throughput}). Além do espaço em disco disponível, métricas relacionadas ao desempenho de I/O são igualmente relevantes.
+
+Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos que afetam a responsividade dos serviços. Portanto, destacam-se as métricas:
+
+\begin{itemize}
+\item \textbf{Espaço livre}: quantidade de espaço livre em disco, em \%. Quando próximo de 0, pode causar degradação de desempenho, corrupção de dados, congelamentos e \foreign{crashes};
+
+\item \textbf{Espaço utilizado}: quantidade de espaço utilizado, em \%;
+
+\item \textbf{INODES livres}: quantidade de INODES livres, em unidades. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
+
+\item \textbf{Taxa de Transferência de Leitura/Escrita}: quantificação da largura de banda, em B/s, nas transferências de dados.
+
+\item \textbf{Utilização de I/O}: tempo o qual o disco estava ocupado com tarefas de I/O, em \%. Valores próximos de 0 indicam saturação da largura de banda.
+\end{itemize}
+
+
+}
 \subsection{Rede}
 \label{subsection:Rede}
+
+{\color{red}
+
 Placeholder
+
+}
+
 \subsection{Processos}
 \label{subsection:Processos}
+
+{\color{red}
+
 Placeholder
+
+}
+
 
 \section{Agentes, Exportadores e Auxiliadores}
 \label{section:Agentes}
