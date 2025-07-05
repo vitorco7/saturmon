@@ -190,6 +190,9 @@ No cenário de monitoramento existem diversas métricas e grandezas a serem obse
 
 \textcolor{red}{Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo.
 }
+
+\todo[inline]{Adicionar referências para as métricas}
+
 \subsection{CPU}
 \label{subsection:CPU}
 
@@ -262,7 +265,7 @@ Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos q
 
 \item \textbf{INODES livres}: quantidade de INODES livres, em unidades. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
 
-\item \textbf{Taxa de Transferência de Leitura/Escrita}: quantificação da largura de banda, em B/s, nas transferências de dados.
+\item \textbf{Taxa de Transferência de Leitura/Escrita}: quantificação da largura de banda, em ordens de grandeza de B/s, nas transferências de dados.
 
 \item \textbf{Utilização de I/O}: tempo o qual o disco estava ocupado com tarefas de I/O, em \%. Valores próximos de 0 indicam saturação da largura de banda.
 \end{itemize}
@@ -274,7 +277,14 @@ Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos q
 
 {\color{red}
 
-Placeholder
+Em sistemas distribuídos, a comunicação em rede torna-se ainda mais importante. Cenários de saturação da interface de rede podem causar lentidão na troca de dados entre serviços, perda de pacotes ou até indisponibilidade de sistemas. Algumas métricas utilizadas para observar a saturação da interface de rede são:
+
+\begin{itemize}
+    \item \textbf{Taxa de tráfego de rede}: quantidade de dados transmitidos ou recebidos por unidade de tempo (geralmente em bits/s). Esta métrica indica o volume instantâneo de tráfego e é fundamental para avaliar a utilização da largura de banda e identificar possíveis gargalos ou picos de uso. Valores acima da capacidade nominal podem acarretar em descartes de pacotes;
+    \item \textbf{Tráfego acumulado}: total de dados transferidos por uma interface de rede ao longo de um determinado intervalo de tempo, medido em ordens de grandeza de \foreign{bytes}. O tráfego acumulado permite analisar o consumo de banda em períodos específicos, facilitando o planejamento de capacidade e a identificação de tendências de uso;
+    \item \textbf{Quantidade de pacotes descartados}: número de pacotes foram eliminados ou perdidos durante a transmissão ou recepção. Altos índices de descarte indicam problemas de desempenho ou capacidade na rede;
+    \item \textbf{Quantidade de erros de pacotes}: número de pacotes estavam corrompidos, com erros de verificação, incompletos ou malformados, tornando-os inutilizáveis. Altas quantidades de pacotes com erro impactam negativamente a confiabilidade e a eficiência da comunicação.
+\end{itemize}
 
 }
 
@@ -283,7 +293,15 @@ Placeholder
 
 {\color{red}
 
-Placeholder
+O monitoramento de processos permite analisar o comportamento interno do sistema, identificando origens de consumo de recursos ou comportamentos anômalos. Das métricas existentes, destacam-se aqui as contagens (em unidades) de três estados de processos: \textbf{em execução, em espera e zumbis.}
+
+\begin{itemize}
+    \item {\textbf{Em execução}}: estes processos representam aqueles que estão ativamente utilizando recursos de CPU ou aguardando na fila de execução do escalonador. Uma alta concentração de processos neste estado sugere possível saturação de CPU;
+    \item {\textbf{Em espera}}: processos que aguardam a conclusão de eventos específicos, subdividindo-se em duas categorias: espera interruptível (processos aguardando entrada de usuário, sinais ou recursos que podem ser interrompidos) e espera não-interruptível (processos aguardando operações críticas de I/O que não podem ser interrompidas). Embora não consumam recursos ativamente, o acúmulo excessivo de processos em espera não-interruptível pode indicar problemas subjacentes, como degradação de operações de I/O, falhas de hardware de armazenamento ou gargalos no subsistema de entrada e saída;
+    \item {\textbf{Zumbi}}: são processos que completaram sua execução mas ainda mantêm entrada na tabela de processos, aguardando que o processo pai colete seu status de saída através da chamada de sistema \texttt{wait()}. Apesar de não consumirem recursos como CPU ou memória RAM ativamente, cada processo zumbi mantém ocupado seu identificador de processo (PID)\abbrev{PID}{\foreign{Process Identifier}}, recurso finito do sistema. A presença persistente e/ou acumulativa de processos zumbis pode esgotar esse conjunto de identificadores disponíveis, impedindo a criação de novos processos, e frequentemente indica erros de programação (\foreign{bugs}) no processo pai.
+\end{itemize}
+
+Correlacionando o monitoramento destes estados com as métricas de recursos do sistema, obtém-se uma visão holística da infraestrutura, auxiliando na identificação de condições de saturação.
 
 }
 
