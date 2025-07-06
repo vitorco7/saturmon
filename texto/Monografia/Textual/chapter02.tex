@@ -1,14 +1,20 @@
 \chapter{Fundamentação Teórica}
 \label{chap2}
 
-1 - Escrever sobre a importância do monitoramento e observabilidade, usando artigos e referências que falem do assunto.
+{\color{red}
 
-2 - Discorrer sobre SRE e saturação, definindo o escopo deste trabalho.
+A fundamentação deste trabalho tem em sua essência quatro conceitos fundamentais: a observabilidade e o monitoramento, a engenharia de confiabilidade de sites (SRE), a infraestrutura como código (IaC) e o software de código aberto. Esses conceitos formam a base teórica que orienta os paradigmas e ferramentas utilizadas na implementação deste projeto.
 
-3 - Discorrer sobre IaC.
+Diferentemente do monitoramento tradicional, que se limita a verificar o estado atual de sistemas através de métricas predefinidas, a observabilidade \citep{rhobservability2025} oferece uma visão mais ampla e detalhada, permitindo compreender o comportamento interno dos sistemas através da análise de \foreign{logs}, métricas e rastreamento distribuído. Esta abordagem tornou-se fundamental para organizações que dependem de infraestruturas complexas, onde a capacidade de identificar e resolver problemas rapidamente pode significar a diferença entre a continuidade dos negócios e perdas substanciais de receita \citep{costofdowntime2024}.
 
-4 - Discorrer sobre software abertos, ferramentas de código aberto.
+O SRE complementa essa perspectiva ao introduzir conceitos como os quatro sinais de ouro \citep{sre2016}: latência, tráfego, erros e saturação. Estes  fornecem um \foreign{framework} estruturado para monitoramento efetivo. Dos sinais citados, este trabalho tem foco particular na saturação, que indica quão próximo um sistema está de seus limites de capacidade, permitindo identificar gargalos antes que afetem a experiência do usuário. Esta abordagem proativa contrasta com métodos reativos tradicionais, onde problemas são identificados apenas após impactarem os usuários finais.
 
+Outro pilar fundamental deste trabalho é a IaC \citep{iac2020}, oferecendo uma metodologia que automatiza o gerenciamento de infraestrutura através de código, substituindo processos manuais por definições programáticas declarativas. Esta prática permite maior consistência, redução de erros humanos e capacidade de versionamento da infraestrutura. A IaC não apenas acelera o processo de implantação, mas também garante que ambientes sejam reproduzíveis e auditáveis, características essenciais para sistemas de alta confiabilidade.
+
+E para a viabilização técnica dessas práticas, a utilização de ferramentas e tecnologias de código aberto oferece transparência, personalização, economia de recursos \citep{hoffmann2024valueoss} e acesso a comunidades ativas de desenvolvimento. O movimento de código aberto evoluiu de uma filosofia alternativa para uma força dominante na indústria de tecnologia, oferecendo confiabilidade, segurança e flexibilidade.
+
+As seções do decorrer deste capítulo categorizam as etapas conceituais para a realização deste projeto, provendo embasamento referente às ferramentas utilizadas, alinhadas aos fundamentos apresentados acima.
+}
 
 \section{Hardware}
 \label{section:Hardware}

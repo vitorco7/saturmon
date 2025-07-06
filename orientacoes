@@ -10,6 +10,8 @@ Orientação 20250708
 
   5) Na subseção 2.8.3, o qual eu falo do Grafana, eu deixo claro que ele suporta vários bancos de dados, mas não acho que ficou claro que ele tem um banco de dados interno para persistência de configurações, além das fontes de dados externas. Ficou meio vago, dando a entender que ele realmente só puxa dados de fontes externas e não tem persistência própria para algumas coisas.
 
+  6) Minhas referências tem, por vezes, coisas em inglês. Exemplo: referencia [14] tem descrições sem ser o título em inglês. Devo traduzir?
+
 #################################
 % ### Os comentarios abaixo vao para o cap3 ###
 
