@@ -1,6 +1,9 @@
 Orientação 20250708
 
 Na seção 2.4.3 (Disco): deveria explicar/detalhar melhor o que são INODES?
+Na introdução da seção 2.4, a referencia para a documentação do kernel do linux já é o suficiente para todas as métricas?
+Posso alterar o nome da seção 2.5? De Auxiliadores para Sidecars?
+Como lidar com títulos de referencias muito grandes? Exemplo: referencias do github.
 
 
 Orientação 20250701

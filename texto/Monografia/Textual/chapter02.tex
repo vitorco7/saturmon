@@ -85,7 +85,7 @@ Rasp. Pi OS Desktop & * & * & 32\,GB (SD**) \\
 \subsection{Ubuntu}
 \label{subsection:Ubuntu}
 
-O Ubuntu \citep{ubuntudsktp2025} é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica, suporte extenso a pacotes --- sistemas de pacotes \foreign{deb} e \foreign{snap} e o gerenciador \foreign{Advanced Package Tool} (APT)\abbrev{APT}{\foreign{Advanced Package Tool}} ---  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
+O Ubuntu \citep{ubuntudsktp2025} é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica, suporte extenso a pacotes -- sistemas de pacotes \foreign{deb} e \foreign{snap} e o gerenciador \foreign{Advanced Package Tool} (APT)\abbrev{APT}{\foreign{Advanced Package Tool}} --  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
 
 Baseado no Debian, o Ubuntu oferece compatibilidade com múltiplas arquiteturas, incluindo x86-64 e ARM, o que permite sua instalação em uma ampla variedade de dispositivos — desde computadores convencionais até plataformas embarcadas e servidores compactos, como o Raspberry Pi e o Intel NUC. A distribuição disponibiliza um conjunto abrangente de pacotes pré-compilados por meio de repositórios oficiais, utilizando o gerenciador de pacotes , o que facilita a instalação de ferramentas relacionadas a monitoramento, virtualização e automação de sistemas.
 
@@ -154,7 +154,7 @@ O suporte à múltiplas máquinas virtuais simultâneas e ferramentas avançadas
 \subsection{Docker}
 \label{subsection:Docker}
 
-O Docker \citep{docker2025} é uma plataforma de conteinerização que introduziu um paradigma mais leve para empacotamento e distribuição de aplicações, virtualizando o sistema operacional em vez do hardware subjacente. Fundamenta-se em mecanismos nativos do \foreign{kernel} Linux — \foreign{namespaces}, \foreign{cgroups} e \foreign{union file systems} — para isolar processos e controlar a alocação de recursos.
+O Docker \citep{docker2025} é uma plataforma de conteinerização que introduziu um paradigma mais leve para empacotamento e distribuição de aplicações, virtualizando o sistema operacional em vez do hardware subjacente. Fundamenta-se em mecanismos nativos do \foreign{kernel} Linux -- \foreign{namespaces}, \foreign{cgroups} e \foreign{union file systems} -- para isolar processos e controlar a alocação de recursos.
 
 A principal unidade no Docker é a imagem, que representa o conjunto de camadas de arquivos e instruções necessárias para construir um contêiner. A partir dessas imagens, é possível iniciar instâncias isoladas de software, com comportamento idêntico em diferentes ambientes, garantindo portabilidade e consistência, pondo fim à famosa frase "mas na minha máquina funciona".
 
@@ -190,8 +190,6 @@ No cenário de monitoramento existem diversas métricas e grandezas a serem obse
 
 \textcolor{red}{Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo.
 }
-
-\todo[inline]{Adicionar referências para as métricas}
 
 \subsection{CPU}
 \label{subsection:CPU}
@@ -298,7 +296,7 @@ O monitoramento de processos permite analisar o comportamento interno do sistema
 \begin{itemize}
     \item {\textbf{Em execução}}: estes processos representam aqueles que estão ativamente utilizando recursos de CPU ou aguardando na fila de execução do escalonador. Uma alta concentração de processos neste estado sugere possível saturação de CPU;
     \item {\textbf{Em espera}}: processos que aguardam a conclusão de eventos específicos, subdividindo-se em duas categorias: espera interruptível (processos aguardando entrada de usuário, sinais ou recursos que podem ser interrompidos) e espera não-interruptível (processos aguardando operações críticas de I/O que não podem ser interrompidas). Embora não consumam recursos ativamente, o acúmulo excessivo de processos em espera não-interruptível pode indicar problemas subjacentes, como degradação de operações de I/O, falhas de hardware de armazenamento ou gargalos no subsistema de entrada e saída;
-    \item {\textbf{Zumbi}}: são processos que completaram sua execução mas ainda mantêm entrada na tabela de processos, aguardando que o processo pai colete seu status de saída através da chamada de sistema \texttt{wait()}. Apesar de não consumirem recursos como CPU ou memória RAM ativamente, cada processo zumbi mantém ocupado seu identificador de processo (PID)\abbrev{PID}{\foreign{Process Identifier}}, recurso finito do sistema. A presença persistente e/ou acumulativa de processos zumbis pode esgotar esse conjunto de identificadores disponíveis, impedindo a criação de novos processos, e frequentemente indica erros de programação (\foreign{bugs}) no processo pai.
+    \item {\textbf{Zumbi}}: são processos que completaram sua execução mas ainda mantêm entrada na tabela de processos, aguardando que o processo pai colete seu status de saída através da chamada de sistema \verb|wait()|. Apesar de não consumirem recursos como CPU ou memória RAM ativamente, cada processo zumbi mantém ocupado seu identificador de processo (PID)\abbrev{PID}{\foreign{Process Identifier}}, recurso finito do sistema. A presença persistente e/ou acumulativa de processos zumbis pode esgotar esse conjunto de identificadores disponíveis, impedindo a criação de novos processos, e frequentemente indica erros de programação (\foreign{bugs}) no processo pai.
 \end{itemize}
 
 Correlacionando o monitoramento destes estados com as métricas de recursos do sistema, obtém-se uma visão holística da infraestrutura, auxiliando na identificação de condições de saturação.
@@ -309,48 +307,78 @@ Correlacionando o monitoramento destes estados com as métricas de recursos do s
 \section{Agentes, Exportadores e Auxiliadores}
 \label{section:Agentes}
 
-Placeholder
+{\color{red}
 
-%quando for falar de agentes ativos e passivos, falar tambem de agentless monitoring
+De forma geral, sistemas de monitoramento raramente acessam diretamente os dados brutos dos sistemas que observam. Em sua arquitetura, dependem fundamentalmente de componentes intermediários para abstrair a heterogeneidade dos sistemas monitorados, coletando, transformando e disponibilizando métricas em formatos padronizados e consumíveis por sistemas de monitoramento. Esses elementos constituem a camada de telemetria da arquitetura de observabilidade, estabelecendo a ponte entre os recursos monitorados e as plataformas de agregação, análise e visualização de dados.
+
+Tais componentes operam através de dois paradigmas de comunicação: o modelo ativo (\foreign{push}), onde o componente envia dados periodicamente ao sistema de monitoramento e o modelo passivo (\foreign{pull}), onde o sistema de monitoramento realiza consultas nos \foreign{endpoints} HTTP em intervalos periódicos configurados.
+
+Agentes representam programas instalados diretamente nos dispositivos monitorados, frequentemente implementados em arquiteturas bidirecionais cliente-servidor podendo se comunicar via \foreign{push} ou \foreign{pull}. Já exportadores  constituem componentes especializados em arquiteturas pull, funcionando como tradutores que convertem métricas de sistemas específicos para o formato de exposição do sistema de monitoramento, que realiza raspagens (\foreign{scrapings}) de \foreign{endpoints} HTTP (\verb|/metrics|) periodicamente. Podem ser instalados diretamente no dispositivo alvo, ou em algum \foreign{proxy} ou contêiner auxiliar (\foreign{sidecar}) que disponibilize as métricas alvo.
+
+Além dos agentes e exportadores, pode-se utilizar \foreign{sidecars} para executar as atividades descritas nesta seção. Em ambientes modulares, como Docker e Kubernetes, um \foreign{sidecar} é executado de forma adjacente ao contêiner principal, coletando \foreign{logs} e métricas do contêiner principal. \foreign{Sidecars} não seguem um modelo específico, podendo seguir o modelo \foreign{push}, \foreign{pull} ou ambos.
+
+Existe também a arquitetura \foreign{agentless}, onde não há instalação de nenhum software especializado nas tarefas descritas acima, mas não são o foco deste trabalho.
+
 \subsection{Zabbix Agent v1}
 \label{subsection:ZabbixAgentV1}
 
-Placeholder
+O Zabbix Agent v1 \citep{zabbix2025} representa a implementação tradicional do agente de monitoramento da plataforma Zabbix, desenvolvido integralmente na linguagem C. É projetado para ser instalado diretamente nos dispositivos alvo, operando como daemon em sistemas Unix-\foreign{like} e serviço no Windows e oferecendo modos \foreign{push} e \foreign{pull} de coleta, e também possui imagem Docker.
+
+Uma funcionalidade interessante do Zabbix Agent v1 é que, no modo \foreign{push}, o agente deve primeiro receber do servidor Zabbix uma lista de itens a monitorar e seus respectivos intervalos de coleta. Isto permite que o agente continue executando o perfil de monitoramento mesmo quando o servidor está indisponível, enviando posteriormente os resultados coletados
 
 \subsection{Zabbix Agent v2}
 \label{subsection:ZabbixAgentV2}
 
-Placeholder
+O Zabbix Agent v2 \citep{zabbix2025} é uma reescrita com base em uma arquitetura modular e "pluginável" na linguagem Go. Compartilhando parte do código C do agente original, tem foco em modularidade e maior concorrência.
+
+Algumas de suas características são a execução de plugins Go, facilitando extensão e manutenção, concorrência melhorada, armazenamento persistente, suporte nativo a monitoramento de tecnologias como Docker, e tanto verificações passivas quanto ativas suportam intervalos programados e flexíveis.
+
+Pode ser instalado diretamente no dispositivo alvo, ou ser executado como contêiner usando a imagem Docker oficial.
 
 \subsection{Node Exporter}
 \label{subsection:NodeExporter}
 
-Placeholder
+O Node Exporter \citep{nodeexporter2025} é um exportador oficial do ecossistema Prometheus escrito em Go. Projetado para coleta de métricas de hardware e sistema operacional de máquinas Linux, ele utiliza chamadas do \foreign{kernel} via \verb|/proc|, bibliotecas Go e expõe métricas de sistema operacional no padrão de formatação nativa do Prometheus, no \foreign{endpoint} HTTP \verb|/metrics|.
+
+Ele pode ser instalado no diretamente no dispositivo, ou pode ser executado em contêiner. 
 
 \subsection{cAdvisor}
 \label{subsection:cAdvisor}
 
-Placeholder
+O Container Advisor (cAdvisor)\abbrev{cAdvisor}{Container Advisor} \citep{cadvisor2025} é uma ferramenta escrita na linguagem Go desenvolvida pelo Google para monitoramento de contêineres em ambientes Linux, com foco especial em contêineres Docker. Ele coleta e expõe métricas por contêiner.
+
+O cAdvisor é normalmente executado como um contêiner próprio, com acesso ao host e aos diretórios de controle do Docker, e expõe suas métricas no formato Prometheus em um endpoint HTTP.
 
 \subsection{Telegraf}
 \label{subsection:Telegraf}
 
-Placeholder
+O Telegraf \citep{telegraf2025} é um agente de coleta de métricas da InfluxData escrito em Go, projetado sob o modelo \foreign{plugin-driven}. Ele coleta dados de fontes variadas (sistemas operacionais, bancos, contêineres, serviços) via \foreign{plugins} de \foreign{input} e envia para diversos destinos (InfluxDB, Prometheus, Kafka etc.) via \foreign{plugins} de \foreign{output}.
+
+O Telegraf pode operar tanto em modo \foreign{push} quanto em modo \foreign{pull} e arquitetura modular o torna particularmente interessante para ambientes heterogêneos e para integração com múltiplas ferramentas.
+
+Pode ser instalado diretamente no dispositivo, ou ser executado como contêiner.
 
 \subsection{Docker Stats Exporter}
 \label{subsection:DockerStatsExporter}
 
-Placeholder
+O Docker Stats Exporter \citep{dockerstatsexporter2025} é um exportador leve escrito em diferentes linguagens (existem múltiplas versões mantidas pela comunidade) que consome a API de estatísticas do Docker (\verb|docker stats|) e exporta métricas de contêineres em um endpoint \verb|/metrics|. 
+Deve ser executado como contêiner.
 
 \subsection{Prometheus Agent}
 \label{subsection:PrometheusAgent}
 
-Placeholder
+O Prometheus Agent \citep{promagent2025} é um modo de operação leve do servidor Prometheus, focado apenas em descoberta de serviços, \foreign{scraping} e \foreign{remote write}, sem armazenamento local de séries temporais. O Agent mantém a mesma base de código do Prometheus, atuando como exportador avançado com capacidade de adaptação a configurações dinâmicas via \foreign{service discovery}.
+
+Pode ser instalado no \foreign{host} via arquivo binário, porém é mais comumente utilizado via contêiner.
 
 \subsection{Grafana Agent}
 \label{subsection:GrafanaAgent}
 
-Placeholder
+O Grafana Agent \citep{grafanaagent2025} é um coletor unificado de telemetria desenvolvido pela Grafana Labs, implementado em Go. Possui uma arquitetura modular, com microsserviços especializados para cada tarefa e modelo de comunicação \foreign{push} unificado para o ecossistema Grafana.
+
+Pode ser instalado como um serviço no host, porém é mais comum ser implantado como um contêiner (próprio ou sidecar).
+
+}
 
 \section{Sistemas de Monitoramento}
 \label{section:SistemasMonitoramento}
@@ -525,7 +553,7 @@ Essas ferramentas são amplamente empregadas em testes de tolerância a falhas, 
 \subsection{Stress-ng}
 \label{subsection:StressNG}
 
-O stress-ng \citep{stressng2025} é uma ferramenta de código aberto projetada para gerar carga sintética sobre os principais componentes de um sistema operacional, incluindo CPU, memória, disco, I/O e chamadas de sistema. Desenvolvido inicialmente por Colin King, o stress-ng é amplamente utilizado em testes de estresse para kernels Linux e benchmarks de infraestrutura.
+O stress-ng \citep{stressng2025} é uma ferramenta de código aberto projetada para gerar carga sintética sobre os principais componentes de um sistema operacional, incluindo CPU, memória, disco, I/O e chamadas de sistema. Desenvolvido inicialmente por Colin King, o stress-ng é amplamente utilizado em testes de estresse para \foreign{kernels} Linux e benchmarks de infraestrutura.
 
 A ferramenta permite configurar o número de workers (processos de carga), duração dos testes e tipo de carga aplicada, além de oferecer modos de estresse diferentes \foreign{stressors}, que abrangem desde operações aritméticas até simulações de falhas de hardware. Seu uso é comum em ambientes virtualizados e conteinerizados por ser leve, scriptável e altamente configurável.
 
@@ -550,7 +578,7 @@ Com suporte a cenários de aplicação Java e C/C++, bem como experimentos em pl
 \subsection{Pumba}
 \label{subsection:Pumba}
 
-O Pumba \citep{pumba2025} é outra ferramenta de engenharia de caos, só que voltada especificamente para o ecossistema Docker, de uso via linha de comando, que injeta falhas em contêineres por meio da API Docker e utilitários de rede como \texttt{tc} e \texttt{netem}.
+O Pumba \citep{pumba2025} é outra ferramenta de engenharia de caos, só que voltada especificamente para o ecossistema Docker, de uso via linha de comando, que injeta falhas em contêineres por meio da API Docker e utilitários de rede como \verb|tc| e \verb|netem|.
 
 Entre suas funcionalidades, destacam-se: parada, reinício ou término forçado de contêineres; simulação de falhas de rede (atrasos, perda de pacotes, limitação de banda); stress de CPU, memória e I/O dentro de contêineres; e cenários predefinidos de caos.
 
