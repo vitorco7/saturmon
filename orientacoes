@@ -1,10 +1,23 @@
 Orientação 20250708
 
-Na seção 2.4.3 (Disco): deveria explicar/detalhar melhor o que são INODES?
-Na introdução da seção 2.4, a referencia para a documentação do kernel do linux já é o suficiente para todas as métricas?
-Posso alterar o nome da seção 2.5? De Auxiliadores para Sidecars?
-Como lidar com títulos de referencias muito grandes? Exemplo: referencias do github.
+  1) Na seção 2.4.3 (Disco): deveria explicar/detalhar melhor o que são INODES?
+  
+  2) Na introdução da seção 2.4, a referencia para a documentação do kernel do linux já é o suficiente para todas as métricas?
+  
+  3) Posso alterar o nome da seção 2.5? De Auxiliadores para Sidecars? Não gostei do termo e também não o utilizei no texto.
 
+  4) Como lidar com títulos de referencias muito grandes? Exemplo: referencias do github.
+
+  5) Na subseção 2.8.3, o qual eu falo do Grafana, eu deixo claro que ele suporta vários bancos de dados, mas não acho que ficou claro que ele tem um banco de dados interno para persistência de configurações, além das fontes de dados externas. Ficou meio vago, dando a entender que ele realmente só puxa dados de fontes externas e não tem persistência própria para algumas coisas.
+
+#################################
+% ### Os comentarios abaixo vao para o cap3 ###
+
+%!@@!#$@#$#@$@#$@
+% A virtualização desempenha um papel essencial neste trabalho por dois motivos principais. Primeiramente, conforme discutido na Seção \ref{section:Delimitação}, a indisponibilidade de equipamentos motivou a adoção de técnicas de virtualização para simular diferentes dispositivos, permitindo a criação de um ambiente de testes controlado e replicável utilizando uma úniac máquina física como base. 
+
+% Em segundo lugar, a conteinerização dos softwares de monitoramento e coleta de métricas contribui diretamente para a portabilidade, escalabilidade, automação e manutenção da solução desenvolvida. Ao encapsular os serviços em contêineres independentes, é possível garantir maior uniformidade entre ambientes de desenvolvimento e produção, além de alinhar a implementação aos princípios da IaC.
+#################################
 
 Orientação 20250701
 
