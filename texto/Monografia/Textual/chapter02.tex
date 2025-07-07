@@ -184,17 +184,15 @@ O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da i
 \section{Métricas de Interesse}
 \label{section:Metricas}
 
-No cenário de monitoramento existem diversas métricas e grandezas a serem observadas para garantir a saúde do sistema. No entanto, como discutido no início do capítulo, este trabalho delimita o escopo de monitoramento a métricas referentes à saturação de recursos do ambiente a ser monitorado. \textcolor{red}{Isto é, na identificação de pontos de estrangulamento (gargalos) que comprometam a capacidade de resposta do sistema.} Dito isso, o projeto dá foco à monitoria de CPU, memória RAM, disco, rede e processos.
+No cenário de monitoramento existem diversas métricas e grandezas a serem observadas para garantir a saúde do sistema. No entanto, como discutido no início do capítulo, este trabalho delimita o escopo de monitoramento a métricas referentes à saturação de recursos do ambiente a ser monitorado. Isto é, na identificação de pontos de estrangulamento (gargalos) que comprometam a capacidade de resposta do sistema. Dito isso, o projeto dá foco à monitoria de CPU, memória RAM, disco, rede e processos.
 
-\textcolor{red}{Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo.
-}
+Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo.
+
 
 \subsection{CPU}
 \label{subsection:CPU}
 
-{\color{red}
-
-As métricas de utilização da CPU são fundamentadas na medição de tempo. Conforme discutido por Harris-Birtill e Harris-Birtill \citep{harris-birtill2021}, o tempo computacional necessário para a execução de uma tarefa constitui uma métrica essencial para avaliar a performance de sistemas computacionais, especialmente no que diz respeito à sua capacidade de atender a restrições temporais específicas. Em arquiteturas sequenciais, nas quais apenas uma instrução é processada por vez, a quantificação e categorização do tempo consumido por diferentes tipos de tarefas (usuário, sistema, ocioso, interrupções, entre outros) tornam-se fundamentais para o diagnóstico de desempenho e a detecção de situações de saturação.
+As métricas de utilização da CPU são fundamentadas na medição de tempo. Conforme discutido por Harris-Birtill e Harris-Birtill \citep{harris-birtill2021}, o tempo computacional necessário para a execução de uma tarefa constitui uma métrica essencial para avaliar o desempenho de sistemas computacionais, especialmente no que diz respeito à sua capacidade de atender a restrições temporais específicas. Em arquiteturas sequenciais, nas quais apenas uma instrução é processada por vez, a quantificação e categorização do tempo consumido por diferentes tipos de tarefas (usuário, sistema, ocioso, interrupções, entre outros) tornam-se fundamentais para o diagnóstico de desempenho e a detecção de situações de saturação.
 
 \begin{itemize}
 \item \textbf{user\_load}: tempo em que a CPU esteve executando processos no espaço do usuário, ou seja, aplicações não relacionadas ao sistema operacional;
@@ -210,12 +208,9 @@ As métricas de utilização da CPU são fundamentadas na medição de tempo. Co
 \footnotesize \textit{Observação:} as métricas de CPU citadas acima são fornecidas pelo sistema em porcentagem (\%).
 \end{flushleft}
 
-}
-
 \subsection{Memória}
 \label{subsection:Memoria}
 
-{\color{red}
 A memória RAM é um recurso volátil, quantificado em \foreign{bytes}, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso à dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
 
 Durante a execução de uma aplicação, o sistema operacional transfere os dados e instruções correspondentes do disco de armazenamento para a RAM, de modo que a CPU possa acessá-los de forma eficiente. Quanto maior a quantidade de memória RAM disponível, maior é a capacidade do sistema de manter múltiplos processos ativos simultaneamente, minimizando a necessidade de acessos ao disco e, consequentemente, otimizando o desempenho geral.
@@ -243,12 +238,8 @@ Padrão de acesso & Acesso direto pela CPU & Acessada por meio de operações de
 \end{tabular}
 \end{table}
 
-}
-
 \subsection{Disco}
 \label{subsection:Disco}
-
-{\color{red}
 
 O subsistema de armazenamento também é alvo de saturações, especialmente em cenários que envolvem grandes volumes de leitura e escrita, como bancos de dados ou aplicações de alta taxa de transferência (\foreign{throughput}). Além do espaço em disco disponível, métricas relacionadas ao desempenho de I/O são igualmente relevantes.
 
@@ -259,15 +250,13 @@ Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos q
 
 \item \textbf{Espaço utilizado}: quantidade de espaço utilizado, em \%;
 
-\item \textbf{INODES livres}: quantidade de INODES livres, em unidades. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
+\item \textbf{INODES livres}: quantidade de INODES livres, em unidades no caso de ambientes Unix-\foreign{like}. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
 
 \item \textbf{Taxa de Transferência de Leitura/Escrita}: quantificação da largura de banda, em ordens de grandeza de B/s, nas transferências de dados.
 
 \item \textbf{Utilização de I/O}: tempo o qual o disco estava ocupado com tarefas de I/O, em \%. Valores próximos de 0 indicam saturação da largura de banda.
 \end{itemize}
 
-
-}
 \subsection{Rede}
 \label{subsection:Rede}
 
@@ -526,7 +515,7 @@ Apesar de sua utilidade técnica e da baixa complexidade de uso, o \foreign{Expr
 \subsection{Grafana}
 \label{subsection:Grafana}
 
-O Grafana \citep{grafana2025} é uma plataforma de código aberto especializada em visualização interativa de dados e análise, desenvolvida pela Grafana Labs. A arquitetura do Grafana é baseada em um modelo \foreign{front-end/back-end}, implementado em TypeScript e Go respectivamente, proporcionando performance otimizada e escalabilidade.
+O Grafana \citep{grafana2025} é uma plataforma de código aberto especializada em visualização interativa de dados e análise, desenvolvida pela Grafana Labs. A arquitetura do Grafana é baseada em um modelo \foreign{front-end/back-end}, implementado em TypeScript e Go respectivamente, proporcionando desempenho otimizado e escalabilidade.
 
 A plataforma suporta diversos \foreign{plugins} de fontes de dados, incluindo sistemas de séries temporais (Prometheus, InfluxDB, Graphite), bancos relacionais (MySQL, PostgreSQL, SQL Server), soluções de observabilidade (Elasticsearch, Splunk) e APIs customizadas, permitindo consolidação de informações heterogêneas em visualizações coesas.
 
@@ -559,7 +548,7 @@ A ferramenta permite configurar o número de workers (processos de carga), dura�
 
 O iperf3 \citep{iperf32025} é uma ferramenta especializada na geração e medição de tráfego de rede. Desenvolvido pelo Energy Sciences Network e Lawrence Berkeley National Laboratory. Baseado em arquitetura cliente-servidor, suporta protocolos TCP\abbrev{TCP}{\foreign{Transmission Control Protocol}}, UDP\abbrev{UDP}{\foreign{User Datagram Protocol}} e SCTP\abbrev{SCTP}{Stream Control Transmission Protocol}, bem como modos de \foreign{zero-copy} e saída em formato JSON.
 
-Por meio de parâmetros configuráveis (tamanho de \foreign{buffer}, duração do teste, número de fluxos paralelos), o iperf3 reporta vazão, perda de pacotes, \foreign{jitter} e latência, sendo amplamente utilizado para \foreign{benchmarking} de links em LAN\abbrev{LAN}{Local Area Network}, WAN\abbrev{WAN}{Wide Area Network} e ambientes em nuvem. Sua implementação simples e independente de bibliotecas externas facilita a integração em \foreign{scripts} de automação e pipelines de CI/CD para validação contínua da performance de rede.
+Por meio de parâmetros configuráveis (tamanho de \foreign{buffer}, duração do teste, número de fluxos paralelos), o iperf3 reporta vazão, perda de pacotes, \foreign{jitter} e latência, sendo amplamente utilizado para \foreign{benchmarking} de links em LAN\abbrev{LAN}{Local Area Network}, WAN\abbrev{WAN}{Wide Area Network} e ambientes em nuvem. Sua implementação simples e independente de bibliotecas externas facilita a integração em \foreign{scripts} de automação e pipelines de CI/CD para validação contínua do desempenho de rede.
 
 Por permitir configurar tanto o lado cliente quanto servidor, o iperf3 é adequado para testar enlaces ponto-a-ponto, identificar gargalos de rede e simular sobrecargas em interfaces de rede. Em projetos de monitoramento, sua utilização é relevante para validar a responsividade de exportadores e a capacidade do sistema em lidar com grandes volumes de tráfego.
     

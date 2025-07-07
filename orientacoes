@@ -10,8 +10,15 @@ Orientação 20250708
 
   5) Na subseção 2.8.3, o qual eu falo do Grafana, eu deixo claro que ele suporta vários bancos de dados, mas não acho que ficou claro que ele tem um banco de dados interno para persistência de configurações, além das fontes de dados externas. Ficou meio vago, dando a entender que ele realmente só puxa dados de fontes externas e não tem persistência própria para algumas coisas.
 
-  6) Minhas referências tem, por vezes, coisas em inglês. Exemplo: referencia [14] tem descrições sem ser o título em inglês. Devo traduzir?
+  6) Minhas referências tem, por vezes, coisas em inglês. Exemplo: referencias [3][18] tem descrições sem ser o título em inglês. Devo traduzir?
 
+  ###Dúvidas quanto às correções###
+
+  1) Em 2.4.1 CPU, vc pede para eu remover a Observação. Devo então incluir em cada item da lista a unidade "%"?
+
+  2) Não sei bem que tipo de artigo/referência devo utilizar para as métricas de interesse.
+
+  
 #################################
 % ### Os comentarios abaixo vao para o cap3 ###
 
