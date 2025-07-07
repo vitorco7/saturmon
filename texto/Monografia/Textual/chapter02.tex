@@ -1,8 +1,6 @@
 \chapter{Fundamentação Teórica}
 \label{chap2}
 
-{\color{red}
-
 A fundamentação deste trabalho tem em sua essência quatro conceitos fundamentais: a observabilidade e o monitoramento, a engenharia de confiabilidade de sites (SRE), a infraestrutura como código (IaC) e o software de código aberto. Esses conceitos formam a base teórica que orienta os paradigmas e ferramentas utilizadas na implementação deste projeto.
 
 Diferentemente do monitoramento tradicional, que se limita a verificar o estado atual de sistemas através de métricas predefinidas, a observabilidade \citep{rhobservability2025} oferece uma visão mais ampla e detalhada, permitindo compreender o comportamento interno dos sistemas através da análise de \foreign{logs}, métricas e rastreamento distribuído. Esta abordagem tornou-se fundamental para organizações que dependem de infraestruturas complexas, onde a capacidade de identificar e resolver problemas rapidamente pode significar a diferença entre a continuidade dos negócios e perdas substanciais de receita \citep{costofdowntime2024}.
@@ -14,7 +12,7 @@ Outro pilar fundamental deste trabalho é a IaC \citep{iac2020}, oferecendo uma 
 E para a viabilização técnica dessas práticas, a utilização de ferramentas e tecnologias de código aberto oferece transparência, personalização, economia de recursos \citep{hoffmann2024valueoss} e acesso a comunidades ativas de desenvolvimento. O movimento de código aberto evoluiu de uma filosofia alternativa para uma força dominante na indústria de tecnologia, oferecendo confiabilidade, segurança e flexibilidade.
 
 As seções do decorrer deste capítulo categorizam as etapas conceituais para a realização deste projeto, provendo embasamento referente às ferramentas utilizadas, alinhadas aos fundamentos apresentados acima.
-}
+
 
 \section{Hardware}
 \label{section:Hardware}
@@ -205,7 +203,7 @@ As métricas de utilização da CPU são fundamentadas na medição de tempo. Co
 \end{itemize}
 
 \begin{flushleft}
-\footnotesize \textit{Observação:} as métricas de CPU citadas acima são fornecidas pelo sistema em porcentagem (\%).
+\footnotesize \textcolor{red}{\textit{Observação:} as métricas de CPU citadas acima são fornecidas pelo sistema em porcentagem (\%).}
 \end{flushleft}
 
 \subsection{Memória}
@@ -294,8 +292,6 @@ Correlacionando o monitoramento destes estados com as métricas de recursos do s
 \section{Agentes, Exportadores e Auxiliadores}
 \label{section:Agentes}
 
-{\color{red}
-
 De forma geral, sistemas de monitoramento raramente acessam diretamente os dados brutos dos sistemas que observam. Em sua arquitetura, dependem fundamentalmente de componentes intermediários para abstrair a heterogeneidade dos sistemas monitorados, coletando, transformando e disponibilizando métricas em formatos padronizados e consumíveis por sistemas de monitoramento. Esses elementos constituem a camada de telemetria da arquitetura de observabilidade, estabelecendo a ponte entre os recursos monitorados e as plataformas de agregação, análise e visualização de dados.
 
 Tais componentes operam através de dois paradigmas de comunicação: o modelo ativo (\foreign{push}), onde o componente envia dados periodicamente ao sistema de monitoramento e o modelo passivo (\foreign{pull}), onde o sistema de monitoramento realiza consultas nos \foreign{endpoints} HTTP em intervalos periódicos configurados.
@@ -316,9 +312,9 @@ Uma funcionalidade interessante do Zabbix Agent v1 é que, no modo \foreign{push
 \subsection{Zabbix Agent v2}
 \label{subsection:ZabbixAgentV2}
 
-O Zabbix Agent v2 \citep{zabbix2025} é uma reescrita com base em uma arquitetura modular e "pluginável" na linguagem Go. Compartilhando parte do código C do agente original, tem foco em modularidade e maior concorrência.
+O Zabbix Agent v2 \citep{zabbix2025} é uma reescrita com base em uma arquitetura modular e plugável na linguagem Go. Compartilhando parte do código C do agente original, tem foco em modularidade e maior concorrência.
 
-Algumas de suas características são a execução de plugins Go, facilitando extensão e manutenção, concorrência melhorada, armazenamento persistente, suporte nativo a monitoramento de tecnologias como Docker, e tanto verificações passivas quanto ativas suportam intervalos programados e flexíveis.
+Algumas de suas características são a execução de \foreign{plugins} Go, facilitando extensão e manutenção, concorrência melhorada, armazenamento persistente, suporte nativo a monitoramento de tecnologias como Docker, e tanto verificações passivas quanto ativas suportam intervalos programados e flexíveis.
 
 Pode ser instalado diretamente no dispositivo alvo, ou ser executado como contêiner usando a imagem Docker oficial.
 
@@ -365,7 +361,6 @@ O Grafana Agent \citep{grafanaagent2025} é um coletor unificado de telemetria d
 
 Pode ser instalado como um serviço no host, porém é mais comum ser implantado como um contêiner (próprio ou sidecar).
 
-}
 
 \section{Sistemas de Monitoramento}
 \label{section:SistemasMonitoramento}
@@ -573,11 +568,9 @@ O Pumba também suporta agendamento de experimentos, segmentação por rótulos 
 \section{Alertas e Notificações}
 \label{section:AlertasNotificacoes}
 
-{\color{red}
-
 A capacidade de gerar alertas e notificar as equipes responsáveis constitui uma parte essencial em qualquer sistema de monitoramento, uma vez que viabiliza a detecção proativa de anomalias e a adoção de medidas corretivas antes que falhas críticas se concretizem.
 
-Os mecanismos de alerta combinam regras de avaliação -- baseadas em métricas, limiares e gatilhos (\foreign{triggers}) -- com canais de notificação configuráveis, assegurando que informações relevantes sejam encaminhadas aos destinatários apropriados por meio de meios eficazes, como e-mail, \abbrev{SMS}{\foreign{Short Message Service}}, plataformas corporativas, webhooks, entre outros.
+Os mecanismos de alerta combinam regras de avaliação -- baseadas em métricas, limiares e gatilhos (\foreign{triggers}) -- com canais de notificação configuráveis, assegurando que informações relevantes sejam encaminhadas aos destinatários apropriados por meio de meios eficazes, como e-mail, SMS\abbrev{SMS}{\foreign{Short Message Service}}, plataformas corporativas, webhooks, entre outros.
 
 Nesta seção, examinam-se duas abordagens adotadas no ecossistema de código aberto: o subsistema de alertas integrado do Grafana e o Alertmanager do Prometheus. O primeiro, integrado a dashboards com foco em visualização e testes interativos. Já o segundo, especializado em roteamento e gestão de notificações em arquiteturas distribuídas baseadas em Prometheus.
 
@@ -601,11 +594,11 @@ A configuração do Alertmanager é feita via arquivos YAML, nos quais são defi
 A integração entre o Prometheus e o Alertmanager é baseada em protocolos HTTP e segue o modelo \foreign{push}, onde o Prometheus envia os alertas conforme as condições definidas. Essa separação entre coleta e gestão de alertas oferece maior controle, escalabilidade e modularidade ao sistema.
 
 Possuindo funcionalidades como agrupamento de alertas, supressão de alertas por redundância, semelhança ou gravidade, silêncio temporário, roteamento condicional para diferentes canais e histórico de alertas, o Alertmanager  é projetado para lidar com grandes volumes de alertas em ambientes distribuídos, oferecendo flexibilidade na configuração e escalabilidade.
-}
 
 \section{Trabalhos relacionados}
 \label{section:TrabalhosRelacionados}
 
+\todo[inline]{nao esquecer das referencias das métricas seção [2.4]}
 Cada paragrafo corresponde a 1 dos artigos/trabalhos - Qual é o assunto do artigo? Como o autor resolve o problema proposto? Que resultados ele obteve? Como isso pode ser útil para o trabalho?
 
 Exemplo: José das Couves [Referencia] trata x problema desta forma...blablabla
