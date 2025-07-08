@@ -1,23 +1,34 @@
 Orientação 20250708
 
-  1) Na seção 2.4.3 (Disco): deveria explicar/detalhar melhor o que são INODES?
+  1) Na seção 2.4.3 (Disco): deveria explicar/detalhar melhor o que são INODES? 
   
-  2) Na introdução da seção 2.4, a referencia para a documentação do kernel do linux já é o suficiente para todas as métricas?
+  nao precisa
   
-  3) Posso alterar o nome da seção 2.5? De Auxiliadores para Sidecars? Não gostei do termo e também não o utilizei no texto.
+  2) Na introdução da seção 2.4, a referencia para a documentação do kernel do linux já é o suficiente para todas as métricas? 
+  
+  nao, procurar referencias que expliquem de onde sairam essas metricas
+  
+  3) Posso alterar o nome da seção 2.5? De Auxiliadores para Sidecars? Não gostei do termo e também não o utilizei no texto. 
+  
+  Texto trocado para sidecars
 
   4) Como lidar com títulos de referencias muito grandes? Exemplo: referencias do github.
 
+  Posso editar para algo curto e objetivo
+
   5) Na subseção 2.8.3, o qual eu falo do Grafana, eu deixo claro que ele suporta vários bancos de dados, mas não acho que ficou claro que ele tem um banco de dados interno para persistência de configurações, além das fontes de dados externas. Ficou meio vago, dando a entender que ele realmente só puxa dados de fontes externas e não tem persistência própria para algumas coisas.
 
-  6) Minhas referências tem, por vezes, coisas em inglês. Exemplo: referencias [3][18] tem descrições sem ser o título em inglês. Devo traduzir?
+  Nao precisa, está bom do jeito que está
 
   ###Dúvidas quanto às correções###
 
   1) Em 2.4.1 CPU, vc pede para eu remover a Observação. Devo então incluir em cada item da lista a unidade "%"?
 
+  Colocar em cara item da lista
+
   2) Não sei bem que tipo de artigo/referência devo utilizar para as métricas de interesse.
 
+  procurar referencias que expliquem de onde sairam essas metricas
   
 #################################
 % ### Os comentarios abaixo vao para o cap3 ###

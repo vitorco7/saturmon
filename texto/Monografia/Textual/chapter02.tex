@@ -289,7 +289,7 @@ Correlacionando o monitoramento destes estados com as métricas de recursos do s
 }
 
 
-\section{Agentes, Exportadores e Auxiliadores}
+\section{Agentes, Exportadores e \foreign{Sidecars}}
 \label{section:Agentes}
 
 De forma geral, sistemas de monitoramento raramente acessam diretamente os dados brutos dos sistemas que observam. Em sua arquitetura, dependem fundamentalmente de componentes intermediários para abstrair a heterogeneidade dos sistemas monitorados, coletando, transformando e disponibilizando métricas em formatos padronizados e consumíveis por sistemas de monitoramento. Esses elementos constituem a camada de telemetria da arquitetura de observabilidade, estabelecendo a ponte entre os recursos monitorados e as plataformas de agregação, análise e visualização de dados.
@@ -422,7 +422,7 @@ O servidor Zabbix funciona como o elo central do sistema: coleta métricas, aval
 
 Os agentes Zabbix, instalados nos dispositivos monitorados, coletam informações sobre uso de CPU, memória, disco, rede e outros parâmetros configurados. A coleta pode ocorrer de forma passiva -- quando o servidor solicita métricas -- ou ativa -- quando o próprio agente envia dados conforme agendado. Além disso, o Zabbix suporta monitoramento sem agente via SSH/Telnet\abbrev{SSH}{\foreign{Secure Shell}}\abbrev{Telnet}{\foreign{Telecommunication Network}}, protocolos SNMP\abbrev{SNMP}{\foreign{Simple Network Management Protocol}}, IPMI\abbrev{IPMI}{\foreign{Intelligent Platform Management Interface}} e JMX\abbrev{JMX}{\foreign{Java Management Extensions}}, e integrações com APIs RESTful\abbrev{API}{\foreign{Application Programming Interface}}, ampliando seu alcance a equipamentos e serviços que não permitem a instalação de software local.
 
-Para simplificar a configuração em ambientes heterogêneos, o Zabbix dispõe de recursos de descoberta automática e de templates padronizados, permitindo replicar ajustes e métricas em múltiplos dispositivos de forma consistente. A interface web, por sua vez, oferece dashboards personalizáveis, relatórios históricos e ferramentas de análise, além de ser o meio principal de configurações e personalizações do servidor, consolidando em um único painel todas as funcionalidades essenciais à observabilidade e ao gerenciamento proativo da infraestrutura.
+Para simplificar a configuração em ambientes heterogêneos, o Zabbix dispõe de recursos de descoberta automática e de templates padronizados, permitindo replicar ajustes e métricas em múltiplos dispositivos de forma consistente. A interface web, por sua vez, oferece \foreign{dashboards} personalizáveis, relatórios históricos e ferramentas de análise, além de ser o meio principal de configurações e personalizações do servidor, consolidando em um único painel todas as funcionalidades essenciais à observabilidade e ao gerenciamento proativo da infraestrutura.
 
 \subsection{Prometheus}
 \label{subsection:Prometheus}
@@ -518,7 +518,7 @@ O sistema de painéis do Grafana oferece uma ampla gama de visualizações, desd
 
 Cada painel pode ser configurado com consultas específicas na linguagem da fonte de dados correspondente, transformações de dados avançadas, alertas baseados em limiares (\foreign{thresholds}) e anotações contextuais. O editor de consultas fornece suporte nativo a PromQL para fontes Prometheus, incluindo funcionalidades como \foreign{query building} assistido, explicação passo a passo de operações e modelos de consultas pré-definidos.
 
-Entre os recursos avançados destacam-se o sistema de variáveis de \foreign{dashboard} para criação de painéis dinâmicos, \foreign{Public Dashboards} para compartilhamento sem necessidade de autenticação, correlações entre diferentes fontes de dados, e \foreign{Scenes} para integração de dashboards em aplicações customizadas.
+Entre os recursos avançados destacam-se o sistema de variáveis de \foreign{dashboard} para criação de painéis dinâmicos, \foreign{Public Dashboards} para compartilhamento sem necessidade de autenticação, correlações entre diferentes fontes de dados, e \foreign{Scenes} para integração de \foreign{dashboards} em aplicações customizadas.
 
 O Grafana também oferece capacidades de IaC através da funcionalidade de provisionamento (\foreign{provisioning}) automatizado via arquivos JSON/YAML\abbrev{JSON}{\foreign{JavaScript Object Notation}}, APIs REST abrangentes para automação, e integração com pipelines de CI/CD.
 
@@ -572,7 +572,7 @@ A capacidade de gerar alertas e notificar as equipes responsáveis constitui uma
 
 Os mecanismos de alerta combinam regras de avaliação -- baseadas em métricas, limiares e gatilhos (\foreign{triggers}) -- com canais de notificação configuráveis, assegurando que informações relevantes sejam encaminhadas aos destinatários apropriados por meio de meios eficazes, como e-mail, SMS\abbrev{SMS}{\foreign{Short Message Service}}, plataformas corporativas, webhooks, entre outros.
 
-Nesta seção, examinam-se duas abordagens adotadas no ecossistema de código aberto: o subsistema de alertas integrado do Grafana e o Alertmanager do Prometheus. O primeiro, integrado a dashboards com foco em visualização e testes interativos. Já o segundo, especializado em roteamento e gestão de notificações em arquiteturas distribuídas baseadas em Prometheus.
+Nesta seção, examinam-se duas abordagens adotadas no ecossistema de código aberto: o subsistema de alertas integrado do Grafana e o Alertmanager do Prometheus. O primeiro, integrado a \foreign{dashboards} com foco em visualização e testes interativos. Já o segundo, especializado em roteamento e gestão de notificações em arquiteturas distribuídas baseadas em Prometheus.
 
 \subsection{Grafana Alerting}
 \label{subsection:GrafanaAlerting}
