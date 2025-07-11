@@ -205,13 +205,13 @@ As métricas de utilização da CPU \citep{cpumetrics2025} são fundamentadas na
 \subsection{Memória}
 \label{subsection:Memoria}
 
-A memória RAM \citep{memorymetrics2025} é um recurso volátil, quantificado em \foreign{bytes}, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso à dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
+A memória RAM \citep{memorymetrics2025} é um recurso volátil, quantificado em bytes, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso à dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
 
 Durante a execução de uma aplicação, o sistema operacional transfere os dados e instruções correspondentes do disco de armazenamento para a RAM, de modo que a CPU possa acessá-los de forma eficiente. Quanto maior a quantidade de memória RAM disponível, maior é a capacidade do sistema de manter múltiplos processos ativos simultaneamente, minimizando a necessidade de acessos ao disco e, consequentemente, otimizando o desempenho geral.
 
 Entretanto, quando a quantidade de aplicações ou processos em execução excede a capacidade da RAM física disponível, o sistema pode sofrer degradação de desempenho, instabilidade e falhas em serviços. Em situações críticas, o sistema operacional pode recorrer à finalização forçada de processos para liberar memória -- um mecanismo conhecido como \foreign{Out-of-Memory Killer} (OOM-Killer)\abbrev{OOM}{\foreign{Out of Memory}}.
 
-Para mitigar tais situações, o sistema operacional recorre à utilização de memória de troca (\foreign{swap memory}) (em \foreign{bytes}), que consiste em uma área disco de armazenamento para funcionar como uma extensão virtual da RAM. Embora o uso de \foreign{swap} permita continuar a execução dos processos mesmo após o esgotamento da memória física, seu desempenho é consideravelmente inferior, podendo resultar em lentidão perceptível do sistema.
+Para mitigar tais situações, o sistema operacional recorre à utilização de memória de troca (\foreign{swap memory}) (em bytes), que consiste em uma área disco de armazenamento para funcionar como uma extensão virtual da RAM. Embora o uso de \foreign{swap} permita continuar a execução dos processos mesmo após o esgotamento da memória física, seu desempenho é consideravelmente inferior, podendo resultar em lentidão perceptível do sistema.
 
 Valores de carga elevados na memória de troca são indicativos de degradação do sistema e saturação da memória RAM.
 
@@ -240,15 +240,18 @@ O subsistema de armazenamento \citep{diskmetrics2025} também é alvo de satura�
 Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos que afetam a responsividade dos serviços. Portanto, destacam-se as métricas:
 
 \begin{itemize}
-\item \textbf{Espaço livre}: quantidade de espaço livre em disco, em \foreign{bytes}. Quando próximo de 0, pode causar degradação de desempenho, corrupção de dados, congelamentos e \foreign{crashes};
+\item \textbf{Espaço livre}: quantidade de espaço livre em disco, \textcolor{red}{em bytes. Quando o espaço livre está proporcionalmente próximo} de 0, pode causar degradação de desempenho, corrupção de dados, congelamentos e \foreign{crashes};
 
-\item \textbf{Espaço utilizado}: quantidade de espaço utilizado, em \foreign{bytes};
+\item \textbf{Espaço utilizado}: quantidade de espaço utilizado, em bytes;
 
 \item \textbf{INODES livres}: quantidade de INODES livres \citep{inodes2025}, em unidades no caso de ambientes Unix-\foreign{like}. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
 
-\item \textbf{Taxa de Transferência de Leitura/Escrita}: quantificação da largura de banda, em ordens de grandeza de B/s, nas transferências de dados.
+{\color{red}
+\item \textbf{Bytes lidos}: quantidade de bytes lidos do disco;
 
-\item \textbf{Utilização de I/O}: tempo o qual o disco estava ocupado com tarefas de I/O, em \%. Valores próximos de 0 indicam saturação da largura de banda.
+\item \textbf{Bytes escritos}: quantidade de bytes escritos no disco;}
+
+\item \textbf{Utilização de I/O}: tempo o qual o disco estava ocupado com tarefas de I/O, em \%. Valores próximos de 100 indicam saturação da largura de banda.
 \end{itemize}
 
 \subsection{Rede}
@@ -258,11 +261,10 @@ Em sistemas distribuídos, a comunicação em rede torna-se ainda mais important
 
 \begin{itemize}
     \item \textbf{Taxa de tráfego de rede}: quantidade de dados transmitidos ou recebidos por unidade de tempo (geralmente em bits/s). Esta métrica indica o volume instantâneo de tráfego e é fundamental para avaliar a utilização da largura de banda e identificar possíveis gargalos ou picos de uso. Valores acima da capacidade nominal podem acarretar em descartes de pacotes;
-    \item \textbf{Tráfego acumulado}: total de dados transferidos por uma interface de rede ao longo de um determinado intervalo de tempo, medido em ordens de grandeza de \foreign{bytes}. O tráfego acumulado permite analisar o consumo de banda em períodos específicos, facilitando o planejamento de capacidade e a identificação de tendências de uso;
+    \item \textbf{Tráfego acumulado}: total de dados transferidos por uma interface de rede ao longo de um determinado intervalo de tempo, medido em bytes. O tráfego acumulado permite analisar o consumo de banda em períodos específicos, facilitando o planejamento de capacidade e a identificação de tendências de uso;
     \item \textbf{Quantidade de pacotes descartados}: número de pacotes foram eliminados ou perdidos durante a transmissão ou recepção. Altos índices de descarte indicam problemas de desempenho ou capacidade na rede;
     \item \textbf{Quantidade de erros de pacotes}: número de pacotes estavam corrompidos, com erros de verificação, incompletos ou malformados, tornando-os inutilizáveis. Altas quantidades de pacotes com erro impactam negativamente a confiabilidade e a eficiência da comunicação.
 \end{itemize}
-
 
 \subsection{Processos}
 \label{subsection:Processos}
