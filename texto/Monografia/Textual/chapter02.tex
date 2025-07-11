@@ -184,32 +184,28 @@ O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da i
 
 No cenário de monitoramento existem diversas métricas e grandezas a serem observadas para garantir a saúde do sistema. No entanto, como discutido no início do capítulo, este trabalho delimita o escopo de monitoramento a métricas referentes à saturação de recursos do ambiente a ser monitorado. Isto é, na identificação de pontos de estrangulamento (gargalos) que comprometam a capacidade de resposta do sistema. Dito isso, o projeto dá foco à monitoria de CPU, memória RAM, disco, rede e processos.
 
-Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo.
-
+Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo. {\color{red}{De forma geral, estas métricas são obtidas a partir da leitura de arquivos do sistema de arquivos (\foreign{filesystem}) do Linux, localizados no diretório \verb|/proc|, que expõem informações sobre o estado atual do sistema.}
+}
 
 \subsection{CPU}
 \label{subsection:CPU}
 
-As métricas de utilização da CPU são fundamentadas na medição de tempo. Conforme discutido por Harris-Birtill e Harris-Birtill \citep{harris-birtill2021}, o tempo computacional necessário para a execução de uma tarefa constitui uma métrica essencial para avaliar o desempenho de sistemas computacionais, especialmente no que diz respeito à sua capacidade de atender a restrições temporais específicas. Em arquiteturas sequenciais, nas quais apenas uma instrução é processada por vez, a quantificação e categorização do tempo consumido por diferentes tipos de tarefas (usuário, sistema, ocioso, interrupções, entre outros) tornam-se fundamentais para o diagnóstico de desempenho e a detecção de situações de saturação.
+As métricas de utilização da CPU \citep{cpumetrics2025} são fundamentadas na medição de tempo. Conforme discutido por Harris-Birtill e Harris-Birtill \citep{harris-birtill2021}, o tempo computacional necessário para a execução de uma tarefa constitui uma métrica essencial para avaliar o desempenho de sistemas computacionais, especialmente no que diz respeito à sua capacidade de atender a restrições temporais específicas. Em arquiteturas sequenciais, nas quais apenas uma instrução é processada por vez, a quantificação e categorização do tempo consumido por diferentes tipos de tarefas (usuário, sistema, ocioso, interrupções, entre outros) tornam-se fundamentais para o diagnóstico de desempenho e a detecção de situações de saturação.
 
 \begin{itemize}
-\item \textbf{user\_load}: tempo em que a CPU esteve executando processos no espaço do usuário, ou seja, aplicações não relacionadas ao sistema operacional;
+\item \textbf{user}: tempo (em \%) em que a CPU esteve executando processos no espaço do usuário, ou seja, aplicações não relacionadas ao sistema operacional;
 
-\item \textbf{sys\_load}: tempo destinado à execução de processos no espaço do \foreign{kernel}, geralmente relacionado a chamadas de sistema e operações internas;
+\item \textbf{system}: tempo (em \%) destinado à execução de processos no espaço do \foreign{kernel}, geralmente relacionado a chamadas de sistema e operações internas;
 
-\item \textbf{iowait}: tempo durante o qual a CPU permaneceu ociosa aguardando a finalização de operações de I/O, como leitura e escrita em disco. Valores elevados podem indicar degradação/saturação dos discos;
+\item \textbf{iowait}: tempo (em \%) durante o qual a CPU permaneceu ociosa aguardando a finalização de operações de I/O, como leitura e escrita em disco. Valores elevados podem indicar degradação/saturação dos discos;
 
-\item \textbf{idle\_time}: tempo em que a CPU não estava realizando nenhuma atividade, indicando inatividade total do processador/núcleo naquele intervalo de tempo. Valores próximos de 0 podem indicar saturação da CPU.
+\item \textbf{idle}: tempo (em \%) em que a CPU não estava realizando nenhuma atividade, indicando inatividade total do processador/núcleo naquele intervalo de tempo. Valores próximos de 0 podem indicar saturação da CPU.
 \end{itemize}
-
-\begin{flushleft}
-\footnotesize \textcolor{red}{\textit{Observação:} as métricas de CPU citadas acima são fornecidas pelo sistema em porcentagem (\%).}
-\end{flushleft}
 
 \subsection{Memória}
 \label{subsection:Memoria}
 
-A memória RAM é um recurso volátil, quantificado em \foreign{bytes}, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso à dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
+A memória RAM \citep{memorymetrics2025} é um recurso volátil, quantificado em \foreign{bytes}, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso à dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
 
 Durante a execução de uma aplicação, o sistema operacional transfere os dados e instruções correspondentes do disco de armazenamento para a RAM, de modo que a CPU possa acessá-los de forma eficiente. Quanto maior a quantidade de memória RAM disponível, maior é a capacidade do sistema de manter múltiplos processos ativos simultaneamente, minimizando a necessidade de acessos ao disco e, consequentemente, otimizando o desempenho geral.
 
@@ -239,16 +235,16 @@ Padrão de acesso & Acesso direto pela CPU & Acessada por meio de operações de
 \subsection{Disco}
 \label{subsection:Disco}
 
-O subsistema de armazenamento também é alvo de saturações, especialmente em cenários que envolvem grandes volumes de leitura e escrita, como bancos de dados ou aplicações de alta taxa de transferência (\foreign{throughput}). Além do espaço em disco disponível, métricas relacionadas ao desempenho de I/O são igualmente relevantes.
+O subsistema de armazenamento \citep{diskmetrics2025} também é alvo de saturações, especialmente em cenários que envolvem grandes volumes de leitura e escrita, como bancos de dados ou aplicações de alta taxa de transferência (\foreign{throughput}). Além do espaço em disco disponível, métricas relacionadas ao desempenho de I/O são igualmente relevantes.
 
 Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos que afetam a responsividade dos serviços. Portanto, destacam-se as métricas:
 
 \begin{itemize}
-\item \textbf{Espaço livre}: quantidade de espaço livre em disco, em \%. Quando próximo de 0, pode causar degradação de desempenho, corrupção de dados, congelamentos e \foreign{crashes};
+\item \textbf{Espaço livre}: quantidade de espaço livre em disco, em \foreign{bytes}. Quando próximo de 0, pode causar degradação de desempenho, corrupção de dados, congelamentos e \foreign{crashes};
 
-\item \textbf{Espaço utilizado}: quantidade de espaço utilizado, em \%;
+\item \textbf{Espaço utilizado}: quantidade de espaço utilizado, em \foreign{bytes};
 
-\item \textbf{INODES livres}: quantidade de INODES livres, em unidades no caso de ambientes Unix-\foreign{like}. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
+\item \textbf{INODES livres}: quantidade de INODES livres \citep{inodes2025}, em unidades no caso de ambientes Unix-\foreign{like}. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
 
 \item \textbf{Taxa de Transferência de Leitura/Escrita}: quantificação da largura de banda, em ordens de grandeza de B/s, nas transferências de dados.
 
@@ -258,9 +254,7 @@ Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos q
 \subsection{Rede}
 \label{subsection:Rede}
 
-{\color{red}
-
-Em sistemas distribuídos, a comunicação em rede torna-se ainda mais importante. Cenários de saturação da interface de rede podem causar lentidão na troca de dados entre serviços, perda de pacotes ou até indisponibilidade de sistemas. Algumas métricas utilizadas para observar a saturação da interface de rede são:
+Em sistemas distribuídos, a comunicação em rede torna-se ainda mais importante. Cenários de saturação da interface de rede \citep{netmetrics2025} podem causar lentidão na troca de dados entre serviços, perda de pacotes ou até indisponibilidade de sistemas. Algumas métricas utilizadas para observar a saturação da interface de rede são:
 
 \begin{itemize}
     \item \textbf{Taxa de tráfego de rede}: quantidade de dados transmitidos ou recebidos por unidade de tempo (geralmente em bits/s). Esta métrica indica o volume instantâneo de tráfego e é fundamental para avaliar a utilização da largura de banda e identificar possíveis gargalos ou picos de uso. Valores acima da capacidade nominal podem acarretar em descartes de pacotes;
@@ -269,14 +263,11 @@ Em sistemas distribuídos, a comunicação em rede torna-se ainda mais important
     \item \textbf{Quantidade de erros de pacotes}: número de pacotes estavam corrompidos, com erros de verificação, incompletos ou malformados, tornando-os inutilizáveis. Altas quantidades de pacotes com erro impactam negativamente a confiabilidade e a eficiência da comunicação.
 \end{itemize}
 
-}
 
 \subsection{Processos}
 \label{subsection:Processos}
 
-{\color{red}
-
-O monitoramento de processos permite analisar o comportamento interno do sistema, identificando origens de consumo de recursos ou comportamentos anômalos. Das métricas existentes, destacam-se aqui as contagens (em unidades) de três estados de processos: \textbf{em execução, em espera e zumbis.}
+O monitoramento de processos \citep{processmetrics2025} permite analisar o comportamento interno do sistema, identificando origens de consumo de recursos ou comportamentos anômalos. Das métricas existentes, destacam-se aqui as contagens (em unidades) de três estados de processos: \textbf{em execução, em espera e zumbis.}
 
 \begin{itemize}
     \item {\textbf{Em execução}}: estes processos representam aqueles que estão ativamente utilizando recursos de CPU ou aguardando na fila de execução do escalonador. Uma alta concentração de processos neste estado sugere possível saturação de CPU;
@@ -285,9 +276,6 @@ O monitoramento de processos permite analisar o comportamento interno do sistema
 \end{itemize}
 
 Correlacionando o monitoramento destes estados com as métricas de recursos do sistema, obtém-se uma visão holística da infraestrutura, auxiliando na identificação de condições de saturação.
-
-}
-
 
 \section{Agentes, Exportadores e \foreign{Sidecars}}
 \label{section:Agentes}
@@ -598,7 +586,6 @@ Possuindo funcionalidades como agrupamento de alertas, supressão de alertas por
 \section{Trabalhos relacionados}
 \label{section:TrabalhosRelacionados}
 
-\todo[inline]{nao esquecer das referencias das métricas seção [2.4]}
 Cada paragrafo corresponde a 1 dos artigos/trabalhos - Qual é o assunto do artigo? Como o autor resolve o problema proposto? Que resultados ele obteve? Como isso pode ser útil para o trabalho?
 
 Exemplo: José das Couves [Referencia] trata x problema desta forma...blablabla
