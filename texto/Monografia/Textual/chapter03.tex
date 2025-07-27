@@ -1,248 +1,84 @@
 \chapter{Metodologia Proposta}
 \label{chap3}
 
-\section{Lorem Ipsum}
+{\color{red}
+No capítulo anterior, foram apresentados os conceitos e as tecnologias relevantes para a compreensão da solução de monitoramento desenvolvida. Contudo, vale ressaltar que nem todas as ferramentas descritas anteriormente foram efetivamente empregadas na implementação final da proposta.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et rutrum tortor. Aenean placerat sed erat at posuere. Praesent a dui augue. Etiam ultrices est in eleifend convallis. Nulla condimentum eleifend nunc, quis commodo nisi imperdiet a. Vestibulum dolor neque, rutrum ac cursus vitae, facilisis et felis. Nam magna massa, molestie ut luctus et, blandit et odio. Vestibulum dignissim, magna quis ultrices convallis, felis sem tempus orci, nec lacinia nibh massa a nulla. Suspendisse potenti. Fusce bibendum tortor quis quam scelerisque sollicitudin. Ut a tempor orci, vel efficitur ante.
+Este capítulo tem por objetivo detalhar todo o processo de desenvolvimento da solução de monitoramento, desde as primeiras considerações e escolhas de arquitetura, passando pela seleção e adaptação das ferramentas adotadas, até a apresentação da solução final implementada. Serão discutidas as motivações para determinadas decisões técnicas, desafios encontrados ao longo do desenvolvimento, e os métodos empregados para contorná-los, buscando sempre respaldar as opções feitas com base nos conceitos apresentados no Capítulo 2.
 
-\begin{enumerate}
-    \item Para a obtenção de $b_{3gu}^n(t_l)$:
-    
-    \begin{equation}
-    \begin{split}
-        \left[12D_g^n(t_l)/(a_u^n)^2 + \frac{1}{5}\Sigma_{Rg}^n(t_l)\right]b_{3gu}^n(t_l) - \frac{1}{5}\left[\nu\Sigma_{fg}^n(t_l)\sum_{g'=1}^G\chi_{g'}b_{3g'u}^n(t_l)\right. + \\
-        + \left.\sum_{g'=1}^G \Sigma_{g'g}^n(t_l)b_{3g'u}^n(t_l) + \right] = -\frac{1}{3}\left[\Sigma_{Rg}^n(t_l)b_{1gu}^n(t_l) + \nu\Sigma_{fg}^n(t_l)\sum_{g'=1}^G\chi_{g'}b_{1g'u}^n(t_l)\right. + \\
-        \left.+\sum_{g'=1}^G\Sigma_{g'g}^n(t_l)b_{1g'u}^n(t_l)+  +\alpha_{1gu}^n(t_l)\right];
-    \label{chap3:58}
-    \end{split}
-    \end{equation}
-    
-    \item Para a obtenção de $b_{4gu}^n(t_l)$:
-    
-    \begin{equation}
-    \begin{split}
-        \left[12D_g^n(t_l)/(a_u^n)^2 + \frac{3}{35}\Sigma_{Rg}^n(t_l)\right]b_{4gu}^n(t_l) - \frac{3}{35}\left[\nu\Sigma_{fg}^n(t_l)\sum_{g'=1}^G\chi_{g'}b_{4g'u}^n(t_l)\right. + \\
-        \left.+ \sum_{g'=1}^G \Sigma_{g'g}^n(t_l)b_{4g'u}^n(t_l) + \right] = -\frac{1}{5}\left[\Sigma_{Rg}^n(t_l)b_{2gu}^n(t_l) + \nu\Sigma_{fg}^n(t_l)\sum_{g'=1}^G\chi_{g'}b_{2g'u}^n(t_l) \right. + \\
-        +\left.\sum_{g'=1}^G\Sigma_{g'g}^n(t_l)b_{2g'u}^n(t_l)-\alpha_{2gu}^n(t_l) \right].
-    \label{chap3:59}
-    \end{split}        
-    \end{equation}    
-    
-    
-\end{enumerate}
+Também são descritos os equipamentos utilizados durante o desenvolvimento. Foram utilizados dois computadores, cujas especificações são apresentadas na Tabela \ref{tab:available-hardware}.
 
-\section{O Cálculo do Parâmetro de Subcriticalidade Utilizando o Método NEM}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et rutrum tortor. Aenean placerat sed erat at posuere. Praesent a dui augue. Etiam ultrices est in eleifend convallis. Nulla condimentum eleifend nunc, quis commodo nisi imperdiet a. Vestibulum dolor neque, rutrum ac cursus vitae, facilisis et felis.
 
 \begin{table}[H]
 \centering
-\caption{Produto dos polinômios de base do NEM.}
-\label{chap3:ksub:table}
-\vspace{0.5cm}
-\begin{tabular}{|>{\centering} m{2cm}|>{\centering} m{2cm}|>{\centering} m{2cm}|>{\centering} m{2cm}|>{\centering\arraybackslash} m{2cm}|}
-\hline
-\diagbox[innerwidth=2cm]{$m$}{$k$}        & \textbf{1}    & \textbf{2}    & \textbf{3}     & \textbf{4}      \\ \hline 
-\textbf{1} & $\frac{1}{3}$ & $0$           & $\frac{1}{5}$  & $0$             \\ \hline 
-\textbf{2} & $0$           & $\frac{1}{5}$ & $0$            & $-\frac{3}{35}$ \\ \hline
-\textbf{3} & $\frac{1}{5}$ & $0$           & $\frac{6}{35}$ & $0$             \\ \hline
-\textbf{4} & $0$           & $0$           & $0$            & $\frac{6}{105}$ \\ \hline
+{\color{red}
+\caption{Especificações de hardware dos equipamentos disponíveis}
+\label{tab:available-hardware}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Componente} & \textbf{Desktop} & \textbf{Notebook} \\
+\midrule
+CPU   & Intel Core i5-7600   & Intel Core i7-8565U \\
+RAM   & 16GB                 & 32GB                \\
+Disco & 500GB (SSD)            & 250GB (SSD)          \\
+\bottomrule
 \end{tabular}
+}
 \end{table}
 
+As especificações do sistema operacional serão apresentadas posteriormente, visto que a escolha desse aspecto evoluiu ao longo do desenvolvimento, conforme será detalhado neste capítulo.
 
-\section{Fluxograma do Algoritmo de Solução do Parâmetro de Subcriticalidade}
-\label{chap3:sec:fluxograma}
+\section{Abordagem Preliminar}
+\label{section:AbordagemPreliminar}
 
-A Figura \ref{chap3:fluxograma} In ornare, enim non porta interdum, est lorem volutpat metus, pellentesque pharetra lacus est sed lacus. Vivamus quis magna et justo mattis commodo viverra in tellus. Cras tempor ullamcorper libero vitae tristique. Morbi malesuada posuere tincidunt. Integer accumsan egestas ante eget elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur ac lacinia urna. Vivamus id nunc a nisl tincidunt efficitur eget quis neque. Praesent quis lorem rhoncus, rhoncus dui vel, condimentum dolor. Curabitur condimentum augue dignissim turpis consectetur venenatis.
+Esta seção apresenta uma visão geral das decisões iniciais tomadas antes da definição da arquitetura final da solução de monitoramento. As primeiras etapas deste trabalho podem ser divididas em dois momentos: inicialmente, o escopo era voltado para o monitoramento de infraestruturas de TI tradicionais (como servidores e clusters); em seguida, evoluiu para englobar também dispositivos conectados à rede de forma abrangente, sem restrições de tipagem.
+
+\subsection{Escopo inicial - Infraestrutura Tradicional}
+\label{subsection:EscopoInicial}
+
+Durante as discussões preliminares, o objetivo era monitorar servidores. Foi considerada uma arquitetura onde um equipamento -- podendo ser um NUC ou Raspberry Pi -- realizaria a coleta de métricas deste servidor e, após o processamento destes dados, disponibilizaria-os em painés com visualizações gráficas especializadas. Alternativas com Orange Pi como equipamento foram analisadas, mas a escolha final recaiu sobre o NUC ou Raspberry Pi devido à sua popularidade e suporte.
+
+Entretanto, como não foi possível adquirir fisicamente um NUC ou Raspberry Pi, decidiu-se simular toda a \foreign{stack} de monitoramento em uma máquina virtual.
+
+No desktop disponível, à época com sistema operacional não-Linux, instalou-se o VMWare Workstation Player para configuração de uma VM com Rocky Linux. A escolha pelo Rocky Linux baseou-se em sua compatibilidade com o CentOS, estabilidade e longo ciclo de suporte, características valorizadas em ambientes corporativos.
+
+No entanto, o VMWare Workstation Player mostrou-se limitado em recursos, dificultando a execução de múltiplas VMs. Por isso, migrou-se para o VirtualBox, o que trouxe maior flexibilidade e controle.
+
+Esta estratégia inicial apresentou limitações importantes: a primeira era a maior dificildade na aquisição de dados, pois seria necessário obter um servidor físico para coleta dos mesmos. Outra limitação seria elevado custo computacional inerente ao uso de VMs em comparação a soluções baseadas em contêineres, e pouca modularidade, resultando em manutenção complexa e baixa praticidade
+
+Devido a esses fatores, verificou-se a necessidade de reavaliar o escopo e buscar abordagens mais aderentes aos recursos disponíveis e aos objetivos do projeto.
+
 
 \begin{figure}[H]
-
-\begin{tikzpicture}[font=\small,thick]
- 
-% Start block
-\node[draw,
-    rounded rectangle,
-    minimum width=2.5cm,
-    minimum height=1cm] (block1) {Início};
- 
-% Voltage and Current Measurement
-\node[draw,
-    trapezium, 
-    trapezium left angle = 65,
-    trapezium right angle = 115,
-    trapezium stretches,
-    below= 0.8cm of block1,
-    minimum width=3.5cm,
-    minimum height=1cm
-] (block2) { Geometria, $N_i^n{(t_1)}$, $K_{\text{sub}}^\text{Alvo}(t_1)$, $\Delta K_{\text{sub}}^\text{Alvo}$, $L$, $\varepsilon_0$ e $P_\text{Nominal}$ ou $\overline{I}_{s,0}$};
- 
-% Power and voltage variation
-\node[draw,
-    below=0.8cm of block2,
-    minimum width=2.5cm,
-    minimum height=1cm
-] (block3) { $l=1$};
-
-% Power and voltage variation
-\node[draw,
-    below=0.8cm of block3,
-    minimum width=3.5cm,
-    minimum height=1cm
-] (block4) {Cálculo de $\hat{\phi}_g^n(t_l)$ e $\overline{\Psi}_g^{*n}(t_l)$ usando o NEM};
-
-% Voltage and Current Measurement
-\node[draw,
-    trapezium, 
-    trapezium left angle = 65,
-    trapezium right angle = 115,
-    trapezium stretches,
-    left=of block4,
-    minimum width=3.5cm,
-    minimum height=1cm
-] (block21) {Dados Nucleares};
-
-% Power and voltage variation
-\node[draw,
-    below=0.8cm of block4,
-    minimum width=3.5cm,
-    minimum height=1cm
-] (block5) {Cálculo de $K_{\text{sub}}$};
-    
-% Conditions test
-\node[draw,
-    diamond,
-    below=0.8cm of block5,
-    minimum width=2.5cm,
-    inner sep=0] (block6) {$\left|\frac{K_{\text{sub}}(t_l)}{K_{\text{sub}}^\text{Alvo}(t_l)} -1 \right| \le \varepsilon_0$};
-    
-    
-% Conditions test
-\node[draw,
-    diamond,
-    below=of block6,
-    minimum width=2.5cm,
-    inner sep=0] (block7) {Calcula $P(t_l)$?};   
-
-% Power and voltage variation
-\node[draw,
-    below left=0.5cm of block7,
-    minimum width=3.5cm,
-    minimum height=1cm,
-    text width=4cm
-] (block8) {Cálculo de $\overline{I}_s(t_l)$, se $P(t_l)=P_\text{Nominal}$ é dado};  
-
-% Power and voltage variation
-\node[draw,
-    below right=0.5cm of block7,
-    minimum width=3.5cm,
-    minimum height=1cm,
-    text width=3.5cm
-] (block9) {Cálculo de $P(t_l)$, se $\overline{I}_s(t_l)=\overline{I}_{s,0}$ é dado};  
-
-% Power and voltage variation
-\node[draw,
-    right= 1cm of block5,
-    minimum width=3.5cm,
-    minimum height=1cm,
-    text width=3cm,
-    text centered
-] (block17) {Ajuste da Subcriticalidade};  
-
-\node[coordinate,below=1.5cm of block7] (block16) {};
-
-% Conditions test
-\node[draw,
-    diamond,
-    below= of block16,
-    minimum width=2.5cm,
-    inner sep=0] (block10) {$l>L$};
-  
-
-%\node[coordinate,right=0.5cm of block17] (block18) {};
-    
-
-% Power and voltage variation
-\node[draw,
-    right=3.5cm of block10,
-    minimum width=3.5cm,
-    minimum height=1cm
-] (block12) {$l=l+1$};
-
-% Power and voltage variation
-\node[draw,
-    above=4cm of block12,
-    minimum width=3.5cm,
-    minimum height=1cm
-] (block13) {$K_{\text{sub}}^\text{Alvo}(t_l) = K_{\text{sub}}^\text{Alvo}(t_1) + \frac{t_l}{t_L}\Delta K_\text{sub}^\text{Alvo}$}; 
-
-% Power and voltage variation
-\node[draw,
-    above=0.8cm of block13,
-    minimum width=3.5cm,
-    minimum height=1cm
-] (block14) {Calcula $\overline{\phi}_g^n(t_l) = \overline{I}_s(t_l)\hat{\phi}_g^n(t_l)$};    
-
-
-% Power and voltage variation
-\node[draw,
-    above=0.8cm of block14,
-    minimum width=3.5cm,
-    minimum height=1cm
-] (block18) {Calcula $N_i^n(t_l)$};    
-    
-% Return block
-\node[draw,
-    rounded rectangle,
-    below=of block10,
-    minimum width=2.5cm,
-    minimum height=1cm,] (block11) {Fim};
- 
-% \node[coordinate,below=4.35cm of block4] (block12) {};
- 
- 
-% Arrows
-\draw[-latex] (block1) edge (block2)
-    (block2) edge (block3)
-    (block3) edge (block4)
-    (block21) edge (block4)
-    (block4) edge (block5)	
-    (block5) edge (block6);
- 
-\draw[-latex] (block6) -- (block7)
-    node[pos=0.5,fill=white,inner sep=0]{Sim};
-    
-\draw[-latex] (block6) -| (block17)
-    node[pos=0.25,fill=white,inner sep=0]{Não};    
- 
-\draw[-latex] (block7) -| (block8)
-    node[pos=0.25,fill=white,inner sep=0]{Sim};
-
-\draw[-latex] (block7) -| (block9)
-    node[pos=0.25,fill=white,inner sep=0]{Não};
-
-\draw (block8) |- (block16);
- 
-\draw (block9) |- (block16);
-
-\draw[-latex] (block16) -- (block10);
-
-\draw[-latex] (block10) -- (block11)
-    node[pos=0.5,fill=white,inner sep=0]{Sim};
-
-\draw[-latex] (block10) -- (block12)
-    node[pos=0.5,fill=white,inner sep=0]{Não};
-
-
-\draw[-latex] (block12) edge (block13)
-              (block13) edge (block14)
-              (block18) |- (block4)
-              (block17) |- (block4)
-              (block14) edge (block18);
-%\draw (block17) -- (block18);              
- 
-\end{tikzpicture}
-\vspace{-1cm}
-\caption{Fluxograma do algoritmo de solução para determinar o parâmetro $K_{\text{sub}}$.}
-\label{chap3:fluxograma}
+\centering
+\fbox{\rule{0pt}{150pt} \rule{200pt}{0pt}} % 200pt wide, 150pt high
+\caption{Image placeholder}
+\label{fig:placeholder}
 \end{figure}
+
+-----
+****Inserir aqui uma imagem esquemática da arquitetura inicial****
+-----
+
+\subsection{Escopo Reformulado - Monitoramento Amplo}
+\label{subsection:EscopoReformulado}
+
+
+
+
+}
+\section{Descrição Macro da Arquitetura da Solução}
+
+Placeholder
+
+\section{Infraestrutura}
+
+Placeholder
+
+\section{Discussão sobre as métricas}
+
+Placeholder
+
+\section{Aplicação de Monitoramento}
+
+Placeholder
