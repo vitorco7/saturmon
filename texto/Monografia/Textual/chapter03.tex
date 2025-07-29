@@ -95,20 +95,48 @@ Desde o início do projeto, o Zabbix foi escolhido como principal ferramenta de 
 
 Tendo o Zabbix como motor central, posteriormente acoplaria-se a ele o Grafana. Apesar do Zabbix já possuir uma interface web com \foreign{dashboards} e gráficos, o Grafana oferece uma experiência de visualização mais rica e personalizável, sendo um complemento ideal.
 
-% A partir do repositório de Dockerfiles do Zabbix \citep{zabbixdocker2025}, foi feito um fork para o repositório do projeto. Com isso, experimentou-se com os recursos da ferramenta, subindo um servidor Zabbix, um banco de dados MySQL e um agente em contêineres Docker. Por já incluir um modelo de \foreign{dashboard} no Dockerfile, o servidor Zabbix foi inicializado com um \foreign{dashboard} básico.
+
+{\color{blue}
+-----RASCUNHO-----
+
+A partir do repositório de Dockerfiles do Zabbix \citep{zabbixdocker2025}, foi feito um fork para o repositório do projeto. Com isso, experimentou-se com os recursos da ferramenta, subindo um servidor Zabbix, um banco de dados MySQL e um agente em contêineres Docker. Por já incluir um modelo de \foreign{dashboard} no Dockerfile, o servidor Zabbix foi inicializado com um \foreign{dashboard} básico.
 
 
-%- Falar o que eu fiz com o zabbix: 
-% subi os containers
-% instalei um agente nao oficial no meu celular
-% consegui pingar o meu celular a partir do container do servidor
-% consegui vincular o container do agente ao servidor
-% acabei nao gostando da interface e navegabilidade
-% dificuldade realizar configurações avançadas via interface web
-% os arquivos do projeto do Zabbix são muito inchados e extensos, o que dificultou a leitura e compreensão do código
-% por ter características monolíticas, o Zabbix estava difícil de compreender e manter.
-% É mais custoso computacionalmente (precisa de um banco de dados acoplado como o MySQL ou Postgres)
-% unindo a curva de aprendizado do Docker com a do Zabbix, somado aos itens acima, foi custoso, o que me fez trocar pro Prometheus 
+- Falar o que eu fiz com o zabbix (pontos a serem abordados na seção 3.1.3. Finalizando esta subseção, eu finalizo as abordagens preliminares e vou para a descrição do projeto):
+    \begin{itemize}
+        \item subi os containers
+        \item instalei um agente nao oficial no meu celular
+        \item consegui pingar o meu celular a partir do container do servidor
+        \item consegui vincular o container do agente ao servidor
+        \item acabei nao gostando da interface e navegabilidade
+        \item dificuldade realizar configurações avançadas via interface web
+        \item os arquivos do projeto do Zabbix são muito inchados e extensos, o que dificultou a leitura e compreensão do código por ter características monolíticas, o Zabbix estava difícil de compreender e manter.
+        \item É mais custoso computacionalmente (precisa de um banco de dados acoplado como o MySQL ou Postgres)
+        \item unindo a curva de aprendizado do Docker com a do Zabbix, somado aos itens acima, foi custoso, o que me fez trocar pro Prometheus 
+    
+    \end{itemize}
+     
+    !!!DÚVIDAS COM RELAÇÃO À ESTRUTURA DO TEXTO!!!
+
+    Até então, estou escrevendo o cap3 seguindo uma linha temporal de eventos, enquanto descrevo a Metodologia e ao mesmo tempo realizo as Discussões para explicar as decisões de projeto. Tenho 3 formas de seguir com o capítulo:
+    
+    \begin{enumerate}
+        \item Eu escrevo o capítulo todo descrevendo a Metodologia ao mesmo tempo que realizo as Discussões para justificar as decisões;
+        \item Eu reformulo tudo o que foi escrito no cap 3 até aqui, focando APENAS na Metodologia (ou seja, descrevendo objetivamente o que foi, de fato, feito) e, posteriormente, num capítulo 4, eu apresento as Discussões;
+        \item Eu deixo a seção 3.1 como está, finalizo a 3.1.3 com os pontos apresentados no rascunho, e nas seções seguintes do capítulo 3 eu descrevo APENAS a Metodologia, deixando discussões de projeto para um capítulo 4 - Discussões?
+
+
+
+    \end{enumerate}
+
+     
+     
+     
+     
+     
+
+
+}
 }
 \section{Descrição Macro da Arquitetura da Solução}
 
