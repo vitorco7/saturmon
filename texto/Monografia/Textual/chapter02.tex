@@ -218,17 +218,18 @@ Valores de carga elevados na memória de troca são indicativos de degradação 
 \centering
 \caption{Comparativo entre Memória RAM e Memória de Troca (Swap)}
 \label{tab:comparativo-ram-swap}
-\begin{tabular}{@{}p{4cm} p{5.5cm} p{5.5cm}@{}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}p{4cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Aspecto} & \textbf{RAM} & \textbf{Swap} \\
 \midrule
 Localização & Chips físicos de memória na placa-mãe & Espaço reservado em disco rígido ou SSD \\
 Velocidade & Extremamente rápida (nanosegundos) & Mais lenta (milissegundos) \\
 Volatilidade & Volátil -- os dados são perdidos ao desligar o sistema & Não volátil -- os dados persistem mesmo sem energia \\
-Finalidade & Memória de trabalho principal para processos ativos & Memória de transbordo(\foreign{overflow})/backup para dados inativos \\
+Finalidade & Memória de trabalho principal para processos ativos & Memória de transbordo (\foreign{overflow})/backup para dados inativos \\
 Padrão de acesso & Acesso direto pela CPU & Acessada por meio de operações de I/O em disco \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \subsection{Disco}
@@ -302,9 +303,7 @@ Uma funcionalidade interessante do Zabbix Agent v1 é que, no modo \foreign{push
 
 O Zabbix Agent v2 \citep{zabbix2025} é uma reescrita com base em uma arquitetura modular e plugável na linguagem Go. Compartilhando parte do código C do agente original, tem foco em modularidade e maior concorrência.
 
-Algumas de suas características são a execução de \foreign{plugins} Go, facilitando extensão e manutenção, concorrência melhorada, armazenamento persistente, suporte nativo a monitoramento de tecnologias como Docker, e tanto verificações passivas quanto ativas suportam intervalos programados e flexíveis.
-
-Pode ser instalado diretamente no dispositivo alvo, ou ser executado como contêiner usando a imagem Docker oficial.
+Algumas de suas características são a execução de \foreign{plugins} Go, facilitando extensão e manutenção, concorrência melhorada, armazenamento persistente, suporte nativo a monitoramento de tecnologias como Docker, e tanto verificações passivas quanto ativas suportam intervalos programados e flexíveis. Pode ser instalado diretamente no dispositivo alvo, ou ser executado como contêiner usando a imagem Docker oficial.
 
 \subsection{Node Exporter}
 \label{subsection:NodeExporter}
@@ -363,7 +362,8 @@ Esta seção apresenta duas abordagens arquiteturais distintas e consolidadas, q
 \centering
 \caption{Zabbix - Requisitos recomendados por porte de instalação}
 \label{tab:requisitos-zabbix}
-\begin{tabular}{@{}p{4cm} p{3cm} p{2.5cm} p{2.5cm}@{}}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{4cm} X X X@{}}
 \toprule
 \textbf{Porte da instalação Zabbix} & \textbf{Métricas monitoradas} & \textbf{CPU cores} & \textbf{Memória (GiB)} \\
 \midrule
@@ -372,32 +372,32 @@ Médio       & 10.000      & 4   & 16  \\
 Grande       & 100.000     & 16  & 64  \\
 Muito grande & 1.000.000 & 32  & 96  \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \begin{flushleft}
 \footnotesize
-
-Nota: A documentação oficial do Prometheus não disponibiliza as informações necessárias para inclusão do mesmo nesta tabela. 
-
+Nota: A documentação oficial do Prometheus não disponibiliza as informações necessárias para inclusão do mesmo nesta tabela.
 \end{flushleft}
 \end{table}
+
 
 
 \begin{table}[H]
 \centering
 \caption{Comparativo técnico entre Zabbix e Prometheus}
 \label{tab:comparativo-zabbix-prometheus}
-\begin{tabular}{@{}p{4cm} p{5.3cm} p{5.3cm}@{}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}p{4cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Aspecto} & \textbf{Zabbix} & \textbf{Prometheus} \\
 \midrule
 Modelo de coleta & \foreign{Pull}, \foreign{Push}, SNMP, SSH, etc. & \foreign{Pull} via HTTP \\
 Base de dados & Relacional (MySQL, PostgreSQL, etc.) & TSDB interno \\
-Linguagem de consulta & Via interface gráfica web & PromQL \\
+Ling. de consulta & Via interface gráfica web & PromQL \\
 Agentes/exportadores & Agentes Zabbix v1/v2, \foreign{proxies}, SNMP, etc. & node\_exporter, cAdvisor, Telegraf, etc. \\
 Gestão de alertas & Interface gráfica web & Regras em PromQL com envio via Alertmanager \\
 Interface nativa & Interface gráfica web & Interface web nativa básica. Recomenda-se integração com o Grafana \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 
@@ -484,7 +484,7 @@ A interface organiza os dados de maneira estruturada, com seções dedicadas par
 
 A plataforma disponibiliza recursos avançados como mapas de rede que permitem visualização topológica da infraestrutura monitorada, com elementos representados por ícones que se destacam visualmente quando problemas ocorrem. O sistema de \foreign{thresholds} visuais possibilita configuração de alertas por cores, facilitando a identificação rápida de condições críticas. Adicionalmente, a interface suporta monitoramento web sintético através de cenários baseados em etapas, permitindo verificação de funcionalidade e tempo de resposta de aplicações web.
 
-Embora não ofereça o mesmo nível de flexibilidade visual e personalização avançada de plataformas especializadas como o Grafana, a Zabbix UI apresenta integração total com os recursos internos do sistema, eliminando a necessidade de configuração adicional ou dependências externas.
+Embora não ofereça o mesmo nível de flexibilidade visual e personalização avan\-çada de plataformas especializadas como o Grafana, a Zabbix UI apresenta integração total com os recursos internos do sistema, eliminando a necessidade de configuração adicional ou dependências externas.
 
 \subsection{Prometheus Expression Browser}
 \label{subsection:PrometheusExpressionBrowser}
@@ -569,7 +569,7 @@ O Grafana Alerting \citep{grafanaalerting2025} é um sistema de alertas integrad
 
 O mecanismo de alertas pode ser configurado diretamente pelos de painés de visualização, associando as condições de alerta a consultas previamente definidas. Além disso, versões mais recentes introduziram o mecanismo de alertas unificados (\foreign{unified alerting}), que substituiu o sistema legado e unificou a experiência entre todas as edições do Grafana. Este sistema combina alertas de painéis com regras centrais, o que permite agrupar múltiplas regras, organizá-las por diretórios (para regras gerenciadas pelo Grafana) ou \foreign{namespaces} (para regras gerenciadas pela fonte de dados) e definir políticas e canais de notificação variados.
 
-Por meio da funcionalidade de provisionamento (mencionada em \ref{subsection:Grafana}) é possível pré-configurar todos os parâmetros descritos anteriormente através de arquivos YAML ou JSON, facilitando a automação, consistência e manutenção do sistema de alertas conforme princípios de IaC.
+Por meio da funcionalidade de provisionamento (mencionada em \ref{subsection:Grafana}) pode-se pré-configurar todos os parâmetros descritos anteriormente através de arquivos YAML ou JSON, facilitando a automação, consistência e manutenção do sistema de alertas conforme princípios de IaC.
 
 \subsection{Prometheus Alertmanager}
 \label{subsection:PrometheusAlertmanager}
