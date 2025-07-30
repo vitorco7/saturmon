@@ -184,8 +184,7 @@ O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da i
 
 No cenário de monitoramento existem diversas métricas e grandezas a serem observadas para garantir a saúde do sistema. No entanto, como discutido no início do capítulo, este trabalho delimita o escopo de monitoramento a métricas referentes à saturação de recursos do ambiente a ser monitorado. Isto é, na identificação de pontos de estrangulamento (gargalos) que comprometam a capacidade de resposta do sistema. Dito isso, o projeto dá foco à monitoria de CPU, memória RAM, disco, rede e processos.
 
-Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo. {\color{red}{De forma geral, estas métricas são obtidas a partir da leitura de arquivos do sistema de arquivos (\foreign{filesystem}) do Linux, localizados no diretório \verb|/proc|, que expõem informações sobre o estado atual do sistema.}
-}
+Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo. {De forma geral, estas métricas são obtidas a partir da leitura de arquivos do sistema de arquivos (\foreign{filesystem}) do Linux, localizados no diretório \verb|/proc|, que expõem informações sobre o estado atual do sistema.}
 
 \subsection{CPU}
 \label{subsection:CPU}
@@ -240,16 +239,15 @@ O subsistema de armazenamento \citep{diskmetrics2025} também é alvo de satura�
 Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos que afetam a responsividade dos serviços. Portanto, destacam-se as métricas:
 
 \begin{itemize}
-\item \textbf{Espaço livre}: quantidade de espaço livre em disco, \textcolor{red}{em bytes. Quando o espaço livre está proporcionalmente próximo} de 0, pode causar degradação de desempenho, corrupção de dados, congelamentos e \foreign{crashes};
+\item \textbf{Espaço livre}: quantidade de espaço livre em disco, em bytes. Quando o espaço livre está proporcionalmente próximo de 0, pode causar degradação de desempenho, corrupção de dados, congelamentos e \foreign{crashes};
 
 \item \textbf{Espaço utilizado}: quantidade de espaço utilizado, em bytes;
 
 \item \textbf{INODES livres}: quantidade de INODES livres \citep{inodes2025}, em unidades no caso de ambientes Unix-\foreign{like}. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
 
-{\color{red}
 \item \textbf{Bytes lidos}: quantidade de bytes lidos do disco;
 
-\item \textbf{Bytes escritos}: quantidade de bytes escritos no disco;}
+\item \textbf{Bytes escritos}: quantidade de bytes escritos no disco;
 
 \item \textbf{Utilização de I/O}: tempo o qual o disco estava ocupado com tarefas de I/O, em \%. Valores próximos de 100 indicam saturação da largura de banda.
 \end{itemize}
@@ -588,38 +586,14 @@ Possuindo funcionalidades como agrupamento de alertas, supressão de alertas por
 \section{Trabalhos relacionados}
 \label{section:TrabalhosRelacionados}
 
-{\color{red}
-
-O trabalho de Antônio José Alves Neto \citep{alvesneto2023} tem por objetivo o desenvolvimento e avaliação de desempenho de um cluster em aplicações big data. Utilizando Raspberry Pis para implementação do hardware do cluster, o autor alinha-se com a ideia de que a utilização de Raspberry Pis é uma boa solução na obtenção de um cluster big data de baixo custo. Além disso, utilizando-se de ferramentas Zabbix para coleta e Grafana para visualização, o autor pôde observar a utilização de recursos do cluster, tais como: uso de CPU, memória usada,
-estatísticas de tráfego de rede, temperatura do nó, uso de armazenamento de disco, quantidade de processos em execução, dentre outros. Tal abordagem corrobora a escolha de plataformas acessíveis e ferramentas open source na implantação de clusters replicáveis e eficientes, similar ao que foi adotado nesta pesquisa.
+O trabalho de Antônio José Alves Neto \citep{alvesneto2023} tem por objetivo o desenvolvimento e avaliação de desempenho de um cluster em aplicações big data. Utilizando Raspberry Pis para implementação do hardware do cluster, o autor alinha-se com a ideia de que a utilização de Raspberry Pis é uma boa solução na obtenção de um cluster big data de baixo custo. Além disso, utilizando-se de ferramentas Zabbix para coleta e Grafana para visualização, o autor pôde observar a utilização de recursos do cluster, tais como: uso de CPU, memória usada, estatísticas de tráfego de rede, temperatura do nó, uso de armazenamento de disco, quantidade de processos em execução, dentre outros. Tal abordagem corrobora a escolha de plataformas acessíveis e ferramentas open source na implantação de clusters replicáveis e eficientes, similar ao que foi adotado nesta pesquisa.
 
 Já Panagiotis Giannakopoulos e colaboradores \citep{panagiotis2025} investigam a variabilidade de desempenho de sistemas de computação \foreign{edge}, utilizando Kubernetes para orquestração de contêineres Docker e Prometheus para coleta de métricas de CPU, GPU, RAM e rede. Correlacionando estas métricas com outras técnicas de análise, os autores desenvolvem uma metodologia que fornece uma compreensão profunda de causas de degradação de desempenho, alinhando-se diretamente à proposta deste trabalho de correlacionar saturação de recursos e comportamento sistêmico.
 
 No contexto de arquiteturas baseadas em microsserviços, Bhanuprakash Madupati \citep{madupati2023} propõe a integração de Prometheus (coleta), Grafana (visualização) e Jaeger (rastreamento distribuído) para ampliar a observabilidade e identificar gargalos em aplicações modernas. O autor enfatiza a importância da automação e centralização de configurações conforme princípios de IaC, prática que também fundamenta a estratégia de implementação adotada neste projeto.
 
-% Bhanuprakash Madupati \citep{madupati2023} em seu trabalho sobre observabilidade em arquiteturas em microsserviços, propõe a utilização do Prometheus para a coleta de métricas de saturação, Grafana para visualização e Jaeger (uma ferramenta de código aberto desenvolvida pela Uber) para rastreamento distribuído. O autor demonstra como essas ferramentas podem ser integradas para fornecer uma visão abrangente do desempenho de aplicações em microsserviços, permitindo a identificação de gargalos e a otimização de recursos. Além disso, o autor menciona a importância da automatização de instruções para centralização,  consistência e maior facilidade de manutenção do sistema, práticas em conformidade com príncipios de IaC.
-
 A relevância do monitoramento em ambientes DevOps é reforçada por Praveen Chaitanya Jakku \citep{jakku2025}, que discorre sobre métricas de uso de CPU, memória, I/O de disco e rede como indicadores críticos de estabilidade. O autor exemplifica o papel das ferramentas Prometheus e Grafana na detecção proativa de problemas com alertas e notificações e no suporte à alta disponibilidade em grandes plataformas como Uber e LinkedIn, evidenciando o impacto da observabilidade na otimização dos serviços.
-
-% Praveen Chaitanya Jakku \citep{jakku2025} também aborda o papel fundamental do monitoramento em soluções de problemas e otimização na cultura DevOps (\foreign{Development and Operations}\abbrev{DevOps}{\foreign{Development and Operations}}). Em seu trabalho, ele apresenta conceitos e práticas de DevOps onde, dentre outros temas, discutem-se:
-% \begin{itemize}
-%     \item Métricas de uso de CPU, memória, I/O de disco e rede como indicativos de estabilidade do sistema;
-%     \item Monitoramento da alocação e uso de recursos de contêineres;
-%     \item Alertas e notificações para indícios de degradação de desempenho;
-%     \item Utilização de ferramentas como Prometheus e Grafana no monitoramento;
-%     \item Apresenta casos de estudo onde grandes plataformas como Uber e LinkedIn utilizam o Prometheus (aliado de outras ferramentas) para monitoramento de suas aplicações, otimizando o desempenho e a confiabilidade de seus serviços.
-% \end{itemize}
 
 No campo da resiliência e engenharia de caos, Joshua Owotogbe e equipe \citep{chaosengineering2025} conduzem uma revisão abrangente da literatura, sistematizando definições, taxonomias e práticas recomendadas. Os autores ressaltam a importância da injeção controlada de falhas — via engenharia de caos — como complemento indispensável aos testes tradicionais, especialmente para aprimorar a disponibilidade e confiabilidade de serviços.
 
 Os trabalhos relacionados apresentados nesta seção fundamentam a relevância e aplicabilidade dos conceitos e ferramentas apresentadas neste capítulo, validando as abordagens adotadas neste projeto.
-
-}
-
-
-
-% Cada paragrafo corresponde a 1 dos artigos/trabalhos - Qual é o assunto do artigo? Como o autor resolve o problema proposto? Que resultados ele obteve? Como isso pode ser útil para o trabalho?
-
-% Exemplo: José das Couves [Referencia] trata x problema desta forma...blablabla
-
-% De 6 a 7 trabalhos

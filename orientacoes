@@ -1,11 +1,15 @@
 Orientação 20250708
 
-Devo explicar Git?
+O notebook tem capacidade computacional mais elevado, mas tem restriçoes sobre o que pode ser instalado nele, sendo a principal restrição o sistema operacional, onde era obrigatório a utilização do ubuntu desktop 20.04. "Então eu mexi onde eu podia mexer"
 
-Onde incluir o repositório do projeto?
+
+Devo explicar Git? nao, afinal é apenas um utilitario, como o VSCode. Nao é um personagem importante no projeto
+
+Onde incluir o repositório do projeto? Fazer referencia no texto
 
 Em que momentos eu devo inserir código? Alguma formatação específica?
-
+ A partir da 3.2. Colocar trechos importantes de código. A cada trecho importante, referenciar um Apendice.
+ Os Apendices deverao incluir o codigo completo dios scripts e arquivos YAML (seria como um backup leve do git)
 
 Orientação 20250708
 
@@ -62,10 +66,17 @@ Modificiar a formatação de citaçaõ para o padrao [1] (Padrao IEEE) (Manhatan
 
     2) Descrição MACRO da Arquitetura da Solução
     Descrição da Arquitetura Final
+    Apresentar os blocos gerais e explicar o que cada um faz, quais seus inputs e outputs, e como interagem entre si. 
+
+    Um diagrama de blocos com a visao MACRO
+
+    A ideia é que o leitor consigar ter um bom entendimento geral do projeto só com a seção 3.2   
 
     3) Infraestrutura
     As escolhas de OS, container, o que foi construido, como foi construido, aplicações a serem instaladas
     Falar o que instalou
+
+    Fazer 1 subseção para cada bloco. Fazer no máximo 1 camada de subseção (3.2.1, 3.2.2, etc)
 
     4) Agentes (pode virar uma subseção de 3)
 
