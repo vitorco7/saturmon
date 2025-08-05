@@ -1,15 +1,15 @@
 Orientação 20250708
 
-O notebook tem capacidade computacional mais elevado, mas tem restriçoes sobre o que pode ser instalado nele, sendo a principal restrição o sistema operacional, onde era obrigatório a utilização do ubuntu desktop 20.04. "Então eu mexi onde eu podia mexer"
+  O notebook tem capacidade computacional mais elevado, mas tem restriçoes sobre o que pode ser instalado nele, sendo a principal restrição o sistema operacional, onde era obrigatório a utilização do ubuntu desktop 20.04. "Então eu mexi onde eu podia mexer"
 
 
-Devo explicar Git? nao, afinal é apenas um utilitario, como o VSCode. Nao é um personagem importante no projeto
+  Devo explicar Git? nao, afinal é apenas um utilitario, como o VSCode. Nao é um personagem importante no projeto
 
-Onde incluir o repositório do projeto? Fazer referencia no texto
+  Onde incluir o repositório do projeto? Fazer referencia no texto
 
-Em que momentos eu devo inserir código? Alguma formatação específica?
- A partir da 3.2. Colocar trechos importantes de código. A cada trecho importante, referenciar um Apendice.
- Os Apendices deverao incluir o codigo completo dios scripts e arquivos YAML (seria como um backup leve do git)
+  Em que momentos eu devo inserir código? Alguma formatação específica?
+  A partir da 3.2. Colocar trechos importantes de código. A cada trecho importante, referenciar um Apendice.
+  Os Apendices deverao incluir o codigo completo dios scripts e arquivos YAML (seria como um backup leve do git)
 
 Orientação 20250708
 

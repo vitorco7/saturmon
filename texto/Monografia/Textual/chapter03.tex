@@ -46,7 +46,7 @@ Até então, os sistemas operacionais dos \foreign{hosts} disponíveis eram dist
 
 Conforme relatado na literatura, o Ubuntu Server demonstrou desempenho satisfatório e baixo consumo de recursos. Contudo, havia dois equipamentos sendo utilizados no desenvolvimento do projeto: 1 -- desktop do próprio autor, sem qualquer restrição para troca e alteração de hardware e software; 2 -- notebook corporativo em que o sistema operacional não poderia ser alterado. Visando padronizar os ambientes de desenvolvimento, decidiu-se por padronizar o SO no Ubuntu Desktop em ambos os dispositivos.
 
-No decorrer dessas alterações, a abordagem de monitoramento foi ampliada para contemplar não apenas servidores, mas também uma ampla variedade de dispositivos conectados à rede. Essa redefinição proporcionou maior versatilidade ao projeto, tornando desnecessária a aquisição de servidores físicos e possibilitando a utilização de contêineres tanto para a simulação de dispositivos quanto para a implementação da stack de monitoramento. Com isso, o processo de desenvolvimento tornou-se mais prático, ágil e modular, além de permitir um aproveitamento mais eficiente dos recursos computacionais disponíveis. Cabe destacar ainda que, ao adotar contêineres não só para testes, mas também para toda a infraestrutura de monitoramento, a discussão sobre a necessidade de hardware específico, como NUC ou Raspberry Pi, perdeu relevância neste contexto, já que a solução desenvolvida pode ser executada em qualquer máquina compatível com tecnologias de conteinerização.
+No decorrer dessas alterações, a abordagem de monitoramento foi ampliada para contemplar não apenas servidores, mas também uma ampla variedade de dispositivos conectados à rede. Essa redefinição proporcionou maior versatilidade ao projeto, tornando desnecessária a aquisição de servidores físicos e possibilitando a utilização de contêineres tanto para a simulação de dispositivos quanto para a implementação da \foreign{stack} de monitoramento. Com isso, o processo de desenvolvimento tornou-se mais prático, ágil e modular, além de permitir um aproveitamento mais eficiente dos recursos computacionais disponíveis. Cabe destacar ainda que, ao adotar contêineres não só para testes, mas também para toda a infraestrutura de monitoramento, a discussão sobre a necessidade de hardware específico, como NUC ou Raspberry Pi, perdeu relevância neste contexto, já que a solução desenvolvida pode ser executada em qualquer máquina compatível com tecnologias de conteinerização.
 
 %TODO: Em trabalhos futuros a análise de viabilidade de implementação em NUC ou Raspberry Pi
 
@@ -54,7 +54,7 @@ No decorrer dessas alterações, a abordagem de monitoramento foi ampliada para 
 \centering
 \fbox{\rule{0pt}{150pt} \rule{200pt}{0pt}} % 200pt wide, 150pt high
 \caption{Inserir aqui uma imagem esquemática da arquitetura reformulada}
-\label{fig:placeholder}
+\label{fig:placeholder2}
 \end{figure}
 
 -----
@@ -71,26 +71,44 @@ Desde o início do projeto, o Zabbix foi escolhido como principal ferramenta de 
 
 Tendo o Zabbix como sistema de monitoramento central, posteriormente aco\-plaria-se a ele o Grafana. Apesar do Zabbix já possuir uma interface web com \foreign{dashboards} e gráficos, o Grafana oferece uma experiência de visualização mais rica e personalizável, sendo um complemento ideal.
 
+{\color{red}
 
-{\color{blue}
------RASCUNHO-----
+A partir do repositório Docker oficial do Zabbix  \citep{zabbixdocker2025}, fez-se um \foreign{fork} para o repositório dedicado a este projeto. Essa abordagem permitiu a experimentação com os principais recursos conteinerizados da ferramenta, como servidor Zabbix, banco de dados MySQL, e agentes. O servidor foi inicialmente configurado com um \foreign{dashboard} básico, aproveitando o modelo fornecido pelo repositório Zabbix-Docker..
 
-A partir do repositório de Dockerfiles do Zabbix \citep{zabbixdocker2025}, foi feito um fork para o repositório do projeto. Com isso, experimentou-se com os recursos da ferramenta, subindo um servidor Zabbix, um banco de dados MySQL e um agente em contêineres Docker. Por já incluir um modelo de \foreign{dashboard} no Dockerfile, o servidor Zabbix foi inicializado com um \foreign{dashboard} básico.
+Após a execução bem-sucedida dos contêineres que compunham o sistema de monitoramento central, procedeu-se à instalação de um agente Zabbix no dispositivo móvel do autor para fins de teste. Foi possível realizar o \foreign{ping} do dispositivo a partir do servidor, sendo ambos — o agente conteinerizado e o instalado no dispositivo móvel — devidamente adicionados à lista de \foreign{hosts} do servidor.
+
+É importante ressaltar que o Zabbix não dispõe de agentes oficiais para dispositivos móveis, mas disponibiliza recomendações de versões não oficiais desenvolvidas por terceiros para esse tipo de aplicação.
+
+No decorrer dessas implementações, alguns pontos críticos foram identificados e impactaram a continuidade do Zabbix como ferramenta de monitoramento principal do projeto:
+
+\begin{itemize}
+\item A necessidade de executar um contêiner adicional exclusivamente para o banco de dados (MySQL ou Postgres) eleva o custo computacional do ambiente;
+\item A interface gráfica do Zabbix apresentou limitações quanto à navegabilidade e usabilidade, dificultando a adaptação do autor;
+\item O projeto Zabbix-Docker, por abranger múltiplas configurações, mostrou-se extenso e complexo, o que dificultou a leitura, compreensão e manutenção do código.
+\end{itemize}
+
+Além desses aspectos, o autor enfrentava simultaneamente a curva de aprendizado do Zabbix e do Docker, o que elevou significativamente o esforço necessário para a evolução do projeto. Tal cenário levou à decisão de abandonar o Zabbix, optando-se pela adoção do Prometheus nas etapas subsequentes deste trabalho.
+}
+
+% {\color{blue}
+% -----RASCUNHO-----
+
+% A partir do repositório de Dockerfiles do Zabbix \citep{zabbixdocker2025}, foi feito um fork para o repositório do projeto. Com isso, experimentou-se com os recursos da ferramenta, subindo um servidor Zabbix, um banco de dados MySQL e um agente em contêineres Docker. Por já incluir um modelo de \foreign{dashboard} no Dockerfile, o servidor Zabbix foi inicializado com um \foreign{dashboard} básico.
 
 
-- Falar o que eu fiz com o zabbix (pontos a serem abordados na seção 3.1.3. Finalizando esta subseção, eu finalizo as abordagens preliminares e vou para a descrição do projeto):
-    \begin{itemize}
-        \item subi os containers
-        \item instalei um agente nao oficial no meu celular
-        \item consegui pingar o meu celular a partir do container do servidor
-        \item consegui vincular o container do agente ao servidor
-        \item acabei nao gostando da interface e navegabilidade
-        \item dificuldade realizar configurações avançadas via interface web
-        \item os arquivos do projeto do Zabbix são muito inchados e extensos, o que dificultou a leitura e compreensão do código por ter características monolíticas, o Zabbix estava difícil de compreender e manter.
-        \item É mais custoso computacionalmente (precisa de um banco de dados acoplado como o MySQL ou Postgres)
-        \item unindo a curva de aprendizado do Docker com a do Zabbix, somado aos itens acima, foi custoso, o que me fez trocar pro Prometheus 
+% - Falar o que eu fiz com o zabbix (pontos a serem abordados na seção 3.1.3. Finalizando esta subseção, eu finalizo as abordagens preliminares e vou para a descrição do projeto):
+%     \begin{itemize}
+%         \item subi os containers
+%         \item instalei um agente nao oficial no meu celular
+%         \item consegui pingar o meu celular a partir do container do servidor
+%         \item consegui vincular o container do agente ao servidor
+%         \item acabei nao gostando da interface e navegabilidade
+%         \item dificuldade realizar configurações avançadas via interface web
+%         \item os arquivos do projeto do Zabbix são muito inchados e extensos, o que dificultou a leitura e compreensão do código por ter características monolíticas, o Zabbix estava difícil de compreender e manter.
+%         \item É mais custoso computacionalmente (precisa de um banco de dados acoplado como o MySQL ou Postgres)
+%         \item unindo a curva de aprendizado do Docker com a do Zabbix, somado aos itens acima, foi custoso, o que me fez trocar pro Prometheus 
     
-    \end{itemize}
+%     \end{itemize}
      
     % !!!DÚVIDAS COM RELAÇÃO À ESTRUTURA DO TEXTO!!!
 
@@ -105,7 +123,7 @@ A partir do repositório de Dockerfiles do Zabbix \citep{zabbixdocker2025}, foi 
 
     % \end{enumerate}
 
-}
+% }
 
 \section{Descrição Macro da Arquitetura da Solução}
 
