@@ -3,11 +3,10 @@
 
 No capítulo anterior, foram apresentados os conceitos e as tecnologias relevantes para a compreensão da solução de monitoramento desenvolvida. Contudo, vale ressaltar que nem todas as ferramentas descritas anteriormente foram efetivamente empregadas na implementação final da proposta.
 
-Este capítulo tem por objetivo detalhar todo o processo de desenvolvimento da solução de monitoramento, desde as primeiras considerações e escolhas de arquitetura, passando pela seleção e adaptação das ferramentas adotadas, até a apresentação da solução final implementada. Serão discutidas as motivações para determinadas decisões técnicas, desafios encontrados ao longo do desenvolvimento, e os métodos empregados para contorná-los, buscando sempre respaldar as opções feitas com base nos conceitos apresentados no Capítulo 2. {\color{red}
-Também são descritos os equipamentos utilizados durante o desenvolvimento e todo o código fonte do projeto está versionado no repositório Git \citep{vitorcossetti2025}.
+Este capítulo tem por objetivo detalhar todo o processo de desenvolvimento da solução de monitoramento, desde as primeiras considerações e escolhas de arquitetura, passando pela seleção e adaptação das ferramentas adotadas, até a apresentação da solução final implementada. Serão discutidas as motivações para determinadas decisões técnicas, desafios encontrados ao longo do desenvolvimento, e os métodos empregados para contorná-los, buscando sempre respaldar as opções feitas com base nos conceitos apresentados no Capítulo 2. Também são descritos os equipamentos utilizados durante o desenvolvimento e todo o código fonte do projeto está versionado no repositório Git \citep{vitorcossetti2025}.
 
 As especificações do sistema operacional serão apresentadas posteriormente, visto que a escolha desse aspecto evoluiu ao longo do desenvolvimento, conforme será detalhado neste capítulo.
-}
+
 \section{Abordagem Preliminar}
 \label{section:AbordagemPreliminar}
 
@@ -20,7 +19,7 @@ Durante as discussões preliminares, o objetivo era monitorar servidores. Foi co
 
 Entretanto, como não foi possível adquirir fisicamente um NUC ou Raspberry Pi, decidiu-se simular toda a \foreign{stack} de monitoramento em uma máquina virtual. Com isso, a possibilidade da utilização de distribuições ou versões do Raspberry Pi OS para fins de desenvolvimento foi descartada, por tratar-se de um sistema operacional baseado em arquitetura ARM, incompatível com a arquitetura x86-64 dos equipamentos disponíveis.
 
-No desktop disponível, à época com sistema operacional não-Linux, instalou-se o \textcolor{red}{VMWare Workstation Player (versão gratuita do VMWare Workstation)} para configuração de uma VM com Rocky Linux. A escolha pelo Rocky Linux baseou-se em sua compatibilidade com o CentOS, estabilidade e longo ciclo de suporte, características valorizadas em ambientes corporativos.
+No desktop disponível, à época com sistema operacional não-Linux, instalou-se o VMWare Workstation Player (versão gratuita do VMWare Workstation) para configuração de uma VM com Rocky Linux. A escolha pelo Rocky Linux baseou-se em sua compatibilidade com o CentOS, estabilidade e longo ciclo de suporte, características valorizadas em ambientes corporativos.
 
 No entanto, o VMWare Workstation Player mostrou-se limitado em recursos, dificultando a execução de múltiplas VMs. Por isso, migrou-se para o VirtualBox, o que trouxe maior flexibilidade e controle.
 
@@ -71,9 +70,7 @@ Desde o início do projeto, o Zabbix foi escolhido como principal ferramenta de 
 
 Tendo o Zabbix como sistema de monitoramento central, posteriormente aco\-plaria-se a ele o Grafana. Apesar do Zabbix já possuir uma interface web com \foreign{dashboards} e gráficos, o Grafana oferece uma experiência de visualização mais rica e personalizável, sendo um complemento ideal.
 
-{\color{red}
-
-A partir do repositório Docker oficial do Zabbix  \citep{zabbixdocker2025}, fez-se um \foreign{fork} para o repositório dedicado a este projeto. Essa abordagem permitiu a experimentação com os principais recursos conteinerizados da ferramenta, como servidor Zabbix, banco de dados MySQL, e agentes. O servidor foi inicialmente configurado com um \foreign{dashboard} básico, aproveitando o modelo fornecido pelo repositório Zabbix-Docker..
+A partir do repositório Docker oficial do Zabbix  \citep{zabbixdocker2025}, fez-se um \foreign{fork} para o repositório dedicado a este projeto. Essa abordagem permitiu a experimentação com os principais recursos conteinerizados da ferramenta, como servidor Zabbix, banco de dados MySQL, e agentes. O servidor foi inicialmente configurado com um \foreign{dashboard} básico, aproveitando o modelo fornecido pelo repositório Zabbix-Docker.
 
 Após a execução bem-sucedida dos contêineres que compunham o sistema de monitoramento central, procedeu-se à instalação de um agente Zabbix no dispositivo móvel do autor para fins de teste. Foi possível realizar o \foreign{ping} do dispositivo a partir do servidor, sendo ambos — o agente conteinerizado e o instalado no dispositivo móvel — devidamente adicionados à lista de \foreign{hosts} do servidor.
 
@@ -88,7 +85,7 @@ No decorrer dessas implementações, alguns pontos críticos foram identificados
 \end{itemize}
 
 Além desses aspectos, o autor enfrentava simultaneamente a curva de aprendizado do Zabbix e do Docker, o que elevou significativamente o esforço necessário para a evolução do projeto. Tal cenário levou à decisão de abandonar o Zabbix, optando-se pela adoção do Prometheus nas etapas subsequentes deste trabalho.
-}
+
 
 % {\color{blue}
 % -----RASCUNHO-----
