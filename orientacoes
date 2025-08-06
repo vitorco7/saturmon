@@ -1,3 +1,26 @@
+
+Orientação 20250805
+
+Figuras e pilhas : Par figura pilha - 1 par para o que foi idealizado e 1 par para o que foi implementado. 2 pares para o momento 1(versao 1), 2 pares para o momento 2 (versao 2)
+
+Adicionar o DB, pois todas as ferramentas puxam dele (zabbix, grafana, dahs, alertas)
+
+Figura principal - fazer toda a figura completa com todas as implementações, mas nao apresentá-la de uma unica vez, apresentar por partes.
+
+Figuras - nao usar as logos ou simbolos, usar apenas caixas pretas e brancas.
+
+
+Seção 3.2 - paragrafo introdutorio e inicia com a figura do prometheus
+após a figura, ir explicando como os blocos se comunicam.
+
+Começar explicando os containers (quem sao e pra que estao ali)
+
+Começar detalhando a historia dos agentes (começou com o node exporter, aí foi mudando ate o telegraf.
+
+e detalhar melhor o bloco do prometheus (prom + tsdb)
+
+falar do grafana
+
 Orientação 20250708
 
   O notebook tem capacidade computacional mais elevado, mas tem restriçoes sobre o que pode ser instalado nele, sendo a principal restrição o sistema operacional, onde era obrigatório a utilização do ubuntu desktop 20.04. "Então eu mexi onde eu podia mexer"
