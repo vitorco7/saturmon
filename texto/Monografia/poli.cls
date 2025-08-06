@@ -530,12 +530,12 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 					\@ifpackageloaded{hyperref}{%
 						\def\@wrlab#1#2{%
 							\protected@write\@labfile{}%
-							{\string\indexentry{[#1] #2|hyperpage}{\thepage}}%
+							{\string\indexentry{#1 -- #2|hyperpage}{\thepage}}%
 							\endgroup
 							\@esphack}}{%
 						\def\@wrlab#1#2{%
 							\protected@write\@labfile{}%
-							{\string\indexentry{[#1] #2}{\arabic{page}}}%
+							{\string\indexentry{#1 -- #2}{\arabic{page}}}%
 							\endgroup
 							\@esphack}}}
 				\newdimen\bibindent%

@@ -1,144 +1,599 @@
 \chapter{Fundamentação Teórica}
 \label{chap2}
 
-Placeholder
+A fundamentação deste trabalho tem em sua essência quatro conceitos fundamentais: a observabilidade e o monitoramento, a engenharia de confiabilidade de sites (SRE), a infraestrutura como código (IaC) e o software de código aberto. Esses conceitos formam a base teórica que orienta os paradigmas e ferramentas utilizadas na implementação deste projeto.
+
+Diferentemente do monitoramento tradicional, que se limita a verificar o estado atual de sistemas através de métricas predefinidas, a observabilidade \citep{rhobservability2025} oferece uma visão mais ampla e detalhada, permitindo compreender o comportamento interno dos sistemas através da análise de \foreign{logs}, métricas e rastreamento distribuído. Esta abordagem tornou-se fundamental para organizações que dependem de infraestruturas complexas, onde a capacidade de identificar e resolver problemas rapidamente pode significar a diferença entre a continuidade dos negócios e perdas substanciais de receita \citep{costofdowntime2024}.
+
+O SRE complementa essa perspectiva ao introduzir conceitos como os quatro sinais de ouro \citep{sre2016}: latência, tráfego, erros e saturação. Estes  fornecem um \foreign{framework} estruturado para monitoramento efetivo. Dos sinais citados, este trabalho tem foco particular na saturação, que indica quão próximo um sistema está de seus limites de capacidade, permitindo identificar gargalos antes que afetem a experiência do usuário. Esta abordagem proativa contrasta com métodos reativos tradicionais, onde problemas são identificados apenas após impactarem os usuários finais.
+
+Outro pilar fundamental deste trabalho é a IaC \citep{iac2020}, oferecendo uma metodologia que automatiza o gerenciamento de infraestrutura através de código, substituindo processos manuais por definições programáticas declarativas. Esta prática permite maior consistência, redução de erros humanos e capacidade de versionamento da infraestrutura. A IaC não apenas acelera o processo de implantação, mas também garante que ambientes sejam reproduzíveis e auditáveis, características essenciais para sistemas de alta confiabilidade.
+
+E para a viabilização técnica dessas práticas, a utilização de ferramentas e tecnologias de código aberto oferece transparência, personalização, economia de recursos \citep{hoffmann2024valueoss} e acesso a comunidades ativas de desenvolvimento. O movimento de código aberto evoluiu de uma filosofia alternativa para uma força dominante na indústria de tecnologia, oferecendo confiabilidade, segurança e flexibilidade.
+
+As seções do decorrer deste capítulo categorizam as etapas conceituais para a realização deste projeto, provendo embasamento referente às ferramentas utilizadas, alinhadas aos fundamentos apresentados acima.
+
 
 \section{Hardware}
-Placeholder
+\label{section:Hardware}
 
-\subsection{NUC}
-Placeholder
+A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, podem causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
+
+Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa \foreign{(desktops)}, ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
+
+A seguir, serão apresentadas algumas opções de hardware avaliadas para compor uma plataforma de monitoramento.
+
+\subsection{Next Unit of Computing (NUC)}
+\label{subsection:NUC}
+
+O Intel \foreign{Next Unit of Computing} (NUC)\abbrev{NUC}{\foreign{Next Unit of Computing}} \citep{nuc2025} configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de \foreign{desktops} convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
+
+No NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura Advanced RISC Machine (ARM)\abbrev{ARM}{\foreign{Advanced RISC Machine}}. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
+
+Outro ponto relevante é o suporte a recursos de hardware mais robustos em comparação aos computadores de placa única. O NUC permite configurações com processadores de maior desempenho, maior quantidade de memória \foreign{Random Access Memory} (RAM)\abbrev{RAM}{\foreign{Random Access Memory}}, opções avançadas de armazenamento, como unidades \foreign{Solid State Drive} (SSD) NVMe, interfaces modernas de conectividade e em alguns casos até mesmo placas gráficas dedicadas. Tais características tornam o dispositivo apto a lidar com cargas de trabalho mais exigentes, especialmente em situações que demandam coleta intensiva de métricas ou visualização analítica em tempo real.
+
+Dessa forma, o Intel NUC pode ser compreendido como uma solução intermediária entre os computadores de placa única, como o Raspberry Pi e o Orange Pi, e os \foreign{desktops} tradicionais, reunindo portabilidade e desempenho em um único equipamento.
 
 \subsection{Raspberry Pi}
-Placeholder
+\label{subsection:RaspberryPi}
+
+O Raspberry Pi \citep{raspihw2025} é uma família de computadores de placa única (SBC)\abbrev{SBC}{\foreign{Single-Board Computer}} desenvolvida pela Raspberry Pi Foundation, no Reino Unido, em colaboração com a Broadcom. Sua arquitetura baseia-se em processadores ARM e adota o conceito de sistema em um chip (SoC)\abbrev{SoC}{\foreign{system-on-a-chip}}, integrando CPU, unidade de processamento gráfico (GPU)\abbrev{GPU}{\foreign{Graphics Processing Unit}} e memória RAM em uma única placa. Essa integração favorece a eficiência energética e a redução de custos, características que tornam o dispositivo especialmente atrativo para aplicações embarcadas, automação residencial, robótica, projetos de Internet das Coisas (IoT) e experimentação em ambientes educacionais e industriais.
+
+A compatibilidade do Raspberry Pi com uma ampla gama de sistemas operacionais baseados em Linux -- como Raspberry Pi OS, Ubuntu e Debian -- amplia suas possibilidades de uso, permitindo desde tarefas cotidianas, como navegação web e execução de aplicações de escritório, até a implementação de servidores, clusters de computação e plataformas de monitoramento de redes. A ausência de armazenamento interno é suprida pelo uso de cartões microSD, que funcionam tanto para o sistema operacional quanto para o armazenamento de dados. Embora essa solução seja prática e econômica, o desempenho de leitura e escrita dos cartões microSD pode ser um fator limitante, especialmente em aplicações que demandam operações intensivas de I/O.
+
+Apesar de suas vantagens, o Raspberry Pi apresenta restrições que devem ser consideradas no planejamento de sistemas mais exigentes. Entre elas, destacam-se o desempenho modesto da CPU em tarefas altamente paralelas, a limitação de memória RAM -- que varia conforme o modelo -- e a já mencionada dependência do armazenamento em microSD, que pode impactar negativamente a velocidade e a durabilidade em cenários de uso intensivo. Ainda assim, a combinação de baixo custo, versatilidade e vasta documentação faz do Raspberry Pi uma plataforma amplamente adotada em projetos experimentais, educacionais e de prototipagem, mesmo que não alcance o desempenho de computadores convencionais baseados em arquitetura x86.
+
+No entanto, vale mencionar que, em modelos mais recentes há suporte para boot via USB, permitindo o uso de SSDs externos, além da expansão do limite de memória RAM para até 16GB no caso do Raspberry Pi 5. 
 
 \subsection{Orange Pi}
-Placeholder
+\label{subsection:OrangePi}
+
+O Orange Pi \citep{orangepihw2025} é outra família de SBC, desenvolvida por fabricantes independentes, geralmente sediados na China, com base na arquitetura ARM. A proposta central da plataforma é fornecer alternativas ao Raspberry Pi com diferentes combinações de processador, memória e conectividade, visando atender a uma variedade maior de aplicações e faixas de preço.
+
+Em termos de especificações técnicas, os modelos da família Orange Pi apresentam ampla diversidade de configurações, permitindo a seleção do um modelo mais adequado às demandas de processamento, rede ou armazenamento exigidas.
+
+Porém, essa diversidade também implica em desafios. Um dos principais refere-se à compatibilidade com sistemas operacionais: nem todos os modelos contam com suporte oficial ou com imagens Linux estáveis e amplamente testadas. Em muitos casos, é necessário recorrer a distribuições mantidas pela comunidade ou adaptadas por terceiros, o que pode comprometer a confiabilidade e a manutenção a longo prazo.
+
 
 \section{Sistemas Operacionais}
-Placeholder
+\label{section:SistemasOperacionais}
+
+Como mencionado no início deste capítulo, o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, 
+foram consideradas distribuições Linux. A seguir, a tabela \ref{tab:requisitos-minimos} apresenta um comparativo dos requisitos de hardware mínimos para cada sistema operacional.
+
+\begin{table}[H]
+\centering
+\caption{Requisitos mínimos das distribuições analisadas}
+\label{tab:requisitos-minimos}
+\begin{tabular}{@{}c c c c@{}}
+\toprule
+\textbf{SO} & \textbf{CPU} & \textbf{RAM} & \textbf{Armazenamento} \\
+\midrule
+Ubuntu Desktop 25.04 & 2\,GHz dual-core & 4\,GB & 25\,GB \\
+Ubuntu Server 25.04 & 1\,GHz & 1\,GB & 2{,}5\,GB \\
+Rocky Linux 10 & 1\,GHz & 1\,GB & 10\,GB \\
+Rocky Linux 10 (sem GUI) & 1\,GHz & 2\,GB & 40\,GB \\
+Rasp. Pi OS Lite & * & * & 16\,GB (SD**) \\
+Rasp. Pi OS Desktop & * & * & 32\,GB (SD**) \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize
+
+* Estes requisitos do Raspberry Pi OS variam conforme o modelo do hardware utilizado.
+
+** Cartão de memória microSD.
+\end{flushleft}
+\end{table}
 
 \subsection{Ubuntu}
-Placeholder
+\label{subsection:Ubuntu}
+
+O Ubuntu \citep{ubuntudsktp2025} é uma das distribuições Linux de código aberto mais utilizadas no mundo, sendo mantida pela empresa Canonical Ltd. Sua popularidade se deve, em grande parte, à combinação de uma interface gráfica, suporte extenso a pacotes -- sistemas de pacotes \foreign{deb} e \foreign{snap} e o gerenciador \foreign{Advanced Package Tool} (APT)\abbrev{APT}{\foreign{Advanced Package Tool}} --  e uma comunidade ativa de usuários e desenvolvedores, o que o torna uma escolha comum tanto para iniciantes quanto para usuários mais experientes.
+
+Baseado no Debian, o Ubuntu oferece compatibilidade com múltiplas arquiteturas, incluindo x86-64 e ARM, o que permite sua instalação em uma ampla variedade de dispositivos -- desde computadores convencionais até plataformas embarcadas e servidores compactos, como o Raspberry Pi e o Intel NUC. A distribuição disponibiliza um conjunto abrangente de pacotes pré-compilados por meio de repositórios oficiais, utilizando o gerenciador de pacotes , o que facilita a instalação de ferramentas relacionadas a monitoramento, virtualização e automação de sistemas.
+
+No entanto, sua versão padrão, o Ubuntu Desktop, por incluir uma interface gráfica completa e diversos serviços em segundo plano voltados ao uso geral, o que pode resultar em um maior consumo de recursos computacionais. Em dispositivos com restrições de memória e processamento, essa sobrecarga pode comprometer o desempenho geral do sistema, tornando essa versão menos indicada para ambientes com recursos limitados, sendo interessante a avaliação de variantes Linux mais enxutas e minimalistas.
 
 \subsection{Ubuntu Server}
-Placeholder
+\label{subsection:UbuntuServer}
+
+O Ubuntu Server \citep{ubuntusrvr2025} é uma variante da distribuição Ubuntu voltada especificamente para ambientes de servidores, caracterizando-se pela ausência de interface gráfica padrão e pela ênfase em desempenho, estabilidade e economia de recursos. Assim como a versão Desktop, é baseada no Debian e mantida pela Canonical Ltd., mantendo compatibilidade com as arquiteturas x86-64 e ARM, como citado na subseção anterior.
+
+Por adotar uma abordagem minimalista, o Ubuntu Server consome menos recursos de memória e processamento que o Ubuntu Desktop. Essa característica torna-o apropriado para dispositivos de hardware limitado, como SBCs e vantajoso para implantações em larga escala, nas quais a redução de sobrecarga do sistema operacional é desejável.
+
+Possuindo um ecossistema consolidado, com ampla disponibilidade de pacotes nos repositórios oficiais, suporte nativo a tecnologias amplamente utilizadas em infraestrutura e sua compatibilidade com ferramentas de automação (facilitando a adoção de práticas IaC), essa distribuição representa uma opção eficiente para o projeto.
 
 \subsection{Rocky Linux}
-Placeholder
+\label{subsection:RockyLinux}
+
+O Rocky Linux \citep{rocky2025} é uma distribuição Linux comunitária desenvolvida como sucessora direta do CentOS, após a descontinuação do suporte oficial deste pela Red Hat. Desenvolvida e mantida sob coordenação da Rocky Enterprise Software Foundation, o projeto tem como objetivo principal oferecer compatibilidade binária total (1:1) com o Red Hat Enterprise Linux (RHEL). Essa compatibilidade estende-se não apenas aos pacotes do sistema, mas também ao gerenciamento de serviços, recursos de segurança e estrutura de diretórios, tornando-o uma alternativa sem custos de licenciamento para organizações e projetos que dependem do ecossistema RHEL.
+
+Em termos de arquitetura, o Rocky Linux oferece suporte abrangente a múltiplas plataformas, dentre elas x86-64 e ARM, arquiteturas relevantes para este projeto. Já em termos de gerenciamento de pacotes, o Rocky Linux utiliza o \foreign{(Dandified YUM)} (DNF)\abbrev{DNF}{\foreign{Dandified YUM}}, que é compatível com os repositórios do RHEL e do CentOS, permitindo fácil acesso a uma vasta gama de softwares e ferramentas.
+
+Com sua estabilidade, suporte a longo prazo (LTS)\abbrev{LTS}{\foreign{Long Term Support}}, compatibilidade com ferramentas consolidadas no mercado e suporte nativo à tecnologias de virtualização e contêineres, o Rocky Linux mostra-se uma sólida opção de sistema operacional para aplicação no projeto.
 
 \subsection{Raspberry Pi OS}
-Placeholder
+\label{subsection:RaspberryPiOS}
+
+O Raspberry Pi OS \citep{raspisftwr2025}, anteriormente conhecido como Raspbian, é a distribuição Linux oficial mantida pela Raspberry Pi Foundation, projetada especificamente para uso nos computadores de placa única (SBCs) da linha Raspberry Pi. Baseada no Debian, essa distribuição é otimizada para arquitetura ARM e visa oferecer uma experiência estável, leve e compatível com o conjunto de hardware embarcado disponível nesses dispositivos.
+
+Assim como o Ubuntu, o Raspberry Pi OS está disponível em diferentes versões, incluindo uma variante com ambiente gráfico completo (Raspberry Pi OS \foreign{with desktop}) e uma versão reduzida, voltada para servidores e sistemas embarcados (Raspberry Pi OS Lite), o que implica nas mesmas vantagens mencionadas em \ref{subsection:UbuntuServer}.
+
+No que diz respeito ao gerenciamento de pacotes, o Raspberry Pi OS também utiliza o gerenciador APT, herdado do Debian, com acesso aos repositórios oficiais da distribuição base. Entretanto, incorpora ajustes e otimizações voltadas ao hardware do Raspberry Pi, como a configuração prévia de parâmetros de inicialização (\foreign{boot}) via cartão SD e ajustes de desempenho voltados à compatibilidade com os periféricos e interfaces do dispositivo.
+
+Uma funcionalidade de destaque é a ferramenta \foreign{raspi-config}, que permite a configuração de parâmetros críticos do sistema -- como \foreign{overclock}, interfaces de hardware, permissões e expansão do sistema de arquivos -- por meio de uma interface simplificada. Esse recurso reduz a necessidade de intervenção manual em arquivos de configuração, facilitando a administração em ambientes com múltiplas unidades implantadas ou em cenários de manutenção remota.
+
+Apesar dessas vantagens, é importante considerar algumas limitações. O Raspberry Pi OS é projetado exclusivamente para os dispositivos da linha Raspberry Pi, o que restringe sua portabilidade para outras arquiteturas. Além disso, por priorizar estabilidade e compatibilidade com o hardware, o sistema tende a disponibilizar versões mais conservadoras de determinados pacotes, o que pode representar um obstáculo em projetos que demandem funcionalidades recentes ou maior flexibilidade de configuração, como observado em distribuições de propósito geral, como Ubuntu ou Rocky Linux.
 
 \section{Virtualização e Conteinerização}
-Placeholder
+\label{section:Virtualizacao}
+
+Nesta seção serão apresentadas as ferramentas de abstração. Algumas representam uma abordagem tradicional, com máquinas virtuais e hipervisores completos, enquanto outras trazem uma abordagem mais moderna, trazendo soluções de conteinerização.
 
 \subsection{Oracle VirtualBox}
-Placeholder
+\label{subsection:VirtualBox}
 
-\subsection{VMware Workstation}
-Placeholder
+O Oracle VirtualBox \citep{virtualbox2025} é um software de virtualização de código aberto, amplamente utilizado para criar e gerenciar máquinas virtuais (VMs)\abbrev{VM}{\foreign{Virtual Machine}} em diversas plataformas, incluindo Windows, macOS, Linux e Solaris. Mantido pela Oracle Corporation, o VirtualBox permite a criação de ambientes virtuais completos, nos quais é possível instalar e executar sistemas operacionais distintos de forma isolada, sobre o mesmo hardware físico.
+
+A ferramenta é compatível com múltiplos sistemas operacionais hospedeiros (Windows, Linux, macOS) e suporta uma ampla gama de sistemas convidados, como diversas distribuições Linux, versões do Windows e sistemas BSD\abbrev{BSD}{\foreign{Berkeley Software Distribution}}. Além disso, o VirtualBox oferece suporte a recursos avançados, como \foreign{snapshots} (pontos de restauração), compartilhamento de pastas entre o \foreign{host} e as VMs, e suporte a dispositivos USB\abbrev{USB}{\foreign{Universal Serial Bus}}.
+
+Embora útil para simular ambientes heterogêneos, sua principal limitação reside na necessidade de um hipervisor completo, implicando num maior consumo de recursos do sistema em comparação com soluções de conteinerização. Além disso, a configuração e o gerenciamento de máquinas virtuais podem ser mais complexos, especialmente em cenários que exigem alta escalabilidade ou automação extensiva.
+
+\subsection{VMware Workstation Player}
+\label{subsection:VMware-Player}
+
+O VMware Workstation Player \citep{vmwareplayer2025}, também conhecido como VMware Player, é um hipervisor gratuito para uso pessoal e mantido pela VMware Inc., disponível para sistemas hospedeiros Windows e Linux. Ele permite a execução de apenas uma máquina virtual por vez e não possui funcionalidades avançadas de gerenciamento, como \foreign{snapshots}, clones ou integração com redes virtuais complexas.
+
+O suporte à múltiplas máquinas virtuais simultâneas e ferramentas avançadas de virtualização são recursos disponíveis apenas na versão VMware Workstation Pro, que no momento da implementação deste projeto, não era gratuita.
 
 \subsection{Docker}
-Placeholder
+\label{subsection:Docker}
+
+O Docker \citep{docker2025} é uma plataforma de conteinerização que introduziu um paradigma mais leve para empacotamento e distribuição de aplicações, virtualizando o sistema operacional em vez do hardware subjacente. Fundamenta-se em mecanismos nativos do \foreign{kernel} Linux -- \foreign{namespaces}, \foreign{cgroups} e \foreign{union file systems} -- para isolar processos e controlar a alocação de recursos.
+
+A principal unidade no Docker é a imagem, que representa o conjunto de camadas de arquivos e instruções necessárias para construir um contêiner. A partir dessas imagens, é possível iniciar instâncias isoladas de software, com comportamento idêntico em diferentes ambientes, garantindo portabilidade e consistência, pondo fim à famosa frase "mas na minha máquina funciona".
+
+Com imagens imutáveis e a capacidade de versionamento, o Docker facilita a automação de implantações, a escalabilidade horizontal e a replicação de ambientes. Além disso, o Docker Hub oferece um repositório público para compartilhamento de imagens pré-construídas, permitindo que desenvolvedores acessem e utilizem aplicações prontas para uso.
+
+Além das imagens pré-construídas, o Docker também permite a criação de imagens personalizadas por meio de arquivos Dockerfile, que definem as etapas necessárias para construir uma imagem personalizada. Esses arquivos contêm instruções para instalar dependências, copiar arquivos, definir variáveis de ambiente e configurar o contêiner.
+
+A partir de uma imagem, basta executar um comando como \verb|docker run| para iniciar um contêiner, sem a necessidade de instalar o conteúdo da imagem diretamente no sistema operacional hospedeiro. Essa abordagem reduz significativamente a sobrecarga de recursos em comparação com máquinas virtuais tradicionais.
 
 \subsection{Docker Compose}
-Placeholder
+\label{subsection:DockerCompose}
+
+Ao utilizar apenas a interface de linha de comando do Docker, cada contêiner deve ser criado individualmente mediante comandos \verb|docker run| ou \verb|docker create|, nos quais todos os parâmetros (portas, volumes, redes, variáveis de ambiente) precisam ser especificados manualmente. A mesma lógica se aplica à criação de redes e volumes, cujo gerenciamento isolado torna-se pouco escalável à medida que a quantidade de contêineres aumenta.
+
+O Docker Compose \citep{dockercmpse2025}, mantido oficialmente pela Docker Inc., surgiu precisamente para abstrair essa complexidade. Trata-se de uma ferramenta orquestradora complementar ao Docker, que descreve aplicações multi-contêiner por meio de um arquivo declarativo \verb|docker-compose.yml| (ou simplesmente \verb|compose.yml|) escrito em YAML\abbrev{YAML}{\foreign{Yet Another Markup Language}}. Nesse manifesto podem ser definidos, de forma unificada:
+
+\begin{itemize}
+\item \textbf{Serviços}: os contêineres que compõem a aplicação;
+\item \textbf{Redes}: topologias de comunicação internas entre serviços;
+\item \textbf{Volumes}: áreas de persistência de dados compartilhadas ou exclusivas;
+\item \textbf{Variáveis de ambiente, políticas de reinicialização, limitações de recursos}, entre outras configurações.
+\end{itemize}
+
+Com um único comando (\verb|docker compose up|), o Compose instancia toda a pilha descrita, garantindo que dependências sejam criadas na ordem correta e que os serviços passem a se comunicar por meio de DNS\abbrev{DNS}{\foreign{Domain Name System}} interno. Embora não seja um orquestrador distribuído como o Kubernetes, o Compose simplifica significativamente o ciclo de vida de aplicações em um único \foreign{host}, sendo amplamente empregado em desenvolvimento local, testes de integração contínua e pequenas implantações.
+
+O uso de arquivos YAML insere-se no paradigma de IaC: toda a configuração da infraestrutura torna-se texto declarativo versionável, revisável e reproduzível, eliminando a fragilidade de procedimentos manuais ou \foreign{scripts ad-hoc} e facilitando a automação em \foreign{pipelines} de Integração Contínua e Entrega/Implantação Contínua (CI/CD)\abbrev{CI/CD}{\foreign{Continuous Integration and \\Continuous Deployment}}.
+
 
 \section{Métricas de Interesse}
-Placeholder
+\label{section:Metricas}
+
+No cenário de monitoramento existem diversas métricas e grandezas a serem observadas para garantir a saúde do sistema. No entanto, como discutido no início do capítulo, este trabalho delimita o escopo de monitoramento a métricas referentes à saturação de recursos do ambiente a ser monitorado. Isto é, na identificação de pontos de estrangulamento (gargalos) que comprometam a capacidade de resposta do sistema. Dito isso, o projeto dá foco à monitoria de CPU, memória RAM, disco, rede e processos.
+
+Para maior aprofundamento nas técnicas e mecanismos de aquisição das métricas apresentadas nesta seção, a comunidade desenvolvedora do \foreign{kernel} do Linux fornece uma extensa documentação \citep{linuxkernel2025} para estudo. {De forma geral, estas métricas são obtidas a partir da leitura de arquivos do sistema de arquivos (\foreign{filesystem}) do Linux, localizados no diretório \verb|/proc|, que expõem informações sobre o estado atual do sistema.}
 
 \subsection{CPU}
-Placeholder
-\subsection{Memória}
-Placeholder
-\subsection{Disco}
-Placeholder
-\subsection{Rede}
-Placeholder
-\subsection{Processos}
-Placeholder
+\label{subsection:CPU}
 
-\section{Agentes, Exportadores e Auxiliadores}
-Placeholder
+As métricas de utilização da CPU \citep{cpumetrics2025} são fundamentadas na medição de tempo. Conforme discutido por Harris-Birtill e Harris-Birtill \citep{harris-birtill2021}, o tempo computacional necessário para a execução de uma tarefa constitui uma métrica essencial para avaliar o desempenho de sistemas computacionais, especialmente no que diz respeito à sua capacidade de atender a restrições temporais específicas. Em arquiteturas sequenciais, nas quais apenas uma instrução é processada por vez, a quantificação e categorização do tempo consumido por diferentes tipos de tarefas (usuário, sistema, ocioso, interrupções, entre outros) tornam-se fundamentais para o diagnóstico de desempenho e a detecção de situações de saturação.
+
+\begin{itemize}
+\item \textbf{user}: tempo (em \%) em que a CPU esteve executando processos no espaço do usuário, ou seja, aplicações não relacionadas ao sistema operacional;
+
+\item \textbf{system}: tempo (em \%) destinado à execução de processos no espaço do \foreign{kernel}, geralmente relacionado a chamadas de sistema e operações internas;
+
+\item \textbf{iowait}: tempo (em \%) durante o qual a CPU permaneceu ociosa aguardando a finalização de operações de I/O, como leitura e escrita em disco. Valores elevados podem indicar degradação/saturação dos discos;
+
+\item \textbf{idle}: tempo (em \%) em que a CPU não estava realizando nenhuma atividade, indicando inatividade total do processador/núcleo naquele intervalo de tempo. Valores próximos de 0 podem indicar saturação da CPU.
+\end{itemize}
+
+\subsection{Memória}
+\label{subsection:Memoria}
+
+A memória RAM \citep{memorymetrics2025} é um recurso volátil, quantificado em bytes, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso à dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
+
+Durante a execução de uma aplicação, o sistema operacional transfere os dados e instruções correspondentes do disco de armazenamento para a RAM, de modo que a CPU possa acessá-los de forma eficiente. Quanto maior a quantidade de memória RAM disponível, maior é a capacidade do sistema de manter múltiplos processos ativos simultaneamente, minimizando a necessidade de acessos ao disco e, consequentemente, otimizando o desempenho geral.
+
+Entretanto, quando a quantidade de aplicações ou processos em execução excede a capacidade da RAM física disponível, o sistema pode sofrer degradação de desempenho, instabilidade e falhas em serviços. Em situações críticas, o sistema operacional pode recorrer à finalização forçada de processos para liberar memória -- um mecanismo conhecido como \foreign{Out-of-Memory Killer} (OOM-Killer)\abbrev{OOM}{\foreign{Out of Memory}}.
+
+Para mitigar tais situações, o sistema operacional recorre à utilização de memória de troca (\foreign{swap memory}) (em bytes), que consiste em uma área disco de armazenamento para funcionar como uma extensão virtual da RAM. Embora o uso de \foreign{swap} permita continuar a execução dos processos mesmo após o esgotamento da memória física, seu desempenho é consideravelmente inferior, podendo resultar em lentidão perceptível do sistema.
+
+Valores de carga elevados na memória de troca são indicativos de degradação do sistema e saturação da memória RAM.
+
+\begin{table}[H]
+\centering
+\caption{Comparativo entre Memória RAM e Memória de Troca (Swap)}
+\label{tab:comparativo-ram-swap}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}p{4cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Aspecto} & \textbf{RAM} & \textbf{Swap} \\
+\midrule
+Localização & Chips físicos de memória na placa-mãe & Espaço reservado em disco rígido ou SSD \\
+Velocidade & Extremamente rápida (nanosegundos) & Mais lenta (milissegundos) \\
+Volatilidade & Volátil -- os dados são perdidos ao desligar o sistema & Não volátil -- os dados persistem mesmo sem energia \\
+Finalidade & Memória de trabalho principal para processos ativos & Memória de transbordo (\foreign{overflow})/backup para dados inativos \\
+Padrão de acesso & Acesso direto pela CPU & Acessada por meio de operações de I/O em disco \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Disco}
+\label{subsection:Disco}
+
+O subsistema de armazenamento \citep{diskmetrics2025} também é alvo de saturações, especialmente em cenários que envolvem grandes volumes de leitura e escrita, como bancos de dados ou aplicações de alta taxa de transferência (\foreign{throughput}). Além do espaço em disco disponível, métricas relacionadas ao desempenho de I/O são igualmente relevantes.
+
+Altos tempos de espera e taxas elevadas de uso do disco podem indicar gargalos que afetam a responsividade dos serviços. Portanto, destacam-se as métricas:
+
+\begin{itemize}
+\item \textbf{Espaço livre}: quantidade de espaço livre em disco, em bytes. Quando o espaço livre está proporcionalmente próximo de 0, pode causar degradação de desempenho, corrupção de dados, congelamentos e \foreign{crashes};
+
+\item \textbf{Espaço utilizado}: quantidade de espaço utilizado, em bytes;
+
+\item \textbf{INODES livres}: quantidade de INODES livres \citep{inodes2025}, em unidades no caso de ambientes Unix-\foreign{like}. Uma baixa quantidade pode inviabilizar a criação de novos arquivos, mesmo com espaço livre em disco;
+
+\item \textbf{Bytes lidos}: quantidade de bytes lidos do disco;
+
+\item \textbf{Bytes escritos}: quantidade de bytes escritos no disco;
+
+\item \textbf{Utilização de I/O}: tempo o qual o disco estava ocupado com tarefas de I/O, em \%. Valores próximos de 100 indicam saturação da largura de banda.
+\end{itemize}
+
+\subsection{Rede}
+\label{subsection:Rede}
+
+Em sistemas distribuídos, a comunicação em rede torna-se ainda mais importante. Cenários de saturação da interface de rede \citep{netmetrics2025} podem causar lentidão na troca de dados entre serviços, perda de pacotes ou até indisponibilidade de sistemas. Algumas métricas utilizadas para observar a saturação da interface de rede são:
+
+\begin{itemize}
+    \item \textbf{Taxa de tráfego de rede}: quantidade de dados transmitidos ou recebidos por unidade de tempo (geralmente em bits/s). Esta métrica indica o volume instantâneo de tráfego e é fundamental para avaliar a utilização da largura de banda e identificar possíveis gargalos ou picos de uso. Valores acima da capacidade nominal podem acarretar em descartes de pacotes;
+    \item \textbf{Tráfego acumulado}: total de dados transferidos por uma interface de rede ao longo de um determinado intervalo de tempo, medido em bytes. O tráfego acumulado permite analisar o consumo de banda em períodos específicos, facilitando o planejamento de capacidade e a identificação de tendências de uso;
+    \item \textbf{Quantidade de pacotes descartados}: número de pacotes foram eliminados ou perdidos durante a transmissão ou recepção. Altos índices de descarte indicam problemas de desempenho ou capacidade na rede;
+    \item \textbf{Quantidade de erros de pacotes}: número de pacotes estavam corrompidos, com erros de verificação, incompletos ou malformados, tornando-os inutilizáveis. Altas quantidades de pacotes com erro impactam negativamente a confiabilidade e a eficiência da comunicação.
+\end{itemize}
+
+\subsection{Processos}
+\label{subsection:Processos}
+
+O monitoramento de processos \citep{processmetrics2025} permite analisar o comportamento interno do sistema, identificando origens de consumo de recursos ou comportamentos anômalos. Das métricas existentes, destacam-se aqui as contagens (em unidades) de três estados de processos: \textbf{em execução, em espera e zumbis.}
+
+\begin{itemize}
+    \item {\textbf{Em execução}}: estes processos representam aqueles que estão ativamente utilizando recursos de CPU ou aguardando na fila de execução do escalonador. Uma alta concentração de processos neste estado sugere possível saturação de CPU;
+    \item {\textbf{Em espera}}: processos que aguardam a conclusão de eventos específicos, subdividindo-se em duas categorias: espera interruptível (processos aguardando entrada de usuário, sinais ou recursos que podem ser interrompidos) e espera não-interruptível (processos aguardando operações críticas de I/O que não podem ser interrompidas). Embora não consumam recursos ativamente, o acúmulo excessivo de processos em espera não-interruptível pode indicar problemas subjacentes, como degradação de operações de I/O, falhas de hardware de armazenamento ou gargalos no subsistema de entrada e saída;
+    \item {\textbf{Zumbi}}: são processos que completaram sua execução mas ainda mantêm entrada na tabela de processos, aguardando que o processo pai colete seu status de saída através da chamada de sistema \verb|wait()|. Apesar de não consumirem recursos como CPU ou memória RAM ativamente, cada processo zumbi mantém ocupado seu identificador de processo (PID)\abbrev{PID}{\foreign{Process Identifier}}, recurso finito do sistema. A presença persistente e/ou acumulativa de processos zumbis pode esgotar esse conjunto de identificadores disponíveis, impedindo a criação de novos processos, e frequentemente indica erros de programação (\foreign{bugs}) no processo pai.
+\end{itemize}
+
+Correlacionando o monitoramento destes estados com as métricas de recursos do sistema, obtém-se uma visão holística da infraestrutura, auxiliando na identificação de condições de saturação.
+
+\section{Agentes, Exportadores e \foreign{Sidecars}}
+\label{section:Agentes}
+
+De forma geral, sistemas de monitoramento raramente acessam diretamente os dados brutos dos sistemas que observam. Em sua arquitetura, dependem fundamentalmente de componentes intermediários para abstrair a heterogeneidade dos sistemas monitorados, coletando, transformando e disponibilizando métricas em formatos padronizados e consumíveis por sistemas de monitoramento. Esses elementos constituem a camada de telemetria da arquitetura de observabilidade, estabelecendo a ponte entre os recursos monitorados e as plataformas de agregação, análise e visualização de dados.
+
+Tais componentes operam através de dois paradigmas de comunicação: o modelo ativo (\foreign{push}), onde o componente envia dados periodicamente ao sistema de monitoramento e o modelo passivo (\foreign{pull}), onde o sistema de monitoramento realiza consultas nos \foreign{endpoints} HTTP em intervalos periódicos configurados.
+
+Agentes representam programas instalados diretamente nos dispositivos monitorados, frequentemente implementados em arquiteturas bidirecionais cliente-servidor podendo se comunicar via \foreign{push} ou \foreign{pull}. Já exportadores  constituem componentes especializados em arquiteturas pull, funcionando como tradutores que convertem métricas de sistemas específicos para o formato de exposição do sistema de monitoramento, que realiza raspagens (\foreign{scrapings}) de \foreign{endpoints} HTTP (\verb|/metrics|) periodicamente. Podem ser instalados diretamente no dispositivo alvo, ou em algum \foreign{proxy} ou contêiner auxiliar (\foreign{sidecar}) que disponibilize as métricas alvo.
+
+Além dos agentes e exportadores, pode-se utilizar \foreign{sidecars} para executar as atividades descritas nesta seção. Em ambientes modulares, como Docker e Kubernetes, um \foreign{sidecar} é executado de forma adjacente ao contêiner principal, coletando \foreign{logs} e métricas do contêiner principal. \foreign{Sidecars} não seguem um modelo específico, podendo seguir o modelo \foreign{push}, \foreign{pull} ou ambos.
+
+Existe também a arquitetura \foreign{agentless}, onde não há instalação de nenhum software especializado nas tarefas descritas acima, mas não são o foco deste trabalho.
 
 \subsection{Zabbix Agent v1}
-Placeholder
+\label{subsection:ZabbixAgentV1}
+
+O Zabbix Agent v1 \citep{zabbix2025} representa a implementação tradicional do agente de monitoramento da plataforma Zabbix, desenvolvido integralmente na linguagem C. É projetado para ser instalado diretamente nos dispositivos alvo, operando como daemon em sistemas Unix-\foreign{like} e serviço no Windows e oferecendo modos \foreign{push} e \foreign{pull} de coleta, e também possui imagem Docker.
+
+Uma funcionalidade interessante do Zabbix Agent v1 é que, no modo \foreign{push}, o agente deve primeiro receber do servidor Zabbix uma lista de itens a monitorar e seus respectivos intervalos de coleta. Isto permite que o agente continue executando o perfil de monitoramento mesmo quando o servidor está indisponível, enviando posteriormente os resultados coletados
 
 \subsection{Zabbix Agent v2}
-Placeholder
+\label{subsection:ZabbixAgentV2}
+
+O Zabbix Agent v2 \citep{zabbix2025} é uma reescrita com base em uma arquitetura modular e plugável na linguagem Go. Compartilhando parte do código C do agente original, tem foco em modularidade e maior concorrência.
+
+Algumas de suas características são a execução de \foreign{plugins} Go, facilitando extensão e manutenção, concorrência melhorada, armazenamento persistente, suporte nativo a monitoramento de tecnologias como Docker, e tanto verificações passivas quanto ativas suportam intervalos programados e flexíveis. Pode ser instalado diretamente no dispositivo alvo, ou ser executado como contêiner usando a imagem Docker oficial.
 
 \subsection{Node Exporter}
-Placeholder
+\label{subsection:NodeExporter}
+
+O Node Exporter \citep{nodeexporter2025} é um exportador oficial do ecossistema Prometheus escrito em Go. Projetado para coleta de métricas de hardware e sistema operacional de máquinas Linux, ele utiliza chamadas do \foreign{kernel} via \verb|/proc|, bibliotecas Go e expõe métricas de sistema operacional no padrão de formatação nativa do Prometheus, no \foreign{endpoint} HTTP \verb|/metrics|.
+
+Ele pode ser instalado no diretamente no dispositivo, ou pode ser executado em contêiner. 
 
 \subsection{cAdvisor}
-Placeholder
+\label{subsection:cAdvisor}
+
+O Container Advisor (cAdvisor)\abbrev{cAdvisor}{Container Advisor} \citep{cadvisor2025} é uma ferramenta escrita na linguagem Go desenvolvida pelo Google para monitoramento de contêineres em ambientes Linux, com foco especial em contêineres Docker. Ele coleta e expõe métricas por contêiner.
+
+O cAdvisor é normalmente executado como um contêiner próprio, com acesso ao host e aos diretórios de controle do Docker, e expõe suas métricas no formato Prometheus em um endpoint HTTP.
 
 \subsection{Telegraf}
-Placeholder
+\label{subsection:Telegraf}
+
+O Telegraf \citep{telegraf2025} é um agente de coleta de métricas da InfluxData escrito em Go, projetado sob o modelo \foreign{plugin-driven}. Ele coleta dados de fontes variadas (sistemas operacionais, bancos, contêineres, serviços) via \foreign{plugins} de \foreign{input} e envia para diversos destinos (InfluxDB, Prometheus, Kafka etc.) via \foreign{plugins} de \foreign{output}.
+
+O Telegraf pode operar tanto em modo \foreign{push} quanto em modo \foreign{pull} e arquitetura modular o torna particularmente interessante para ambientes heterogêneos e para integração com múltiplas ferramentas.
+
+Pode ser instalado diretamente no dispositivo, ou ser executado como contêiner.
 
 \subsection{Docker Stats Exporter}
-Placeholder
+\label{subsection:DockerStatsExporter}
+
+O Docker Stats Exporter \citep{dockerstatsexporter2025} é um exportador leve escrito em diferentes linguagens (existem múltiplas versões mantidas pela comunidade) que consome a API de estatísticas do Docker (\verb|docker stats|) e exporta métricas de contêineres em um endpoint \verb|/metrics|. 
+Deve ser executado como contêiner.
 
 \subsection{Prometheus Agent}
-Placeholder
+\label{subsection:PrometheusAgent}
+
+O Prometheus Agent \citep{promagent2025} é um modo de operação leve do servidor Prometheus, focado apenas em descoberta de serviços, \foreign{scraping} e \foreign{remote write}, sem armazenamento local de séries temporais. O Agent mantém a mesma base de código do Prometheus, atuando como exportador avançado com capacidade de adaptação a configurações dinâmicas via \foreign{service discovery}.
+
+Pode ser instalado no \foreign{host} via arquivo binário, porém é mais comumente utilizado via contêiner.
 
 \subsection{Grafana Agent}
-Placeholder
+\label{subsection:GrafanaAgent}
 
-\section{Motores de Processamento de Dados}
-Placeholder
+O Grafana Agent \citep{grafanaagent2025} é um coletor unificado de telemetria desenvolvido pela Grafana Labs, implementado em Go. Possui uma arquitetura modular, com microsserviços especializados para cada tarefa e modelo de comunicação \foreign{push} unificado para o ecossistema Grafana.
+
+Pode ser instalado como um serviço no host, porém é mais comum ser implantado como um contêiner (próprio ou sidecar).
+
+
+\section{Sistemas de Monitoramento}
+\label{section:SistemasMonitoramento}
+
+Os sistemas de monitoramento representam o núcleo da infraestrutura de observabilidade em um ambiente computacional. São responsáveis por coletar, armazenar, processar e disponibilizar métricas provenientes de dispositivos e serviços monitorados, exercendo influência direta sobre o desempenho, a confiabilidade e a capacidade analítica da solução implementada.
+
+No contexto específico deste projeto -- voltado à análise de saturação de recursos -- o sistema de monitoramento deve ser capaz de lidar eficientemente com grandes volumes de dados temporais, oferecendo suporte à ingestão contínua de métricas, armazenamento histórico, consulta expressiva, visualização em tempo real e detecção de comportamentos anômalos. Além disso, mecanismos de alerta e integração com outros componentes da \foreign{stack} são essenciais para garantir resposta proativa diante de eventos críticos.
+
+Esta seção apresenta duas abordagens arquiteturais distintas e consolidadas, que representam paradigmas complementares no monitoramento de infraestrutura: o Zabbix, com uma abordagem tradicional e integrada, e o Prometheus, baseado em séries temporais e voltado a ambientes dinâmicos e conteinerizados. Na sequência apresentam-se tabelas comparativas de ambos.
+
+\begin{table}[H]
+\centering
+\caption{Zabbix - Requisitos recomendados por porte de instalação}
+\label{tab:requisitos-zabbix}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{4cm} X X X@{}}
+\toprule
+\textbf{Porte da instalação Zabbix} & \textbf{Métricas monitoradas} & \textbf{CPU cores} & \textbf{Memória (GiB)} \\
+\midrule
+Pequeno     & 1.000       & 2   & 8   \\
+Médio       & 10.000      & 4   & 16  \\
+Grande       & 100.000     & 16  & 64  \\
+Muito grande & 1.000.000 & 32  & 96  \\
+\bottomrule
+\end{tabularx}
+\begin{flushleft}
+\footnotesize
+Nota: A documentação oficial do Prometheus não disponibiliza as informações necessárias para inclusão do mesmo nesta tabela.
+\end{flushleft}
+\end{table}
+
+
+
+\begin{table}[H]
+\centering
+\caption{Comparativo técnico entre Zabbix e Prometheus}
+\label{tab:comparativo-zabbix-prometheus}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{@{}p{4cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Aspecto} & \textbf{Zabbix} & \textbf{Prometheus} \\
+\midrule
+Modelo de coleta & \foreign{Pull}, \foreign{Push}, SNMP, SSH, etc. & \foreign{Pull} via HTTP \\
+Base de dados & Relacional (MySQL, PostgreSQL, etc.) & TSDB interno \\
+Ling. de consulta & Via interface gráfica web & PromQL \\
+Agentes/exportadores & Agentes Zabbix v1/v2, \foreign{proxies}, SNMP, etc. & node\_exporter, cAdvisor, Telegraf, etc. \\
+Gestão de alertas & Interface gráfica web & Regras em PromQL com envio via Alertmanager \\
+Interface nativa & Interface gráfica web & Interface web nativa básica. Recomenda-se integração com o Grafana \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 
 \subsection{Zabbix}
-Placeholder
+\label{subsection:Zabbix}
+
+O Zabbix é uma plataforma de monitoramento de código aberto, mantida pela Zabbix LLC \citep{zabbix2025}, que oferece uma solução completa para supervisão de infraestrutura de TI, incluindo servidores, dispositivos de rede, máquinas virtuais, aplicações e serviços. Desenvolvida em C e PHP, adota uma arquitetura monolítica cliente-servidor composta por quatro componentes principais: agentes, servidor, banco de dados e interface web.
+
+O servidor Zabbix funciona como o elo central do sistema: coleta métricas, avalia condições de gatilho, gera eventos e dispara notificações. Todas as informações de configuração, métricas e históricos são armazenadas em um banco de dados relacional -- MySQL, PostgreSQL, Oracle ou SQLite. Em implementações de maior escala, proxies Zabbix podem ser empregados para atuar como intermediários, coletando dados localmente e armazenando-os em \foreign{buffer} antes de repassá-los ao servidor, o que reduz a carga de comunicação sobre o núcleo central.
+
+Os agentes Zabbix, instalados nos dispositivos monitorados, coletam informações sobre uso de CPU, memória, disco, rede e outros parâmetros configurados. A coleta pode ocorrer de forma passiva -- quando o servidor solicita métricas -- ou ativa -- quando o próprio agente envia dados conforme agendado. Além disso, o Zabbix suporta monitoramento sem agente via SSH/Telnet\abbrev{SSH}{\foreign{Secure Shell}}\abbrev{Telnet}{\foreign{Telecommunication Network}}, protocolos SNMP\abbrev{SNMP}{\foreign{Simple Network Management\\ Protocol}}, IPMI\abbrev{IPMI}{\foreign{Intelligent Platform Management Interface}} e JMX\abbrev{JMX}{\foreign{Java Management Extensions}}, e integrações com APIs RESTful\abbrev{API}{\foreign{Application Programming Interface}}, ampliando seu alcance a equipamentos e serviços que não permitem a instalação de software local.
+
+Para simplificar a configuração em ambientes heterogêneos, o Zabbix dispõe de recursos de descoberta automática e de templates padronizados, permitindo replicar ajustes e métricas em múltiplos dispositivos de forma consistente. A interface web, por sua vez, oferece \foreign{dashboards} personalizáveis, relatórios históricos e ferramentas de análise, além de ser o meio principal de configurações e personalizações do servidor, consolidando em um único painel todas as funcionalidades essenciais à observabilidade e ao gerenciamento proativo da infraestrutura.
 
 \subsection{Prometheus}
-Placeholder
+\label{subsection:Prometheus}
+
+O Prometheus \citep{prometheus2025} é um sistema de monitoramento e alerta de código aberto desenvolvido inicialmente pela SoundCloud, mas atulamente não possui um "proprietário". Trata-se de um projeto independente mantido por uma comunidade de contribuidores com uma governança formalizada pela Cloud Native Computing Foundation (CNCF)\abbrev{CNCF}{Cloud Native Computing Foundation}. Projetado para atender aos desafios de ambientes \foreign{cloud-native} e arquiteturas baseadas em microsserviços, o Prometheus adota um paradigma distinto do monitoramento tradicional, estruturando-se em torno do modelo de coleta ativa (\foreign{pull}) e do armazenamento eficiente de séries temporais.
+
+A arquitetura do Prometheus é composta por diversos componentes especializados que operam de forma distribuída. O servidor Prometheus constitui o componente central, responsável por descobrir alvos de monitoramento, coletar métricas através de \foreign{scraping} HTTP\abbrev{HTTP}{\foreign{Hypertext Transfer Protocol}}, armazenar dados em sua base de dados de séries temporais (TSDB)\abbrev{TSDB}{\foreign{Time Series Database}} interna e disponibilizar esses dados para consultas via PromQL (Prometheus Query Language). Os exportadores funcionam como intermediários, traduzindo métricas de sistemas existentes (MySQL, PostgreSQL, servidores web, sistemas operacionais) para o formato de exposição do Prometheus. O Alertmanager opera como serviço separado, recebendo alertas do servidor Prometheus e gerenciando seu roteamento, agrupamento e entrega através de múltiplos canais de notificação.
+
+O \foreign{Time Series Database} (TSDB) interno representa uma das principais inovações do Prometheus. Otimizado especificamente para dados de séries temporais, o TSDB utiliza técnicas de compressão (\foreign{delta encoding, double-delta encoding, bitpacking}) para reduzir o uso em disco. A arquitetura do TSDB separa dados recentes (\foreign{head block} em memória) de dados históricos (blocos persistentes em disco), garantindo acesso rápido a métricas atuais enquanto mantém eficiência para consultas históricas. O \foreign{write-ahead log} (WAL)\abbrev{WAL}{\foreign{Write-Ahead Log}} garante durabilidade dos dados, enquanto políticas de retenção automáticas (padrão de 15 dias) controlam o uso de armazenamento.
+
+O modelo de dados do Prometheus é baseado em métricas multidimensionais, onde cada série temporal é identificada por um nome de métrica e um conjunto de labels (pares chave-valor) que fornecem contexto adicional. Este modelo permite consultas flexíveis e agregações complexas através do PromQL, uma linguagem de consulta especializada que suporta operações matemáticas, estatísticas e análises temporais. A capacidade de correlacionar múltiplas métricas e calcular taxas, percentis e médias móveis torna o Prometheus especialmente adequado para análise de saturação e detecção de anomalias.
+
+Outro diferencial do Prometheus é seu suporte a mecanismos de descoberta automática de serviços (\foreign{service discovery}), permitindo integração nativa com plataformas como Kubernetes, DNS e provedores de nuvem. Esta característica, combinada com o modelo pull, oferece maior resilência a falhas de rede e permite que o Prometheus mantenha uma visão centralizada dos alvos de monitoramento mesmo em topologias complexas.
+
+Diferentemente do Zabbix, que conta com uma interface web nativa para configurações, as configurações do Prometheus devem ser feitas diretamente via arquivos YAML. Para um experiência gráfica mais completa, vê-se necessária a integração de outras ferramentas, como por exemplo o Grafana, que é a aplicação recomendada oficialmente.
 
 \section{Bancos de Dados}
-Placeholder
+\label{section:BancosDados}
+
+Os bancos de dados são outro componente fundamental em arquiteturas de monitoramento, uma vez que são responsáveis por armazenar informações críticas como métricas coletadas, eventos, \foreign{logs}, configurações e histórico de alertas. A escolha adequada do sistema de gerenciamento de banco de dados impacta diretamente o desempenho, a escalabilidade e a confiabilidade da solução implementada.
+
+No contexto deste projeto, a natureza das informações coletadas -- predominantemente séries temporais -- exige a avaliação de diferentes abordagens de armazenamento, incluindo bancos de dados relacionais tradicionais e soluções especializadas em dados temporais. As subseções a seguir apresentam os bancos de dados analisados para o projeto, destacando suas principais características.
 
 \subsection{MySQL}
-Placeholder
+\label{subsection:MySQL}
+
+O MySQL \citep{mysql2025} é um sistema de gerenciamento de banco de dados relacional de código aberto, mantido pela Oracle Corporation e amplamente adotado em soluções comerciais e de código aberto. Fundamentado no modelo relacional e na linguagem SQL, organiza as informações em tabelas com esquemas definidos, o que o torna adequado para o armazenamento de dados estruturados, tais como configurações, usuários e registros históricos de eventos.
+
+Em cenários de monitoramento, o MySQL apresenta vantagens quando há necessidade de consultas complexas envolvendo múltiplas junções, geração de relatórios analíticos e integração com ferramentas de inteligência de negócio. Entretanto, por se tratar de um banco relacional tradicional, seu desempenho em operações de escrita intensiva e concorrente pode ser inferior ao de soluções especializadas em séries temporais. Nesses casos, torna-se recomendável a aplicação de técnicas de otimização -- como particionamento de tabelas, uso de índices adequados e ajustes de parâmetros de \foreign{buffer} -- para atender a ambientes com alta frequência de ingestão de métricas.
 
 \subsection{Time Series DataBase (TSDB)}
-Placeholder
+\label{subsection:TSDB}
+
+Time Series Database (TSDB) \citep{tigerdata2024} refere-se a uma categoria especializada de sistemas de banco de dados otimizados para armazenar, consultar e analisar dados organizados cronologicamente. Diferentemente dos bancos relacionais tradicionais, os TSDBs são otimizados para cargas de trabalho caracterizadas por inserções sequenciais de alta frequência, consultas baseadas em intervalos temporais e operações de agregação temporal.
+
+A arquitetura típica de um TSDB incorpora otimizações específicas para dados temporais, como mencionado na subseção \ref{subsection:Prometheus}. Entre os principais representantes dessa categoria, destacam-se o InfluxDB -- com sua linguagem de consulta InfluxQL e suporte nativo a \foreign{tags} para metadados --, o TimescaleDB -- uma extensão do PostgreSQL que preserva compatibilidade com SQL padrão --, e o Prometheus TSDB (interno ao sistema de monitoramento homônimo).
+
+A adoção de TSDBs é especialmente recomendada em arquiteturas \foreign{cloud-native}, sistemas distribuídos e ambientes com geração contínua de dados métricos em alta frequência.
 
 \subsection{SQLite}
-Placeholder
+\label{subsection:SQLite}
+
+O SQLite \citep{sqlite2025} é um sistema de gerenciamento de banco de dados relacional leve e embarcado, cuja principal característica é sua implementação como uma biblioteca em linguagem C, que opera de forma integrada à aplicação, dispensando a necessidade de um processo servidor separado. Todos os dados são armazenados em um único arquivo local, e a linguagem SQL é plenamente suportada, o que favorece sua adoção em aplicações embarcadas, ambientes de testes ou soluções de pequeno porte que requerem simplicidade na configuração e baixo consumo de recursos.
+
+Contudo, sua arquitetura impõe limitações importantes no que se refere à concorrência de escritas simultâneas, desempenho sob cargas elevadas e escalabilidade. Tais restrições tornam o SQLite pouco adequado para cenários de monitoramento intensivo, nos quais há alta taxa de ingestão de métricas ou múltipos agentes escrevendo em paralelo, como ocorre em arquiteturas centralizadas e distribuídas de observabilidade.
 
 \subsection{PostgreSQL}
-Placeholder
+\label{subsection:PostgreSQL}
 
-\section{Visualização de Dados}
-Placeholder
+O PostgreSQL \citep{postgresql2025} é um sistema de gerenciamento de banco de dados objeto-relacional de código aberto desenvolvido continuamente há mais de trinta e cinco anos. Com origem no projeto POSTGRES da Universidade de Berkeley (1986) e atualmente mantido pelo PostgreSQL Global Development Group, é reconhecido por sua conformidade com os padrões SQL, extensibilidade e confiabilidade em ambientes corporativos.
+
+Para monitoramento de infraestrutura, o PostgreSQL oferece recursos interessantes através de suas capacidades analíticas avançadas, incluindo agregações complexas, análises estatísticas nativas e suporte a extensões especializadas como TimescaleDB \citep{timescaledb2025} para otimização de séries temporais. O sistema \verb|pg_stat_activity| permite monitoramento detalhado de consultas ativas, enquanto extensões como \verb|pg_cron| facilitam automação de tarefas de manutenção e coleta de dados. A flexibilidade de tipos de dados e a robustez transacional tornam o PostgreSQL adequado para ambientes que demandam integridade de dados, consultas analíticas complexas e integração com múltiplas fontes de dados.
+
+A facilidade de indexação por texto, suporte ao modelo híbrido objeto-relacional e capacidade de processamento em diversos sistemas operacionais ampliam sua aplicabilidade em cenários heterogêneos de monitoramento.
+
+\section{Visualização das Métricas}
+\label{section:VisualizacaoMetricas}
+
+Após a coleta de métricas e o processamento dos respectivos dados, torna-se necessário encontrar meios eficazes de visualizar graficamente os resultados obtidos, permitindo uma interpretação mais intuitiva das informações apresentadas pelo sistema de monitoramento.
+
+Uma abordagem amplamente adotada para essa finalidade é a utilização de painéis interativos (\foreign{dashboards}) que combinam diferentes tipos de gráficos, medidores e indicadores visuais, proporcionando elevado grau de customização e auxiliando os usuários em análises e tomadas de decisão baseadas em dados. Estes painéis agregam métricas em visualizações unificadas, facilitando a identificação de padrões, tendências e anomalias nos sistemas monitorados
+
+A seguir, apresentam-se três soluções de visualização: a interface web integrada do Zabbix (Zabbix UI) \abbrev{UI}{\foreign{User Interface}}, a interface web embutida (\foreign{Expression Browser}) do Prometheus  e o Grafana, uma plataforma especializada na visualização de dados e métricas provenientes de fontes externas.
 
 \subsection{Zabbix UI}
-Placeholder
+\label{subsection:ZabbixUI}
+
+A Zabbix UI \citep{zabbix2025} é a interface gráfica nativa fornecida pelo próprio sistema Zabbix, desenvolvida em PHP e acessível via navegador web, que oferece uma experiência centralizada para gerenciamento completo do sistema de monitoramento, integrando funcionalidades de configuração, análise e apresentação de dados em um único ambiente.
+
+A interface organiza os dados de maneira estruturada, com seções dedicadas para visualizações analíticas, registros de eventos, \foreign{dashboards} configuráveis e mapas de rede. Os gráficos são gerados diretamente com base nas métricas coletadas e armazenadas no banco de dados relacional subjacente.
+
+A plataforma disponibiliza recursos avançados como mapas de rede que permitem visualização topológica da infraestrutura monitorada, com elementos representados por ícones que se destacam visualmente quando problemas ocorrem. O sistema de \foreign{thresholds} visuais possibilita configuração de alertas por cores, facilitando a identificação rápida de condições críticas. Adicionalmente, a interface suporta monitoramento web sintético através de cenários baseados em etapas, permitindo verificação de funcionalidade e tempo de resposta de aplicações web.
+
+Embora não ofereça o mesmo nível de flexibilidade visual e personalização avan\-çada de plataformas especializadas como o Grafana, a Zabbix UI apresenta integração total com os recursos internos do sistema, eliminando a necessidade de configuração adicional ou dependências externas.
+
+\subsection{Prometheus Expression Browser}
+\label{subsection:PrometheusExpressionBrowser}
+
+O Prometheus dispõe de uma interface web embutida conhecida como \foreign{Expression Browser} \citep{promexpbrwsr2025}, cujo principal propósito é permitir a consulta direta de métricas por meio da linguagem PromQL. Essa interface serve como ferramenta básica para inspeção e depuração de séries temporais coletadas pelo Prometheus, sendo especialmente útil durante o desenvolvimento de consultas e na validação da integridade dos dados recebidos.
+
+Por meio dessa interface, é possível realizar buscas manuais de métricas, aplicar filtros com base em \foreign{labels}, realizar agregações, calcular taxas e derivadas, entre outras operações matemáticas compatíveis com PromQL. A ferramenta oferece duas visualizações principais: uma aba \foreign{Table} que exibe resultados em formato tabular com timestamps e valores correspondentes, e uma aba \foreign{Graph} que gera gráficos temporais básicos para análise visual. Usuários podem navegar através do histórico temporal modificando o tempo de avaliação através de controles dedicados, permitindo análise retrospectiva de métricas
+
+Apesar de sua utilidade técnica e da baixa complexidade de uso, o \foreign{Expression Browser} não foi projetado para monitoramento contínuo, tampouco para a construção de painéis interativos complexos. Dessa forma, seu papel se restringe majoritariamente à verificação pontual de métricas e à formulação de expressões que posteriormente serão integradas em ferramentas de visualização mais avançadas, como o Grafana.
 
 \subsection{Grafana}
-Placeholder
+\label{subsection:Grafana}
+
+O Grafana \citep{grafana2025} é uma plataforma de código aberto especializada em visualização interativa de dados e análise, desenvolvida pela Grafana Labs. A arquitetura do Grafana é baseada em um modelo \foreign{front-end/back-end}, implementado em TypeScript e Go respectivamente, proporcionando desempenho otimizado e escalabilidade.
+
+A plataforma suporta diversos \foreign{plugins} de fontes de dados, incluindo sistemas de séries temporais (Prometheus, InfluxDB, Graphite), bancos relacionais (MySQL, PostgreSQL, SQL Server), soluções de observabilidade (Elasticsearch, Splunk) e APIs customizadas, permitindo consolidação de informações heterogêneas em visualizações coesas.
+
+O sistema de painéis do Grafana oferece uma ampla gama de visualizações, desde gráficos temporais tradicionais até mapas geoespaciais, \foreign{heatmaps}, gráficos 3D e canvas personalizáveis.
+
+Cada painel pode ser configurado com consultas específicas na linguagem da fonte de dados correspondente, transformações de dados avançadas, alertas baseados em limiares (\foreign{thresholds}) e anotações contextuais. O editor de consultas fornece suporte nativo a PromQL para fontes Prometheus, incluindo funcionalidades como \foreign{query building} assistido, explicação passo a passo de operações e modelos de consultas pré-definidos.
+
+Entre os recursos avançados destacam-se o sistema de variáveis de \foreign{dashboard} para criação de painéis dinâmicos, \foreign{Public Dashboards} para compartilhamento sem necessidade de autenticação, correlações entre diferentes fontes de dados, e \foreign{Scenes} para integração de \foreign{dashboards} em aplicações customizadas.
+
+O Grafana também oferece capacidades de IaC através da funcionalidade de provisionamento (\foreign{provisioning}) automatizado via arquivos JSON/YAML\abbrev{JSON}{\foreign{JavaScript Object Notation}}, APIs REST abrangentes para automação, e integração com pipelines de CI/CD.
+
+Sua arquitetura baseada em \foreign{plugins} e sua interface web responsiva o tornam uma ferramenta altamente extensível e adaptável a diferentes cenários. A separação entre a origem dos dados e sua visualização permite que o Grafana atue como camada de apresentação unificada para múltiplos sistemas de monitoramento, consolidando visualmente informações coletadas por diferentes ferramentas.
 
 \section{Simuladores de Carga}
-Placeholder
+\label{section:SimuladoresCarga}
+
+Para a avaliação da robustez e desempenho dos sistemas monitorados, especialmente em cenários de saturação de recursos, é necessário induzir artificialmente condições de carga que reflitam situações reais de estresse. Simuladores de carga cumprem esse papel, permitindo a geração controlada de uso intensivo de CPU, memória, disco, rede e outros recursos do sistema.
+
+Essas ferramentas são amplamente empregadas em testes de tolerância a falhas, validação de métricas de observabilidade, e experimentos de \foreign{benchmarking}.
 
 \subsection{Stress-ng}
-Placeholder
+\label{subsection:StressNG}
+
+O stress-ng \citep{stressng2025} é uma ferramenta de código aberto projetada para gerar carga sintética sobre os principais componentes de um sistema operacional, incluindo CPU, memória, disco, I/O e chamadas de sistema. Desenvolvido inicialmente por Colin King, o stress-ng é amplamente utilizado em testes de estresse para \foreign{kernels} Linux e benchmarks de infraestrutura.
+
+A ferramenta permite configurar o número de workers (processos de carga), duração dos testes e tipo de carga aplicada, além de oferecer modos de estresse diferentes \foreign{stressors}, que abrangem desde operações aritméticas até simulações de falhas de hardware. Seu uso é comum em ambientes virtualizados e conteinerizados por ser leve, scriptável e altamente configurável.
 
 \subsection{Iperf3}
-Placeholder
+\label{subsection:Iperf3}
 
+O iperf3 \citep{iperf32025} é uma ferramenta especializada na geração e medição de tráfego de rede. Desenvolvido pelo Energy Sciences Network e Lawrence Berkeley National Laboratory. Baseado em arquitetura cliente-servidor, suporta protocolos TCP\abbrev{TCP}{\foreign{Transmission Control Protocol}}, UDP\abbrev{UDP}{\foreign{User Datagram Protocol}} e SCTP\abbrev{SCTP}{\foreign{Stream Control Transmission\\ Protocol}}, bem como modos de \foreign{zero-copy} e saída em formato JSON.
+
+Por meio de parâmetros configuráveis (tamanho de \foreign{buffer}, duração do teste, número de fluxos paralelos), o iperf3 reporta vazão, perda de pacotes, \foreign{jitter} e latência, sendo amplamente utilizado para \foreign{benchmarking} de links em LAN\abbrev{LAN}{Local Area Network}, WAN\abbrev{WAN}{Wide Area Network} e ambientes em nuvem. Sua implementação simples e independente de bibliotecas externas facilita a integração em \foreign{scripts} de automação e pipelines de CI/CD para validação contínua do desempenho de rede.
+
+Por permitir configurar tanto o lado cliente quanto servidor, o iperf3 é adequado para testar enlaces ponto-a-ponto, identificar gargalos de rede e simular sobrecargas em interfaces de rede. Em projetos de monitoramento, sua utilização é relevante para validar a responsividade de exportadores e a capacidade do sistema em lidar com grandes volumes de tráfego.
+    
 \subsection{Chaos Blade}
-Placeholder
+\label{subsection:ChaosBlade}
 
+O ChaosBlade \citep{chaosblade2025} é um kit de ferramentas de engenharia de caos de código aberto, originado na Alibaba e mantido pela comunidade MonkeyKing, que permite injetar falhas controladas em sistemas distribuídos conforme modelos de caos engineering.
+
+A CLI do ChaosBlade oferece comandos para criar, destruir e consultar experimentos -- por exemplo, limitação de CPU, consumo intensivo de memória, introdução de latência ou perda de pacotes na rede, finalização de processos e simulação de falhas em contêineres e instâncias Kubernetes.
+
+Com suporte a cenários de aplicação Java e C/C++, bem como experimentos em plataformas nativas de nuvem, o ChaosBlade auxilia a avaliação de resiliência de aplicações e infraestruturas, verificando estratégias de recuperação automática e tolerância a falhas.
+    
 \subsection{Pumba}
-Placeholder
+\label{subsection:Pumba}
+
+O Pumba \citep{pumba2025} é outra ferramenta de engenharia de caos, só que voltada especificamente para o ecossistema Docker, de uso via linha de comando, que injeta falhas em contêineres por meio da API Docker e utilitários de rede como \verb|tc| e \verb|netem|.
+
+Entre suas funcionalidades, destacam-se: parada, reinício ou término forçado de contêineres; simulação de falhas de rede (atrasos, perda de pacotes, limitação de banda); stress de CPU, memória e I/O dentro de contêineres; e cenários predefinidos de caos.
+
+O Pumba também suporta agendamento de experimentos, segmentação por rótulos e geração de relatórios de métricas durante os testes. Sua integração nativa com Docker e compatibilidade com pipelines de CI/CD tornam-o uma escolha prática para avaliar a robustez de aplicações conteinerizadas em ambientes de orquestração como Kubernetes.
 
 \section{Alertas e Notificações}
-Placeholder
+\label{section:AlertasNotificacoes}
+
+A capacidade de gerar alertas e notificar as equipes responsáveis constitui uma parte essencial em qualquer sistema de monitoramento, uma vez que viabiliza a detecção proativa de anomalias e a adoção de medidas corretivas antes que falhas críticas se concretizem.
+
+Os mecanismos de alerta combinam regras de avaliação -- baseadas em métricas, limiares e gatilhos (\foreign{triggers}) -- com canais de notificação configuráveis, assegurando que informações relevantes sejam encaminhadas aos destinatários apropriados por meio de meios eficazes, como e-mail, SMS\abbrev{SMS}{\foreign{Short Message Service}}, plataformas corporativas, webhooks, entre outros.
+
+Nesta seção, examinam-se duas abordagens adotadas no ecossistema de código aberto: o subsistema de alertas integrado do Grafana e o Alertmanager do Prometheus. O primeiro, integrado a \foreign{dashboards} com foco em visualização e testes interativos. Já o segundo, especializado em roteamento e gestão de notificações em arquiteturas distribuídas baseadas em Prometheus.
 
 \subsection{Grafana Alerting}
-Placeholder
+\label{subsection:GrafanaAlerting}
+
+O Grafana Alerting \citep{grafanaalerting2025} é um sistema de alertas integrado diretamente à interface de visualização do Grafana. Ele funciona com base em regras de alerta, que avaliam consultas de dados em intervalos regulares. Quando uma condição é atendida, o alerta é disparado e pode enviar notificações através de diversos canais.
+
+O mecanismo de alertas pode ser configurado diretamente pelos de painés de visualização, associando as condições de alerta a consultas previamente definidas. Além disso, versões mais recentes introduziram o mecanismo de alertas unificados (\foreign{unified alerting}), que substituiu o sistema legado e unificou a experiência entre todas as edições do Grafana. Este sistema combina alertas de painéis com regras centrais, o que permite agrupar múltiplas regras, organizá-las por diretórios (para regras gerenciadas pelo Grafana) ou \foreign{namespaces} (para regras gerenciadas pela fonte de dados) e definir políticas e canais de notificação variados.
+
+Por meio da funcionalidade de provisionamento (mencionada em \ref{subsection:Grafana}) pode-se pré-configurar todos os parâmetros descritos anteriormente através de arquivos YAML ou JSON, facilitando a automação, consistência e manutenção do sistema de alertas conforme princípios de IaC.
 
 \subsection{Prometheus Alertmanager}
-Placeholder
+\label{subsection:PrometheusAlertmanager}
+
+O Alertmanager \citep{promalertmanager2025}
+é o componente oficial do ecossistema Prometheus para gerenciamento de alertas. Seguindo conceitos de modularidade, ele é uma aplicação desacoplada do servidor, atuando como um intermediário entre este e os canais de notificação, recebendo alertas gerados com base nas expressões PromQL e definidas nos arquivos de configuração do Prometheus.
+
+A configuração do Alertmanager é feita via arquivos YAML, nos quais são definidos os receptores (destinatários), as regras de roteamento e os filtros de silêncio. O serviço também disponibiliza uma interface web para gerenciamento de silêncios e visualização de alertas ativos.
+
+A integração entre o Prometheus e o Alertmanager é baseada em protocolos HTTP e segue o modelo \foreign{push}, onde o Prometheus envia os alertas conforme as condições definidas. Essa separação entre coleta e gestão de alertas oferece maior controle, escalabilidade e modularidade ao sistema.
+
+Possuindo funcionalidades como agrupamento de alertas, supressão de alertas por redundância, semelhança ou gravidade, silêncio temporário, roteamento condicional para diferentes canais e histórico de alertas, o Alertmanager  é projetado para lidar com grandes volumes de alertas em ambientes distribuídos, oferecendo flexibilidade na configuração e escalabilidade.
+
+\section{Trabalhos relacionados}
+\label{section:TrabalhosRelacionados}
+
+O trabalho de Antônio José Alves Neto \citep{alvesneto2023} tem por objetivo o desenvolvimento e avaliação de desempenho de um cluster em aplicações big data. Utilizando Raspberry Pis para implementação do hardware do cluster, o autor alinha-se com a ideia de que a utilização de Raspberry Pis é uma boa solução na obtenção de um cluster big data de baixo custo. Além disso, utilizando-se de ferramentas Zabbix para coleta e Grafana para visualização, o autor pôde observar a utilização de recursos do cluster, tais como: uso de CPU, memória usada, estatísticas de tráfego de rede, temperatura do nó, uso de armazenamento de disco, quantidade de processos em execução, dentre outros. Tal abordagem corrobora a escolha de plataformas acessíveis e ferramentas open source na implantação de clusters replicáveis e eficientes, similar ao que foi adotado nesta pesquisa.
+
+Já Panagiotis Giannakopoulos e colaboradores \citep{panagiotis2025} investigam a variabilidade de desempenho de sistemas de computação \foreign{edge}, utilizando Kubernetes para orquestração de contêineres Docker e Prometheus para coleta de métricas de CPU, GPU, RAM e rede. Correlacionando estas métricas com outras técnicas de análise, os autores desenvolvem uma metodologia que fornece uma compreensão profunda de causas de degradação de desempenho, alinhando-se diretamente à proposta deste trabalho de correlacionar saturação de recursos e comportamento sistêmico.
+
+No contexto de arquiteturas baseadas em microsserviços, Bhanuprakash Madupati \citep{madupati2023} propõe a integração de Prometheus (coleta), Grafana (visualização) e Jaeger (rastreamento distribuído) para ampliar a observabilidade e identificar gargalos em aplicações modernas. O autor enfatiza a importância da automação e centralização de configurações conforme princípios de IaC, prática que também fundamenta a estratégia de implementação adotada neste projeto.
+
+A relevância do monitoramento em ambientes DevOps é reforçada por Praveen Chaitanya Jakku \citep{jakku2025}, que discorre sobre métricas de uso de CPU, memória, I/O de disco e rede como indicadores críticos de estabilidade. O autor exemplifica o papel das ferramentas Prometheus e Grafana na detecção proativa de problemas com alertas e notificações e no suporte à alta disponibilidade em grandes plataformas como Uber e LinkedIn, evidenciando o impacto da observabilidade na otimização dos serviços.
+
+No campo da resiliência e engenharia de caos, Joshua Owotogbe e equipe \citep{chaosengineering2025} conduzem uma revisão abrangente da literatura, sistematizando definições, taxonomias e práticas recomendadas. Os autores ressaltam a importância da injeção controlada de falhas — via engenharia de caos — como complemento indispensável aos testes tradicionais, especialmente para aprimorar a disponibilidade e confiabilidade de serviços.
+
+Os trabalhos relacionados apresentados nesta seção fundamentam a relevância e aplicabilidade dos conceitos e ferramentas apresentadas neste capítulo, validando as abordagens adotadas neste projeto.

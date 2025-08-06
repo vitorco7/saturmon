@@ -1,3 +1,123 @@
+
+Orientação 20250805
+
+Figuras e pilhas : Par figura pilha - 1 par para o que foi idealizado e 1 par para o que foi implementado. 2 pares para o momento 1(versao 1), 2 pares para o momento 2 (versao 2)
+
+Adicionar o DB, pois todas as ferramentas puxam dele (zabbix, grafana, dahs, alertas)
+
+Figura principal - fazer toda a figura completa com todas as implementações, mas nao apresentá-la de uma unica vez, apresentar por partes.
+
+Figuras - nao usar as logos ou simbolos, usar apenas caixas pretas e brancas.
+
+
+Seção 3.2 - paragrafo introdutorio e inicia com a figura do prometheus
+após a figura, ir explicando como os blocos se comunicam.
+
+Começar explicando os containers (quem sao e pra que estao ali)
+
+Começar detalhando a historia dos agentes (começou com o node exporter, aí foi mudando ate o telegraf.
+
+e detalhar melhor o bloco do prometheus (prom + tsdb)
+
+falar do grafana
+
+Orientação 20250708
+
+  O notebook tem capacidade computacional mais elevado, mas tem restriçoes sobre o que pode ser instalado nele, sendo a principal restrição o sistema operacional, onde era obrigatório a utilização do ubuntu desktop 20.04. "Então eu mexi onde eu podia mexer"
+
+
+  Devo explicar Git? nao, afinal é apenas um utilitario, como o VSCode. Nao é um personagem importante no projeto
+
+  Onde incluir o repositório do projeto? Fazer referencia no texto
+
+  Em que momentos eu devo inserir código? Alguma formatação específica?
+  A partir da 3.2. Colocar trechos importantes de código. A cada trecho importante, referenciar um Apendice.
+  Os Apendices deverao incluir o codigo completo dios scripts e arquivos YAML (seria como um backup leve do git)
+
+Orientação 20250708
+
+  1) Na seção 2.4.3 (Disco): deveria explicar/detalhar melhor o que são INODES? 
+  
+  nao precisa
+  
+  2) Na introdução da seção 2.4, a referencia para a documentação do kernel do linux já é o suficiente para todas as métricas? 
+  
+  nao, procurar referencias que expliquem de onde sairam essas metricas
+  
+  3) Posso alterar o nome da seção 2.5? De Auxiliadores para Sidecars? Não gostei do termo e também não o utilizei no texto. 
+  
+  Texto trocado para sidecars
+
+  4) Como lidar com títulos de referencias muito grandes? Exemplo: referencias do github.
+
+  Posso editar para algo curto e objetivo
+
+  5) Na subseção 2.8.3, o qual eu falo do Grafana, eu deixo claro que ele suporta vários bancos de dados, mas não acho que ficou claro que ele tem um banco de dados interno para persistência de configurações, além das fontes de dados externas. Ficou meio vago, dando a entender que ele realmente só puxa dados de fontes externas e não tem persistência própria para algumas coisas.
+
+  Nao precisa, está bom do jeito que está
+
+  ###Dúvidas quanto às correções###
+
+  1) Em 2.4.1 CPU, vc pede para eu remover a Observação. Devo então incluir em cada item da lista a unidade "%"?
+
+  Colocar em cara item da lista
+
+  2) Não sei bem que tipo de artigo/referência devo utilizar para as métricas de interesse.
+
+  procurar referencias que expliquem de onde sairam essas metricas   
+  
+#################################
+% ### Os comentarios abaixo vao para o cap3 ###
+
+%!@@!#$@#$#@$@#$@
+% A virtualização desempenha um papel essencial neste trabalho por dois motivos principais. Primeiramente, conforme discutido na Seção \ref{section:Delimitação}, a indisponibilidade de equipamentos motivou a adoção de técnicas de virtualização para simular diferentes dispositivos, permitindo a criação de um ambiente de testes controlado e replicável utilizando uma úniac máquina física como base. 
+
+% Em segundo lugar, a conteinerização dos softwares de monitoramento e coleta de métricas contribui diretamente para a portabilidade, escalabilidade, automação e manutenção da solução desenvolvida. Ao encapsular os serviços em contêineres independentes, é possível garantir maior uniformidade entre ambientes de desenvolvimento e produção, além de alinhar a implementação aos princípios da IaC.
+#################################
+
+Orientação 20250701
+
+Modificiar a formatação de citaçaõ para o padrao [1] (Padrao IEEE) (Manhatan)
+
+  Discussões Iniciais do Capítulo 3:
+    1) Abordagem Preliminar
+    Qual OS? Rocky, Rasp OS, Ubuntu
+    QUal hardware?NUC ou Raspberry
+    Qual motor? Zabbix
+    Qual interface? Zabbix UI ou Grafana?
+
+
+    2) Descrição MACRO da Arquitetura da Solução
+    Descrição da Arquitetura Final
+    Apresentar os blocos gerais e explicar o que cada um faz, quais seus inputs e outputs, e como interagem entre si. 
+
+    Um diagrama de blocos com a visao MACRO
+
+    A ideia é que o leitor consigar ter um bom entendimento geral do projeto só com a seção 3.2   
+
+    3) Infraestrutura
+    As escolhas de OS, container, o que foi construido, como foi construido, aplicações a serem instaladas
+    Falar o que instalou
+
+    Fazer 1 subseção para cada bloco. Fazer no máximo 1 camada de subseção (3.2.1, 3.2.2, etc)
+
+    4) Agentes (pode virar uma subseção de 3)
+
+    5) Discussão sobre as métricas
+
+    6) Aplicação de monitoramento
+    Mostrar os comportamentos, desempenho/performance/problemas e correções, e escolha de graficos/usabilidade do dashboard, alertas e notificações
+
+
+
+Orientação 20250624
+
+  -> Ao mesmo tempo que acho que faltam imagens e diagramas nas explicações das ferramentas no capítulo 2, também acho que já tem muita coisa escrita, e ficaria muito massante com muita informação. Devo acrescentar ilustrações? Em todos os tópicos ou apenas em alguns selecionados? Não precisa de ilustrações no cap2
+  -> Só deixar em caixa alta o que for sigla. 
+  -> Em itálico somente um idioma estrangeiro. E quando for um nome próprio, nao precisa por em italico. Exemplo: Dockerfile nao precisa ser em italico
+  -> Siglas precisam ser explicadas na lista de siglas e tambem na primeira vez que aparecem no texto.
+
+
 Orientação 20250617
 
   - Praticamente traduzi as regras de alarmes e políticas de notificações dos ymls do Grafana para yml do Prometheus, levantei um container separado para o Alertmanager e configurei o Prometheus para enviar os alertas para o Alertmanager.
@@ -13,6 +133,7 @@ Orientação 20250617
 
     - Porém, não realizei estudos comparativos de utilização de recursos para melhor definir a que momento um passa a valer mais a pena que o outro em cada escopo.
 
+  -> Esta experiência com o Alertmanager deve ser retratada no capítulo 3.
 
 Orientação 20250610
   -> Capítulo 1 - Introdução, com as seguintes seções:

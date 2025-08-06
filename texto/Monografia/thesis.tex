@@ -26,13 +26,17 @@
 \usepackage{indentfirst}
 \usepackage{array}
 \usepackage{diagbox}
-\usepackage{natbib}
+\usepackage[numbers]{natbib}
 \usepackage{todonotes}
-
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xurl}
 %\usepackage[alf, bibjustif]{abntex2cite}
 
 \makelosymbols
 \makeloabbreviations
+
+\newcommand{\foreign}[1]{\textit{#1}}
 
 \begin{document}
   % \title{Solução de Monitoramento de Recursos e Infraestrutura de Redes de Computadores com Dados em Tempo Real}
@@ -52,28 +56,37 @@
   % \maketitle
 
   % \frontmatter
-  % \include{Pre-textual/dedic}
-  % \include{Pre-textual/thanks}
-  % \include{Pre-textual/resumo}
-  % \include{Pre-textual/abstract}
+  % % \include{Pre-textual/dedic}
+  % % \include{Pre-textual/thanks}
+  % % \include{Pre-textual/resumo}
+  % % \include{Pre-textual/abstract}
+  % \renewcommand{\indexname}{Lista de Siglas}
+  % \printloabbreviations
   % \tableofcontents
   % \listoffigures
   % \listoftables
   % \printlosymbols
-  % \printloabbreviations
 
   \mainmatter
-    % \include{Textual/chapter01}
+  \renewcommand{\indexname}{Lista de Abreviaturas e Siglas}
+  \printloabbreviations
+  \tableofcontents
+  \listoffigures
+  \listoftables
+  % \printlosymbols
+
+    \include{Textual/chapter01}
     \include{Textual/chapter02}    
-  %   \include{Textual/chapter03}
+    \include{Textual/chapter03}
   %   \include{Textual/chapter04}
   %   \include{Textual/chapter05}
   %   \include{Textual/chapter06}
 
-  % \backmatter
-  % %\nocite{*}
-  % \bibliographystyle{coppe-unsrt}
-  % \bibliography{thesis}
-  % \appendix
+  \backmatter
+  % \nocite{*}
+  \bibliographystyle{coppe}
+  \bibliography{thesis}
+  \addcontentsline{toc}{chapter}{Bibliografia}
+  \appendix
   % \include{Pos-textual/appenA}
 \end{document}
