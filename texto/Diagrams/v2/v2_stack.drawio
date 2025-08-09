@@ -1,0 +1,28 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0" version="28.0.9">
+  <diagram name="Page-1" id="qWtlDdQ_t1fBnjkW_Zxo">
+    <mxGraphModel dx="786" dy="711" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="is5yBYUkAZ2dMtjzCGNo-1" value="Hardware&lt;br&gt;(Desktop do autor)" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;gradientDirection=south;fillColor=#dae8fc;strokeColor=#6c8ebf;gradientColor=#7ea6e0;glass=0;" parent="1" vertex="1">
+          <mxGeometry x="200" y="380" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="is5yBYUkAZ2dMtjzCGNo-2" value="Host OS&lt;br&gt;&lt;div&gt;(Ubuntu Desktop)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;glass=0;fillColor=#d5e8d4;gradientColor=#97d077;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="200" y="340" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="is5yBYUkAZ2dMtjzCGNo-3" value="&lt;div&gt;Zabbix&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=1;glass=0;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="200" y="230" width="50" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="is5yBYUkAZ2dMtjzCGNo-5" value="MySQL" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=1;glass=0;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="255" y="230" width="50" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="is5yBYUkAZ2dMtjzCGNo-6" value="&lt;div&gt;Grafana&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=1;glass=0;fillColor=#fff2cc;gradientColor=#ffd966;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="310" y="230" width="50" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Qf3-FYTLfyepxTUIdwEo-1" value="Docker Engine" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;gradientDirection=south;fillColor=#e6d0de;strokeColor=#996185;gradientColor=#d5739d;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="300" width="160" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
