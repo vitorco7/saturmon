@@ -21,7 +21,7 @@ e detalhar melhor o bloco do prometheus (prom + tsdb)
 
 falar do grafana
 
-Orientação 20250708
+Orientação 20250729
 
   O notebook tem capacidade computacional mais elevado, mas tem restriçoes sobre o que pode ser instalado nele, sendo a principal restrição o sistema operacional, onde era obrigatório a utilização do ubuntu desktop 20.04. "Então eu mexi onde eu podia mexer"
 
