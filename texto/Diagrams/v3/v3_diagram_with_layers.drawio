@@ -74,7 +74,7 @@
         <mxCell id="3SZMAM52sG9_Gdmyh299-149" value="&lt;div&gt;Docker Engine&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="524" y="1040" width="100" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="3SZMAM52sG9_Gdmyh299-150" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Zabbix Agent&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=1;" vertex="1" parent="1">
+        <mxCell id="3SZMAM52sG9_Gdmyh299-150" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Agent&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=1;" vertex="1" parent="1">
           <mxGeometry x="484.62" y="663.75" width="40" height="40" as="geometry" />
         </mxCell>
         <mxCell id="3SZMAM52sG9_Gdmyh299-151" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;glass=0;perimeterSpacing=1;" vertex="1" parent="1">
@@ -92,10 +92,10 @@
         <mxCell id="3SZMAM52sG9_Gdmyh299-155" value="&lt;div&gt;&lt;b&gt;Notificações&lt;/b&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="810" y="932.5" width="90" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="3SZMAM52sG9_Gdmyh299-156" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Zabbix Agent&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=1;" vertex="1" parent="1">
+        <mxCell id="3SZMAM52sG9_Gdmyh299-156" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Agent&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=1;" vertex="1" parent="1">
           <mxGeometry x="554.87" y="608.75" width="40" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="3SZMAM52sG9_Gdmyh299-157" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Zabbix Agent&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=1;" vertex="1" parent="1">
+        <mxCell id="3SZMAM52sG9_Gdmyh299-157" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Agent&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=1;" vertex="1" parent="1">
           <mxGeometry x="624.87" y="630" width="40" height="40" as="geometry" />
         </mxCell>
         <mxCell id="3SZMAM52sG9_Gdmyh299-158" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3SZMAM52sG9_Gdmyh299-159" target="3SZMAM52sG9_Gdmyh299-150">
@@ -122,7 +122,7 @@
         <mxCell id="3SZMAM52sG9_Gdmyh299-165" value="IoT" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="554.87" y="540" width="40" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="3SZMAM52sG9_Gdmyh299-166" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Zabbix Agent&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=1;" vertex="1" parent="1">
+        <mxCell id="3SZMAM52sG9_Gdmyh299-166" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Agent&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shadow=1;" vertex="1" parent="1">
           <mxGeometry x="640.87" y="713.75" width="40" height="40" as="geometry" />
         </mxCell>
         <mxCell id="3SZMAM52sG9_Gdmyh299-167" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.585;entryY=0.943;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="3SZMAM52sG9_Gdmyh299-157" target="3SZMAM52sG9_Gdmyh299-133">

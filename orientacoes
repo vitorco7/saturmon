@@ -1,10 +1,11 @@
 Orientação 20250812
 
-QUal o padrão de espaçamentos entre figuras e legendas? Pq eu tive de ir ajustando manualmente o gap imagem por imagem
-
+O SQLite deveria entrar na figura 3.7? Uso o símbolo de DB, ou um símbolo de arquivo (pra explicitar a diferente gritante entre ele e o Postgres ou MySQL)?
 
 
 Orientação 20250805
+
+DÚVIDAS COM RELAÇÃO À ESTRUTURA DO TEXTO -> Eu escrevo o capítulo todo descrevendo a Metodologia ao mesmo tempo que realizo as Discussões para justificar as decisões;
 
 Figuras e pilhas : Par figura pilha - 1 par para o que foi idealizado e 1 par para o que foi implementado. 2 pares para o momento 1(versao 1), 2 pares para o momento 2 (versao 2)
 
@@ -13,7 +14,6 @@ Adicionar o DB, pois todas as ferramentas puxam dele (zabbix, grafana, dahs, ale
 Figura principal - fazer toda a figura completa com todas as implementações, mas nao apresentá-la de uma unica vez, apresentar por partes.
 
 Figuras - nao usar as logos ou simbolos, usar apenas caixas pretas e brancas.
-
 
 Seção 3.2 - paragrafo introdutorio e inicia com a figura do prometheus
 após a figura, ir explicando como os blocos se comunicam.
