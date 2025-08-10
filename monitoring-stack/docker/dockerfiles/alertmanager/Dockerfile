@@ -1,4 +1,3 @@
-# Multi-stage build to get envsubst
 FROM alpine:3.21.3
 RUN apk add --no-cache curl gettext
 
@@ -9,7 +8,6 @@ RUN curl -L https://github.com/prometheus/alertmanager/releases/download/v${ALER
     mv alertmanager-${ALERTMANAGER_VERSION}.linux-amd64/amtool /bin/amtool && \
     rm -rf alertmanager-${ALERTMANAGER_VERSION}.linux-amd64
 
-# Copy your entrypoint script and config template
 COPY scripts/alertmanager_entrypoint.sh /usr/local/bin/alertmanager_entrypoint.sh
 COPY configs/prometheus/alertmanager/alertmanager.yml.template /etc/alertmanager/alertmanager.yml.template
 

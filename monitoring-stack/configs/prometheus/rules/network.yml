@@ -1,7 +1,6 @@
 groups:
 - name: network_normalization
   rules:
-  # Virtual (container) metrics
   - record: net_bytes_recv
     expr: |
       label_replace(
@@ -74,7 +73,6 @@ groups:
     labels:
       unit: "packets"
 
-  # Physical metrics
   - record: net_bytes_recv
     expr: |
       label_replace(

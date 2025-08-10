@@ -17,18 +17,3 @@ groups:
   - record: diskio_read
     expr: physical_diskio_read_bytes{job="physical_host"}
 
-
-# groups:
-# - name: diskio_normalization
-#   rules:
-#   - record: diskio_write
-#     expr: label_replace(container_cgroup_io_stat_8:16_wbytes{job="virtual_hosts"}, "disk_partition", "container", "", "")
-
-#   - record: diskio_write
-#     expr: label_replace(physical_diskio_write_bytes{job="physical_host"}, "disk_partition", "$1", "disk_partition", "(.*)")
-
-#   - record: diskio_read
-#     expr: label_replace(container_cgroup_io_stat_8:16_rbytes{job="virtual_hosts"}, "disk_partition", "container", "", "")
-
-#   - record: diskio_read
-#     expr: label_replace(physical_diskio_read_bytes{job="physical_host"}, "disk_partition", "$1", "disk_partition", "(.*)")

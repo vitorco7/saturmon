@@ -1,7 +1,7 @@
 global:
-  scrape_interval: 5s       # How often Prometheus scrapes targets
-  evaluation_interval: 5s   # How often Prometheus evaluates rules
-  scrape_timeout: 4s        # Timeout for scraping; keep below scrape_interval
+  scrape_interval: 5s
+  evaluation_interval: 5s
+  scrape_timeout: 4s
 
 rule_files:
   - "rules/*.yml"
@@ -9,13 +9,13 @@ rule_files:
 alerting:
   alertmanagers:
     - static_configs:
-        - targets: ["alertmanager:9093"] # Alertmanager service
+        - targets: ["alertmanager:9093"]
 
 scrape_configs:
-  # - job_name: "prometheus" # Monitor Prometheus itself
+  # - job_name: "prometheus"
   #   static_configs:
   #     - targets:
-  #         - "prometheus:9090" # Prometheus itself
+  #         - "prometheus:9090"
 
   - job_name: "physical_host"
     static_configs:

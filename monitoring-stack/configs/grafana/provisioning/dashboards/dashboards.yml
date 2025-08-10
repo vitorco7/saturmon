@@ -2,10 +2,10 @@ apiVersion: 1
 providers:
   - name: 'monitoring'
     orgId: 1
-    folder: 'Monitoring'  # Optional folder name in Grafana UI
+    folder: 'Monitoring'
     type: file
     disableDeletion: false
     updateIntervalSeconds: 5
     options:
       path: /etc/grafana/dashboards
-      foldersFromFilesStructure: false  # Set to `true` to mirror host folder structure
+      foldersFromFilesStructure: false

@@ -17,7 +17,7 @@ while true; do
     echo "$(timestamp) [INFO] === Starting CPU Tests ==="
     
     # CPU Test
-    cpu_workers=$((RANDOM % 3 + 2))   # 2 or 3 workers for moderate load
+    cpu_workers=$((RANDOM % 3 + 2))
     echo "$(timestamp) [INFO] [CPU] Workers: $cpu_workers, Duration: $stress_time"
     stress-ng --cpu "$cpu_workers" --timeout "$stress_time"
     
@@ -42,8 +42,8 @@ while true; do
     echo "$(timestamp) [INFO] === Starting Memory Tests ==="
     
     # Memory Test
-    vm_workers=$((RANDOM % 2 + 1))   # 1 or 2 workers for moderate load
-    vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker (25% increase)
+    vm_workers=$((RANDOM % 2 + 1))
+    vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker
     echo "$(timestamp) [INFO] [Memory] Workers: $vm_workers, Bytes per worker: $vm_bytes, Duration: $stress_time"
     stress-ng --vm "$vm_workers" --vm-bytes "$vm_bytes" --timeout "$stress_time"
 
@@ -72,7 +72,7 @@ while true; do
     echo "$(timestamp) [INFO] === Starting Network Tests ==="
     
     # Network Test
-    net_workers=2   # Increase network load by using 2 workers
+    net_workers=2
     echo "$(timestamp) [INFO] [Network] Workers: $net_workers, Duration: $stress_time"
     # stress-ng --sock "$net_workers" --timeout "$stress_time"
 
@@ -85,7 +85,7 @@ while true; do
     echo "$(timestamp) [INFO] === Starting System Tests ==="
     
     # System Test (e.g., fork)
-    system_workers=2   # Increase system load by using 2 workers
+    system_workers=2
     echo "$(timestamp) [INFO] [System] 'Fork' workers: $system_workers, Duration: $stress_time"
     stress-ng --fork "$system_workers" --timeout "$stress_time"
 
@@ -102,12 +102,12 @@ while true; do
     sleep_time=$((RANDOM % 20 + 10))      # 10–30 seconds
 
     # Regenerate parameters
-    cpu_workers=$((RANDOM % 3 + 2))   # 2 or 3 workers for CPU stress
-    vm_workers=$((RANDOM % 2 + 1))   # 1 or 2 workers for memory stress
-    vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker (25% increase)
+    cpu_workers=$((RANDOM % 3 + 2))
+    vm_workers=$((RANDOM % 2 + 1))
+    vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker
     hdd_bytes=$((RANDOM % 50 + 100))M  # Disk I/O size between 100MB to 150MB
-    net_workers=2   # 2 workers for network stress
-    system_workers=2  # 2 workers for system stress
+    net_workers=2
+    system_workers=2
 
     echo "$(timestamp) [INFO] CPU: $cpu_workers, VM: $vm_workers x $vm_bytes, HDD: $hdd_bytes, Network: $net_workers, System: $system_workers"
     echo "$(timestamp) [INFO] Running all in parallel for $stress_time"
