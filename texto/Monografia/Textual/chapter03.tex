@@ -29,11 +29,26 @@ Devido a esses fatores, verificou-se a necessidade de reavaliar o escopo e busca
 
 \begin{figure}[H]
 \centering
-\fbox{\rule{0pt}{150pt} \rule{200pt}{0pt}} % 200pt wide, 150pt high
-\caption{Inserir aqui uma imagem esquemática da arquitetura inicial}
-\label{fig:placeholder}
+\includegraphics[scale=1]{Imagens/chap03/v0xv1_stack.pdf}
+\caption{\textcolor{red}{Da esquerda para a direita - \foreign{stack} conceitual, \foreign{stack} implementada.}}
+\label{fig:StackImplementada}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap03/v0_diagram.pdf}
+\caption{\textcolor{red}{Arquitetura conceitual.}}
+\label{fig:ArquiteturaConceitual}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap03/v1_diagram.pdf}
+\caption{\textcolor{red}{Arquitetura implementada.}}
+\label{fig:ArquiteturaImplementada}
+\end{figure}
 
 \subsection{Escopo Reformulado - Monitoramento Amplo}
 \label{subsection:EscopoReformulado}
@@ -45,12 +60,19 @@ Conforme relatado na literatura, o Ubuntu Server demonstrou desempenho satisfat�
 No decorrer dessas alterações, a abordagem de monitoramento foi ampliada para contemplar não apenas servidores, mas também uma ampla variedade de dispositivos conectados à rede. Essa redefinição proporcionou maior versatilidade ao projeto, tornando desnecessária a aquisição de servidores físicos e possibilitando a utilização de contêineres tanto para a simulação de dispositivos quanto para a implementação da \foreign{stack} de monitoramento. Com isso, o processo de desenvolvimento tornou-se mais prático, ágil e modular, além de permitir um aproveitamento mais eficiente dos recursos computacionais disponíveis. Cabe destacar ainda que, ao adotar contêineres não só para testes, mas também para toda a infraestrutura de monitoramento, a discussão sobre a necessidade de hardware específico, como NUC ou Raspberry Pi, perdeu relevância neste contexto, já que a solução desenvolvida pode ser executada em qualquer máquina compatível com tecnologias de conteinerização.
 
 %TODO: Em trabalhos futuros a análise de viabilidade de implementação em NUC ou Raspberry Pi
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.96]{Imagens/chap03/v2_stack.pdf}
+\caption{\textcolor{red}{\foreign{Stack} reformulada.}}
+\label{fig:StackReformulada}
+\end{figure}
 
 \begin{figure}[H]
 \centering
-\fbox{\rule{0pt}{150pt} \rule{200pt}{0pt}} % 200pt wide, 150pt high
-\caption{Inserir aqui uma imagem esquemática da arquitetura reformulada}
-\label{fig:placeholder2}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap03/v2_diagram.pdf}
+\caption{\textcolor{red}{Arquitetura reformulada.}}
+\label{fig:ArquiteturaReformulada}
 \end{figure}
 
 
@@ -69,15 +91,24 @@ Após a execução bem-sucedida dos contêineres que compunham o sistema de moni
 
 É importante ressaltar que o Zabbix não dispõe de agentes oficiais para dispositivos móveis, mas disponibiliza recomendações de versões não oficiais desenvolvidas por terceiros para esse tipo de aplicação.
 
-No decorrer dessas implementações, alguns pontos críticos foram identificados e impactaram a continuidade do Zabbix como ferramenta de monitoramento principal do projeto:
-
-\begin{itemize}
-\item A necessidade de executar um contêiner adicional exclusivamente para o banco de dados (MySQL ou Postgres) eleva o custo computacional do ambiente;
-\item A interface gráfica do Zabbix apresentou limitações quanto à navegabilidade e usabilidade, dificultando a adaptação do autor;
-\item O projeto Zabbix-Docker, por abranger múltiplas configurações, mostrou-se extenso e complexo, o que dificultou a leitura, compreensão e manutenção do código.
-\end{itemize}
+Durante essas implementações, foram identificados alguns pontos críticos que impactaram a continuidade do Zabbix como ferramenta principal de monitoramento do projeto: a necessidade de executar um contêiner adicional exclusivamente para o banco de dados (MySQL ou Postgres) eleva o custo computacional do ambiente; a interface gráfica do Zabbix apresentou limitações quanto à navegabilidade e usabilidade, dificultando a adaptação do autor; e o projeto Zabbix-Docker, por abranger múltiplas configurações, mostrou-se extenso e complexo, o que dificultou a leitura, compreensão e manutenção do código.
 
 Além desses aspectos, o autor enfrentava simultaneamente a curva de aprendizado do Zabbix e do Docker, o que elevou significativamente o esforço necessário para a evolução do projeto. Tal cenário levou à decisão de abandonar o Zabbix, optando-se pela adoção do Prometheus nas etapas subsequentes deste trabalho.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{Imagens/chap03/v3_stack.pdf}
+\caption{\textcolor{red}{\foreign{Stack} da versão base do projeto.}}
+\label{fig:StackBase}
+\end{figure}
+\begin{figure}[H]
+\centering
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap03/v3_diagram.pdf}
+\caption{\textcolor{red}{Arquitetura da versão base do projeto.}}
+\label{fig:ArquiteturaBase}
+\end{figure}
+
 
 
 % {\color{blue}

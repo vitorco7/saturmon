@@ -41,6 +41,8 @@ latex.log/
 # # Ignore generated PDFs (optional, remove this if you want to track PDFs)
 *.pdf
 
+!texto/Monografia/Imagens/chap03/*.pdf
+
 # Ignore VS Code workspace settings (optional)
 .vscode/
 

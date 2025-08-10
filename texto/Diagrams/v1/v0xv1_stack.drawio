@@ -11,19 +11,34 @@
           <mxGeometry x="200" y="360" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="is5yBYUkAZ2dMtjzCGNo-3" value="&lt;div&gt;Zabbix&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=0;glass=0;" parent="1" vertex="1">
-          <mxGeometry x="200" y="180" width="50" height="70" as="geometry" />
+          <mxGeometry x="200" y="210" width="50" height="40" as="geometry" />
         </mxCell>
         <mxCell id="is5yBYUkAZ2dMtjzCGNo-5" value="MySQL" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=0;glass=0;" parent="1" vertex="1">
-          <mxGeometry x="255" y="180" width="50" height="70" as="geometry" />
+          <mxGeometry x="255" y="210" width="50" height="40" as="geometry" />
         </mxCell>
         <mxCell id="is5yBYUkAZ2dMtjzCGNo-6" value="&lt;div&gt;Grafana&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=0;glass=0;" parent="1" vertex="1">
-          <mxGeometry x="310" y="180" width="50" height="70" as="geometry" />
+          <mxGeometry x="310" y="210" width="50" height="40" as="geometry" />
         </mxCell>
         <mxCell id="Qf3-FYTLfyepxTUIdwEo-1" value="Hypervisor&lt;br&gt;(VirtualBox)" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;gradientDirection=south;glass=0;" parent="1" vertex="1">
           <mxGeometry x="200" y="310" width="160" height="40" as="geometry" />
         </mxCell>
         <mxCell id="Qf3-FYTLfyepxTUIdwEo-2" value="&lt;div&gt;Guest OS&lt;br&gt;(Rocky Linux)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;glass=0;" parent="1" vertex="1">
           <mxGeometry x="200" y="260" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wsLTrybeLacOq6zgvxL6-1" value="Hardware&lt;br&gt;(Raspberry Pi / NUC)" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;gradientDirection=south;glass=0;" parent="1" vertex="1">
+          <mxGeometry y="410" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wsLTrybeLacOq6zgvxL6-2" value="Host OS&lt;br&gt;(Rocky Linux)" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;glass=0;" parent="1" vertex="1">
+          <mxGeometry y="360" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wsLTrybeLacOq6zgvxL6-3" value="&lt;div&gt;Zabbix&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=0;glass=0;" parent="1" vertex="1">
+          <mxGeometry y="310" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wsLTrybeLacOq6zgvxL6-4" value="MySQL" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=0;glass=0;" parent="1" vertex="1">
+          <mxGeometry x="55" y="310" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="wsLTrybeLacOq6zgvxL6-5" value="&lt;div&gt;Grafana&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;direction=south;shadow=0;glass=0;" parent="1" vertex="1">
+          <mxGeometry x="110" y="310" width="50" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
