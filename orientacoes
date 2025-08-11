@@ -1,7 +1,10 @@
 Orientação 20250812
 
+Os nomes dos blocos deveria estar em negrito?
+
 O SQLite deveria entrar na figura 3.7? Uso o símbolo de DB, ou um símbolo de arquivo (pra explicitar a diferente gritante entre ele e o Postgres ou MySQL)?
 
+Em que momento eu devo fala sobre as experiencias e alterações do SQLite pro Postgres? E subsequentemente da alteração para o TSDB? Pois eu passei o projeto todo usando o SQLite. Visto que só comecei a ter o problema do database lock lá pelo fim do projeto (alertas do grafana), talvez faça sentido estar na seção de aplicação. Mas ao mesmo tempo discorrer sobre isso agora, na seção 3.2, me permitiria matar a arquitetura inteira nesta seção.
 
 Orientação 20250805
 
