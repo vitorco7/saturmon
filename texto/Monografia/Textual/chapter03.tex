@@ -30,7 +30,7 @@ Devido a esses fatores, verificou-se a necessidade de reavaliar o escopo e busca
 \begin{figure}[H]
 \centering
 \includegraphics[scale=1]{Imagens/chap03/v0xv1_stack.pdf}
-\caption{\textcolor{red}{Da esquerda para a direita - \foreign{stack} conceitual, \foreign{stack} implementada.}}
+\caption{Da esquerda para a direita - \foreign{stack} conceitual, \foreign{stack} implementada.}
 \label{fig:StackImplementada}
 \end{figure}
 
@@ -38,7 +38,7 @@ Devido a esses fatores, verificou-se a necessidade de reavaliar o escopo e busca
 \centering
 \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[width=\textwidth]{Imagens/chap03/v0_diagram.pdf}
-\caption{\textcolor{red}{Arquitetura conceitual.}}
+\caption{Arquitetura conceitual.}
 \label{fig:ArquiteturaConceitual}
 \end{figure}
 
@@ -46,7 +46,7 @@ Devido a esses fatores, verificou-se a necessidade de reavaliar o escopo e busca
 \centering
 \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[width=\textwidth]{Imagens/chap03/v1_diagram.pdf}
-\caption{\textcolor{red}{Arquitetura implementada.}}
+\caption{Arquitetura implementada.}
 \label{fig:ArquiteturaImplementada}
 \end{figure}
 
@@ -63,7 +63,7 @@ No decorrer dessas alterações, a abordagem de monitoramento foi ampliada para 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.97]{Imagens/chap03/v2_stack.pdf}
-\caption{\textcolor{red}{\foreign{Stack} reformulada.}}
+\caption{\foreign{Stack} reformulada.}
 \label{fig:StackReformulada}
 \end{figure}
 
@@ -71,7 +71,7 @@ No decorrer dessas alterações, a abordagem de monitoramento foi ampliada para 
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[scale=0.97]{Imagens/chap03/v2_diagram.pdf}
-\caption{\textcolor{red}{Arquitetura reformulada.}}
+\caption{Arquitetura reformulada.}
 \label{fig:ArquiteturaReformulada}
 \end{figure}
 
@@ -98,14 +98,14 @@ Além desses aspectos, o autor enfrentava simultaneamente a curva de aprendizado
 \begin{figure}[H]
 \centering
 \includegraphics[scale=1]{Imagens/chap03/v3_stack.pdf}
-\caption{\textcolor{red}{\foreign{Stack} da versão-base do projeto.}}
+\caption{\foreign{Stack} da versão-base do projeto.}
 \label{fig:StackBase}
 \end{figure}
 \begin{figure}[H]
 \centering
 \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[width=\textwidth]{Imagens/chap03/v3_diagram.pdf}
-\caption{\textcolor{red}{Arquitetura da versão-base do projeto.}}
+\caption{Arquitetura da versão-base do projeto.}
 \label{fig:ArquiteturaBase}
 \end{figure}
 
@@ -117,26 +117,53 @@ Com o escopo e as ferramentas devidamente definidos, e tomando como referência 
 
 Nas subseções seguintes, detalham-se os blocos que compõem a arquitetura, seu funcionamento e as respectivas interações, culminando na apresentação da versão final da solução.
 
-\begin{figure}[H]
-\centering
-\setlength{\abovecaptionskip}{-20pt}
-\includegraphics[width=\textwidth]{Imagens/chap03/v4_diagram.pdf}
-\caption{\textcolor{red}{Arquitetura da versão 1.0.}}
-\label{fig:Arquiteturav1.0}
-\end{figure}
+% \begin{figure}[H]
+% \centering
+% \setlength{\abovecaptionskip}{-20pt}
+% \includegraphics[width=\textwidth]{Imagens/chap03/v4_diagram.pdf}
+% \caption{\textcolor{red}{Arquitetura.}}
+% \label{fig:Arquiteturav1.0}
+% \end{figure}
 
 \subsection{Dispositivos virtuais}
 \label{subsection:DispositivosVirtuais}
 
 Placeholder
 
+\begin{figure}[H]
+\centering
+% \setlength{\abovecaptionskip}{-20pt}
+\includegraphics[scale=1]{Imagens/chap03/by-blocks/virtual_devices_diagram.pdf}
+\caption{\textcolor{red}{Dispositivos virtuais.}}
+\label{fig:DiagramaDispositivosVirtuais}
+\end{figure}
+
+
 \subsection{Agentes}
 \label{subsection:Agentes}
 
 Placeholder
 
+\begin{figure}[H]
+\centering
+% \setlength{\abovecaptionskip}{-20pt}
+\includegraphics[scale=1]{Imagens/chap03/by-blocks/agents_diagram.pdf}
+\caption{\textcolor{red}{Agentes Telegraf.}}
+\label{fig:DiagramaAgentes}
+\end{figure}
+
+
 \subsection{Prometheus e TSDB}
 \label{subsection:PrometheusTSDB}
+
+\begin{figure}[H]
+\centering
+% \setlength{\abovecaptionskip}{-20pt}
+\includegraphics[scale=1]{Imagens/chap03/by-blocks/prometheus_diagram.pdf}
+\caption{\textcolor{red}{Prometheus e TSDB.}}
+\label{fig:DiagramaPrometheusTSDB}
+\end{figure}
+
 
 Placeholder
 
@@ -145,13 +172,33 @@ Placeholder
 
 Placeholder
 
+\begin{figure}[H]
+\centering
+% \setlength{\abovecaptionskip}{-20pt}
+\includegraphics[scale=1]{Imagens/chap03/by-blocks/grafana_diagram.pdf}
+\caption{\textcolor{red}{Grafana}}
+\label{fig:DiagramaGrafana}
+\end{figure}
+
+
 \subsection{Testes de saturação}
 \label{subsection:TestesSaturacao}
 
-Placeholder
+\textcolor{blue}{Nesta figura eu estou sentindo falta de algum símbolo que represente o script de carga que fica rodando dentros dos containers. Pensei no símbolo "lambda" ou uma pequena engrenagem em algum lugar dentro dos diamantes dos dispositivos virtuais. Qual a sua opinião?}
+
+\begin{figure}[H]
+\centering
+% \setlength{\abovecaptionskip}{-20pt}
+\includegraphics[scale=1]{Imagens/chap03/by-blocks/saturation_diagram.pdf}
+\caption{\textcolor{red}{Ferramentas de saturação.}}
+\label{fig:DiagramaSaturacao}
+\end{figure}
+
 
 \subsection{Considerações finais}
 \label{subsection:ConsideracoesFinais}
+
+\textcolor{blue}{Uma dúvida que tive hoje nesta seção: nós combinamos de comentar sobre dashboards e alertas na seção 3.5, porém isso implica que eu não incluiria os respectivos blocos de dashboards e alertas (e Alertmanager) no diagrama neste momento. Isso implica que a figura do diagrama final da arquitetura só apareceria no fim da seção 3.6. Como proceder?}
 
 Aqui a finalizo a seção contando a historia do SQLite x Postgres e eventualmente chegando na decisão de descartar ambos e ficar apenas com o TSDB.
 Tambem relato da minha experiencia de formatar a maquina toda e a facilidade em subir todo o projeto (salve a configuração pontual do permissionamento de escrita do grafana e da chave do repositorio do telegraf)
