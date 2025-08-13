@@ -1,10 +1,15 @@
 Orientação 20250812
 
-Os nomes dos blocos deveria estar em negrito?
+Os nomes dos blocos deveria estar em negrito? Não há necessidade
 
 Eu não gosto da forma como representei o TSDB, pois ele dá a entender que o TSDB é "separado" do Prometheus, quando na verdade ele é parte intrínseca/interna do Prometheus server. Isso é preciosismo da minha parte?
 
+--> Deixar o TSDB solto dentro do bloco do Prometheus
+
 Dúvida: para os alertas, a seta vai do grafana para o alerta (Grafan->Alertas) ou sai do SQLite pros Alertas (SQLite->Alertas) ou ambos? Mesma dúvida para o Prometheus+TSDB+Alertmanager (ver imagem texto/prometheus_architecture.png)
+
+--> A seta sai do grafana
+
 
 Em que momento eu devo fala sobre as experiencias e alterações do SQLite pro Postgres? E subsequentemente da alteração para o TSDB? Pois eu passei o projeto todo usando o SQLite. Visto que só comecei a ter o problema do database lock lá pelo fim do projeto (alertas do grafana), talvez faça sentido estar na seção de aplicação. Mas ao mesmo tempo discorrer sobre isso agora, na seção 3.2, me permitiria matar a arquitetura inteira nesta seção.
 
