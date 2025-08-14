@@ -117,9 +117,6 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    # ports:
-    #   - "9091:9273"
-    # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -140,9 +137,6 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    # ports:
-    #   - "9092:9273"
-    # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -163,9 +157,6 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    # ports:
-    #   - "9093:9273"
-    # profiles: ["all", "ubuntu"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -186,9 +177,6 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    # ports:
-    #   - "9094:9273"
-    # profiles: ["all", "alpine"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -209,9 +197,6 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    # ports:
-    #   - "9095:9273"
-    # profiles: ["all", "alpine"]
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s

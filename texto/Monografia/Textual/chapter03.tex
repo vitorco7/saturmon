@@ -97,14 +97,14 @@ Além desses aspectos, o autor enfrentava simultaneamente a curva de aprendizado
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=1]{Imagens/chap03/v3_stack.pdf}
+\includegraphics[scale=0.97]{Imagens/chap03/v3_stack.pdf}
 \caption{\foreign{Stack} da versão-base do projeto.}
 \label{fig:StackBase}
 \end{figure}
 \begin{figure}[H]
 \centering
-\setlength{\abovecaptionskip}{-20pt}
-\includegraphics[width=\textwidth]{Imagens/chap03/v3_diagram.pdf}
+% \setlength{\abovecaptionskip}{-20pt}
+\includegraphics[scale=0.98]{Imagens/chap03/v3_diagram.pdf}
 \caption{Arquitetura da versão-base do projeto.}
 \label{fig:ArquiteturaBase}
 \end{figure}
@@ -115,7 +115,7 @@ Além desses aspectos, o autor enfrentava simultaneamente a curva de aprendizado
 
 Com o escopo e as ferramentas devidamente definidos, e tomando como referência a versão-base apresentada na seção anterior, esta seção descreve integralmente o trabalho desenvolvido: desde as simulações realizadas para obtenção de dados, passando pelos procedimentos de coleta e armazenamento, até a configuração dos mecanismos de visualização e alerta.
 
-Nas subseções seguintes, detalham-se os blocos que compõem a arquitetura, seu funcionamento e as respectivas interações, culminando na apresentação da versão final da solução.
+Nas subseções seguintes, são detalhados os principais blocos que compõem a arquitetura, seu funcionamento e as interações entre eles, culminando na apresentação da versão final da solução. Embora a ordem em que as subseções são apresentadas não siga estritamente a sequência cronológica do desenvolvimento, a estrutura adotada busca facilitar a compreensão do leitor, organizando o conteúdo de maneira progressiva conforme o fluxo natural de entrada, processamento e saída de dados.
 
 % \begin{figure}[H]
 % \centering
@@ -128,8 +128,6 @@ Nas subseções seguintes, detalham-se os blocos que compõem a arquitetura, seu
 \subsection{Dispositivos virtuais}
 \label{subsection:DispositivosVirtuais}
 
-Placeholder
-
 \begin{figure}[H]
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
@@ -138,6 +136,31 @@ Placeholder
 \label{fig:DiagramaDispositivosVirtuais}
 \end{figure}
 
+Para a aquisição de dados, foram instanciados cinco contêineres Docker para simular uma rede de computadores. A fim de reproduzir um ambiente heterogêneo, cada contêiner recebeu restrições específicas de CPU e memória em sua configuração no Docker Compose. O Dockerfile, por sua vez, provisiona a distribuição Linux, \foreign{script} e software para geração de carga e o agente de monitoramento. Detalhes adicionais sobre essas ferramentas são apresentados nas subseções seguintes.
+
+Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo com as especificações resumidas na tabela a seguir:
+
+\begin{table}[h]
+\centering
+\color{red}
+\begin{tabular}{c c c c}
+\hline
+\textbf{Dispositivo Virtual} & \textbf{Distribuição Linux} & \textbf{CPU} & \textbf{Memória (MB)} \\
+\hline
+1 & Ubuntu 24 & 0.6 & 1024 \\
+2 & Ubuntu 24 & 0.6 & 900 \\
+3 & Ubuntu 24 & 0.7 & 800 \\
+4 & Alpine 3.21 & 0.5 & 886 \\
+5 & Alpine 3.21 & 0.6 & 750 \\
+\hline
+\end{tabular}
+\caption{Especificações dos dispositivos virtuais.}
+\label{tab:EspecificaçõesDispositivosVirtuais}
+\end{table}
+
+A restrição de CPU pode parecer, a princípio, pouco intuitiva em função dos valores adotados. É importante destacar que o Docker, por padrão, considera 100\% de um núcleo como limite máximo de uso de CPU; logo, a atribuição de 0.6 indica que o contêiner está autorizado a utilizar até 60\% de um único núcleo.
+
+O código-fonte do Docker Compose e dos Dockerfiles empregados na criação desses dispositivos virtuais encontra-se disponível no Apêndice \ref{apendiceA}.
 
 \subsection{Agentes}
 \label{subsection:Agentes}

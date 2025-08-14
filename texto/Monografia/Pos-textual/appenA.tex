@@ -1,50 +1,158 @@
-\chapter{Informações de Dados Nucleares}
-\label{apendice}
+\chapter{Códigos Fonte dos Dispositivos Virtuais}
+\label{apendiceA}
 
-Tabela é muito chato fazer, vou deixar alguns exemplo para seguir, mas eu gosto bastante de utilizar esse site aqui para gerar as tabelasa de forma mais fácil: https://www.tablesgenerator.com/
+Seção do Docker Compose referente aos dispositivos virtuais.
+\begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
+services:
+# ...
+  virtual_device_1:
+    container_name: device_1
+    build:
+      dockerfile: ${UBUNTU_DOCKERFILE}
+      context: .
+    image: ${UBUNTU_DEVICE_IMG}
+    hostname: device1
+    cpus: "0.6"
+    mem_limit: "1024m"
+    networks:
+      - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%  COLOCAR TABELAS DE SEÇÕES DE CHOQUE  %%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  virtual_device_2:
+    container_name: device_2
+    build:
+      dockerfile: ${UBUNTU_DOCKERFILE}
+      context: .
+    image: ${UBUNTU_DEVICE_IMG}
+    hostname: device2
+    cpus: "0.6"
+    mem_limit: "900m"
+    networks:
+      - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-\begin{table}[H]
-\centering
-\caption{Parâmetros de geração dos produtos de fissão (\cite{belo2022}).} \label{tab:generationPF} \vspace{0.5cm}
-\begin{tabular}{llcccc}
-\hline
-\textbf{$i$} & \textbf{Actinídeos} & \multicolumn{1}{l}{\textbf{$\gamma_{ij}$}} & \multicolumn{1}{l}{\textbf{}} & \multicolumn{1}{l}{\textbf{}} & \multicolumn{1}{l}{\textbf{}} \\ \hline
-\textbf{}    & \textbf{}           & \textbf{$j = 16$}                          & \textbf{$j = 18$}             & \textbf{$j = 19$}             & \textbf{$j = 20$}             \\
-\textbf{}    & \textbf{}           & \textbf{$^{149}$Pm}                      & \textbf{$^{135}$I}          & \textbf{$^{135}$Xe}         & \textbf{LFP}                \\ \hline
-1            & $^{234}$U           & 0,0107                                     & 0,0630                        & 0,0024                        & 1,0                           \\
-2            & $^{235}$U           & 0,0107                                     & 0,0630                        & 0,0024                        & 1,0                           \\
-3            & $^{236}$U           & 0,0107                                     & 0,0630                        & 0,0024                        & 1,0                           \\
-4            & $^{237}$Np          & 0,0107                                     & 0,0630                        & 0,0024                        & 1,0                           \\
-5            & $^{238}$U           & 0,0161                                     & 0,0683                        & 0,0003                        & 1,0                           \\
-6            & $^{238}$Pu          & 0,0124                                     & 0,0645                        & 0,0115                        & 1,0                           \\
-7            & $^{239}$Np          & 0,0000                                     & 0,0000                        & 0,0000                        & 0,0                           \\
-8            & $^{239}$Pu          & 0,0124                                     & 0,0645                        & 0,0115                        & 1,0                           \\
-9            & $^{240}$Pu          & 0,0124                                     & 0,0645                        & 0,0115                        & 1,0                           \\
-10           & $^{241}$Pu          & 0,0152                                     & 0,0707                        & 0,0023                        & 1,0                           \\
-11           & $^{241}$Am          & 0,0152                                     & 0,0707                        & 0,0023                        & 1,0                           \\
-12           & $^{242}$Pu          & 0,0152                                     & 0,0707                        & 0,0023                        & 1,0                           \\
-13           & $^{242}$Cm          & 0,0152                                     & 0,0707                        & 0,0023                        & 1,0                           \\
-14           & $^{243}$Am          & 0,0152                                     & 0,0707                        & 0,0023                        & 1,0                           \\
-15           & $^{244}$Cm          & 0,0152                                     & 0,0707                        & 0,0023                        & 1,0                           \\ \hline
-\end{tabular}
-\end{table}
+  virtual_device_3:
+    container_name: device_3
+    build:
+      dockerfile: ${UBUNTU_DOCKERFILE}
+      context: .
+    image: ${UBUNTU_DEVICE_IMG}
+    hostname: device3
+    cpus: "0.7"
+    mem_limit: "800m"
+    networks:
+      - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      
+  virtual_device_4:
+    container_name: device_4
+    build:
+      dockerfile: ${ALPINE_DOCKERFILE}
+      context: .
+    image: ${ALPINE_DEVICE_IMG}
+    hostname: device4
+    cpus: "0.5"
+    mem_limit: "886m"
+    networks:
+      - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      
+  virtual_device_5:
+    container_name: device_5
+    build:
+      dockerfile: ${ALPINE_DOCKERFILE}
+      context: .
+    image: ${ALPINE_DEVICE_IMG}
+    hostname: device5
+    cpus: "0.6"
+    mem_limit: "750m"
+    networks:
+      - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+# ...
+\end{lstlisting}
 
+Dockerfile referente aos dispositivos virtuais Ubuntu (1 à 3):
+\begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
+FROM ubuntu:24.04
 
+RUN apt update && apt install -y wget stress-ng gnupg curl iperf3
 
-\begin{table}[H]
-\centering
-\caption{Seções de choque microscópicas para o decaimento do tipo $n2n$ do $^{238}$U (\cite{belo2022}).} \label{tab:n2nU238} \vspace{0.5cm}
-\begin{tabular}{lc}
-\hline 
-\textbf{\begin{tabular}[l]{@{}l@{}}Região\\ {}\end{tabular}} & \begin{tabular}[c]{@{}c@{}}$\sigma_{n2n,g}^{U238}$\\ {[barn]}\end{tabular}   \\ \hline 
-FA01                                                                    & 6,17E-03                                                                   \\  
-FA02                                                                    & 6,17E-03                                                                  \\ 
-FA03                                                                    & 6,17E-03                                                                   \\ 
-FA04                                                                    & 6,17E-03                                                                   \\ \hline 
-\end{tabular}
-\end{table}
+RUN wget -q https://repos.influxdata.com/influxdata-archive_compat.key
 
+RUN echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+
+RUN echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
+
+RUN apt update && apt install -y telegraf
+
+COPY configs/telegraf/virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
+
+COPY scripts/load_simulator.sh /usr/local/bin/load_simulator.sh
+
+RUN chmod +x /usr/local/bin/load_simulator.sh
+
+WORKDIR /
+
+CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]
+\end{lstlisting}
+
+Dockerfile referente aos dispositivos virtuais Alpine (4 e 5):
+\begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
+FROM alpine:3.21.3
+
+RUN apk update && apk add --no-cache wget stress-ng gnupg curl bash iperf3
+
+RUN apk add --no-cache ca-certificates procps lm-sensors tzdata iputils 
+
+RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-1.29.4_linux_amd64.tar.gz && \
+    tar -xzf telegraf-1.29.4_linux_amd64.tar.gz && \
+    cp -r telegraf-1.29.4/* / && \
+    rm -rf telegraf-1.29.4* && \
+    mkdir -p /etc/telegraf
+
+COPY configs/telegraf/virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
+
+COPY scripts/load_simulator.sh /usr/local/bin/load_simulator.sh
+
+RUN chmod +x /usr/local/bin/load_simulator.sh
+
+WORKDIR /
+
+CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]
+\end{lstlisting}

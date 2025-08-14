@@ -32,7 +32,16 @@
 \usepackage{tabularx}
 \usepackage{xurl}
 \usepackage{graphicx}
-%\usepackage[alf, bibjustif]{abntex2cite}
+\usepackage{listings}
+\lstset{
+    breaklines=true,
+    breakatwhitespace=true,
+    basicstyle=\small\ttfamily,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    showstringspaces=false
+}
 
 \makelosymbols
 \makeloabbreviations
@@ -89,5 +98,5 @@
   \bibliography{thesis}
   \addcontentsline{toc}{chapter}{Bibliografia}
   \appendix
-  % \include{Pos-textual/appenA}
+  \include{Pos-textual/appenA}
 \end{document}
