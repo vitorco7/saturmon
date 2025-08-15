@@ -526,14 +526,14 @@ O stress-ng \citep{stressng2025} é uma ferramenta de código aberto projetada p
 
 A ferramenta permite configurar o número de workers (processos de carga), duração dos testes e tipo de carga aplicada, além de oferecer modos de estresse diferentes \foreign{stressors}, que abrangem desde operações aritméticas até simulações de falhas de hardware. Seu uso é comum em ambientes virtualizados e conteinerizados por ser leve, scriptável e altamente configurável.
 
-\subsection{Iperf3}
-\label{subsection:Iperf3}
+\subsection{iPerf3}
+\label{subsection:iPerf3}
 
-O iperf3 \citep{iperf32025} é uma ferramenta especializada na geração e medição de tráfego de rede. Desenvolvido pelo Energy Sciences Network e Lawrence Berkeley National Laboratory. Baseado em arquitetura cliente-servidor, suporta protocolos TCP\abbrev{TCP}{\foreign{Transmission Control Protocol}}, UDP\abbrev{UDP}{\foreign{User Datagram Protocol}} e SCTP\abbrev{SCTP}{\foreign{Stream Control Transmission\\ Protocol}}, bem como modos de \foreign{zero-copy} e saída em formato JSON.
+O iPerf3 \citep{iPerf32025} é uma ferramenta especializada na geração e medição de tráfego de rede. Desenvolvido pelo Energy Sciences Network e Lawrence Berkeley National Laboratory. Baseado em arquitetura cliente-servidor, suporta protocolos TCP\abbrev{TCP}{\foreign{Transmission Control Protocol}} e UDP\abbrev{UDP}{\foreign{User Datagram Protocol}} bem como modos de \foreign{zero-copy} e saída em formato JSON.
 
-Por meio de parâmetros configuráveis (tamanho de \foreign{buffer}, duração do teste, número de fluxos paralelos), o iperf3 reporta vazão, perda de pacotes, \foreign{jitter} e latência, sendo amplamente utilizado para \foreign{benchmarking} de links em LAN\abbrev{LAN}{Local Area Network}, WAN\abbrev{WAN}{Wide Area Network} e ambientes em nuvem. Sua implementação simples e independente de bibliotecas externas facilita a integração em \foreign{scripts} de automação e pipelines de CI/CD para validação contínua do desempenho de rede.
+Por meio de parâmetros configuráveis (tamanho de \foreign{buffer}, duração do teste, número de fluxos paralelos), o iPerf3 reporta vazão, perda de pacotes, \foreign{jitter} e latência, sendo amplamente utilizado para \foreign{benchmarking} de links em LAN\abbrev{LAN}{Local Area Network}, WAN\abbrev{WAN}{Wide Area Network} e ambientes em nuvem. Sua implementação simples e independente de bibliotecas externas facilita a integração em \foreign{scripts} de automação e pipelines de CI/CD para validação contínua do desempenho de rede.
 
-Por permitir configurar tanto o lado cliente quanto servidor, o iperf3 é adequado para testar enlaces ponto-a-ponto, identificar gargalos de rede e simular sobrecargas em interfaces de rede. Em projetos de monitoramento, sua utilização é relevante para validar a responsividade de exportadores e a capacidade do sistema em lidar com grandes volumes de tráfego.
+Por permitir configurar tanto o lado cliente quanto servidor, o iPerf3 é adequado para testar enlaces ponto-a-ponto, identificar gargalos de rede e simular sobrecargas em interfaces de rede. Em projetos de monitoramento, sua utilização é relevante para validar a responsividade de exportadores e a capacidade do sistema em lidar com grandes volumes de tráfego.
     
 \subsection{Chaos Blade}
 \label{subsection:ChaosBlade}

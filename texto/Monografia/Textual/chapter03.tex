@@ -161,11 +161,22 @@ Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo 
 
 \subsection{Agentes}
 \label{subsection:Agentes}
+
+Placeholder
 % {\color{red}
 % Quanto aos agentes, foram consideradas duas abordagens distintas: a primeira, a adição de um novo contêiner ao à rede Docker, executando o serviço do cAdvisor, uma ferramenta amplamente utilizada no monitoramento de contêineres, como apresentado em \ref{subsection:cAdvisor}. No entanto, o cAdvisor 
 
 % %Aqui eu preciso falar dos agentes que só liam dados do host e nao dos containers, explicar que eu quis usar agentes integrados (embedded) nos dispositivos virtuais, e basicamente justificar pq eu larguei os outros e fiquei com telegraf.
 % }
+
+
+% {1 - Atualizei a estratégia de coleta de métricas do Docker: agora estou utilizando o plugin inputs.docker diretamente no telegraf.conf do host. Dessa forma, o Telegraf coleta métricas diretamente do socket do Docker daemon (/var/run/docker.sock), garantindo maior precisão, já que os dados vêm da mesma fonte usada pelo próprio Docker para monitoramento. Com isso, obtenho métricas essenciais como uso de CPU, memória, disco (I/O) e rede. Esses dados podem ser usados para comparações qualitativas com as métricas coletadas por Telegrafs rodando dentro dos containers.
+
+% Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais? Quando o objetivo era comparar máquinas físicas versus containers, essa comparação qualitativa era justificável. Porém, ao comparar container versus container, será que essa análise ainda se sustenta? Há valor prático em comparar dispositivos virtuais entre si nesses termos?
+
+% --> Realmente não faz sentido, logo não é necessário fazer esse levantamento.
+% }
+
 \begin{figure}[H]
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
@@ -198,7 +209,13 @@ Além disso, há uma importante sincronia entre os intervalos de raspagem do Pro
 \subsection{Grafana}
 \label{subsection:GrafanaVisualizacao}
 
-Placeholder
+{\color{red}
+Como mencionado no Capítulo \ref{chap2}, o Prometheus Expression Browser oferece uma interface web básica para visualização de métricas, porém essa interface apresenta limitações e não atende às demandas para visualizações avançadas. Por esse motivo, o próximo passo do projeto foi integrar o Grafana.
+
+Assim como nos demais serviços, a inclusão do Grafana ao Docker Compose envolveu apenas a definição das configurações básicas. Neste caso, é importante destacar a utilização da diretiva \verb|volumes|, que aponta para dois caminhos específicos: \verb|grafana/dashboard-json| e \verb|grafana/provisioning|. O primeiro armazena os arquivos JSON dos \foreign{dashboards}, que serão importados automaticamente pelo Grafana durante a inicialização. O segundo contém as configurações de provisionamento, usadas para automatizar a integração de fontes de dados e \foreign{dashboards}. Esse mecanismo é essencial para a automação do projeto, pois garante que todas as configurações necessárias — tanto das integrações com fontes de dados, como o Prometheus, quanto dos \foreign{dashboards} — sejam carregadas automaticamente ao iniciar o contêiner, dispensando procedimentos manuais pela interface web.
+
+Adicionalmente, a imagem oficial do Grafana utilizada no projeto já inclui o banco de dados SQLite, responsável por armazenar as configurações realizadas por meio da interface gráfica. As configurações aplicadas via provisionamento são acessíveis em modo \foreign{read-only} na interface e não podem ser modificadas manualmente. Já as alterações feitas diretamente pela interface gráfica são gravadas no SQLite, mas não são replicadas para os arquivos de provisionamento. Em situações de conflito entre as configurações do provisionamento e as definidas pela interface gráfica, prevalecem aquelas estabelecidas pelo provisionamento.
+}
 
 \begin{figure}[H]
 \centering
@@ -212,6 +229,20 @@ Placeholder
 \subsection{Testes de saturação}
 \label{subsection:TestesSaturacao}
 
+{\color{red}
+Os dispositivos virtuais, por si só, não produzem dados suficientes para uma análise qualitativa ou quantitativa eficaz do sistema de monitoramento. Por esse motivo, foram implementados testes de saturação, consistindo na geração de carga adicional sobre os dispositivos virtuais para simular cenários de uso intenso e coletar as métricas correspondentes.
+
+Inicialmente, a introdução de carga foi realizada exclusivamente com o stress-ng, integrado aos Dockerfiles dos dispositivos virtuais. Posteriormente, desenvolveu-se um \foreign{script} Bash que executa o stress-ng com diferentes parâmetros, simulando variados tipos de carga (CPU, memória, I/O, etc.) e níveis de intensidade. Esse \foreign{script} é executado em segundo plano, simultaneamente à execução do agente Telegraf, garantindo a geração contínua de carga durante a coleta das métricas.
+
+Apesar do bom desempenho na geração de carga computacional, o stress-ng mostrou-se insuficiente para simular tráfego de rede de forma realista. Para superar essa limitação, foi incorporado o iPerf3 ao projeto. Como esta ferramenta opera no modelo cliente-servidor e não permite a atuação simultânea nessas funções, foi criado um contêiner dedicado para funcionar como servidor iPerf3. Em paralelo, cada dispositivo virtual passou a contar com uma instância do iPerf3 configurada como cliente. Dessa maneira, tornou-se possível gerar tráfego de rede entre os dispositivos virtuais e o servidor iPerf3, aprimorando a simulação de carga sobre o ambiente de rede.
+
+
+\textcolor{blue}{Rascunho:
+[FALAR SOBRE AS ESPECIFICAÇOES DOS TESTES (PRIMEIRO UM DE CADA VEZ, DEPOIS TODOS JUNTOS, CARGAS, INTENSIDADES, DURAÇOES, ETC.)]}
+
+
+}
+
 \begin{figure}[H]
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
@@ -224,7 +255,7 @@ Placeholder
 \subsection{Considerações finais}
 \label{subsection:ConsideracoesFinais}
 
-Placeholder
+\textcolor{blue}{Dúvida: Como combinamos de contar a experiencia com o SQLitexPostgres e tambem a alteração para Alertmanager na seção 3.5 (alertas e dashboards), confesso que não sei mais o que colocar aqui... talvez matemos essa subseção 3.2.6?}
 
 % Uma dúvida que tive hoje nesta seção: nós combinamos de comentar sobre dashboards e alertas na seção 3.5, porém isso implica que eu não incluiria os respectivos blocos de dashboards e alertas (e Alertmanager) no diagrama neste momento. Isso implica que a figura do diagrama final da arquitetura só apareceria no fim da seção 3.6. Como proceder?
 
@@ -261,6 +292,12 @@ Disco & 500GB (SSD)            & 250GB (SSD)          \\
 \section{Discussão sobre as métricas}
 
 Placeholder
+
+% foram feitas tentativas de utilização de ferramentas de \foreign{chaos-engineering} como Pumba e ChaosBlade e até mesmo tentativas de manipulação direta de iptables para gerar tráfego de rede, mas essas ferramentas não se mostraram adequadas para este trabalho.
+
+
+% Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema de controle de tráfego \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|). Enquanto isso, o \foreign{plugin} \verb|inputs.net| do Telegraf a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Ou seja, 
+
 
 \section{Aplicação de Monitoramento}
 
