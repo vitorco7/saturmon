@@ -87,7 +87,7 @@ Tendo o Zabbix como sistema de monitoramento central, posteriormente aco\-plaria
 
 A partir do repositório Docker oficial do Zabbix  \citep{zabbixdocker2025}, fez-se um \foreign{fork} para o repositório dedicado a este projeto. Essa abordagem permitiu a experimentação com os principais recursos conteinerizados da ferramenta, como servidor Zabbix, banco de dados MySQL, e agentes. O servidor foi inicialmente configurado com um \foreign{dashboard} básico, aproveitando o modelo fornecido pelo repositório Zabbix-Docker.
 
-Após a execução bem-sucedida dos contêineres que compunham o sistema de monitoramento central, procedeu-se à instalação de um agente Zabbix no dispositivo móvel do autor para fins de teste. Foi possível realizar o \foreign{ping} do dispositivo a partir do servidor, sendo ambos — o agente conteinerizado e o instalado no dispositivo móvel — devidamente adicionados à lista de \foreign{hosts} do servidor.
+Após a execução bem-sucedida dos contêineres que compunham o sistema de monitoramento central, procedeu-se à instalação de um agente Zabbix no dispositivo móvel do autor para fins de teste. Foi possível realizar o \foreign{ping} do dispositivo a partir do servidor, sendo ambos -- o agente conteinerizado e o instalado no dispositivo móvel -- devidamente adicionados à lista de \foreign{hosts} do servidor.
 
 É importante ressaltar que o Zabbix não dispõe de agentes oficiais para dispositivos móveis, mas disponibiliza recomendações de versões não oficiais desenvolvidas por terceiros para esse tipo de aplicação.
 
@@ -111,8 +111,6 @@ Além desses aspectos, o autor enfrentava simultaneamente a curva de aprendizado
 
 \section{Descrição da Arquitetura}
 
-{\color{red}
-
 Com o escopo e as ferramentas devidamente definidos, e tomando como referência a versão-base apresentada na seção anterior, esta seção descreve integralmente o trabalho desenvolvido: desde as simulações realizadas para obtenção de dados, passando pelos procedimentos de coleta e armazenamento, até a configuração dos mecanismos de visualização e alerta.
 
 Nas subseções seguintes, são detalhados os principais blocos que compõem a arquitetura, seu funcionamento e as interações entre eles, culminando na apresentação da versão final da solução. Embora a ordem em que as subseções são apresentadas não siga estritamente a sequência cronológica do desenvolvimento, a estrutura adotada busca facilitar a compreensão do leitor, organizando o conteúdo de maneira progressiva conforme o fluxo natural de entrada, processamento e saída de dados.
@@ -132,63 +130,70 @@ Nas subseções seguintes, são detalhados os principais blocos que compõem a a
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[scale=1]{Imagens/chap03/by-blocks/virtual_devices_diagram.pdf}
-\caption{\textcolor{red}{Dispositivos virtuais.}}
+\caption{Dispositivos virtuais.}
 \label{fig:DiagramaDispositivosVirtuais}
 \end{figure}
 
-Para a aquisição de dados, foram instanciados cinco contêineres Docker para simular uma rede de computadores. A fim de reproduzir um ambiente heterogêneo, cada contêiner recebeu restrições específicas de CPU e memória em sua configuração no Docker Compose. O Dockerfile, por sua vez, provisiona a distribuição Linux, \foreign{script} e software para geração de carga e o agente de monitoramento. Detalhes adicionais sobre essas ferramentas são apresentados nas subseções seguintes.
+Para a aquisição de dados, foram instanciados cinco contêineres Docker para simular uma rede de computadores. A fim de reproduzir um ambiente heterogêneo, cada contêiner recebeu restrições específicas de CPU e memória em sua configuração no Docker Compose. O Dockerfile, por sua vez, provisiona a distribuição Linux, \foreign{script} e software para geração de carga e o agente de monitoramento. Detalhamentos sobre essas ferramentas são apresentados nas subseções seguintes.
 
 Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo com as especificações resumidas na tabela a seguir:
 
 \begin{table}[h]
 \centering
-\color{red}
-\begin{tabular}{c c c c}
-\hline
-\textbf{Dispositivo Virtual} & \textbf{Distribuição Linux} & \textbf{CPU} & \textbf{Memória (MB)} \\
-\hline
-1 & Ubuntu 24 & 0.6 & 1024 \\
-2 & Ubuntu 24 & 0.6 & 900 \\
-3 & Ubuntu 24 & 0.7 & 800 \\
-4 & Alpine 3.21 & 0.5 & 886 \\
-5 & Alpine 3.21 & 0.6 & 750 \\
-\hline
-\end{tabular}
 \caption{Especificações dos dispositivos virtuais.}
 \label{tab:EspecificaçõesDispositivosVirtuais}
+\begin{tabular}{c c c c}
+\hline
+\textbf{Dispositivo Virtual} & \textbf{Distribuição Linux} & \textbf{CPU (\%)} & \textbf{Memória (MB)} \\
+\hline
+1 & Ubuntu 24 & 60 & 1024 \\
+2 & Ubuntu 24 & 60 & 900 \\
+3 & Ubuntu 24 & 70 & 800 \\
+4 & Alpine 3.21 & 50 & 886 \\
+5 & Alpine 3.21 & 60 & 750 \\
+\hline
+\end{tabular}
 \end{table}
 
-A restrição de CPU pode parecer, a princípio, pouco intuitiva em função dos valores adotados. É importante destacar que o Docker, por padrão, considera 100\% de um núcleo como limite máximo de uso de CPU; logo, a atribuição de 0.6 indica que o contêiner está autorizado a utilizar até 60\% de um único núcleo.
+É importante destacar que o Docker, por padrão, considera 100\% de um núcleo como limite máximo de uso de CPU; logo, a atribuição de 0.6 no arquivo Compose indica que o contêiner está autorizado a utilizar até 60\% da capacidade de um único núcleo.
 
-O código-fonte do Docker Compose e dos Dockerfiles empregados na criação desses dispositivos virtuais encontra-se disponível no Apêndice \ref{apendiceA}.
+% O código fonte do Docker Compose e dos Dockerfiles empregados na criação desses dispositivos virtuais encontra-se disponível no Apêndice \ref{apendiceA}.
 
 \subsection{Agentes}
 \label{subsection:Agentes}
+% {\color{red}
+% Quanto aos agentes, foram consideradas duas abordagens distintas: a primeira, a adição de um novo contêiner ao à rede Docker, executando o serviço do cAdvisor, uma ferramenta amplamente utilizada no monitoramento de contêineres, como apresentado em \ref{subsection:cAdvisor}. No entanto, o cAdvisor 
 
-Placeholder
-
+% %Aqui eu preciso falar dos agentes que só liam dados do host e nao dos containers, explicar que eu quis usar agentes integrados (embedded) nos dispositivos virtuais, e basicamente justificar pq eu larguei os outros e fiquei com telegraf.
+% }
 \begin{figure}[H]
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[scale=1]{Imagens/chap03/by-blocks/agents_diagram.pdf}
-\caption{\textcolor{red}{Agentes Telegraf.}}
+\caption{Agentes Telegraf.}
 \label{fig:DiagramaAgentes}
 \end{figure}
 
 
 \subsection{Prometheus e TSDB}
 \label{subsection:PrometheusTSDB}
+{\color{red}
+Para implementar o sistema de monitoramento central, o serviço Prometheus foi adicionado ao Docker Compose. Essa inclusão trouxe não apenas o ferramental para coleta das métricas expostas pelos agentes Telegraf, mas também o banco de dados de séries temporais (TSDB), responsável pelo armazenamento permanente dessas métricas. Como o TSDB é parte integrante do Prometheus, não foi necessária nenhuma configuração adicional para sua integração, o que não só simplificou significativamente a implementação como também reduziu o custo e otimizou o desempenho do sistema.
 
+No Compose, além das diretivas comuns de configuração de contêineres -- como mapeamento de portas, redes e volumes -- destacam-se as diretivas \verb|extra_hosts| e \verb|command|. A primeira permite que o contêiner do Prometheus consiga acessar o host da máquina onde está sendo executado, configuração fundamental para coleta das métricas do agente Telegraf em execução no host. A segunda, por sua vez, configura o tempo de retenção dos dados no TSDB para 15 dias, utilizando o comando \verb|--storage.tsdb.retention.time=15d|.
+
+Já no arquivo \verb|prometheus.yml|, são definidas as regras globais de raspagem (\verb|global|), os direcionamentos para o arquivo de regras e para o serviço de alertas (Alertmanager -- a ser detalhado posteriormente), além das configurações dos \foreign{endpoints} do Telegraf para coleta de dados. Ressalta-se que, em \verb|global|, o parâmetro \verb|scrape_interval| é definido como 5 segundos, enquanto o \verb|scrape_timeout| é ajustado para 4 segundos. Essa configuração proporciona uma coleta de alta frequência, permitindo maior granularidade dos dados. Ao mesmo tempo, o limite de 4 segundos para o tempo de requisição evita bloqueios prolongados: caso uma coleta exceda esse tempo, o Prometheus considera a tentativa como falha e parte para uma nova coleta no próximo intervalo, o que contribui para a prevenção de congestionamentos no sistema.
+
+Além disso, há uma importante sincronia entre os intervalos de raspagem do Prometheus e os de coleta do Telegraf — ambos configurados para 5 segundos. Essa equivalência garante que as métricas coletadas estejam sempre atualizadas e alinhadas entre as duas ferramentas.
+
+}
 \begin{figure}[H]
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[scale=1]{Imagens/chap03/by-blocks/prometheus_diagram.pdf}
-\caption{\textcolor{red}{Prometheus e TSDB.}}
+\caption{Prometheus e TSDB.}
 \label{fig:DiagramaPrometheusTSDB}
 \end{figure}
-
-
-Placeholder
 
 \subsection{Grafana}
 \label{subsection:GrafanaVisualizacao}
@@ -199,7 +204,7 @@ Placeholder
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[scale=1]{Imagens/chap03/by-blocks/grafana_diagram.pdf}
-\caption{\textcolor{red}{Grafana}}
+\caption{Grafana}
 \label{fig:DiagramaGrafana}
 \end{figure}
 
@@ -207,13 +212,11 @@ Placeholder
 \subsection{Testes de saturação}
 \label{subsection:TestesSaturacao}
 
-\textcolor{blue}{Nesta figura eu estou sentindo falta de algum símbolo que represente o script de carga que fica rodando dentros dos containers. Pensei no símbolo "lambda" ou uma pequena engrenagem em algum lugar dentro dos diamantes dos dispositivos virtuais. Qual a sua opinião?}
-
 \begin{figure}[H]
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[scale=1]{Imagens/chap03/by-blocks/saturation_diagram.pdf}
-\caption{\textcolor{red}{Ferramentas de saturação.}}
+\caption{Ferramentas de saturação.}
 \label{fig:DiagramaSaturacao}
 \end{figure}
 
@@ -221,12 +224,14 @@ Placeholder
 \subsection{Considerações finais}
 \label{subsection:ConsideracoesFinais}
 
-\textcolor{blue}{Uma dúvida que tive hoje nesta seção: nós combinamos de comentar sobre dashboards e alertas na seção 3.5, porém isso implica que eu não incluiria os respectivos blocos de dashboards e alertas (e Alertmanager) no diagrama neste momento. Isso implica que a figura do diagrama final da arquitetura só apareceria no fim da seção 3.6. Como proceder?}
+Placeholder
 
-Aqui a finalizo a seção contando a historia do SQLite x Postgres e eventualmente chegando na decisão de descartar ambos e ficar apenas com o TSDB.
-Tambem relato da minha experiencia de formatar a maquina toda e a facilidade em subir todo o projeto (salve a configuração pontual do permissionamento de escrita do grafana e da chave do repositorio do telegraf)
-Após isso eu fecho a seção com o diagrama da arquitetura final definitiva. 
-}
+% Uma dúvida que tive hoje nesta seção: nós combinamos de comentar sobre dashboards e alertas na seção 3.5, porém isso implica que eu não incluiria os respectivos blocos de dashboards e alertas (e Alertmanager) no diagrama neste momento. Isso implica que a figura do diagrama final da arquitetura só apareceria no fim da seção 3.6. Como proceder?
+
+% Aqui a finalizo a seção contando a historia do SQLite x Postgres e eventualmente chegando na decisão de descartar ambos e ficar apenas com o TSDB.
+% Tambem relato da minha experiencia de formatar a maquina toda e a facilidade em subir todo o projeto (salve a configuração pontual do permissionamento de escrita do grafana e da chave do repositorio do telegraf)
+% Após isso eu fecho a seção com o diagrama da arquitetura final definitiva. 
+
 
 \section{Infraestrutura}
 

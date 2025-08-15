@@ -1,158 +1,158 @@
-\chapter{Códigos Fonte dos Dispositivos Virtuais}
-\label{apendiceA}
+% \chapter{Códigos Fonte dos Dispositivos Virtuais}
+% \label{apendiceA}
 
-Seção do Docker Compose referente aos dispositivos virtuais.
-\begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
-services:
-# ...
-  virtual_device_1:
-    container_name: device_1
-    build:
-      dockerfile: ${UBUNTU_DOCKERFILE}
-      context: .
-    image: ${UBUNTU_DEVICE_IMG}
-    hostname: device1
-    cpus: "0.6"
-    mem_limit: "1024m"
-    networks:
-      - devices_network
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+% \verb|docker-compose.yml|
+% \begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
+% services:
+% # ...
+%   virtual_device_1:
+%     container_name: device_1
+%     build:
+%       dockerfile: ${UBUNTU_DOCKERFILE}
+%       context: .
+%     image: ${UBUNTU_DEVICE_IMG}
+%     hostname: device1
+%     cpus: "0.6"
+%     mem_limit: "1024m"
+%     networks:
+%       - devices_network
+%     volumes:
+%       - /etc/timezone:/etc/timezone:ro
+%       - /etc/localtime:/etc/localtime:ro
+%     healthcheck:
+%       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+%       interval: 30s
+%       timeout: 10s
+%       retries: 3
 
-  virtual_device_2:
-    container_name: device_2
-    build:
-      dockerfile: ${UBUNTU_DOCKERFILE}
-      context: .
-    image: ${UBUNTU_DEVICE_IMG}
-    hostname: device2
-    cpus: "0.6"
-    mem_limit: "900m"
-    networks:
-      - devices_network
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+%   virtual_device_2:
+%     container_name: device_2
+%     build:
+%       dockerfile: ${UBUNTU_DOCKERFILE}
+%       context: .
+%     image: ${UBUNTU_DEVICE_IMG}
+%     hostname: device2
+%     cpus: "0.6"
+%     mem_limit: "900m"
+%     networks:
+%       - devices_network
+%     volumes:
+%       - /etc/timezone:/etc/timezone:ro
+%       - /etc/localtime:/etc/localtime:ro
+%     healthcheck:
+%       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+%       interval: 30s
+%       timeout: 10s
+%       retries: 3
 
-  virtual_device_3:
-    container_name: device_3
-    build:
-      dockerfile: ${UBUNTU_DOCKERFILE}
-      context: .
-    image: ${UBUNTU_DEVICE_IMG}
-    hostname: device3
-    cpus: "0.7"
-    mem_limit: "800m"
-    networks:
-      - devices_network
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+%   virtual_device_3:
+%     container_name: device_3
+%     build:
+%       dockerfile: ${UBUNTU_DOCKERFILE}
+%       context: .
+%     image: ${UBUNTU_DEVICE_IMG}
+%     hostname: device3
+%     cpus: "0.7"
+%     mem_limit: "800m"
+%     networks:
+%       - devices_network
+%     volumes:
+%       - /etc/timezone:/etc/timezone:ro
+%       - /etc/localtime:/etc/localtime:ro
+%     healthcheck:
+%       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+%       interval: 30s
+%       timeout: 10s
+%       retries: 3
       
-  virtual_device_4:
-    container_name: device_4
-    build:
-      dockerfile: ${ALPINE_DOCKERFILE}
-      context: .
-    image: ${ALPINE_DEVICE_IMG}
-    hostname: device4
-    cpus: "0.5"
-    mem_limit: "886m"
-    networks:
-      - devices_network
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+%   virtual_device_4:
+%     container_name: device_4
+%     build:
+%       dockerfile: ${ALPINE_DOCKERFILE}
+%       context: .
+%     image: ${ALPINE_DEVICE_IMG}
+%     hostname: device4
+%     cpus: "0.5"
+%     mem_limit: "886m"
+%     networks:
+%       - devices_network
+%     volumes:
+%       - /etc/timezone:/etc/timezone:ro
+%       - /etc/localtime:/etc/localtime:ro
+%     healthcheck:
+%       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+%       interval: 30s
+%       timeout: 10s
+%       retries: 3
       
-  virtual_device_5:
-    container_name: device_5
-    build:
-      dockerfile: ${ALPINE_DOCKERFILE}
-      context: .
-    image: ${ALPINE_DEVICE_IMG}
-    hostname: device5
-    cpus: "0.6"
-    mem_limit: "750m"
-    networks:
-      - devices_network
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-# ...
-\end{lstlisting}
+%   virtual_device_5:
+%     container_name: device_5
+%     build:
+%       dockerfile: ${ALPINE_DOCKERFILE}
+%       context: .
+%     image: ${ALPINE_DEVICE_IMG}
+%     hostname: device5
+%     cpus: "0.6"
+%     mem_limit: "750m"
+%     networks:
+%       - devices_network
+%     volumes:
+%       - /etc/timezone:/etc/timezone:ro
+%       - /etc/localtime:/etc/localtime:ro
+%     healthcheck:
+%       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
+%       interval: 30s
+%       timeout: 10s
+%       retries: 3
+% # ...
+% \end{lstlisting}
 
-Dockerfile referente aos dispositivos virtuais Ubuntu (1 à 3):
-\begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
-FROM ubuntu:24.04
+% \verb|Dockerfile| referente aos dispositivos virtuais Ubuntu (1 à 3):
+% \begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
+% FROM ubuntu:24.04
 
-RUN apt update && apt install -y wget stress-ng gnupg curl iperf3
+% RUN apt update && apt install -y wget stress-ng gnupg curl iperf3
 
-RUN wget -q https://repos.influxdata.com/influxdata-archive_compat.key
+% RUN wget -q https://repos.influxdata.com/influxdata-archive_compat.key
 
-RUN echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
+% RUN echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdata-archive_compat.key' | sha256sum -c && cat influxdata-archive_compat.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg > /dev/null
 
-RUN echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
+% RUN echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | tee /etc/apt/sources.list.d/influxdata.list
 
-RUN apt update && apt install -y telegraf
+% RUN apt update && apt install -y telegraf
 
-COPY configs/telegraf/virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
+% COPY configs/telegraf/virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
 
-COPY scripts/load_simulator.sh /usr/local/bin/load_simulator.sh
+% COPY scripts/load_simulator.sh /usr/local/bin/load_simulator.sh
 
-RUN chmod +x /usr/local/bin/load_simulator.sh
+% RUN chmod +x /usr/local/bin/load_simulator.sh
 
-WORKDIR /
+% WORKDIR /
 
-CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]
-\end{lstlisting}
+% CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]
+% \end{lstlisting}
 
-Dockerfile referente aos dispositivos virtuais Alpine (4 e 5):
-\begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
-FROM alpine:3.21.3
+% \verb|Dockerfile| referente aos dispositivos virtuais Alpine (4 e 5):
+% \begin{lstlisting}[breaklines=true, basicstyle=\small\ttfamily]
+% FROM alpine:3.21.3
 
-RUN apk update && apk add --no-cache wget stress-ng gnupg curl bash iperf3
+% RUN apk update && apk add --no-cache wget stress-ng gnupg curl bash iperf3
 
-RUN apk add --no-cache ca-certificates procps lm-sensors tzdata iputils 
+% RUN apk add --no-cache ca-certificates procps lm-sensors tzdata iputils 
 
-RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-1.29.4_linux_amd64.tar.gz && \
-    tar -xzf telegraf-1.29.4_linux_amd64.tar.gz && \
-    cp -r telegraf-1.29.4/* / && \
-    rm -rf telegraf-1.29.4* && \
-    mkdir -p /etc/telegraf
+% RUN wget -q https://dl.influxdata.com/telegraf/releases/telegraf-1.29.4_linux_amd64.tar.gz && \
+%     tar -xzf telegraf-1.29.4_linux_amd64.tar.gz && \
+%     cp -r telegraf-1.29.4/* / && \
+%     rm -rf telegraf-1.29.4* && \
+%     mkdir -p /etc/telegraf
 
-COPY configs/telegraf/virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
+% COPY configs/telegraf/virtual-devices/telegraf.conf /etc/telegraf/telegraf.conf
 
-COPY scripts/load_simulator.sh /usr/local/bin/load_simulator.sh
+% COPY scripts/load_simulator.sh /usr/local/bin/load_simulator.sh
 
-RUN chmod +x /usr/local/bin/load_simulator.sh
+% RUN chmod +x /usr/local/bin/load_simulator.sh
 
-WORKDIR /
+% WORKDIR /
 
-CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]
-\end{lstlisting}
+% CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]
+% \end{lstlisting}
