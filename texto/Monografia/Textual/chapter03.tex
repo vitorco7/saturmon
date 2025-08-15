@@ -15,7 +15,7 @@ Esta seção apresenta uma visão geral das decisões iniciais tomadas antes da 
 \subsection{Escopo inicial - Infraestrutura Tradicional}
 \label{subsection:EscopoInicial}
 
-Durante as discussões preliminares, o objetivo era monitorar servidores. Foi considerada uma arquitetura onde um dispositivo -- podendo ser um NUC ou Raspberry Pi com softwares instalados -- realizaria a coleta de métricas deste servidor e, após o processamento destes dados, disponibilizaria-os em painéis com visualizações gráficas especializadas. Alternativas com Orange Pi como equipamento foram analisadas, mas a escolha final recaiu sobre o NUC ou Raspberry Pi devido à suas respectivas popularidades e suporte.
+Durante as discussões preliminares, o objetivo era monitorar servidores. Foi considerada uma arquitetura onde um dispositivo --- podendo ser um NUC ou Raspberry Pi com softwares instalados --- realizaria a coleta de métricas deste servidor e, após o processamento destes dados, disponibilizaria-os em painéis com visualizações gráficas especializadas. Alternativas com Orange Pi como equipamento foram analisadas, mas a escolha final recaiu sobre o NUC ou Raspberry Pi devido à suas respectivas popularidades e suporte.
 
 Entretanto, como não foi possível adquirir fisicamente um NUC ou Raspberry Pi, decidiu-se simular toda a \foreign{stack} de monitoramento em uma máquina virtual. Com isso, a possibilidade da utilização de distribuições ou versões do Raspberry Pi OS para fins de desenvolvimento foi descartada, por tratar-se de um sistema operacional baseado em arquitetura ARM, incompatível com a arquitetura x86-64 dos equipamentos disponíveis.
 
@@ -87,7 +87,7 @@ Tendo o Zabbix como sistema de monitoramento central, posteriormente aco\-plaria
 
 A partir do repositório Docker oficial do Zabbix  \citep{zabbixdocker2025}, fez-se um \foreign{fork} para o repositório dedicado a este projeto. Essa abordagem permitiu a experimentação com os principais recursos conteinerizados da ferramenta, como servidor Zabbix, banco de dados MySQL, e agentes. O servidor foi inicialmente configurado com um \foreign{dashboard} básico, aproveitando o modelo fornecido pelo repositório Zabbix-Docker.
 
-Após a execução bem-sucedida dos contêineres que compunham o sistema de monitoramento central, procedeu-se à instalação de um agente Zabbix no dispositivo móvel do autor para fins de teste. Foi possível realizar o \foreign{ping} do dispositivo a partir do servidor, sendo ambos -- o agente conteinerizado e o instalado no dispositivo móvel -- devidamente adicionados à lista de \foreign{hosts} do servidor.
+Após a execução bem-sucedida dos contêineres que compunham o sistema de monitoramento central, procedeu-se à instalação de um agente Zabbix no dispositivo móvel do autor para fins de teste. Foi possível realizar o \foreign{ping} do dispositivo a partir do servidor, sendo ambos --- o agente conteinerizado e o instalado no dispositivo móvel --- devidamente adicionados à lista de \foreign{hosts} do servidor.
 
 É importante ressaltar que o Zabbix não dispõe de agentes oficiais para dispositivos móveis, mas disponibiliza recomendações de versões não oficiais desenvolvidas por terceiros para esse tipo de aplicação.
 
@@ -188,16 +188,14 @@ Placeholder
 
 \subsection{Prometheus e TSDB}
 \label{subsection:PrometheusTSDB}
-{\color{red}
 Para implementar o sistema de monitoramento central, o serviço Prometheus foi adicionado ao Docker Compose. Essa inclusão trouxe não apenas o ferramental para coleta das métricas expostas pelos agentes Telegraf, mas também o banco de dados de séries temporais (TSDB), responsável pelo armazenamento permanente dessas métricas. Como o TSDB é parte integrante do Prometheus, não foi necessária nenhuma configuração adicional para sua integração, o que não só simplificou significativamente a implementação como também reduziu o custo e otimizou o desempenho do sistema.
 
-No Compose, além das diretivas comuns de configuração de contêineres -- como mapeamento de portas, redes e volumes -- destacam-se as diretivas \verb|extra_hosts| e \verb|command|. A primeira permite que o contêiner do Prometheus consiga acessar o host da máquina onde está sendo executado, configuração fundamental para coleta das métricas do agente Telegraf em execução no host. A segunda, por sua vez, configura o tempo de retenção dos dados no TSDB para 15 dias, utilizando o comando \verb|--storage.tsdb.retention.time=15d|.
+No Compose, além das diretivas comuns de configuração de contêineres --- como mapeamento de portas, redes e volumes --- destacam-se as diretivas \verb|extra_hosts| e \verb|command|. A primeira permite que o contêiner do Prometheus consiga acessar o host da máquina onde está sendo executado, configuração fundamental para coleta das métricas do agente Telegraf em execução no host. A segunda, por sua vez, configura o tempo de retenção dos dados no TSDB para 15 dias, utilizando o comando \verb|--storage.tsdb.retention.time=15d|.
 
-Já no arquivo \verb|prometheus.yml|, são definidas as regras globais de raspagem (\verb|global|), os direcionamentos para o arquivo de regras e para o serviço de alertas (Alertmanager -- a ser detalhado posteriormente), além das configurações dos \foreign{endpoints} do Telegraf para coleta de dados. Ressalta-se que, em \verb|global|, o parâmetro \verb|scrape_interval| é definido como 5 segundos, enquanto o \verb|scrape_timeout| é ajustado para 4 segundos. Essa configuração proporciona uma coleta de alta frequência, permitindo maior granularidade dos dados. Ao mesmo tempo, o limite de 4 segundos para o tempo de requisição evita bloqueios prolongados: caso uma coleta exceda esse tempo, o Prometheus considera a tentativa como falha e parte para uma nova coleta no próximo intervalo, o que contribui para a prevenção de congestionamentos no sistema.
+Já no arquivo \verb|prometheus.yml|, são definidas as regras globais de \textcolor{red}{\foreign{scraping} (raspagem) de dados}, os direcionamentos para o arquivo de regras e para o serviço de alertas (Alertmanager -- a ser detalhado posteriormente), além das configurações dos \foreign{endpoints} do Telegraf para coleta de dados. Ressalta-se que, em \verb|global|, o parâmetro \verb|scrape_interval| é definido como 5 segundos, enquanto o \verb|scrape_timeout| é ajustado para 4 segundos. Essa configuração proporciona uma coleta de alta frequência, permitindo maior granularidade dos dados. Ao mesmo tempo, o limite de 4 segundos para o tempo de requisição evita bloqueios prolongados: caso uma coleta exceda esse tempo, o Prometheus considera a tentativa como falha e parte para uma nova coleta no próximo intervalo, o que contribui para a prevenção de congestionamentos no sistema.
 
-Além disso, há uma importante sincronia entre os intervalos de raspagem do Prometheus e os de coleta do Telegraf — ambos configurados para 5 segundos. Essa equivalência garante que as métricas coletadas estejam sempre atualizadas e alinhadas entre as duas ferramentas.
+Além disso, há uma importante sincronia entre os intervalos de \textcolor{red}{\foreign{scraping}} do Prometheus e os de coleta do Telegraf --- ambos configurados para 5 segundos. Essa equivalência garante que as métricas coletadas estejam sempre atualizadas e alinhadas entre as duas ferramentas.
 
-}
 \begin{figure}[H]
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
@@ -209,13 +207,11 @@ Além disso, há uma importante sincronia entre os intervalos de raspagem do Pro
 \subsection{Grafana}
 \label{subsection:GrafanaVisualizacao}
 
-{\color{red}
 Como mencionado no Capítulo \ref{chap2}, o Prometheus Expression Browser oferece uma interface web básica para visualização de métricas, porém essa interface apresenta limitações e não atende às demandas para visualizações avançadas. Por esse motivo, o próximo passo do projeto foi integrar o Grafana.
 
-Assim como nos demais serviços, a inclusão do Grafana ao Docker Compose envolveu apenas a definição das configurações básicas. Neste caso, é importante destacar a utilização da diretiva \verb|volumes|, que aponta para dois caminhos específicos: \verb|grafana/dashboard-json| e \verb|grafana/provisioning|. O primeiro armazena os arquivos JSON dos \foreign{dashboards}, que serão importados automaticamente pelo Grafana durante a inicialização. O segundo contém as configurações de provisionamento, usadas para automatizar a integração de fontes de dados e \foreign{dashboards}. Esse mecanismo é essencial para a automação do projeto, pois garante que todas as configurações necessárias — tanto das integrações com fontes de dados, como o Prometheus, quanto dos \foreign{dashboards} — sejam carregadas automaticamente ao iniciar o contêiner, dispensando procedimentos manuais pela interface web.
+Assim como nos demais serviços, a inclusão do Grafana ao Docker Compose envolveu apenas a definição das configurações básicas. Neste caso, é importante destacar a utilização da diretiva \verb|volumes|, que aponta para dois caminhos específicos: \verb|grafana/dashboard-json| e \verb|grafana/provisioning|. O primeiro armazena os arquivos JSON dos \foreign{dashboards}, que serão importados automaticamente pelo Grafana durante a inicialização. O segundo contém as configurações de provisionamento, usadas para automatizar a integração de fontes de dados e \foreign{dashboards}. Esse mecanismo é essencial para a automação do projeto, pois garante que todas as configurações necessárias --- tanto das integrações com fontes de dados, como o Prometheus, quanto dos \foreign{dashboards} --- sejam carregadas automaticamente ao iniciar o contêiner, dispensando procedimentos manuais pela interface web.
 
 Adicionalmente, a imagem oficial do Grafana utilizada no projeto já inclui o banco de dados SQLite, responsável por armazenar as configurações realizadas por meio da interface gráfica. As configurações aplicadas via provisionamento são acessíveis em modo \foreign{read-only} na interface e não podem ser modificadas manualmente. Já as alterações feitas diretamente pela interface gráfica são gravadas no SQLite, mas não são replicadas para os arquivos de provisionamento. Em situações de conflito entre as configurações do provisionamento e as definidas pela interface gráfica, prevalecem aquelas estabelecidas pelo provisionamento.
-}
 
 \begin{figure}[H]
 \centering
@@ -229,13 +225,13 @@ Adicionalmente, a imagem oficial do Grafana utilizada no projeto já inclui o ba
 \subsection{Testes de saturação}
 \label{subsection:TestesSaturacao}
 
-{\color{red}
 Os dispositivos virtuais, por si só, não produzem dados suficientes para uma análise qualitativa ou quantitativa eficaz do sistema de monitoramento. Por esse motivo, foram implementados testes de saturação, consistindo na geração de carga adicional sobre os dispositivos virtuais para simular cenários de uso intenso e coletar as métricas correspondentes.
 
 Inicialmente, a introdução de carga foi realizada exclusivamente com o stress-ng, integrado aos Dockerfiles dos dispositivos virtuais. Posteriormente, desenvolveu-se um \foreign{script} Bash que executa o stress-ng com diferentes parâmetros, simulando variados tipos de carga (CPU, memória, I/O, etc.) e níveis de intensidade. Esse \foreign{script} é executado em segundo plano, simultaneamente à execução do agente Telegraf, garantindo a geração contínua de carga durante a coleta das métricas.
 
 Apesar do bom desempenho na geração de carga computacional, o stress-ng mostrou-se insuficiente para simular tráfego de rede de forma realista. Para superar essa limitação, foi incorporado o iPerf3 ao projeto. Como esta ferramenta opera no modelo cliente-servidor e não permite a atuação simultânea nessas funções, foi criado um contêiner dedicado para funcionar como servidor iPerf3. Em paralelo, cada dispositivo virtual passou a contar com uma instância do iPerf3 configurada como cliente. Dessa maneira, tornou-se possível gerar tráfego de rede entre os dispositivos virtuais e o servidor iPerf3, aprimorando a simulação de carga sobre o ambiente de rede.
 
+{\color{red}
 
 \textcolor{blue}{Rascunho:
 [FALAR SOBRE AS ESPECIFICAÇOES DOS TESTES (PRIMEIRO UM DE CADA VEZ, DEPOIS TODOS JUNTOS, CARGAS, INTENSIDADES, DURAÇOES, ETC.)]}
@@ -252,10 +248,23 @@ Apesar do bom desempenho na geração de carga computacional, o stress-ng mostro
 \end{figure}
 
 
-\subsection{Considerações finais}
-\label{subsection:ConsideracoesFinais}
+{\color{red}
 
-\textcolor{blue}{Dúvida: Como combinamos de contar a experiencia com o SQLitexPostgres e tambem a alteração para Alertmanager na seção 3.5 (alertas e dashboards), confesso que não sei mais o que colocar aqui... talvez matemos essa subseção 3.2.6?}
+\subsection{Considerações}
+\label{subsection:Consideracoes}
+
+Diversas tentativas de incluir dispositivos móveis na rede de monitoramento foram realizadas ao longo do desenvolvimento, com o intuito de ampliar a diversidade dos equipamentos monitorados. No entanto, obstáculos técnicos --- como a ausência de suporte oficial para Android e restrições de permissão do sistema operacional (incluindo limitações de segurança e necessidade de acesso \foreign{root}) --- inviabilizaram essa integração. Embora não tenham resultado em sucesso, essas experiências contribuíram para um melhor entendimento das limitações e desafios envolvidos no monitoramento de dispositivos móveis.
+
+Destaca-se que, em uma das tentativas, foi possível realizar com êxito um \foreign{ping} ao dispositivo móvel do autor, equipado com uma versão não oficial do Zabbix Agent recomendada pela própria Zabbix, via contêiner do servidor Zabbix (anterior à adoção do Prometheus). Ainda assim, as dificuldades anteriormente expostas impediram o avanço dessa abordagem.
+
+Considerou-se também a utilização do \foreign{agentless monitoring} (monitoramento sem agentes) por meio do SNMP, mas essa alternativa foi descartada devido à complexidade adicional e às limitações do protocolo, como a necessidade de pré-configuração nos dispositivos e a restrição quanto ao tipo e à quantidade de métricas acessíveis.
+
+Também estudou-se a simulação de dispositivos móveis por meio de emuladores Android, alternativa igualmente abandonada devido ao aumento da complexidade do projeto.
+}
+
+\textcolor{blue}{Dúvida: Por ter mencionado o Android nesse texto, sou obrigado a acrescentá-lo lá no embasamento teórico no capítulo 2?}
+
+% \textcolor{blue}{Dúvida: Como combinamos de contar a experiencia com o SQLitexPostgres e tambem a alteração para Alertmanager na seção 3.5 (alertas e dashboards), confesso que não sei mais o que colocar aqui... talvez matemos essa subseção 3.2.6?}
 
 % Uma dúvida que tive hoje nesta seção: nós combinamos de comentar sobre dashboards e alertas na seção 3.5, porém isso implica que eu não incluiria os respectivos blocos de dashboards e alertas (e Alertmanager) no diagrama neste momento. Isso implica que a figura do diagrama final da arquitetura só apareceria no fim da seção 3.6. Como proceder?
 
