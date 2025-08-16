@@ -17,7 +17,11 @@ while true; do
     cpu_pipe_workers=$((RANDOM % 3 + 2))
 
     vm_workers=$((RANDOM % 2 + 1))
-    vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker
+    if [ "$vm_workers" -eq 1 ]; then
+        vm_bytes=$((RANDOM % 101 + 500))M # 500–600MB/worker
+    else
+        vm_bytes=$((RANDOM % 163 + 350))M # 350–512MB/worker
+    fi
 
     hdd_workers=1
     hdd_bytes=$((RANDOM % 50 + 100))M  # Disk I/O size between 100MB to 150MB
@@ -105,11 +109,15 @@ while true; do
     # Regenerate parameters
     cpu_workers=$((RANDOM % 3 + 2))
     vm_workers=$((RANDOM % 2 + 1))
-    vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker
+    if [ "$vm_workers" -eq 1 ]; then
+        vm_bytes=$((RANDOM % 101 + 500))M # 500–600MB/worker
+    else
+        vm_bytes=$((RANDOM % 163 + 350))M # 350–512MB/worker
+    fi
     hdd_bytes=$((RANDOM % 50 + 100))M  # Disk I/O size between 100MB to 150MB
     system_workers=2
 
-    echo "$(timestamp) [INFO] CPU: $cpu_workers, VM: $vm_workers x $vm_bytes, HDD: $hdd_bytes, Network: $net_workers, System: $system_workers"
+    echo "$(timestamp) [INFO] CPU: $cpu_workers, VM: $vm_workers x $vm_bytes, HDD: $hdd_bytes, System: $system_workers"
     echo "$(timestamp) [INFO] Running all in parallel for $stress_time"
 
     stress-ng --cpu "$cpu_workers" --timeout "$stress_time" &

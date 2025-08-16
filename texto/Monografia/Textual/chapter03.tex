@@ -158,7 +158,7 @@ Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo 
 É importante destacar que o Docker, por padrão, considera 100\% de um núcleo como limite máximo de uso de CPU; logo, a atribuição de 0.6 no arquivo Compose indica que o contêiner está autorizado a utilizar até 60\% da capacidade de um único núcleo.
 
 {\color{red}
-Os valores atribuídos às limitações de memória foram definidos a partir de cálculos estimativos, considerando a carga potencial gerada pelo \foreign{script} de geração de carga, acrescida do consumo médio do sistema operacional e do agente Telegraf. Durante os testes iniciais, esses parâmetros foram ajustados empiricamente, de modo a assegurar a operação estável dos contêineres dentro dos limites estabelecidos. Detalhes adicionais sobre esse processo estão apresentados na Seção \ref{subsection:TestesSaturacao}.
+Os valores atribuídos às limitações de memória foram definidos a partir de cálculos estimativos, considerando a carga potencial gerada pelo \foreign{script} de geração de carga, acrescida do consumo médio do sistema operacional e do agente Telegraf. Durante os testes iniciais, esses parâmetros foram ajustados empiricamente, de modo a assegurar a operação estável dos contêineres dentro dos limites estabelecidos.% Detalhes adicionais sobre esse processo estão apresentados na Seção \ref{subsection:TestesSaturacao}.
 }
 % O código fonte do Docker Compose e dos Dockerfiles empregados na criação desses dispositivos virtuais encontra-se disponível no Apêndice \ref{apendiceA}.
 
@@ -234,10 +234,11 @@ Inicialmente, a introdução de carga foi realizada exclusivamente com o stress-
 
 Apesar do bom desempenho na geração de carga computacional, o stress-ng mostrou-se insuficiente para simular tráfego de rede de forma realista. Para superar essa limitação, foi incorporado o iPerf3 ao projeto. Como esta ferramenta opera no modelo cliente-servidor e não permite a atuação simultânea nessas funções, foi criado um contêiner dedicado para funcionar como servidor iPerf3. Em paralelo, cada dispositivo virtual passou a contar com uma instância do iPerf3 configurada como cliente. Dessa maneira, tornou-se possível gerar tráfego de rede entre os dispositivos virtuais e o servidor iPerf3, aprimorando a simulação de carga sobre o ambiente de rede.
 
+
 \begin{figure}[H]
 \centering
 \color{red}
-% \setlength{\abovecaptionskip}{-20pt}
+\setlength{\abovecaptionskip}{-10pt}
 \includegraphics[width=\textwidth]{Imagens/chap03/load_generator_flowchart2.pdf}
 \caption{Fluxograma dos testes de carga.}
 \label{fig:FluxogramaCarga}
@@ -246,10 +247,37 @@ Apesar do bom desempenho na geração de carga computacional, o stress-ng mostro
 
 
 {\color{red}
+O script executa um \foreign{loop} \verb|while true| estruturado em dois blocos principais: inicialmente, realiza uma série de testes sequenciais, seguidos pela repetição desses testes de forma paralela e simultânea. No início de cada bloco, os valores de duração dos testes (\verb|stress_time|) e do tempo de espera entre um bloco e outro (\verb|sleep_time|) são definidos aleatoriamente.
 
-\textcolor{blue}{Rascunho:
-[FALAR SOBRE AS ESPECIFICAÇOES DOS TESTES (PRIMEIRO UM DE CADA VEZ, DEPOIS TODOS JUNTOS, CARGAS, INTENSIDADES, DURAÇOES, ETC.)] e explicar o símbolo e o caĺculo das limitações de memória.}
+A aleatoriedade nas durações dos testes e dos intervalos de espera, bem como a definição contínua de novos valores a cada execução de bloco, tem como objetivo conferir um caráter caótico aos experimentos, aproximando-os das condições reais de operação. Embora os valores sejam determinados aleatoriamente, eles obedecem a intervalos previamente estabelecidos: nos testes sequenciais, cada execução ocorre entre 15 e 20 segundos; no bloco paralelo, o tempo total de execução varia de 25 a 30 segundos. Para ambos os blocos, o intervalo de espera entre execuções está fixado entre 10 e 30 segundos.
 
+Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas.
+
+Na figura 3.13, os \foreign{scripts} são representados pelo símbolo \includegraphics[height=1em]{Imagens/chap03/input_black.png}.
+
+% , conforme apresentado na Tabela xxx.
+
+% \begin{table}[h]
+% \centering
+% \color{red}
+% \caption{Cargas do stress-ng.}
+% \label{tab:CargasStressng}
+% \begin{tabular}{c c}
+% \hline
+% \textbf{Teste} & \textbf{Nº de workers} \\
+% \hline
+% CPU & 2 a 4  \\
+% Memória & 1 a 2 \\
+% Disk I/O & 1 \\
+% System & 2 \\
+% Network & N/A (iPerf3) \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% No caso da memória, a carga atribuída varia conforme o número de \foreign{workers} utilizados pelo stress-ng. Quando há apenas 1 \foreign{worker}, a carga é definida dentro do intervalo de 500MB a 600MB por \foreign{worker}. Com 2 \foreign{workers}, esse intervalo é ajustado para 350MB a 512MB por \foreign{worker}.
+
+% Cabe ressaltar que, diante da configuração de 2 \foreign{workers} com carga máxima de 500MB, somada ao consumo do agente Telegraf e do sistema operacional, é provável que a maioria dos dispositivos virtuais apresente o erro de OOM (\foreign{Out of Memory}). Esse cenário, por sua vez, constitui uma oportunidade relevante para analisar o uso de \foreign{swap memory}, conforme discutido na Seção \ref{subsection:Memoria}.
 
 }
 
