@@ -11,28 +11,35 @@ while true; do
     stress_time=$((RANDOM % 11 + 15))s    # 15–25 seconds
     sleep_time=$((RANDOM % 20 + 10))      # 10–30 seconds
 
+    cpu_workers=$((RANDOM % 3 + 2))
+    cpu_cache_workers=$((RANDOM % 3 + 2))
+    cpu_float_workers=$((RANDOM % 3 + 2))
+    cpu_pipe_workers=$((RANDOM % 3 + 2))
+
+    vm_workers=$((RANDOM % 2 + 1))
+    vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker
+
+    hdd_workers=1
+    hdd_bytes=$((RANDOM % 50 + 100))M  # Disk I/O size between 100MB to 150MB
+
     #### Block 1: Serial Stress Tests ####
 
     # 1. CPU Tests
     echo "$(timestamp) [INFO] === Starting CPU Tests ==="
     
     # CPU Test
-    cpu_workers=$((RANDOM % 3 + 2))
     echo "$(timestamp) [INFO] [CPU] Workers: $cpu_workers, Duration: $stress_time"
     stress-ng --cpu "$cpu_workers" --timeout "$stress_time"
     
     # CPU Cache Stress
-    cpu_cache_workers=$((RANDOM % 3 + 2))
     echo "$(timestamp) [INFO] [CPU Cache] Workers: $cpu_cache_workers, Duration: $stress_time"
     stress-ng --cache "$cpu_cache_workers" --timeout "$stress_time"
     
     # CPU Floating Point Stress
-    cpu_float_workers=$((RANDOM % 3 + 2))
     echo "$(timestamp) [INFO] [CPU Float] Workers: $cpu_float_workers, Duration: $stress_time"
     stress-ng --matrix "$cpu_float_workers" --timeout "$stress_time"
     
     # CPU Pipe Stress
-    cpu_pipe_workers=$((RANDOM % 3 + 2))
     echo "$(timestamp) [INFO] [CPU Pipe] Workers: $cpu_pipe_workers, Duration: $stress_time"
     stress-ng --pipe "$cpu_pipe_workers" --timeout "$stress_time"
     
@@ -42,8 +49,6 @@ while true; do
     echo "$(timestamp) [INFO] === Starting Memory Tests ==="
     
     # Memory Test
-    vm_workers=$((RANDOM % 2 + 1))
-    vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker
     echo "$(timestamp) [INFO] [Memory] Workers: $vm_workers, Bytes per worker: $vm_bytes, Duration: $stress_time"
     stress-ng --vm "$vm_workers" --vm-bytes "$vm_bytes" --timeout "$stress_time"
 
@@ -53,8 +58,6 @@ while true; do
     echo "$(timestamp) [INFO] === Starting Disk I/O Tests ==="
     
     # Disk I/O Test
-    hdd_workers=1
-    hdd_bytes=$((RANDOM % 50 + 100))M  # Disk I/O size between 100MB to 150MB
     echo "$(timestamp) [INFO] [Disk I/O] Workers: $hdd_workers, Bytes: $hdd_bytes, Duration: $stress_time"
     stress-ng --hdd "$hdd_workers" --hdd-bytes "$hdd_bytes" --timeout "$stress_time"
 
@@ -72,12 +75,10 @@ while true; do
     echo "$(timestamp) [INFO] === Starting Network Tests ==="
     
     # Network Test
-    net_workers=2
-    echo "$(timestamp) [INFO] [Network] Workers: $net_workers, Duration: $stress_time"
-    # stress-ng --sock "$net_workers" --timeout "$stress_time"
+    echo "$(timestamp) [INFO] [Network] Duration: $stress_time"
 
     # Run iperf3 client test to iperf3 server
-    iperf3 -c iperf3 -t 10 || echo "iperf3 test failed"
+    iperf3 -c iperf3 -t "$stress_time" || echo "iperf3 test failed"
 
     echo "$(timestamp) [INFO] === Completed Network Tests ==="
 
@@ -106,7 +107,6 @@ while true; do
     vm_workers=$((RANDOM % 2 + 1))
     vm_bytes=$((RANDOM % 128 + 480))M  # Memory load between 480MB to 608MB per worker
     hdd_bytes=$((RANDOM % 50 + 100))M  # Disk I/O size between 100MB to 150MB
-    net_workers=2
     system_workers=2
 
     echo "$(timestamp) [INFO] CPU: $cpu_workers, VM: $vm_workers x $vm_bytes, HDD: $hdd_bytes, Network: $net_workers, System: $system_workers"
@@ -115,7 +115,6 @@ while true; do
     stress-ng --cpu "$cpu_workers" --timeout "$stress_time" &
     stress-ng --vm "$vm_workers" --vm-bytes "$vm_bytes" --timeout "$stress_time" &
     stress-ng --hdd 1 --hdd-bytes "$hdd_bytes" --timeout "$stress_time" &
-    stress-ng --sock "$net_workers" --timeout "$stress_time" &
     stress-ng --fork "$system_workers" --timeout "$stress_time" &
 
     # Parallel block with additional tests
@@ -126,7 +125,7 @@ while true; do
     stress-ng --hdd 1 --hdd-opts wr-seq --timeout "$stress_time" &
 
     # Run iperf3 client test to iperf3 server (parallel)
-    iperf3 -c iperf3 -t 10 || echo "iperf3 test failed (parallel)" &
+    iperf3 -c iperf3 -t "$stress_time" || echo "iperf3 test failed (parallel)" &
 
     wait
     echo "$(timestamp) [INFO] === Completed Parallel Tests, sleeping for $sleep_time seconds ==="

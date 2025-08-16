@@ -234,6 +234,17 @@ Inicialmente, a introdução de carga foi realizada exclusivamente com o stress-
 
 Apesar do bom desempenho na geração de carga computacional, o stress-ng mostrou-se insuficiente para simular tráfego de rede de forma realista. Para superar essa limitação, foi incorporado o iPerf3 ao projeto. Como esta ferramenta opera no modelo cliente-servidor e não permite a atuação simultânea nessas funções, foi criado um contêiner dedicado para funcionar como servidor iPerf3. Em paralelo, cada dispositivo virtual passou a contar com uma instância do iPerf3 configurada como cliente. Dessa maneira, tornou-se possível gerar tráfego de rede entre os dispositivos virtuais e o servidor iPerf3, aprimorando a simulação de carga sobre o ambiente de rede.
 
+\begin{figure}[H]
+\centering
+\color{red}
+% \setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap03/load_generator_flowchart2.pdf}
+\caption{Fluxograma dos testes de carga.}
+\label{fig:FluxogramaCarga}
+\end{figure}
+
+
+
 {\color{red}
 
 \textcolor{blue}{Rascunho:
