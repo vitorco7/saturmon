@@ -59,7 +59,6 @@ Conforme relatado na literatura, o Ubuntu Server demonstrou desempenho satisfat�
 
 No decorrer dessas alterações, a abordagem de monitoramento foi ampliada para contemplar não apenas servidores, mas também uma ampla variedade de dispositivos conectados à rede. Essa redefinição proporcionou maior versatilidade ao projeto, tornando desnecessária a aquisição de servidores físicos e possibilitando a utilização de contêineres tanto para a simulação de dispositivos quanto para a implementação da \foreign{stack} de monitoramento. Com isso, o processo de desenvolvimento tornou-se mais prático, ágil e modular, além de permitir um aproveitamento mais eficiente dos recursos computacionais disponíveis. Cabe destacar ainda que, ao adotar contêineres não só para testes, mas também para toda a infraestrutura de monitoramento, a discussão sobre a necessidade de hardware específico, como NUC ou Raspberry Pi, perdeu relevância neste contexto, já que a solução desenvolvida pode ser executada em qualquer máquina compatível com tecnologias de conteinerização.
 
-%TODO: Em trabalhos futuros a análise de viabilidade de implementação em NUC ou Raspberry Pi
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.97]{Imagens/chap03/v2_stack.pdf}
@@ -115,14 +114,6 @@ Com o escopo e as ferramentas devidamente definidos, e tomando como referência 
 
 Nas subseções seguintes, são detalhados os principais blocos que compõem a arquitetura, seu funcionamento e as interações entre eles, culminando na apresentação da versão final da solução. Embora a ordem em que as subseções são apresentadas não siga estritamente a sequência cronológica do desenvolvimento, a estrutura adotada busca facilitar a compreensão do leitor, organizando o conteúdo de maneira progressiva conforme o fluxo natural de entrada, processamento e saída de dados.
 
-% \begin{figure}[H]
-% \centering
-% \setlength{\abovecaptionskip}{-20pt}
-% \includegraphics[width=\textwidth]{Imagens/chap03/v4_diagram.pdf}
-% \caption{\textcolor{red}{Arquitetura.}}
-% \label{fig:Arquiteturav1.0}
-% \end{figure}
-
 \subsection{Dispositivos virtuais}
 \label{subsection:DispositivosVirtuais}
 
@@ -159,7 +150,7 @@ Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo 
 
 É importante destacar que o Docker, por padrão, considera 100\% de um núcleo como limite máximo de uso de CPU; logo, a atribuição de 0.6 no arquivo Compose indica que o contêiner está autorizado a utilizar até 60\% da capacidade de um único núcleo.
 
-Os valores atribuídos às limitações de memória foram definidos a partir de cálculos estimativos, considerando a carga potencial gerada pelo \foreign{script} de geração de carga, acrescida do consumo médio do sistema operacional e do agente Telegraf. Durante os testes iniciais, esses parâmetros foram ajustados empiricamente, de modo a assegurar a operação estável dos contêineres dentro dos limites estabelecidos.% Detalhes adicionais sobre esse processo estão apresentados na Seção \ref{subsection:TestesSaturacao}.
+Os valores atribuídos às limitações de memória foram definidos a partir de cálculos estimativos, considerando a carga potencial gerada pelo \foreign{script} de geração de carga, acrescida do consumo médio do sistema operacional e do agente Telegraf. Durante os testes iniciais, esses parâmetros foram ajustados empiricamente, de modo a assegurar a operação estável dos contêineres dentro dos limites estabelecidos.
 
 % O código fonte do Docker Compose e dos Dockerfiles empregados na criação desses dispositivos virtuais encontra-se disponível no Apêndice \ref{apendiceA}.
 \break
@@ -196,28 +187,19 @@ Por fim, considerando as limitações discutidas, optou-se pelo uso do \foreign{
 
 \newpage
 
-\begin{lstlisting}[caption={Leitura de um único arquivo com inputs.exec}, label={lst:trecho1}]
+\begin{lstlisting}[caption={Leitura do arquivo "cpu.pressure" com inputs.exec}, label={lst:trecho1}]
 [[inputs.exec]]
-  name_override = "container_cpu_pressure"
   commands = ["cat /sys/fs/cgroup/cpu.pressure"]
   data_format = "grok"
   grok_patterns = ["%{WORD:pressure_type} avg10=%{NUMBER:avg10:float} avg60=%{NUMBER:avg60:float} avg300=%{NUMBER:avg300:float} total=%{NUMBER:total:int}"]
   timeout = "5s"
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Leitura de diversos arquivos com inputs.cgroups}, label={lst:trecho2}]
+\begin{lstlisting}[caption={Leitura do mesmo arquivo "cpu.pressure" com inputs.cgroups}, label={lst:trecho2}]
 [[inputs.cgroup]]
   paths = ["/sys/fs/cgroup/"]
   files = [
-    "cpu.idle",
-    "cpu.stat",
-    "memory.max",
-    "memory.current",
-    "memory.swap.max",
-    "memory.swap.current",
-    "io.stat",
-    "cpu.pressure",
-    "io.pressure"
+    "cpu.pressure"
   ]
 \end{lstlisting}
 
@@ -286,24 +268,7 @@ Por fim, considerando as limitações discutidas, optou-se pelo uso do \foreign{
 %   \item \textbf{expiration\_interval = "120s"}: Remove métricas que não se atualizam por 120s.
 %   \item \textbf{metric\_version = 2}: Usa formato v2 de métricas Prometheus (nomenclatura melhorada).
 % \end{itemize}
-
-
-
 }
-
-% {\color{red}
-% Quanto aos agentes, foram consideradas duas abordagens distintas: a primeira, a adição de um novo contêiner ao à rede Docker, executando o serviço do cAdvisor, uma ferramenta amplamente utilizada no monitoramento de contêineres, como apresentado em \ref{subsection:cAdvisor}. No entanto, o cAdvisor 
-
-% %Aqui eu preciso falar dos agentes que só liam dados do host e nao dos containers, explicar que eu quis usar agentes integrados (embedded) nos dispositivos virtuais, e basicamente justificar pq eu larguei os outros e fiquei com telegraf.
-% }
-
-
-% {1 - Atualizei a estratégia de coleta de métricas do Docker: agora estou utilizando o plugin inputs.docker diretamente no telegraf.conf do host. Dessa forma, o Telegraf coleta métricas diretamente do socket do Docker daemon (/var/run/docker.sock), garantindo maior precisão, já que os dados vêm da mesma fonte usada pelo próprio Docker para monitoramento. Com isso, obtenho métricas essenciais como uso de CPU, memória, disco (I/O) e rede. Esses dados podem ser usados para comparações qualitativas com as métricas coletadas por Telegrafs rodando dentro dos containers.
-
-% Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais? Quando o objetivo era comparar máquinas físicas versus containers, essa comparação qualitativa era justificável. Porém, ao comparar container versus container, será que essa análise ainda se sustenta? Há valor prático em comparar dispositivos virtuais entre si nesses termos?
-
-% --> Realmente não faz sentido, logo não é necessário fazer esse levantamento.
-% }
 
 \begin{figure}[H]
 \centering
@@ -339,7 +304,7 @@ Como mencionado no Capítulo \ref{chap2}, o Prometheus Expression Browser oferec
 
 Assim como nos demais serviços, a inclusão do Grafana ao Docker Compose envolveu apenas a definição das configurações básicas. Neste caso, é importante destacar a utilização da diretiva \verb|volumes|, que aponta para dois caminhos específicos: \verb|grafana/dashboard-json| e \verb|grafana/provisioning|. O primeiro armazena os arquivos JSON dos \foreign{dashboards}, que serão importados automaticamente pelo Grafana durante a inicialização. O segundo contém as configurações de provisionamento, usadas para automatizar a integração de fontes de dados e \foreign{dashboards}. Esse mecanismo é essencial para a automação do projeto, pois garante que todas as configurações necessárias --- tanto das integrações com fontes de dados, como o Prometheus, quanto dos \foreign{dashboards} --- sejam carregadas automaticamente ao iniciar o contêiner, dispensando procedimentos manuais pela interface web.
 
-Adicionalmente, a imagem oficial do Grafana utilizada no projeto já inclui o banco de dados SQLite, responsável por armazenar as configurações realizadas por meio da interface gráfica. As configurações aplicadas via provisionamento são acessíveis em modo \foreign{read-only} na interface e não podem ser modificadas manualmente. Já as alterações feitas diretamente pela interface gráfica são gravadas no SQLite, mas não são replicadas para os arquivos de provisionamento. Em situações de conflito entre as configurações do provisionamento e as definidas pela interface gráfica, prevalecem aquelas estabelecidas pelo provisionamento.
+Adicionalmente, a imagem oficial do Grafana utilizada no projeto já inclui o banco de dados SQLite, responsável por armazenar as configurações realizadas por meio da interface gráfica. As configurações aplicadas via provisionamento são acessíveis em modo \foreign{read-only} na interface e não podem ser modificadas manualmente. Já as alterações feitas diretamente pela interface gráfica são gravadas no SQLite, mas não são replicadas para os arquivos de provisionamento \textcolor{red}{nem registradas em versionamento}. Em situações de conflito entre as configurações do provisionamento e as definidas pela interface gráfica, prevalecem aquelas estabelecidas pelo provisionamento.
 
 \begin{figure}[H]
 \centering
@@ -452,10 +417,6 @@ A escolha do Ubuntu Desktop como sistema operacional base para ambos os equipame
 
 Placeholder
 
-% foram feitas tentativas de utilização de ferramentas de \foreign{chaos-engineering} como Pumba e ChaosBlade e até mesmo tentativas de manipulação direta de iptables para gerar tráfego de rede, mas essas ferramentas não se mostraram adequadas para este trabalho.
-
-
-% Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema de controle de tráfego \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|). Enquanto isso, o \foreign{plugin} \verb|inputs.net| do Telegraf a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Ou seja, 
 
 
 \section{Aplicação de Monitoramento}
@@ -472,3 +433,27 @@ Discorrer sobre o dashboard em si
 % Aqui a finalizo a seção contando a historia do SQLite x Postgres e eventualmente chegando na decisão de descartar ambos e ficar apenas com o TSDB.
 % Tambem relato da minha experiencia de formatar a maquina toda e a facilidade em subir todo o projeto (salve a configuração pontual do permissionamento de escrita do grafana e da chave do repositorio do telegraf)
 % Após isso eu fecho a seção com o diagrama da arquitetura final definitiva. 
+
+
+% foram feitas tentativas de utilização de ferramentas de \foreign{chaos-engineering} como Pumba e ChaosBlade e até mesmo tentativas de manipulação direta de iptables para gerar tráfego de rede, mas essas ferramentas não se mostraram adequadas para este trabalho.
+
+
+% Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema de controle de tráfego \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|). Enquanto isso, o \foreign{plugin} \verb|inputs.net| do Telegraf a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Ou seja, 
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap03/by-blocks/dashboard_diagram.pdf}
+\caption{Visualização.}
+\label{fig:DiagramaVisualizacao}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap03/by-blocks/alerts_diagram.pdf}
+\caption{Notificações.}
+\label{fig:DiagramaAlertas}
+\end{figure}
