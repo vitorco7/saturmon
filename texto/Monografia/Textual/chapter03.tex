@@ -136,6 +136,8 @@ Nas subseções seguintes, são detalhados os principais blocos que compõem a a
 
 Para a aquisição de dados, foram instanciados cinco contêineres Docker para simular uma rede de computadores. A fim de reproduzir um ambiente heterogêneo, cada contêiner recebeu restrições específicas de CPU e memória em sua configuração no Docker Compose. O Dockerfile, por sua vez, provisiona a distribuição Linux, \foreign{script} e software para geração de carga e o agente de monitoramento. Detalhamentos sobre essas ferramentas são apresentados nas subseções seguintes.
 
+\textcolor{red}{Além das limitações de recursos, houve também a preocupação em manter limitado o permissionamento de acesso dos contêineres à comunicação e recursos do \foreign{host}. Essa medida tem como objetivo garantir o isolamento de cada dispositivo virtual, simulando a independência típica de dispositivos reais em uma rede.}
+
 Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo com as especificações resumidas na tabela a seguir:
 
 \begin{table}[h]
@@ -157,15 +159,138 @@ Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo 
 
 É importante destacar que o Docker, por padrão, considera 100\% de um núcleo como limite máximo de uso de CPU; logo, a atribuição de 0.6 no arquivo Compose indica que o contêiner está autorizado a utilizar até 60\% da capacidade de um único núcleo.
 
-{\color{red}
 Os valores atribuídos às limitações de memória foram definidos a partir de cálculos estimativos, considerando a carga potencial gerada pelo \foreign{script} de geração de carga, acrescida do consumo médio do sistema operacional e do agente Telegraf. Durante os testes iniciais, esses parâmetros foram ajustados empiricamente, de modo a assegurar a operação estável dos contêineres dentro dos limites estabelecidos.% Detalhes adicionais sobre esse processo estão apresentados na Seção \ref{subsection:TestesSaturacao}.
-}
+
 % O código fonte do Docker Compose e dos Dockerfiles empregados na criação desses dispositivos virtuais encontra-se disponível no Apêndice \ref{apendiceA}.
+\break
 
 \subsection{Agentes}
 \label{subsection:Agentes}
 
-Placeholder
+{\color{red}
+Com a substituição do Zabbix pelo Prometheus como sistema de monitoramento principal, todas as ferramentas pertencentes ao ecossistema Zabbix, inclusive seus agentes, foram descartadas. Isso tornou necessário avaliar alternativas de agentes mais adequadas ao novo contexto deste trabalho.
+
+A premissa de isonomia entre as arquiteturas dos dispositivos virtuais e reais é fundamental para assegurar a qualidade dos dados, minimizando possíveis distorções ou vieses nas métricas coletadas. A partir dessa diretriz, cada contêiner de dispositivo virtual deve possuir um agente integrado, cuja inclusão é realizada diretamente no Dockerfile correspondente. Essa abordagem garante que o agente seja instalado, configurado e executado de maneira uniforme em todos os dispositivos do ambiente de monitoramento.
+
+Inicialmente, conforme as recomendações da documentação do Prometheus \citep{promnodeexporter2025}, foi adotado o Node Exporter como exportador. Sua simplicidade, leveza, compatibilidade e fácil integração com o Prometheus foram destaques durante a implementação. Contudo, durante as validações iniciais, verificou-se que o Node Exporter coleta apenas métricas relacionadas ao \foreign{host}, deixando de capturar informações específicas de cada contêiner — uma limitação incompatível com os objetivos deste trabalho.
+
+A partir dessa constatação, foram avaliados outros agentes, como o Prometheus Agent e o Grafana Agent, mas ambos também se mostraram inadequados pelos mesmos motivos do Node Exporter. O cAdvisor, outro agente de monitoramento bastante utilizado, chegou a ser considerado, porém sua abordagem operacional não está alinhada à premissa de isonomia do projeto, pois opera num contêiner próprio e coleta métricas diretamente do Docker \foreign{daemon}, sem a necessidade de instalação individual em cada contêiner. Apesar de sua eficiência, essa solução não atende aos requisitos deste trabalho, que exige uma arquitetura consistente tanto para dispositivos virtuais quanto reais. Os motivos que levaram à desistência do cAdvisor também fundamentaram a rejeição ao Docker Stats Exporter, um exportador que chegou a ser avaliado durante o desenvolvimento.
+
+Outra premissa importante na busca por minimização de distorções e vieses nas leituras é a utilização de um agente versátil, capaz de operar em diversos tipos de sistemas e dispositivos. A partir das premissas apresentadas e das limitações encontradas nos agentes já mencionados, o Telegraf emergiu como a solução ideal para atender às necessidades impostas.
+
+Altamente configurável, o Telegraf pode ser facilmente integrado a diferentes sistemas e dispositivos, além de possuir suporte nativo para o Prometheus. Sua flexibilidade permite a coleta de uma ampla gama de métricas, tanto do \foreign{host} quanto dos contêineres, garantindo a isonomia necessária entre os dispositivos virtuais e reais. Além disso, suas popularidade, documentação e compatibilidade com diversas plataformas facilitam sua adoção e manutenção. Cabe ressaltar que o Telegraf apresenta um custo computacional superior ao do Node Exporter. Esse impacto pode ser ainda maior dependendo dos \foreign{plugins} utilizados.
+
+Instalou-se uma instância do Telegraf em cada contêiner de dispositivo virtual (via Dockerfile) e, adicionalmente, uma instância no \foreign{host} do projeto, com a finalidade de enriquecer os dados coletados. Para garantir uma configuração padronizada, foram definidos dois arquivos \verb|telegraf.conf| distintos: um aplicado aos contêineres e outro ao \foreign{host}.
+
+As configurações foram escritas em formato TOML \abbrev{TOML}{\foreign{Tom's Obvious, Minimal Language}}, de modo que todos os dispositivos compartilham os mesmos parâmetros globais e de saída. Já as configurações de entrada foram ajustadas conforme o papel de cada instância -- diferenciando o \foreign{host} dos dispositivos virtuais.
+
+Descrições mais detalhadas podem ser encontradas nos apêndices \textcolor{blue}{incluir apêndices}. Destaca-se, entretanto, os parâmetros: o uso de \verb|interval = "5s"|, que define a coleta de métricas a cada cinco segundos -- em sincronia com o intervalo de \foreign{scraping} do Prometheus -- e a utilização do \foreign{plugin} \verb|outputs.prometheus_client|, que expõe as métricas no formato Prometheus, permitindo ao mesmo realizar o \foreign{scraping} no \foreign{endpoint} \verb|/metrics| do Telegraf.
+
+Quanto às configurações de entrada, o arquivo \verb|telegraf.conf| do \foreign{host} emprega \foreign{plugins} específicos para cada categoria de métricas: \verb|inputs.cpu|, \verb|inputs.mem|, \verb|inputs.disk|, \verb|inputs.diskio|, \verb|inputs.net| e \verb|inputs.processes|. Essa estratégia otimiza a coleta de dados, ao empregar \foreign{plugins} específicos para cada recurso, além de simplificar a manutenção e favorecer a escalabilidade da solução
+
+Para os dispositivos virtuais, foi inicialmente empregado o \foreign{plugin} \verb|inputs.exec|, que cria \foreign{threads} periodicamente para executar comandos específicos e coletar as métricas desejadas. As especificações de tipagem dos dados, os comandos a serem executados e a formatação das saídas eram definidas manualmente no arquivo \verb|telegraf.conf|. Embora essa abordagem seja funcional, revelou-se pouco eficiente devido à sua complexidade, ao elevado custo computacional — decorrente da constante criação de novas \foreign{threads} — e à dificuldade de manutenção, pois qualquer alteração exigia modificações manuais no arquivo de configuração.
+
+No contexto da coleta de métricas, os \foreign{plugins} mencionados realizam a leitura de arquivos exclusivamente relacionados ao \foreign{kernel} do \foreign{host} (com exceção do \verb|inputs.net| e \verb|inputs.processes|), o que os torna inadequados para uso em contêineres, dadas as restrições de permissões de acesso ao \foreign{host}. Em busca de alternativas, o \foreign{plugin} \verb|inputs.docker| foi considerado, pois permite a coleta de métricas diretamente do \foreign{socket} do Docker \foreign{daemon}. No entanto, essa solução não é compatível com o Telegraf executando dentro de um contêiner, uma vez que o acesso ao \foreign{socket} do Docker exige permissões elevadas junto ao \foreign{host}, contrariando as premissas de isolamento estabelecidas para os dispositivos virtuais.
+
+Por fim, considerando as limitações discutidas, optou-se pelo uso do \foreign{plugin} \verb|inputs.cgroups|, que é especializado na leitura dos arquivos presentes no \foreign{path} \verb|/sys/fs/cgroups| do Linux — os mesmos utilizados pelo Docker para gerenciar e monitorar contêineres. Essa solução permite a coleta precisa de métricas diretamente relacionadas aos contêineres, assegurando a qualidade dos dados sem exigir permissões elevadas de acesso ao \foreign{host}. Além disso, o \verb|inputs.cgroups| simplifica significativamente a configuração e manutenção do Telegraf, eliminando a necessidade de ajustes manuais extensivos, e reduz o custo computacional, já que não há criação recorrente de novas \foreign{threads}.
+
+\newpage
+
+\begin{lstlisting}[caption={Leitura de um único arquivo com inputs.exec}, label={lst:trecho1}]
+[[inputs.exec]]
+  name_override = "container_cpu_pressure"
+  commands = ["cat /sys/fs/cgroup/cpu.pressure"]
+  data_format = "grok"
+  grok_patterns = ["%{WORD:pressure_type} avg10=%{NUMBER:avg10:float} avg60=%{NUMBER:avg60:float} avg300=%{NUMBER:avg300:float} total=%{NUMBER:total:int}"]
+  timeout = "5s"
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Leitura de diversos arquivos com inputs.cgroups}, label={lst:trecho2}]
+[[inputs.cgroup]]
+  paths = ["/sys/fs/cgroup/"]
+  files = [
+    "cpu.idle",
+    "cpu.stat",
+    "memory.max",
+    "memory.current",
+    "memory.swap.max",
+    "memory.swap.current",
+    "io.stat",
+    "cpu.pressure",
+    "io.pressure"
+  ]
+\end{lstlisting}
+
+
+% Diretivas globais:
+
+% \begin{table}[h!]
+% \centering
+% \begin{tabular}{|l|p{10cm}|}
+% \hline
+% \textbf{Configuração} & \textbf{Descrição (PT-BR)} \\
+% \hline
+% \textbf{interval = "5s"} & Coleta métricas a cada 5 segundos (alinhado com Prometheus). \\
+% \hline
+% \textbf{round\_interval = true} & Alinha a coleta com múltiplos exatos do intervalo. \\
+% \hline
+% \textbf{metric\_batch\_size = 1000} & Envia até 1000 métricas por lote para os outputs. \\
+% \hline
+% \textbf{metric\_buffer\_limit = 10000} & Armazena até 10000 métricas em buffer caso haja falha de scraping. \\
+% \hline
+% \textbf{collection\_jitter = "0s"} & Sem atraso aleatório na coleta (maior precisão temporal). \\
+% \hline
+% \textbf{flush\_interval = "5s"} & Descarrega métricas a cada 5 segundos (mesmo ritmo da coleta). \\
+% \hline
+% \textbf{flush\_jitter = "0s"} & Sem atraso aleatório no envio (saída determinística). \\
+% \hline
+% \textbf{precision = "0s"} & Mantém precisão total do timestamp (nanosegundos). \\
+% \hline
+% \textbf{debug = false} & Desabilita logs de depuração (reduz verbosidade em produção). \\
+% \hline
+% \textbf{quiet = false} & Mantém logging padrão (não fica silencioso). \\
+% \hline
+% \textbf{logfile = ""} & Usa syslog/systemd para logs (sem arquivo dedicado). \\
+% \hline
+% \textbf{hostname = ""} & Usa o hostname real do sistema. \\
+% \hline
+% \textbf{omit\_hostname = false} & Inclui a tag \texttt{host} nas métricas. \\
+% \hline
+% \textbf{listen = ":9273"} & Servidor HTTP interno escuta na porta 9273 para Prometheus. \\
+% \hline
+% \textbf{path = "/metrics"} & Endpoint HTTP onde métricas são expostas. \\
+% \hline
+% \textbf{expiration\_interval = "120s"} & Remove métricas que não se atualizam por 120s. \\
+% \hline
+% \textbf{metric\_version = 2} & Usa formato v2 de métricas Prometheus (nomenclatura melhorada). \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+% \begin{itemize}
+%   \item \textbf{interval = "5s"}: Coleta métricas a cada 5 segundos (alinhado com Prometheus).
+%   \item \textbf{round\_interval = true}: Alinha a coleta com múltiplos exatos do intervalo.
+%   \item \textbf{metric\_batch\_size = 1000}: Envia até 1000 métricas por lote para os outputs.
+%   \item \textbf{metric\_buffer\_limit = 10000}: Armazena até 10000 métricas em buffer caso haja falha de scraping.
+%   \item \textbf{collection\_jitter = "0s"}: Sem atraso aleatório na coleta (maior precisão temporal).
+%   \item \textbf{flush\_interval = "5s"}: Descarrega métricas a cada 5 segundos (mesmo ritmo da coleta).
+%   \item \textbf{flush\_jitter = "0s"}: Sem atraso aleatório no envio (saída determinística).
+%   \item \textbf{precision = "0s"}: Mantém precisão total do timestamp (nanosegundos).
+%   \item \textbf{debug = false}: Desabilita logs de depuração (reduz verbosidade em produção).
+%   \item \textbf{quiet = false}: Mantém logging padrão (não fica silencioso).
+%   \item \textbf{logfile = ""}: Usa syslog/systemd para logs (sem arquivo dedicado).
+%   \item \textbf{hostname = ""}: Usa o hostname real do sistema.
+%   \item \textbf{omit\_hostname = false}: Inclui a tag \texttt{host} nas métricas.
+%   \item \textbf{listen = ":9273"}: Servidor HTTP interno escuta na porta 9273 para Prometheus.
+%   \item \textbf{path = "/metrics"}: Endpoint HTTP onde métricas são expostas.
+%   \item \textbf{expiration\_interval = "120s"}: Remove métricas que não se atualizam por 120s.
+%   \item \textbf{metric\_version = 2}: Usa formato v2 de métricas Prometheus (nomenclatura melhorada).
+% \end{itemize}
+
+
+
+}
+
 % {\color{red}
 % Quanto aos agentes, foram consideradas duas abordagens distintas: a primeira, a adição de um novo contêiner ao à rede Docker, executando o serviço do cAdvisor, uma ferramenta amplamente utilizada no monitoramento de contêineres, como apresentado em \ref{subsection:cAdvisor}. No entanto, o cAdvisor 
 
@@ -195,7 +320,7 @@ Para implementar o sistema de monitoramento central, o serviço Prometheus foi a
 
 No Compose, além das diretivas comuns de configuração de contêineres --- como mapeamento de portas, redes e volumes --- destacam-se as diretivas \verb|extra_hosts| e \verb|command|. A primeira permite que o contêiner do Prometheus consiga acessar o host da máquina onde está sendo executado, configuração fundamental para coleta das métricas do agente Telegraf em execução no host. A segunda, por sua vez, configura o tempo de retenção dos dados no TSDB para 15 dias, utilizando o comando \verb|--storage.tsdb.retention.time=15d|.
 
-Já no arquivo \verb|prometheus.yml|, são definidas as regras globais de \textcolor{red}{\foreign{scraping} (raspagem) de dados}, os direcionamentos para o arquivo de regras e para o serviço de alertas (Alertmanager -- a ser detalhado posteriormente), além das configurações dos \foreign{endpoints} do Telegraf para coleta de dados. Ressalta-se que, em \verb|global|, o parâmetro \verb|scrape_interval| é definido como 5 segundos, enquanto o \verb|scrape_timeout| é ajustado para 4 segundos. Essa configuração proporciona uma coleta de alta frequência, permitindo maior granularidade dos dados. Ao mesmo tempo, o limite de 4 segundos para o tempo de requisição evita bloqueios prolongados: caso uma coleta exceda esse tempo, o Prometheus considera a tentativa como falha e parte para uma nova coleta no próximo intervalo, o que contribui para a prevenção de congestionamentos no sistema.
+Já no arquivo \verb|prometheus.yml|, são definidas as regras globais de \textcolor{red}{\foreign{scraping}} \textcolor{blue}{O termo \foreign{scraping} é apresentado e traduzido lá no capítulo 2 em \ref{subsection:Prometheus}. É inclusive utilizado nas documentações oficiais. Eu acho que "extração de dados" passa uma noçao de que o prometheus vai lá na fonte ativamente pegar os dados, quando na verdade o que ele faz é a \foreign{raspagem} dos endpoints do telegraf. Podemos discutir melhor na terça}, os direcionamentos para o arquivo de regras e para o serviço de alertas (Alertmanager -- a ser detalhado posteriormente), além das configurações dos \foreign{endpoints} do Telegraf para coleta de dados. Ressalta-se que, em \verb|global|, o parâmetro \verb|scrape_interval| é definido como 5 segundos, enquanto o \verb|scrape_timeout| é ajustado para 4 segundos. Essa configuração proporciona uma coleta de alta frequência, permitindo maior granularidade dos dados. Ao mesmo tempo, o limite de 4 segundos para o tempo de requisição evita bloqueios prolongados: caso uma coleta exceda esse tempo, o Prometheus considera a tentativa como falha e parte para uma nova coleta no próximo intervalo, o que contribui para a prevenção de congestionamentos no sistema.
 
 Além disso, há uma importante sincronia entre os intervalos de \textcolor{red}{\foreign{scraping}} do Prometheus e os de coleta do Telegraf --- ambos configurados para 5 segundos. Essa equivalência garante que as métricas coletadas estejam sempre atualizadas e alinhadas entre as duas ferramentas.
 
@@ -251,9 +376,7 @@ O script executa um \foreign{loop} \verb|while true| estruturado em dois blocos 
 
 A aleatoriedade nas durações dos testes e dos intervalos de espera, bem como a definição contínua de novos valores a cada execução de bloco, tem como objetivo conferir um caráter caótico aos experimentos, aproximando-os das condições reais de operação. Embora os valores sejam determinados aleatoriamente, eles obedecem a intervalos previamente estabelecidos: nos testes sequenciais, cada execução ocorre entre 15 e 20 segundos; no bloco paralelo, o tempo total de execução varia de 25 a 30 segundos. Para ambos os blocos, o intervalo de espera entre execuções está fixado entre 10 e 30 segundos.
 
-Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas.
-
-Na figura 3.13, os \foreign{scripts} são representados pelo símbolo \includegraphics[height=1em]{Imagens/chap03/input_black.png}.
+Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas. Nas figuras os \foreign{scripts} são representados pelo símbolo \includegraphics[height=1em]{Imagens/chap03/input_black.png}. 
 
 % , conforme apresentado na Tabela xxx.
 
@@ -289,31 +412,22 @@ Na figura 3.13, os \foreign{scripts} são representados pelo símbolo \includegr
 \label{fig:DiagramaSaturacao}
 \end{figure}
 
-
-{\color{red}
-
 \subsection{Desafios na Integração de Dispositivos Móveis}
 \label{subsection:DesafiosDispositivosMoveis}
 
-Diversas tentativas de incluir dispositivos móveis na rede de monitoramento foram realizadas ao longo do desenvolvimento, com o intuito de ampliar a diversidade dos equipamentos monitorados. No entanto, obstáculos técnicos --- como a ausência de suporte oficial para Android e restrições de permissão do sistema operacional (incluindo limitações de segurança e necessidade de acesso \foreign{root}) --- inviabilizaram essa integração. Embora não tenham resultado em sucesso, essas experiências contribuíram para um melhor entendimento das limitações e desafios envolvidos no monitoramento de dispositivos móveis.
+Diversas tentativas de incluir dispositivos móveis na rede de monitoramento foram realizadas ao longo do desenvolvimento, com o intuito de ampliar a diversidade dos equipamentos monitorados. No entanto, obstáculos técnicos --- como a ausência de suporte oficial para Android e restrições de permissão do sistema operacional (incluindo limitações de segurança e necessidade de acesso \foreign{root}) --- inviabilizaram essa integração. Embora não tenham se mostrado viáveis, essas experiências contribuíram para um melhor entendimento das limitações e desafios envolvidos no monitoramento de dispositivos móveis.
 
 Destaca-se que, em uma das tentativas, foi possível realizar com êxito um \foreign{ping} ao dispositivo móvel do autor, equipado com uma versão não oficial do Zabbix Agent recomendada pela própria Zabbix \citep{unofficialzabbixagent2025}, via contêiner do servidor Zabbix (anterior à adoção do Prometheus). Ainda assim, as dificuldades anteriormente expostas impediram o avanço dessa abordagem.
 
 Considerou-se também a utilização do \foreign{agentless monitoring} (monitoramento sem agentes) por meio do SNMP, mas essa alternativa foi descartada devido à complexidade adicional e às limitações do protocolo, como a necessidade de pré-configuração nos dispositivos e a restrição quanto ao tipo e à quantidade de métricas acessíveis.
 
 Também estudou-se a simulação de dispositivos móveis por meio de emuladores Android, alternativa igualmente abandonada devido ao aumento da complexidade do projeto.
-}
-
-\textcolor{blue}{Dúvida: Por ter mencionado o Android nesse texto, sou obrigado a acrescentá-lo lá no embasamento teórico no capítulo 2?}
-
 
 
 \section{Infraestrutura}
 
-{\color{red}
-
 Ao longo do projeto, dois equipamentos estiveram à disponibilidade do autor: um desktop pessoal e um \foreign{notebook} corporativo, conforme mencionado em \ref{subsection:EscopoReformulado}. As especificações desses equipamentos estão detalhadas na Tabela \ref{tab:available-hardware}.
-}
+
 \begin{table}[H]
 \centering
 \caption{Especificações de hardware dos equipamentos disponíveis}
@@ -330,12 +444,10 @@ SO & Ubuntu Desktop 24 & Ubuntu Desktop 20 \\
 \end{tabular}
 \end{table}
 
-{\color{red}
-
 As práticas adotadas ao longo deste projeto possibilitaram um desenvolvimento multi-máquina prático e eficiente. Cada equipamento implementou o projeto por meio de clones locais do repositório e executou os mesmos comandos Docker Compose para iniciar toda a infraestrutura de monitoramento. A possibilidade de rodar o mesmo projeto em diferentes máquinas, sem necessidade de instalações manuais ou configurações complexas, destacou-se como uma das principais vantagens do desenvolvimento.
 
 Entretanto, a partir de determinado momento, o \foreign{desktop} começou a apresentar instabilidades e travamentos de origem desconhecida. Esses problemas tiveram impacto negativo na coleta de dados e, consequentemente, nas visualizações, ocasionando \foreign{gaps} nas curvas dos gráficos e perda de informações. Diante desse contexto, decidiu-se consolidar o \foreign{notebook} como equipamento principal para o desenvolvimento do projeto, descartando o uso do \foreign{desktop}.
-}
+A escolha do Ubuntu Desktop como sistema operacional base para ambos os equipamentos foi motivada por sua estabilidade, ampla adoção na comunidade de desenvolvedores e compatibilidade com as ferramentas utilizadas no projeto. A versão 20 foi inicialmente adotada no \foreign{notebook} corporativo, enquanto a versão 24 foi instalada no \foreign{desktop} pessoal. Posteriormente, o \foreign{notebook} também foi atualizado para a versão 24, garantindo uniformidade entre os ambientes de desenvolvimento.
 \section{Discussão sobre as métricas}
 
 Placeholder
