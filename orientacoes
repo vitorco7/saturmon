@@ -4,6 +4,8 @@ Discussão sobre o termo "scraping" (3.2.3)
 
 Códigos recebem a categoria "Listing". Listing 3.1, Listing 3.2 Tá certo?
 
+Mudanças no load_simulator.sh: os testes estavam gerando travamentos na máquina. Rodava tudo ao mesmo tempo. Sem falar que por conta do while true sem checagens de kill, por vezes demorava 60 segundos para derrubar o container. Para isso, implementei checagens constantes para verificação de kill do container.Outro ponto é que estou implementando os testes indo de 1 device por vez (device1->device2...->device5 ->repete). Tudo isso precisa entrar na figura do fluxograma, ou posso apenas comentar no texto?  
+
 Adição de apêndices para os códigos: quais as melhores práticas? Por tudo junto?  Dividir em vários apêndices temáticos? Se sim, quais seriam os temas? É um pouco complicado dividir em temas precisos visto que muitas vezes os códigos são complementares entre si.
 
 Eu devo entrar em tecnicalidades das medições (isso é do escopo Telegraf e do Prometheus)? Critérios e técnicas utilizadas? Se sim, em que seção isso entra? E o quão detalhista eu deveria ser? Pois haveria discussões/observações em uma infinidade de detalhes que poderia inflar MUITO o texto.
