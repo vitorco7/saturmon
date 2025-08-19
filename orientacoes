@@ -6,6 +6,9 @@ Códigos recebem a categoria "Listing". Listing 3.1, Listing 3.2 Tá certo?
 
 Adição de apêndices para os códigos: quais as melhores práticas? Por tudo junto?  Dividir em vários apêndices temáticos? Se sim, quais seriam os temas? É um pouco complicado dividir em temas precisos visto que muitas vezes os códigos são complementares entre si.
 
+Eu devo entrar em tecnicalidades das medições (isso é do escopo Telegraf e do Prometheus)? Critérios e técnicas utilizadas? Se sim, em que seção isso entra? E o quão detalhista eu deveria ser? Pois haveria discussões/observações em uma infinidade de detalhes que poderia inflar MUITO o texto.
+
+
 Discussão sobre as métricas: a explicação conceitual sobre as métricas é apresentada no Capítulo 2 subseção \ref{subsection:MetricasInteresse}. A única diferença é que no Cap 2 são apresentadas as métricas de interesse e suas respectivas descrições, enquanto no Cap 3 são apresentadas as métricas coletadas diretamente.
 
 Discussão sobre 3.5 - está de acordo com os tópicos propostos? Acho que vai cobrir bem todo o trabalho executado, mas vai ficar grande demais para uma única seção.
