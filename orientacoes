@@ -1,19 +1,40 @@
 Orientação 20250819
 
-Discussão sobre o termo "scraping" (3.2.3)
+Discussão sobre o termo "scraping" (3.2.3) 
+---> usar o tempo scraping em tudo
 
 Códigos recebem a categoria "Listing". Listing 3.1, Listing 3.2 Tá certo?
+--->Trocar o termo "Listing" para "Listagem" ou "Código Fonte"
+
 
 Mudanças no load_simulator.sh: os testes estavam gerando travamentos na máquina. Rodava tudo ao mesmo tempo. Sem falar que por conta do while true sem checagens de kill, por vezes demorava 60 segundos para derrubar o container. Para isso, implementei checagens constantes para verificação de kill do container.Outro ponto é que estou implementando os testes indo de 1 device por vez (device1->device2...->device5 ->repete). Tudo isso precisa entrar na figura do fluxograma, ou posso apenas comentar no texto?  
 
+---->Mantém a figura como está, reportando no texto as mudanças no script.
+
 Adição de apêndices para os códigos: quais as melhores práticas? Por tudo junto?  Dividir em vários apêndices temáticos? Se sim, quais seriam os temas? É um pouco complicado dividir em temas precisos visto que muitas vezes os códigos são complementares entre si.
 
+---> No caso de uma citação, colocar no texto apenas uma parte ilustrativa do código fonte, e referenciar ao repositorio do Git.
+
+
 Eu devo entrar em tecnicalidades das medições (isso é do escopo Telegraf e do Prometheus)? Critérios e técnicas utilizadas? Se sim, em que seção isso entra? E o quão detalhista eu deveria ser? Pois haveria discussões/observações em uma infinidade de detalhes que poderia inflar MUITO o texto.
+
+---> Escrever no texto apenas os parametros de maior relevancia (parametros chave que poderia gerar falhas ou problemas), e explicar no texto de forma ilustrativa. Acrescentar na propria seão (telegraf.conf entra em agentes)
 
 
 Discussão sobre as métricas: a explicação conceitual sobre as métricas é apresentada no Capítulo 2 subseção \ref{subsection:MetricasInteresse}. A única diferença é que no Cap 2 são apresentadas as métricas de interesse e suas respectivas descrições, enquanto no Cap 3 são apresentadas as métricas coletadas diretamente.
 
+--->Tabela -> fazer uma texto explicando as medidas equivalentes, nao equivalentes 1:1 ou que nao sao obtidas (exemplo: o calculo de swap). A posiçao do texto, antes ou depois da tabela, dependerá do layout da pagina (onde encaixar melhor). Trocar o nome Métrica para Etiqueta, e traduzir o significado da metrica bruta coletada. Também adicionar as unidades de cada métrica bruta.
+
 Discussão sobre 3.5 - está de acordo com os tópicos propostos? Acho que vai cobrir bem todo o trabalho executado, mas vai ficar grande demais para uma única seção.
+
+---> Topicos estao bons. Virou um novo capitulo (cha04). Sobre a figura da stack final, ir referenciando cada parte do texto que corresponde aos blocos da figura. Vou apontando tal coisa foi dita na seção tal blablabla , agora so falta falar do alert mgr que sera discutido agora.
+
+1.6 - Descrição: frases de 1 ou 2 linhas, resumem obejtivamente o que vai ser abordado em cada capítulo. Essas frases devem feitas num ÚNICO parágrafo.
+
+Falar com a Fernanda -> Estou quase  terminando a parte da implementação do projeto, e a conclusão. Você prefere receber o texto fechado/completo, ou prefere receber até onde está escrito?
+Neste mesmo email, perguntar se ela tem alguma sugestao de pessoa para completar a banca. Avisando pra ela que a gente já sugeriu o Diego.
+
+
 
 
 Orientação 20250812

@@ -1,4 +1,4 @@
-\chapter{Metodologia Proposta}
+\chapter{Descrição da Solução}
 \label{chap3}
 
 No capítulo anterior, foram apresentados os conceitos e as tecnologias relevantes para a compreensão da solução de monitoramento desenvolvida. Contudo, vale ressaltar que nem todas as ferramentas descritas foram efetivamente empregadas na implementação final da proposta.
@@ -303,7 +303,7 @@ Além disso, há uma importante sincronia entre os intervalos de \foreign{scrapi
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[scale=1]{Imagens/chap03/by-blocks/grafana_diagram.pdf}
-\caption{Grafana}
+\caption{Grafana.}
 \label{fig:DiagramaGrafana}
 \end{figure}
 
@@ -366,7 +366,7 @@ Ao longo do projeto, dois equipamentos estiveram à disponibilidade do autor: um
 
 \begin{table}[H]
 \centering
-\caption{Especificações de hardware dos equipamentos disponíveis}
+\caption{Especificações de hardware dos equipamentos disponíveis.}
 \label{tab:available-hardware}
 \begin{tabular}{lcc}
 \toprule
@@ -397,14 +397,14 @@ Durante o desenvolvimento multiplataforma, especialmente na etapa de configuraç
 
 A disparidade entre versões do \foreign{cgroups} resultou em diferenças estruturais nos arquivos de leitura das métricas, impossibilitando o uso de um arquivo de configuração único e padronizado devido a falhas recorrentes na coleta. Esse problema foi solucionado com a atualização do \foreign{cgroups} do \foreign{notebook} para a versão 2, harmonizando as estruturas dos arquivos e, consequentemente, permitindo a padronização das configurações de coleta. Cabe ressaltar que a versão do \foreign{cgroups} dos dispositivos virtuais é determinada pelo \foreign{kernel} do \foreign{host}, razão pela qual todos também passaram a operar na versão 2 após a atualização.
 
+A partir dos critérios estabelecidos, e as respectivas descrições apresentadas na Seção \ref{section:Metricas} do Capítulo 2, são obtidas as seguintes métricas, a partir da leitura direta dos arquivos de sistema:
+
 A seleção das métricas a serem monitoradas pautou-se nos seguintes critérios:
 \begin{enumerate}
 \item \textbf{Multiplataforma}: Foram priorizadas métricas disponíveis em diferentes sistemas operacionais, sendo desconsideradas aquelas exclusivas de uma plataforma específica, como as restritas ao Linux.
 \item \textbf{Relevância}: As métricas escolhidas devem fornecer informações essenciais para o monitoramento da saturação do sistema, permitindo tanto a detecção imediata de problemas e a adoção de medidas corretivas quanto o auxílio a análises mais aprofundadas.
 \item \textbf{Comparabilidade}: Sempre que possível, optou-se por métricas comparáveis entre os dispositivos virtualizados e físicos. Embora nem todas apresentem correspondência exata, buscou-se garantir um nível de equivalência. Ressalta-se, contudo, que algumas métricas importantes --- como determinadas métricas de disco --- não estão disponíveis nos dispositivos virtuais, mas foram mantidas pela sua relevância para o monitoramento.
 \end{enumerate}
-
-A partir dos critérios estabelecidos, e as respectivas descrições apresentadas na Seção \ref{section:Metricas} do Capítulo 2, são obtidas as seguintes métricas, a partir da leitura direta dos arquivos de sistema:
 
 \textcolor{blue}{Estou com dificuldades de montar esta tabela \ref{tab:metricas-selecionadas} de uma forma intuitiva}
 \begin{table}[H]
@@ -448,78 +448,4 @@ A partir dos critérios estabelecidos, e as respectivas descrições apresentada
 \textcolor{blue}{Eu estou sentindo falta de algo para fechar esta seção, mas não sei bem o que é. Alguma sugestão? Ou acha que está suficiente?}
 
 
-
-\section{Aplicação de Monitoramento}
-
-{\color{blue}
-Seção dividida em 2 partes principais:
-
-1 - o dashboard e seus painéis
-
-2 - alertas e notificações
-
-3 - Acho que vai ficar muito grande, talvez pudesse virar um novo capítulo?
-
-\textbf{Dashboards}
-\begin{enumerate}  
-  \item comentar sobre sobre as coisas que o provisioning já adiantou (datasource padrão, por exemplo);
-  \item a normalização dos dados usando o Pormetheus Recording Rules
-  \item Criação dos filtros globais;
-  \item Regras globais (span e refresh rate);
-  \item Falar de cada gráfico, justificando visualizações, comentando sobre as queries/cálculos e colocar imagens;
-  \item Quando chegar na seção de disco, apresentar o estudo de caĺculo do df (motivação e resultados);
-  \item Chegando na parte de redes, justificar o porquê de nao termos dados de drop e erro de pacotes (apresentar o estudo de caso de camadas de rede e aplicação);
-  \item Fechamento explicando a exportação do JSON e seu versionamento e carregamento automatico via docker volume;
-\end{enumerate}
-\textbf{Alarmes e Notificações}
-\begin{enumerate}
-  \item Comentar sobre o Alertmanager e a sua configuração;
-  \item Explicar como adicionei o servidor smtp do gmail e as tentativas falhas com o Telegram;
-  \item Configuração das regras de notificação e os pontos de contato;
-  \item Como utilizei, a primeiro momenot, a UI do Grafana para criar os alertas (isso era interessante pq vinculava automaticamente o alerta ao respectivo gráfico);
-  \item Como, assim como no dashboard, eu exportava e versionava tudo via JSON;
-  \item Problemas do SQLite e a migração para o Postgres (explicitar como a migração foi fácil graças ao provisionamento, versionamento, uso do Docker e TSDB fazendo o trabalho de persistência);
-  \item Eventual abandono do Postgres e rollback para SQLite, e a migração para o Alertmanager+TSDB (enfatizar como tudo fica embutido no Prometheus e como isso simplifica a arquitetura);
-\end{enumerate}
-
-
-}
-% \textcolor{blue}{Dúvida: Como combinamos de contar a experiencia com o SQLitexPostgres e tambem a alteração para Alertmanager na seção 3.5 (alertas e dashboards), confesso que não sei mais o que colocar aqui... talvez matemos essa subseção 3.2.6?}
-
-% Uma dúvida que tive hoje nesta seção: nós combinamos de comentar sobre dashboards e alertas na seção 3.5, porém isso implica que eu não incluiria os respectivos blocos de dashboards e alertas (e Alertmanager) no diagrama neste momento. Isso implica que a figura do diagrama final da arquitetura só apareceria no fim da seção 3.6. Como proceder?
-
-% Aqui a finalizo a seção contando a historia do SQLite x Postgres e eventualmente chegando na decisão de descartar ambos e ficar apenas com o TSDB.
-% Tambem relato da minha experiencia de formatar a maquina toda e a facilidade em subir todo o projeto (salve a configuração pontual do permissionamento de escrita do grafana e da chave do repositorio do telegraf)
-% Após isso eu fecho a seção com o diagrama da arquitetura final definitiva. 
-
-
-% foram feitas tentativas de utilização de ferramentas de \foreign{chaos-engineering} como Pumba e ChaosBlade e até mesmo tentativas de manipulação direta de iptables para gerar tráfego de rede, mas essas ferramentas não se mostraram adequadas para este trabalho.
-
-
-% Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema de controle de tráfego \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|). Enquanto isso, o \foreign{plugin} \verb|inputs.net| do Telegraf a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Ou seja, 
-
-\begin{figure}[H]
-\centering
-\setlength{\abovecaptionskip}{-20pt}
-\includegraphics[width=\textwidth]{Imagens/chap03/by-blocks/dashboard_diagram.pdf}
-\caption{Visualização.}
-\label{fig:DiagramaVisualizacao}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\setlength{\abovecaptionskip}{-20pt}
-\includegraphics[width=\textwidth]{Imagens/chap03/by-blocks/alerts_diagram.pdf}
-\caption{Notificações e Arquitetura Final.}
-\label{fig:DiagramaAlertas}
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\setlength{\abovecaptionskip}{-20pt}
-\includegraphics[width=\textwidth]{Imagens/chap04/final_stack.pdf}
-\caption{\foreign{Stack} final.}
-\label{fig:StackFinal}
-\end{figure}
 
