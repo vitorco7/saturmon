@@ -169,11 +169,8 @@ Os valores atribuídos às limitações de memória foram definidos a partir de 
 
 Com a substituição do Zabbix pelo Prometheus como sistema de monitoramento principal, todas as ferramentas pertencentes ao ecossistema Zabbix, inclusive seus agentes, foram descartadas. Isso tornou necessário avaliar alternativas de agentes mais adequadas ao novo contexto deste trabalho.
 
-{\color{red}
-
 Uma premissa importante na seleção do agente foi sua implementação dentro de cada contêiner dos dispositivos virtuais. Essa abordagem visa aproximar o ambiente de simulação de um cenário real, no qual cada dispositivo possui seu próprio agente de monitoramento. Para tanto, todos os contêineres dos dispositivos virtuais incorporam um agente por meio de sua inclusão direta no respectivo Dockerfile, garantindo consistência e uniformidade na arquitetura de monitoramento.
 
-}
 Inicialmente, conforme as recomendações da documentação do Prometheus \citep{promnodeexporter2025}, foi adotado o Node Exporter como exportador. Sua simplicidade, leveza, compatibilidade e fácil integração com o Prometheus foram destaques durante a implementação. Contudo, durante as validações iniciais, verificou-se que o Node Exporter coleta apenas métricas relacionadas ao \foreign{host}, deixando de capturar informações específicas de cada contêiner --- uma limitação incompatível com os objetivos deste trabalho.
 
 A partir dessa constatação, foram avaliados outros agentes, como o Prometheus Agent e o Grafana Agent, mas ambos também se mostraram inadequados pelos mesmos motivos do Node Exporter. O cAdvisor, outro agente de monitoramento bastante utilizado, chegou a ser considerado, porém sua abordagem operacional não está alinhada à premissa do projeto, pois opera num contêiner próprio e coleta métricas diretamente do Docker \foreign{daemon}, sem a necessidade de instalação individual em cada contêiner. Apesar de sua eficiência, essa solução não atende aos requisitos deste trabalho, que exige uma arquitetura consistente tanto para dispositivos virtuais quanto reais. Os motivos que levaram à desistência do cAdvisor também fundamentaram a rejeição ao Docker Stats Exporter, um exportador que chegou a ser avaliado durante o desenvolvimento.
@@ -344,11 +341,11 @@ Apesar do bom desempenho na geração de carga computacional, o stress-ng mostro
 
 
 
-O script executa um \foreign{loop} \verb|while true| estruturado em dois blocos principais: inicialmente, realiza uma série de testes sequenciais, seguidos pela repetição desses testes de forma paralela e simultânea. No início de cada bloco, os valores de duração dos testes (\verb|stress_time|) e do tempo de espera entre um bloco e outro (\verb|sleep_time|) são definidos aleatoriamente. {\color{red}Ao término dos testes paralelos, aguarda-se o \verb|sleep_time| previamente estabelecido e, em seguida, inicia-se um novo ciclo, conforme ilustrado no fluxograma da Figura \ref{fig:FluxogramaCarga}. Esse processo se repete indefinidamente, possibilitando a execução contínua dos testes de saturação até que ocorra uma intervenção manual ou a finalização do contêiner.}
+O script executa um \foreign{loop} \verb|while true| estruturado em dois blocos principais: inicialmente, realiza uma série de testes sequenciais, seguidos pela repetição desses testes de forma paralela e simultânea. No início de cada bloco, os valores de duração dos testes (\verb|stress_time|) e do tempo de espera entre um bloco e outro (\verb|sleep_time|) são definidos aleatoriamente. Ao término dos testes paralelos, aguarda-se o \verb|sleep_time| previamente estabelecido e, em seguida, inicia-se um novo ciclo, conforme ilustrado no fluxograma da Figura \ref{fig:FluxogramaCarga}. Esse processo se repete indefinidamente, possibilitando a execução contínua dos testes de saturação até que ocorra uma intervenção manual ou a finalização do contêiner.
 
 A aleatoriedade nas durações dos testes e dos intervalos de espera, bem como a definição contínua de novos valores a cada execução de bloco, tem como objetivo conferir um caráter caótico aos experimentos, aproximando-os das condições reais de operação. Embora os valores sejam determinados aleatoriamente, eles obedecem a intervalos previamente estabelecidos: nos testes sequenciais, cada execução ocorre entre 15 e 20 segundos; no bloco paralelo, o tempo total de execução varia de 25 a 30 segundos. Para ambos os blocos, o intervalo de espera entre execuções está fixado entre 10 e 30 segundos.
 
-Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas. Nas figuras os \foreign{scripts} são representados pelo símbolo \includegraphics[height=1em]{Imagens/chap03/input_black.png}. 
+Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas. Nas figuras os \foreign{scripts} são representados pelo símbolo \includegraphics[height=0.8em]{Imagens/chap03/input_black.png}. 
 
 \subsection{Desafios na Integração de Dispositivos Móveis}
 \label{subsection:DesafiosDispositivosMoveis}
@@ -383,7 +380,7 @@ SO & Ubuntu Desktop 24 & Ubuntu Desktop 20 \\
 \end{tabular}
 \end{table}
 
-As práticas adotadas ao longo deste projeto possibilitaram um desenvolvimento multi-máquina prático e eficiente. Cada equipamento implementou o projeto por meio de clones locais do repositório e executou os mesmos comandos Docker Compose para iniciar toda a infraestrutura de monitoramento. A possibilidade de rodar o mesmo projeto em diferentes máquinas, sem necessidade de instalações manuais ou configurações complexas, destacou-se como uma das principais vantagens do desenvolvimento.
+As práticas adotadas ao longo deste projeto possibilitaram um desenvolvimento multiplataforma prático e eficiente. Cada equipamento implementou o projeto por meio de clones locais do repositório e executou os mesmos comandos Docker Compose para iniciar toda a infraestrutura de monitoramento. A possibilidade de rodar o mesmo projeto em diferentes máquinas, sem necessidade de instalações manuais ou configurações complexas, destacou-se como uma das principais vantagens do desenvolvimento.
 
 A escolha do Ubuntu Desktop como sistema operacional base para ambos os equipamentos foi motivada por sua estabilidade, ampla adoção na comunidade de desenvolvedores e compatibilidade com as ferramentas utilizadas no projeto, onde o \foreign{notebook} operava com a versão 20 e o \foreign{desktop} com a versão 24.
 
@@ -393,13 +390,12 @@ Entretanto, a partir de determinado momento, o \foreign{desktop} começou a apre
 
 \section{Discussão sobre as métricas}
 \label{section:DiscussaoMetricas}
-{\color{red}
+
 As métricas apresentadas neste trabalho são extraídas por meio da leitura de arquivos de sistema do Linux. Particularmente para métricas de CPU, memória e disco dos dispositivos virtuais, a coleta ocorre a partir de arquivos localizados no diretório \verb|/sys/fs/cgroup|.
 
-Durante o desenvolvimento multi-máquina, especialmente na etapa de configuração manual dos parâmetros do \verb|inputs.exec| do Telegraf, foram identificadas inconsistências e erros na leitura das métricas entre as implementações feitas no \foreign{notebook} e no \foreign{desktop}. Como apresentado em \ref{section:Infraestrutura}, o fato do \foreign{notebook} operar com o Ubuntu 20 implica que, por padrão, o mesmo apresenta a versão 1 do \foreign{cgroups}, enquanto o \foreign{desktop}, com Ubuntu 24, utiliza a versão 2.
+Durante o desenvolvimento multiplataforma, especialmente na etapa de configuração manual dos parâmetros do \verb|inputs.exec| do Telegraf, foram identificadas inconsistências e erros na leitura das métricas entre as implementações feitas no \foreign{notebook} e no \foreign{desktop}. Como apresentado em \ref{section:Infraestrutura}, o fato do \foreign{notebook} operar com o Ubuntu 20 implica que, por padrão, o mesmo apresenta a versão 1 do \foreign{cgroups}, enquanto o \foreign{desktop}, com Ubuntu 24, utiliza a versão 2.
 
 A disparidade entre versões do \foreign{cgroups} resultou em diferenças estruturais nos arquivos de leitura das métricas, impossibilitando o uso de um arquivo de configuração único e padronizado devido a falhas recorrentes na coleta. Esse problema foi solucionado com a atualização do \foreign{cgroups} do \foreign{notebook} para a versão 2, harmonizando as estruturas dos arquivos e, consequentemente, permitindo a padronização das configurações de coleta. Cabe ressaltar que a versão do \foreign{cgroups} dos dispositivos virtuais é determinada pelo \foreign{kernel} do \foreign{host}, razão pela qual todos também passaram a operar na versão 2 após a atualização.
-
 
 A seleção das métricas a serem monitoradas pautou-se nos seguintes critérios:
 \begin{enumerate}
@@ -450,8 +446,6 @@ A partir dos critérios estabelecidos, e as respectivas descrições apresentada
 \end{table}
 
 \textcolor{blue}{Eu estou sentindo falta de algo para fechar esta seção, mas não sei bem o que é. Alguma sugestão? Ou acha que está suficiente?}
-
-}
 
 
 
@@ -506,7 +500,6 @@ Seção dividida em 2 partes principais:
 
 \begin{figure}[H]
 \centering
-\color{red}
 \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[width=\textwidth]{Imagens/chap03/by-blocks/dashboard_diagram.pdf}
 \caption{Visualização.}
@@ -515,7 +508,6 @@ Seção dividida em 2 partes principais:
 
 \begin{figure}[H]
 \centering
-\color{red}
 \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[width=\textwidth]{Imagens/chap03/by-blocks/alerts_diagram.pdf}
 \caption{Notificações e Arquitetura Final.}
@@ -525,7 +517,6 @@ Seção dividida em 2 partes principais:
 
 \begin{figure}[H]
 \centering
-\color{red}
 \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[width=\textwidth]{Imagens/chap04/final_stack.pdf}
 \caption{\foreign{Stack} final.}
