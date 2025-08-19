@@ -394,67 +394,102 @@ Entretanto, a partir de determinado momento, o \foreign{desktop} começou a apre
 \section{Discussão sobre as métricas}
 \label{section:DiscussaoMetricas}
 {\color{red}
-As métricas apresentadas neste trabalho são extraídas por meio da leitura de arquivos do Linux. Especificamente para métricas de CPU, memória e I/O de disco dos dispositivos virtuais, a coleta ocorre a partir de arquivos localizados no diretório \verb|/sys/fs/cgroup|.
+As métricas apresentadas neste trabalho são extraídas por meio da leitura de arquivos de sistema do Linux. Particularmente para métricas de CPU, memória e disco dos dispositivos virtuais, a coleta ocorre a partir de arquivos localizados no diretório \verb|/sys/fs/cgroup|.
 
-Durante o desenvolvimento multi-máquina, especialmente na etapa de configuração manual dos parâmetros do \verb|inputs.exec| do Telegraf, foram identificadas inconsistências e erros na leitura das métricas entre as implementações feitas no \foreign{notebook} e no \foreign{desktop}. Como apresentado em \ref{section:Infraestrutura}, o fato do \foreign{notebook} operar com o Ubuntu 20 implica que, por padrão, o mesmo apresenta a versão 1 do \foreign{cgroups}, enquanto o \foreign{desktop}, com Ubuntu 24, utiliza a versão 2. Essa disparidade nas versões do \foreign{cgroups} resultou em diferenças estruturais nos arquivos de leitura das métricas, ocasionando no impedimento de um arquivo de configuração único e padronizado, devido à falhas de coleta. Esse problema foi solucionado com a atualização do \foreign{cgroups} do \foreign{notebook} para a versão 2, harmonizando as estruturas dos arquivos e, consequentemente, permitindo a padronização das configurações de coleta.
+Durante o desenvolvimento multi-máquina, especialmente na etapa de configuração manual dos parâmetros do \verb|inputs.exec| do Telegraf, foram identificadas inconsistências e erros na leitura das métricas entre as implementações feitas no \foreign{notebook} e no \foreign{desktop}. Como apresentado em \ref{section:Infraestrutura}, o fato do \foreign{notebook} operar com o Ubuntu 20 implica que, por padrão, o mesmo apresenta a versão 1 do \foreign{cgroups}, enquanto o \foreign{desktop}, com Ubuntu 24, utiliza a versão 2.
+
+A disparidade entre versões do \foreign{cgroups} resultou em diferenças estruturais nos arquivos de leitura das métricas, impossibilitando o uso de um arquivo de configuração único e padronizado devido a falhas recorrentes na coleta. Esse problema foi solucionado com a atualização do \foreign{cgroups} do \foreign{notebook} para a versão 2, harmonizando as estruturas dos arquivos e, consequentemente, permitindo a padronização das configurações de coleta. Cabe ressaltar que a versão do \foreign{cgroups} dos dispositivos virtuais é determinada pelo \foreign{kernel} do \foreign{host}, razão pela qual todos também passaram a operar na versão 2 após a atualização.
+
 
 A seleção das métricas a serem monitoradas pautou-se nos seguintes critérios:
 \begin{enumerate}
 \item \textbf{Multiplataforma}: Foram priorizadas métricas disponíveis em diferentes sistemas operacionais, sendo desconsideradas aquelas exclusivas de uma plataforma específica, como as restritas ao Linux.
-\item \textbf{Relevância}: As métricas escolhidas devem fornecer informações essenciais para o monitoramento da saturação do sistema, permitindo tanto a detecção imediata de problemas e a adoção de medidas corretivas quanto o auxílio de análises mais aprofundadas.
+\item \textbf{Relevância}: As métricas escolhidas devem fornecer informações essenciais para o monitoramento da saturação do sistema, permitindo tanto a detecção imediata de problemas e a adoção de medidas corretivas quanto o auxílio a análises mais aprofundadas.
 \item \textbf{Comparabilidade}: Sempre que possível, optou-se por métricas comparáveis entre os dispositivos virtualizados e físicos. Embora nem todas apresentem correspondência exata, buscou-se garantir um nível de equivalência. Ressalta-se, contudo, que algumas métricas importantes --- como determinadas métricas de disco --- não estão disponíveis nos dispositivos virtuais, mas foram mantidas pela sua relevância para o monitoramento.
 \end{enumerate}
 
 A partir dos critérios estabelecidos, e as respectivas descrições apresentadas na Seção \ref{section:Metricas} do Capítulo 2, são obtidas as seguintes métricas, a partir da leitura direta dos arquivos de sistema:
 
+\textcolor{blue}{Estou com dificuldades de montar esta tabela \ref{tab:metricas-selecionadas} de uma forma intuitiva}
 \begin{table}[H]
+\color{blue}
 \centering
-\color{red}
 \caption{Métricas selecionadas de leitura direta.}
 \label{tab:metricas-selecionadas}
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{Categoria} & \textbf{Métrica} & \textbf{Host} & \textbf{Dispositivo Virtual} \\ \hline
-\multirow{4}{*}{CPU} & usage\_idle      & --           \\ \cline{2-3}
-                     & usage\_iowait    & --           \\ \cline{2-3}
-                     & usage\_system    & system\_usec  \\ \cline{2-3}
-                     & usage\_user      & user\_usec    \\ \hline
-\multirow{4}{*}{Memória} & used     & memory.current                      \\ \cline{2-3}
-                         & total       & memory.max                          \\ \cline{2-3}
-                         & swap\_free & memory.swap.max                     \\ \cline{2-3}
-                         & swap\_total  & memory.swap.max-memory.swap.current \\ \hline
-\multirow{6}{*}{Disco} & free          & --      \\ \cline{2-3}
-                      & used         & --      \\ \cline{2-3}
-                      & total         & --      \\ \cline{2-3}
-                      & inodes\_free  & --      \\ \cline{2-3}
-                      & read\_bytes   & rbytes  \\ \cline{2-3}
-                      & write\_bytes  & wbytes  \\ \cline{2-3}
-                      & io\_util      & --      \\ \hline
-\multirow{4}{*}{Processos} & running  & running  \\ \cline{2-3}
-                           & sleeping & sleeping \\ \cline{2-3}
-                           & total    & total    \\ \cline{2-3}
-                           & zombies  & zombies  \\ \hline
-\multirow{8}{*}{Rede} & bytes\_recv   & Bytes Received   \\ \cline{2-3}
-                      & bytes\_sent       & Bytes Sent       \\ \cline{2-3}
-                      & packets\_recv & Packets Received \\ \cline{2-3}
-                      & packets\_sent     & Packets Sent     \\ \cline{2-3}
-                      & drop\_in          & Drop In          \\ \cline{2-3}
-                      & drop\_out         & Drop Out         \\ \cline{2-3}
-                      & err\_in         & Error In         \\ \cline{2-3}
-                      & err\_out        & Error Out        \\ \hline
+\multirow{4}{*}{CPU} & user & usage\_user & user\_usec \\ \cline{2-4}
+                     & system & usage\_system & system\_usec \\ \cline{2-4}
+                     & iowait & usage\_iowait & -- \\ \cline{2-4}
+                     & idle & usage\_idle & -- \\ \hline
+\multirow{4}{*}{Memória} & used & used        & memory.current                      \\ \cline{2-4}
+                         & total & total       & memory.max                          \\ \cline{2-4}
+                         & swap\_free & swap\_free  & memory.swap.max - memory.swap.current                     \\ \cline{2-4}
+                         & swap\_total & swap\_total & memory.swap.max \\ \hline
+\multirow{7}{*}{Disco} & Espaço Livre & free         & --     \\ \cline{2-4}
+                       & Espaço Utilizado & used         & --     \\ \cline{2-4}
+                       & Espaço Total & total        & --     \\ \cline{2-4}
+                       & INODES Livres & inodes\_free & --     \\ \cline{2-4}
+                       & Bytes Lidos & read\_bytes  & rbytes \\ \cline{2-4}
+                       & Bytes Escritos & write\_bytes & wbytes \\ \cline{2-4}
+                       & Utilização I/O & io\_util     & --     \\ \hline
+\multirow{8}{*}{Rede} & Placeholder & bytes\_recv     & Bytes Received   \\ \cline{2-4}
+                      & Placeholder & bytes\_sent     & Bytes Sent       \\ \cline{2-4}
+                      & Placeholder & packets\_recv   & Packets Received \\ \cline{2-4}
+                      & Placeholder & packets\_sent   & Packets Sent     \\ \cline{2-4}
+                      & Placeholder & drop\_in        & Drop In          \\ \cline{2-4}
+                      & Placeholder & drop\_out       & Drop Out         \\ \cline{2-4}
+                      & Placeholder & err\_in         & Error In         \\ \cline{2-4}
+                      & Placeholder & err\_out        & Error Out        \\ \hline
+\multirow{4}{*}{Processos} & Em execução & running  & running  \\ \cline{2-4}
+                           & Em espera & sleeping & sleeping \\ \cline{2-4}
+                           & Total & total    & total    \\ \cline{2-4}
+                           & Zumbi & zombies  & zombies  \\ \hline
 \end{tabular}
 \end{table}
 
+\textcolor{blue}{Eu estou sentindo falta de algo para fechar esta seção, mas não sei bem o que é. Alguma sugestão? Ou acha que está suficiente?}
+
+}
+
+
+
+\section{Aplicação de Monitoramento}
+
+{\color{blue}
+Seção dividida em 2 partes principais:
+
+1 - o dashboard e seus painéis
+
+2 - alertas e notificações
+
+3 - Acho que vai ficar muito grande, talvez pudesse virar um novo capítulo?
+
+\textbf{Dashboards}
+\begin{enumerate}  
+  \item comentar sobre sobre as coisas que o provisioning já adiantou (datasource padrão, por exemplo);
+  \item a normalização dos dados usando o Pormetheus Recording Rules
+  \item Criação dos filtros globais;
+  \item Regras globais (span e refresh rate);
+  \item Falar de cada gráfico, justificando visualizações, comentando sobre as queries/cálculos e colocar imagens;
+  \item Quando chegar na seção de disco, apresentar o estudo de caĺculo do df (motivação e resultados);
+  \item Chegando na parte de redes, justificar o porquê de nao termos dados de drop e erro de pacotes (apresentar o estudo de caso de camadas de rede e aplicação);
+  \item Fechamento explicando a exportação do JSON e seu versionamento e carregamento automatico via docker volume;
+\end{enumerate}
+\textbf{Alarmes e Notificações}
+\begin{enumerate}
+  \item Comentar sobre o Alertmanager e a sua configuração;
+  \item Explicar como adicionei o servidor smtp do gmail e as tentativas falhas com o Telegram;
+  \item Configuração das regras de notificação e os pontos de contato;
+  \item Como utilizei, a primeiro momenot, a UI do Grafana para criar os alertas (isso era interessante pq vinculava automaticamente o alerta ao respectivo gráfico);
+  \item Como, assim como no dashboard, eu exportava e versionava tudo via JSON;
+  \item Problemas do SQLite e a migração para o Postgres (explicitar como a migração foi fácil graças ao provisionamento, versionamento, uso do Docker e TSDB fazendo o trabalho de persistência);
+  \item Eventual abandono do Postgres e rollback para SQLite, e a migração para o Alertmanager+TSDB (enfatizar como tudo fica embutido no Prometheus e como isso simplifica a arquitetura);
+\end{enumerate}
 
 
 }
-\section{Aplicação de Monitoramento}
-
-Placeholder
-
-Falar dos alertas e notificações
-Discorrer sobre o dashboard em si
-
 % \textcolor{blue}{Dúvida: Como combinamos de contar a experiencia com o SQLitexPostgres e tambem a alteração para Alertmanager na seção 3.5 (alertas e dashboards), confesso que não sei mais o que colocar aqui... talvez matemos essa subseção 3.2.6?}
 
 % Uma dúvida que tive hoje nesta seção: nós combinamos de comentar sobre dashboards e alertas na seção 3.5, porém isso implica que eu não incluiria os respectivos blocos de dashboards e alertas (e Alertmanager) no diagrama neste momento. Isso implica que a figura do diagrama final da arquitetura só apareceria no fim da seção 3.6. Como proceder?
