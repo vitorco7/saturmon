@@ -1,15 +1,15 @@
 Orientação 20250819
 
-Discussão sobre o termo "scraping" (3.2.3) 
+OK - Discussão sobre o termo "scraping" (3.2.3) 
 ---> usar o tempo scraping em tudo
 
-Códigos recebem a categoria "Listing". Listing 3.1, Listing 3.2 Tá certo?
+OK - Códigos recebem a categoria "Listing". Listing 3.1, Listing 3.2 Tá certo?
 --->Trocar o termo "Listing" para "Listagem" ou "Código Fonte"
 
 
 Mudanças no load_simulator.sh: os testes estavam gerando travamentos na máquina. Rodava tudo ao mesmo tempo. Sem falar que por conta do while true sem checagens de kill, por vezes demorava 60 segundos para derrubar o container. Para isso, implementei checagens constantes para verificação de kill do container.Outro ponto é que estou implementando os testes indo de 1 device por vez (device1->device2...->device5 ->repete). Tudo isso precisa entrar na figura do fluxograma, ou posso apenas comentar no texto?  
 
----->Mantém a figura como está, reportando no texto as mudanças no script.
+---->Mantém a figura como está, reportando no texto as mudanças no script. Reportar também que as execuções dos testes aconteciam de forma assíncrona e simultânea, e agora serão executadas de forma síncrona e sequencial, para evitar travamentos na máquina..
 
 Adição de apêndices para os códigos: quais as melhores práticas? Por tudo junto?  Dividir em vários apêndices temáticos? Se sim, quais seriam os temas? É um pouco complicado dividir em temas precisos visto que muitas vezes os códigos são complementares entre si.
 
@@ -30,12 +30,6 @@ Discussão sobre 3.5 - está de acordo com os tópicos propostos? Acho que vai c
 ---> Topicos estao bons. Virou um novo capitulo (cha04). Sobre a figura da stack final, ir referenciando cada parte do texto que corresponde aos blocos da figura. Vou apontando tal coisa foi dita na seção tal blablabla , agora so falta falar do alert mgr que sera discutido agora.
 
 1.6 - Descrição: frases de 1 ou 2 linhas, resumem obejtivamente o que vai ser abordado em cada capítulo. Essas frases devem feitas num ÚNICO parágrafo.
-
-Falar com a Fernanda -> Estou quase  terminando a parte da implementação do projeto, e a conclusão. Você prefere receber o texto fechado/completo, ou prefere receber até onde está escrito?
-Neste mesmo email, perguntar se ela tem alguma sugestao de pessoa para completar a banca. Avisando pra ela que a gente já sugeriu o Diego.
-
-
-
 
 Orientação 20250812
 
