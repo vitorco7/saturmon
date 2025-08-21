@@ -76,6 +76,25 @@ services:
       retries: 5
       start_period: 90s
 
+  iperf3:
+    container_name: iperf3
+    image: networkstatic/iperf3
+    hostname: iperf3
+    command: -s
+    ports:
+      - "5201:5201"
+    networks:
+      - devices_network
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "pgrep", "iperf3"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+###VIRTUAL DEVICES###
   virtual_device_1:
     container_name: device_1
     build:
@@ -90,6 +109,8 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
+      - load_coordinator:/var/run/load_coordinator      
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -110,6 +131,8 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
+      - load_coordinator:/var/run/load_coordinator      
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -130,6 +153,8 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
+      - load_coordinator:/var/run/load_coordinator      
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -150,6 +175,8 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
+      - load_coordinator:/var/run/load_coordinator      
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -170,29 +197,16 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
+      - load_coordinator:/var/run/load_coordinator      
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
       timeout: 10s
       retries: 3
 
-  iperf3:
-    container_name: iperf3
-    image: networkstatic/iperf3
-    hostname: iperf3
-    command: -s
-    ports:
-      - "5201:5201"
-    networks:
-      - devices_network
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    healthcheck:
-      test: ["CMD", "pgrep", "iperf3"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+volumes:
+  load_coordinator:
 
 networks:
   devices_network:

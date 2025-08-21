@@ -93,6 +93,7 @@ initialize_files() {
 is_active_device() {
   if [ ! -f "${ACTIVE_FILE}" ]; then
     echo "${HOSTNAME}" > "${ACTIVE_FILE}"
+    return 0
   fi
   
   active=$(cat ${ACTIVE_FILE})
@@ -107,8 +108,15 @@ is_active_device() {
 set_next_device() {
   lock_acquire
   
-  local sequence_content=$(cat ${SEQUENCE_FILE})
-  local current=$(cat ${ACTIVE_FILE})
+  local sequence_content=""
+  if [ -f "${SEQUENCE_FILE}" ]; then
+    sequence_content=$(cat ${SEQUENCE_FILE})
+  fi
+  
+  local current=""
+  if [ -f "${ACTIVE_FILE}" ]; then
+    current=$(cat ${ACTIVE_FILE})
+  fi
   
   # Get updated list of devices
   local devices=$(get_active_devices)

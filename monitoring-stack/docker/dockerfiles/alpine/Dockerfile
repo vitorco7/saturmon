@@ -18,4 +18,4 @@ RUN chmod +x /usr/local/bin/load_simulator.sh
 
 WORKDIR /
 
-CMD ["/bin/bash", "-c", "/usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]
+CMD ["/bin/bash", "-c", "/usr/local/bin/load_coordinator.sh & sleep 5 && /usr/local/bin/load_simulator.sh & telegraf --config /etc/telegraf/telegraf.conf"]

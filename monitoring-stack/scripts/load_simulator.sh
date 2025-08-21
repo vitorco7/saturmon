@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Coordination directory
+COORD_DIR="/var/run/load_coordinator"
+ACTIVE_FILE="${COORD_DIR}/active_device"
+
+# Get the hostname of this device
+HOSTNAME=$(hostname)
+
 # Global flag to control the main loop
 RUNNING=true
 
@@ -23,7 +30,46 @@ timestamp() {
     date +"[%Y-%m-%d %H:%M:%S]"
 }
 
+# Function to check if this device is the active one
+is_active_device() {
+  if [ ! -f "${ACTIVE_FILE}" ]; then
+    return 1  # False if file doesn't exist
+  fi
+  
+  active=$(cat ${ACTIVE_FILE})
+  if [ "${active}" = "${HOSTNAME}" ]; then
+    return 0  # True
+  else
+    return 1  # False
+  fi
+}
+
+# Make directory exists (just in case)
+mkdir -p ${COORD_DIR}
+
+# Wait for coordinator to be ready
+echo "$(timestamp) [INFO] Waiting for coordinator to initialize..."
+while [ ! -f "${ACTIVE_FILE}" ] && $RUNNING; do
+  sleep 2
+done
+
+echo "$(timestamp) [INFO] Load simulator started"
+
+# Main loop
 while $RUNNING; do
+    # Check if this device should be active
+    if ! is_active_device; then
+        echo "$(timestamp) [INFO] This device is not active, waiting..."
+        # Use a shorter sleep interval for non-active devices
+        for i in $(seq 1 5); do
+            if ! $RUNNING; then break 2; fi
+            sleep 1
+        done
+        continue
+    fi
+    
+    echo "$(timestamp) [INFO] This device is active, starting load simulation"
+        
     echo "$(timestamp) [INFO] === Starting Serial Stress Tests (Block 1) ==="
     
     if ! $RUNNING; then break; fi
@@ -200,7 +246,13 @@ while $RUNNING; do
         wait "$pid" 2>/dev/null || true
     done
     
-    echo "$(timestamp) [INFO] === Completed Parallel Tests, sleeping for $sleep_time seconds ==="
+    echo "$(timestamp) [INFO] === Completed Parallel Tests ==="
+    
+    # Set next active device after completing all tests
+    echo "$(timestamp) [INFO] Setting next active device"
+    /usr/local/bin/load_coordinator.sh set_next
+    
+    echo "$(timestamp) [INFO] Sleeping for $sleep_time seconds before checking again"
     
     # Interruptible sleep
     for i in $(seq 1 $sleep_time); do
