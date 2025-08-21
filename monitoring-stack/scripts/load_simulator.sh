@@ -47,10 +47,10 @@ is_active_device() {
 # Make directory exists (just in case)
 mkdir -p ${COORD_DIR}
 
-# Wait for coordinator to be ready
+# Wait for coordinator to be ready (OPTIMIZED: reduced to 1s interval)
 echo "$(timestamp) [INFO] Waiting for coordinator to initialize..."
 while [ ! -f "${ACTIVE_FILE}" ] && $RUNNING; do
-  sleep 2
+  sleep 1
 done
 
 echo "$(timestamp) [INFO] Load simulator started"
@@ -60,8 +60,8 @@ while $RUNNING; do
     # Check if this device should be active
     if ! is_active_device; then
         echo "$(timestamp) [INFO] This device is not active, waiting..."
-        # Use a shorter sleep interval for non-active devices
-        for i in $(seq 1 5); do
+        # OPTIMIZED: reduced to 3 seconds for non-active devices
+        for i in $(seq 1 3); do
             if ! $RUNNING; then break 2; fi
             sleep 1
         done
@@ -75,8 +75,11 @@ while $RUNNING; do
     if ! $RUNNING; then break; fi
     
     # Serial block stress and sleep durations
-    stress_time=$((RANDOM % 11 + 15))s # 15–25 seconds
-    sleep_time=$((RANDOM % 20 + 10)) # 10–30 seconds
+    # OPTIMIZED: reduced stress time to 8-12 seconds
+    stress_time=$((RANDOM % 5 + 8))s # 8-12 seconds
+    # OPTIMIZED: reduced sleep time to 5-10 seconds
+    sleep_time=$((RANDOM % 6 + 5)) # 5-10 seconds
+    
     cpu_workers=$((RANDOM % 3 + 2))
     cpu_cache_workers=$((RANDOM % 3 + 2))
     cpu_float_workers=$((RANDOM % 3 + 2))
@@ -199,8 +202,10 @@ while $RUNNING; do
     echo "$(timestamp) [INFO] === Starting Parallel Multi-Resource Stress Tests (Block 2) ==="
     
     # Parallel block stress and sleep durations
-    stress_time=$((RANDOM % 6 + 25))s # 25–30 seconds
-    sleep_time=$((RANDOM % 20 + 10)) # 10–30 seconds
+    # OPTIMIZED: reduced parallel stress time to 10-15 seconds
+    stress_time=$((RANDOM % 6 + 10))s # 10-15 seconds
+    # OPTIMIZED: reduced sleep time to 3-8 seconds
+    sleep_time=$((RANDOM % 6 + 3)) # 3-8 seconds
     
     # Regenerate parameters
     cpu_workers=$((RANDOM % 3 + 2))

@@ -6,6 +6,7 @@ ACTIVE_FILE="${COORD_DIR}/active_device"
 SEQUENCE_FILE="${COORD_DIR}/sequence"
 PRESENCE_DIR="${COORD_DIR}/devices"
 LOCK_FILE="${COORD_DIR}/lock"
+RESTART_MARKER="${COORD_DIR}/.restart_timestamp"
 
 # Get the hostname of this device
 HOSTNAME=$(hostname)
@@ -29,6 +30,30 @@ lock_acquire() {
 
 lock_release() {
   rmdir "${LOCK_FILE}" 2>/dev/null || true
+}
+
+# Check if we need to reset coordination (new deploy/restart)
+check_for_restart() {
+  lock_acquire
+  
+  # Get current timestamp
+  current_time=$(date +%s)
+  
+  # If restart marker doesn't exist or is too old, consider this a fresh start
+  if [ ! -f "${RESTART_MARKER}" ] || [ $((current_time - $(cat "${RESTART_MARKER}"))) -gt 5 ]; then
+    log "Detected new deployment or restart - resetting coordination"
+    
+    # Clean up old presence files
+    find "${PRESENCE_DIR}" -type f -delete
+    
+    # Reset sequence and active device files
+    rm -f "${SEQUENCE_FILE}" "${ACTIVE_FILE}"
+    
+    # Update restart timestamp
+    echo "${current_time}" > "${RESTART_MARKER}"
+  fi
+  
+  lock_release
 }
 
 # Register this device as present
@@ -165,6 +190,9 @@ if [ "$1" = "set_next" ]; then
   set_next_device
   exit 0
 fi
+
+# Check for restart and reset coordination if needed
+check_for_restart
 
 # Register this device as present
 register_device
