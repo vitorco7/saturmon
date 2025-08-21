@@ -92,8 +92,13 @@ initialize_files() {
       log "Creating sequence with devices: ${device_list}"
       echo "${device_list}" > "${SEQUENCE_FILE}"
       
-      # Set first device as active
-      first_device=$(echo "${devices}" | head -n 1)
+      # Set first device by numeric order (instead of alphabetic)
+      # This ensures we always start with device_1 if available
+      first_device=$(echo "${devices}" | grep -E "device[0-9]+" | sort -V | head -n 1)
+      if [ -z "${first_device}" ]; then
+        # Fall back to alphabetical sort if no numeric devices found
+        first_device=$(echo "${devices}" | head -n 1)
+      fi
       echo "${first_device}" > "${ACTIVE_FILE}"
       log "Set initial active device: ${first_device}"
     fi
