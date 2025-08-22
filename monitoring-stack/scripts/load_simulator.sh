@@ -47,10 +47,10 @@ is_active_device() {
 # Make directory exists (just in case)
 mkdir -p ${COORD_DIR}
 
-# Wait for coordinator to be ready (OPTIMIZED: reduced to 1s interval)
+# Wait for coordinator to be ready 
 echo "$(timestamp) [INFO] Waiting for coordinator to initialize..."
 while [ ! -f "${ACTIVE_FILE}" ] && $RUNNING; do
-  sleep 1
+  sleep 2
 done
 
 echo "$(timestamp) [INFO] Load simulator started"
@@ -60,7 +60,6 @@ while $RUNNING; do
     # Check if this device should be active
     if ! is_active_device; then
         echo "$(timestamp) [INFO] This device is not active, waiting..."
-        # OPTIMIZED: reduced to 3 seconds for non-active devices
         for i in $(seq 1 3); do
             if ! $RUNNING; then break 2; fi
             sleep 1
@@ -253,17 +252,20 @@ while $RUNNING; do
     
     echo "$(timestamp) [INFO] === Completed Parallel Tests ==="
     
+    # Check if we should continue running
+    if ! $RUNNING; then break; fi
+    
     # Set next active device after completing all tests
     echo "$(timestamp) [INFO] Setting next active device"
     /usr/local/bin/load_coordinator.sh set_next
     
-    echo "$(timestamp) [INFO] Sleeping for $sleep_time seconds before checking again"
+    # Replace the sleep section with a simple message
+    echo "$(timestamp) [INFO] Handed off to next device, returning to inactive state"
     
-    # Interruptible sleep
-    for i in $(seq 1 $sleep_time); do
-        if ! $RUNNING; then break 2; fi
-        sleep 1
-    done
+    # Maintain a check for shutdown signal before looping back
+    if ! $RUNNING; then break; fi
+    
+    # The loop will now continue immediately, checking active status again
 done
 
 echo "$(timestamp) [INFO] Load simulator stopped."

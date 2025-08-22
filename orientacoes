@@ -12,8 +12,10 @@ OK - Códigos recebem a categoria "Listing". Listing 3.1, Listing 3.2 Tá certo?
 --->Trocar o termo "Listing" para "Listagem" ou "Código Fonte"
 
 
+OK- {
 Mudanças no load_simulator.sh: os testes estavam gerando travamentos na máquina. Rodava tudo ao mesmo tempo. Sem falar que por conta do while true sem checagens de kill, por vezes demorava 60 segundos para derrubar o container. Para isso, implementei checagens constantes para verificação de kill do container.Outro ponto é que estou implementando os testes indo de 1 device por vez (device1->device2...->device5 ->repete). Tudo isso precisa entrar na figura do fluxograma, ou posso apenas comentar no texto?  
 ---->Mantém a figura como está, reportando no texto as mudanças no script. Reportar também que as execuções dos testes aconteciam de forma assíncrona e simultânea, e agora serão executadas de forma síncrona e sequencial, para evitar travamentos na máquina..
+}
 
 OK{
 Adição de apêndices para os códigos: quais as melhores práticas? Por tudo junto?  Dividir em vários apêndices temáticos? Se sim, quais seriam os temas? É um pouco complicado dividir em temas precisos visto que muitas vezes os códigos são complementares entre si.

@@ -326,31 +326,18 @@ Adicionalmente, a imagem oficial do Grafana utilizada no projeto já inclui o ba
 
 Os dispositivos virtuais, por si só, não produzem dados suficientes para uma análise qualitativa ou quantitativa eficaz do sistema de monitoramento. Por esse motivo, foram implementados testes de saturação, consistindo na geração de carga adicional sobre os dispositivos virtuais para simular cenários de uso intenso e coletar as métricas correspondentes.
 
-Inicialmente, a introdução de carga foi realizada exclusivamente com o stress-ng, integrado aos Dockerfiles dos dispositivos virtuais. Posteriormente, desenvolveu-se um \foreign{script} Bash que executa o stress-ng com diferentes parâmetros, simulando variados tipos de carga (CPU, memória, I/O, etc.) e níveis de intensidade. Esse \foreign{script} é executado em segundo plano, simultaneamente à execução do agente Telegraf, garantindo a geração contínua de carga durante a coleta das métricas.
+Num primeiro momento, a introdução de carga foi realizada exclusivamente com o stress-ng, integrado aos Dockerfiles dos dispositivos virtuais. Desenvolveu-se um \foreign{script} Bash que executa o stress-ng com diferentes parâmetros, simulando variados tipos de carga (CPU, memória, I/O, etc.) e níveis de intensidade. Esse \foreign{script} é executado em segundo plano, simultaneamente à execução do agente Telegraf, garantindo a geração contínua de carga durante a coleta das métricas.
 
 Apesar do bom desempenho na geração de carga computacional, o stress-ng mostrou-se insuficiente para simular tráfego de rede de forma realista. Para superar essa limitação, foi incorporado o iPerf3 ao projeto. Como esta ferramenta opera no modelo cliente-servidor e não permite a atuação simultânea nessas funções, foi criado um contêiner dedicado para funcionar como servidor iPerf3. Em paralelo, cada dispositivo virtual passou a contar com uma instância do iPerf3 configurada como cliente. Dessa maneira, tornou-se possível gerar tráfego de rede entre os dispositivos virtuais e o servidor iPerf3, aprimorando a simulação de carga sobre o ambiente de rede.
 
-
-\begin{figure}[H]
-\centering
-% \setlength{\abovecaptionskip}{-10pt}
-\includegraphics[scale=0.75]{Imagens/chap03/load_generator_flowchart2.pdf}
-\caption{Fluxograma dos testes de carga.}
-\label{fig:FluxogramaCarga}
-\end{figure}
-
-
-
-O script executa um \foreign{loop} \verb|while| estruturado em dois blocos principais: inicialmente, realiza uma série de testes sequenciais, seguidos pela repetição desses testes de forma paralela e simultânea. No início de cada bloco, os valores de duração dos testes (\verb|stress_time|) e do tempo de espera entre um bloco e outro (\verb|sleep_time|) são definidos aleatoriamente. Ao término dos testes paralelos, aguarda-se o \verb|sleep_time| previamente estabelecido e, em seguida, inicia-se um novo ciclo, conforme ilustrado no fluxograma da Figura \ref{fig:FluxogramaCarga}. Esse processo se repete indefinidamente, possibilitando a execução contínua dos testes de saturação até que ocorra uma intervenção manual ou a finalização do contêiner.
-
-A aleatoriedade nas durações dos testes e dos intervalos de espera, bem como a definição contínua de novos valores a cada execução de bloco, tem como objetivo conferir um caráter caótico aos experimentos, aproximando-os das condições reais de operação. \textcolor{red}{Embora os valores sejam determinados aleatoriamente, eles obedecem intervalos previamente estabelecidos de modo a favorecer a otimização dos testes.} {\color{blue}Changelog: retirei valores hardcoded e coloquei uma frase mais genérica, pois esses valores podem ser alterados futuramente.}
+O \foreign{script} executa um \foreign{loop} estruturado em dois blocos principais: inicialmente, realiza uma série de testes sequenciais, seguidos pela repetição desses testes de forma paralela e simultânea. No início de cada bloco, os valores de duração dos testes (\verb|stress_time|) e do tempo de espera entre um bloco e outro (\verb|sleep_time|) são definidos aleatoriamente, com objetivo de conferir um caráter caótico aos experimentos, aproximando-os das condições reais de operação. Embora os valores sejam aleatórios eles obedecem intervalos previamente estabelecidos, de modo a favorecer a otimização dos testes.
 
 Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas. Nas figuras os \foreign{scripts} são representados pelo símbolo \includegraphics[height=0.8em]{Imagens/chap03/input_black.png}.
 
 {\color{red}
-Inicialmente, todos os dispositivos virtuais executavam o \foreign{script} de geração de carga (\verb|load_simulator|) simultaneamente após a inicialização dos contêineres. Essa abordagem mostrou-se inadequada, uma vez que a geração simultânea de carga causava travamentos e instabilidades no \foreign{host}. Para contornar essa limitação, foi desenvolvido um novo \foreign{script} coordenador (\verb|load_coordinator|) responsável por gerenciar a execução sequencial rotativa do simulador de carga.
+Inicialmente, todos os dispositivos virtuais executavam o \foreign{script} de geração de carga (\verb|load_simulator|) simultaneamente após a inicialização dos contêineres. Essa abordagem mostrou-se inadequada, uma vez que a geração simultânea de carga causava travamentos e instabilidades no \foreign{host}. Para contornar essa limitação, foi desenvolvido um \foreign{script} coordenador (\verb|load_coordinator|) responsável por gerenciar a execução sequencial rotativa do simulador de carga.
 
-O \verb|load_coordinator| implementa um mecanismo de \foreign{leader election} (eleição de líder), no qual apenas um dispositivo virtual é designado como ativo para gerar carga em cada momento, enquanto os demais permanecem em estado de espera. A ordem de execução é determinada pela listagem crescente dos dispositivos em funcionamento.
+O \verb|load_coordinator| implementa um mecanismo de \foreign{leader election} (eleição de líder), no qual apenas um dispositivo virtual é designado como ativo para gerar carga em cada momento, enquanto os demais permanecem em estado de espera. A ordem de execução é determinada pela sequência crescente dos dispositivos em funcionamento.
 
 O processo operacional funciona da seguinte forma: ao inicializar, cada dispositivo verifica sua posição na lista ordenada. O primeiro dispositivo executa o \verb|load_simulator| e realiza todos os testes de saturação, enquanto os demais aguardam sua vez. Ao concluir o ciclo completo (término dos testes paralelos), o próximo dispositivo da lista assume a função ativa. Esse processo se repete sequencialmente até que todos os dispositivos tenham executado seus ciclos, retornando então ao primeiro para reiniciar a rotação.
 
@@ -358,6 +345,17 @@ A distribuição do \verb|load_coordinator| aos dispositivos virtuais é realiza
 
 A mudança do paradigma de execuções assíncronas e simultâneas para síncronas e sequenciais eliminou os travamentos e instabilidades no \foreign{host}, garantindo a estabilidade do ambiente de monitoramento.
 }
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-10pt}
+\includegraphics[width=\textwidth]{Imagens/chap03/load_flowchart.pdf}
+\caption{Fluxograma dos testes de carga.}
+\label{fig:FluxogramaCarga}
+\end{figure}
+
+\newpage
 
 \subsection{Desafios na Integração de Dispositivos Móveis}
 \label{subsection:DesafiosDispositivosMoveis}
@@ -427,7 +425,7 @@ Com o objetivo de otimizar o desempenho, foram aplicados filtros no arquivo \ver
   fieldinclude = ["running", "sleeping", "total", "zombies"]
 \end{lstlisting}
 
-A Tabela \ref{tab:metricas-selecionadas} apresenta as métricas selecionadas organizadas por categoria, incluindo seus respectivos rótulos e nomenclaturas específicas conforme coletadas no \foreign{host} e nos dispositivos virtuais. As células vazias indicam duas situações distintas: a indisponibilidade da métrica para coleta no ambiente específico (como as métricas de disco em dispositivos virtuais) ou a dispensabilidade de coleta direta, uma vez que tais dados podem ser derivados indiretamente por meio de cálculos baseados em outras métricas já coletadas, como no caso das métricas de Swap. Os procedimentos de cálculo serão detalhados no Capítulo \ref{chap4}.
+A Tabela \ref{tab:metricas-selecionadas} apresenta as métricas selecionadas organizadas por categoria, incluindo seus respectivos rótulos e nomenclaturas específicas conforme coletadas no \foreign{host} e nos dispositivos virtuais. As células vazias indicam duas situações distintas: a indisponibilidade da métrica para coleta no ambiente específico (como as métricas de disco em dispositivos virtuais) ou a dispensabilidade de coleta direta, uma vez que tais dados podem ser derivados indiretamente por meio de cálculos baseados em outras métricas já coletadas, como no caso das métricas de Memória Swap. Os procedimentos de cálculo serão detalhados no Capítulo \ref{chap4}.
 }
 
 \begin{table}[H]
