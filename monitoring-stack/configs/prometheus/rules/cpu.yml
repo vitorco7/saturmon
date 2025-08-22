@@ -23,7 +23,7 @@ groups:
       expr: label_replace(physical_cpu_usage_system{job="physical_host"}, "cpu", "$1", "cpu", "(.*)")
 
     - record: cpu_user_load
-      expr: label_replace(container_cpu_user_percent{job="virtual_hosts"}, "cpu", "container", "", "")
+      expr: label_replace(container_cgroup_cpu_stat_user_usec{job="virtual_hosts"}, "cpu", "container", "", "")
 
     - record: cpu_user_load
       expr: label_replace(physical_cpu_usage_user{job="physical_host"}, "cpu", "$1", "cpu", "(.*)")
