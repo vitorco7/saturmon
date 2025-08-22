@@ -417,13 +417,14 @@ A partir dos critérios estabelecidos, e as respectivas descrições apresentada
 \centering
 \caption{Métricas selecionadas.}
 \label{tab:metricas-selecionadas}
-\begin{tabularx}{\textwidth}{|c|c|c|c|}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{Categoria} & \textbf{Rótulo} & \textbf{Host} & \textbf{Dispositivo Virtual} \\ \hline
-\multirow{4}{*}{CPU} & Carga do usuário & usage\_user(\%) & user\_usec \\ \cline{2-4}
-                     & Carga do sistema & usage\_system(\%) & system\_usec \\ \cline{2-4}
+\multirow{4}{*}{CPU} & Carga do usuário & usage\_user(\%) & user\_usec($\mu$s) \\ \cline{2-4}
+                     & Carga do sistema & usage\_system(\%) & system\_usec($\mu$s) \\ \cline{2-4}
                      & Aguardo de I/O & usage\_iowait(\%) & --- \\ \cline{2-4}
-                     & Tempo ocioso & usage\_idle(\%) & cpu.idle \\ \hline
+                     & Tempo ocioso & usage\_idle(\%) & cpu.idle($\mu$s) \\ \hline
 \multirow{5}{*}{Memória} & RAM em uso & used(Bytes) & current(Bytes) \\ \cline{2-4}
                          & RAM total & total(Bytes) & max(Bytes) \\ \cline{2-4}
                          & Swap em uso & --- & swap.current(Bytes) \\ \cline{2-4}
@@ -433,20 +434,21 @@ A partir dos critérios estabelecidos, e as respectivas descrições apresentada
                        & Espaço utilizado & used(Bytes)         & ---     \\ \cline{2-4}
                        & Espaço total & total(Bytes)        & ---     \\ \cline{2-4}
                        & INODES livres & inodes\_free(un) & ---     \\ \cline{2-4}
-                       & Bytes lidos & read\_bytes(Bytes)  & rbytes \\ \cline{2-4}
-                       & Bytes escritos & write\_bytes(Bytes) & wbytes \\ \cline{2-4}
+                       & Bytes lidos & read\_bytes(Bytes)  & rbytes(Bytes) \\ \cline{2-4}
+                       & Bytes escritos & write\_bytes(Bytes) & wbytes(Bytes) \\ \cline{2-4}
                        & Utilização I/O & io\_util(\%)     & ---     \\ \hline
-\multirow{8}{*}{Rede} & Bytes recebidos & bytes\_recv     & bytes\_recv \\ \cline{2-4}
-                      & Bytes enviados & bytes\_sent     & bytes\_sent \\ \cline{2-4}
-                      & Pacotes recebidos & packets\_recv   & packets\_recv \\ \cline{2-4}
-                      & Pacotes enviados & packets\_sent   & packets\_sent \\ \cline{2-4}
-                      & Pacotes descartados (entrada) & drop\_in        & drop\_in          \\ \cline{2-4}
-                      & Pacotes descartados (saída) & drop\_out       & drop\_out         \\ \cline{2-4}
-                      & Pacotes com erro (entrada) & err\_in         & err\_in         \\ \cline{2-4}
-                      & Pacotes com erro (saída) & err\_out        & err\_out        \\ \hline
+\multirow{8}{*}{Rede} & Bytes recebidos & bytes\_recv(Bytes)     & bytes\_recv(Bytes) \\ \cline{2-4}
+                      & Bytes enviados & bytes\_sent(Bytes)     & bytes\_sent(Bytes) \\ \cline{2-4}
+                      & Pacotes recebidos & packets\_recv(un)   & packets\_recv(un) \\ \cline{2-4}
+                      & Pacotes enviados & packets\_sent(un)   & packets\_sent(un) \\ \cline{2-4}
+                      & Pacotes descartados (entrada) & drop\_in(un)        & drop\_in(un)          \\ \cline{2-4}
+                      & Pacotes descartados (saída) & drop\_out(un)       & drop\_out(un)         \\ \cline{2-4}
+                      & Pacotes com erro (entrada) & err\_in(un)         & err\_in(un)         \\ \cline{2-4}
+                      & Pacotes com erro (saída) & err\_out(un)        & err\_out(un)       \\ \hline
 \multirow{4}{*}{Processos} & Em execução & running(un)  & running(un)  \\ \cline{2-4}
                            & Em espera & sleeping(un) & sleeping(un) \\ \cline{2-4}
                            & Total & total(un)    & total(un)    \\ \cline{2-4}
                            & Zumbi & zombies(un)  & zombies(un)  \\ \hline
-\end{tabularx}
+\end{tabular}
+\end{adjustbox}
 \end{table}
