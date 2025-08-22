@@ -195,19 +195,19 @@ Por fim, considerando as limitações discutidas, optou-se pelo uso do \foreign{
 
 % \newpage
 
-\begin{lstlisting}[caption={Leitura da métrica "cpu.pressure" com inputs.exec}, label={lst:trecho1}]
+\begin{lstlisting}[caption={Leitura da métrica "io.stat" com inputs.exec}, label={lst:inputs_exec}]
 [[inputs.exec]]
-  commands = ["cat /sys/fs/cgroup/cpu.pressure"]
+  commands = ["cat /sys/fs/cgroup/io.stat"]
   data_format = "grok"
-  grok_patterns = ["%{WORD:pressure_type} avg10=%{NUMBER:avg10:float} avg60=%{NUMBER:avg60:float} avg300=%{NUMBER:avg300:float} total=%{NUMBER:total:int}"]
+  grok_patterns = ['%{NUMBER:device_major:int}:%{NUMBER:int} rbytes=%{NUMBER:read_bytes:int} wbytes=%{NUMBER:write_bytes:int} rios=%{NUMBER:read_ios:int} wios=%{NUMBER:write_ios:int} dbytes=%{NUMBER:discard_bytes:int} dios=%{NUMBER:discard_ios:int}']
   timeout = "5s"
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Leitura da mesma métrica "cpu.pressure" com inputs.cgroups}, label={lst:trecho2}]
+\begin{lstlisting}[caption={Leitura da mesma métrica "io.stat" com inputs.cgroups}, label={lst:inputs_cgroup}]
 [[inputs.cgroup]]
   paths = ["/sys/fs/cgroup/"]
   files = [
-    "cpu.pressure"
+    "io.stat"
   ]
 \end{lstlisting}
 
@@ -343,9 +343,21 @@ Apesar do bom desempenho na geração de carga computacional, o stress-ng mostro
 
 O script executa um \foreign{loop} \verb|while| estruturado em dois blocos principais: inicialmente, realiza uma série de testes sequenciais, seguidos pela repetição desses testes de forma paralela e simultânea. No início de cada bloco, os valores de duração dos testes (\verb|stress_time|) e do tempo de espera entre um bloco e outro (\verb|sleep_time|) são definidos aleatoriamente. Ao término dos testes paralelos, aguarda-se o \verb|sleep_time| previamente estabelecido e, em seguida, inicia-se um novo ciclo, conforme ilustrado no fluxograma da Figura \ref{fig:FluxogramaCarga}. Esse processo se repete indefinidamente, possibilitando a execução contínua dos testes de saturação até que ocorra uma intervenção manual ou a finalização do contêiner.
 
-A aleatoriedade nas durações dos testes e dos intervalos de espera, bem como a definição contínua de novos valores a cada execução de bloco, tem como objetivo conferir um caráter caótico aos experimentos, aproximando-os das condições reais de operação. Embora os valores sejam determinados aleatoriamente, eles obedecem a intervalos previamente estabelecidos: nos testes sequenciais, cada execução ocorre entre 15 e 20 segundos; no bloco paralelo, o tempo total de execução varia de 25 a 30 segundos. Para ambos os blocos, o intervalo de espera entre execuções está fixado entre 10 e 30 segundos.
+A aleatoriedade nas durações dos testes e dos intervalos de espera, bem como a definição contínua de novos valores a cada execução de bloco, tem como objetivo conferir um caráter caótico aos experimentos, aproximando-os das condições reais de operação. \textcolor{red}{Embora os valores sejam determinados aleatoriamente, eles obedecem intervalos previamente estabelecidos de modo a favorecer a otimização dos testes.} {\color{blue}Changelog: retirei valores hardcoded e coloquei uma frase mais genérica, pois esses valores podem ser alterados futuramente.}
 
-Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas. Nas figuras os \foreign{scripts} são representados pelo símbolo \includegraphics[height=0.8em]{Imagens/chap03/input_black.png}. 
+Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas. Nas figuras os \foreign{scripts} são representados pelo símbolo \includegraphics[height=0.8em]{Imagens/chap03/input_black.png}.
+
+{\color{red}
+Inicialmente, todos os dispositivos virtuais executavam o \foreign{script} de geração de carga (\verb|load_simulator|) simultaneamente após a inicialização dos contêineres. Essa abordagem mostrou-se inadequada, uma vez que a geração simultânea de carga causava travamentos e instabilidades no \foreign{host}. Para contornar essa limitação, foi desenvolvido um novo \foreign{script} coordenador (\verb|load_coordinator|) responsável por gerenciar a execução sequencial rotativa do simulador de carga.
+
+O \verb|load_coordinator| implementa um mecanismo de \foreign{leader election} (eleição de líder), no qual apenas um dispositivo virtual é designado como ativo para gerar carga em cada momento, enquanto os demais permanecem em estado de espera. A ordem de execução é determinada pela listagem crescente dos dispositivos em funcionamento.
+
+O processo operacional funciona da seguinte forma: ao inicializar, cada dispositivo verifica sua posição na lista ordenada. O primeiro dispositivo executa o \verb|load_simulator| e realiza todos os testes de saturação, enquanto os demais aguardam sua vez. Ao concluir o ciclo completo (término dos testes paralelos), o próximo dispositivo da lista assume a função ativa. Esse processo se repete sequencialmente até que todos os dispositivos tenham executado seus ciclos, retornando então ao primeiro para reiniciar a rotação.
+
+A distribuição do \verb|load_coordinator| aos dispositivos virtuais é realizada por meio de \verb|docker volume| no Docker Compose, implementando duas funcionalidades simultâneas: o carregamento individual em cada contêiner para execução local e o compartilhamento entre todos os dispositivos, permitindo acesso coordenado ao mesmo \foreign{script} e possibilitando a sincronização interativa para determinação do dispositivo ativo.
+
+A mudança do paradigma de execuções assíncronas e simultâneas para síncronas e sequenciais eliminou os travamentos e instabilidades no \foreign{host}, garantindo a estabilidade do ambiente de monitoramento.
+}
 
 \subsection{Desafios na Integração de Dispositivos Móveis}
 \label{subsection:DesafiosDispositivosMoveis}
@@ -404,12 +416,18 @@ A seleção das métricas a serem monitoradas pautou-se nos seguintes critérios
 \item \textbf{Comparabilidade}: Sempre que possível, optou-se por métricas comparáveis entre os dispositivos virtualizados e físicos. Embora nem todas apresentem correspondência exata, buscou-se garantir um nível de equivalência. Ressalta-se, contudo, que algumas métricas importantes --- como determinadas métricas de disco --- não estão disponíveis nos dispositivos virtuais, mas foram mantidas pela sua relevância para o monitoramento.
 \end{enumerate}
 
-{\color{brown}
-Ajeitar este texto 
+{\color{red}
 
-No capitulo 2 eu apresento as metricas com a perspectiva na qual elas serao apresentadas no dashboard. Na tabela abaixo eu apresento as metricas com a perspectiva de como elas sao coletadas, ou seja, quais arquivos sao lidos para obter cada uma delas.
+Embora o Capítulo \ref{chap2} aborde as métricas e grandezas de interesse, ele o faz sob a perspectiva de sua apresentação no \foreign{dashboard}. Esta seção foca na exposição das métricas em formato bruto (\foreign{raw}), isto é, conforme são extraídas diretamente dos arquivos de sistema.
 
-A partir dos critérios estabelecidos, e as respectivas descrições apresentadas na Seção \ref{section:Metricas} do Capítulo 2, são obtidas as seguintes métricas, a partir da leitura direta dos arquivos de sistema:
+Com o objetivo de otimizar o desempenho, foram aplicados filtros no arquivo \verb|telegraf.conf| de cada agente, permitindo uma coleta seletiva e direcionada. Essa abordagem evita a captura de métricas indesejadas, conforme exemplificado a seguir:
+
+\begin{lstlisting}[caption={Exemplo de filtragem de métricas selecionadas.}, label={lst:exemplo-filtro}]
+[[inputs.processes]] 
+  fieldinclude = ["running", "sleeping", "total", "zombies"]
+\end{lstlisting}
+
+A Tabela \ref{tab:metricas-selecionadas} apresenta as métricas selecionadas organizadas por categoria, incluindo seus respectivos rótulos e nomenclaturas específicas conforme coletadas no \foreign{host} e nos dispositivos virtuais. As células vazias indicam duas situações distintas: a indisponibilidade da métrica para coleta no ambiente específico (como as métricas de disco em dispositivos virtuais) ou a dispensabilidade de coleta direta, uma vez que tais dados podem ser derivados indiretamente por meio de cálculos baseados em outras métricas já coletadas, como no caso das métricas de Swap. Os procedimentos de cálculo serão detalhados no Capítulo \ref{chap4}.
 }
 
 \begin{table}[H]
@@ -421,8 +439,8 @@ A partir dos critérios estabelecidos, e as respectivas descrições apresentada
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{Categoria} & \textbf{Rótulo} & \textbf{Host} & \textbf{Dispositivo Virtual} \\ \hline
-\multirow{4}{*}{CPU} & Carga do usuário & usage\_user(\%) & user\_usec($\mu$s) \\ \cline{2-4}
-                     & Carga do sistema & usage\_system(\%) & system\_usec($\mu$s) \\ \cline{2-4}
+\multirow{4}{*}{CPU} & Carga de usuário & usage\_user(\%) & user\_usec($\mu$s) \\ \cline{2-4}
+                     & Carga de sistema & usage\_system(\%) & system\_usec($\mu$s) \\ \cline{2-4}
                      & Aguardo de I/O & usage\_iowait(\%) & --- \\ \cline{2-4}
                      & Tempo ocioso & usage\_idle(\%) & cpu.idle($\mu$s) \\ \hline
 \multirow{5}{*}{Memória} & RAM em uso & used(Bytes) & current(Bytes) \\ \cline{2-4}
