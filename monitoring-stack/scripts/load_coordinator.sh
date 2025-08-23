@@ -20,21 +20,76 @@ log() {
 mkdir -p ${COORD_DIR}
 mkdir -p ${PRESENCE_DIR}
 
-# Use a simple file-based lock for initialization
+# Clean up any stale locks from previous runs
+if [ -d "${LOCK_FILE}" ]; then
+  log "Found stale lock on startup, removing"
+  rmdir "${LOCK_FILE}" 2>/dev/null || true
+fi
+
+# Use a simple file-based lock for initialization with timeout
 lock_acquire() {
+  local timeout=10  # Maximum time to wait for lock in seconds
+  local start_time=$(date +%s)
+  local current_time
+  
   while ! mkdir "${LOCK_FILE}" 2>/dev/null; do
     log "Waiting for lock to be released"
     sleep 1
+    
+    # Check if we've timed out waiting
+    current_time=$(date +%s)
+    if [ $((current_time - start_time)) -gt $timeout ]; then
+      log "WARNING: Lock acquisition timeout - forcing lock release"
+      lock_force_release
+      # Try once more
+      if ! mkdir "${LOCK_FILE}" 2>/dev/null; then
+        log "ERROR: Still cannot acquire lock after force release - proceeding anyway"
+        # Create a marker file indicating we're proceeding without proper lock
+        touch "${LOCK_FILE}.forced"
+        return 1
+      fi
+      break
+    fi
   done
+  
+  # Remove any forced lock marker
+  rm -f "${LOCK_FILE}.forced"
+  return 0
+}
+
+# Force release the lock (for timeout scenarios)
+lock_force_release() {
+  log "Attempting to force release lock"
+  # Check if lock directory exists
+  if [ -d "${LOCK_FILE}" ]; then
+    # Check if it's older than 30 seconds, to avoid race conditions
+    if [ -n "$(find "${LOCK_FILE}" -type d -mmin +0.5 2>/dev/null)" ]; then
+      log "Found stale lock, removing"
+      rmdir "${LOCK_FILE}" 2>/dev/null || true
+    else
+      log "Lock is recent, not forcing removal yet"
+    fi
+  fi
 }
 
 lock_release() {
-  rmdir "${LOCK_FILE}" 2>/dev/null || true
+  # Check if we're operating under a forced lock
+  if [ -f "${LOCK_FILE}.forced" ]; then
+    rm -f "${LOCK_FILE}.forced"
+    return
+  fi
+  
+  # Only remove the directory if it exists
+  if [ -d "${LOCK_FILE}" ]; then
+    rmdir "${LOCK_FILE}" 2>/dev/null || true
+  fi
 }
 
 # Check if we need to reset coordination (new deploy/restart)
 check_for_restart() {
-  lock_acquire
+  if ! lock_acquire; then
+    log "WARNING: Could not acquire lock for restart check - proceeding anyway"
+  fi
   
   # Get current timestamp
   current_time=$(date +%s)
@@ -69,7 +124,9 @@ get_active_devices() {
 
 # Initialize sequence file with available devices
 initialize_files() {
-  lock_acquire
+  if ! lock_acquire; then
+    log "WARNING: Could not acquire lock for initialization - proceeding anyway"
+  fi
   
   # Check if files already exist
   if [ ! -f "${SEQUENCE_FILE}" ] || [ ! -f "${ACTIVE_FILE}" ]; then
@@ -136,7 +193,13 @@ is_active_device() {
 
 # Function to set the next active device
 set_next_device() {
-  lock_acquire
+  # Use a more robust lock with error handling
+  if ! lock_acquire; then
+    log "WARNING: Proceeding with setting next device without proper lock"
+  fi
+  
+  # Make sure we always release the lock, even on error
+  trap lock_release EXIT
   
   local sequence_content=""
   if [ -f "${SEQUENCE_FILE}" ]; then
@@ -187,7 +250,9 @@ set_next_device() {
     fi
   fi
   
+  # Release the lock (also covered by trap, but being explicit)
   lock_release
+  trap - EXIT
 }
 
 # Check for command-line arguments

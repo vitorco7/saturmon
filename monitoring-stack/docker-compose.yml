@@ -94,7 +94,6 @@ services:
       timeout: 10s
       retries: 3
 
-###VIRTUAL DEVICES###
   virtual_device_1:
     container_name: device_1
     build:
