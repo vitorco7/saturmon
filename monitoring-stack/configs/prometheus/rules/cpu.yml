@@ -11,6 +11,8 @@ groups:
             ),
             "path", "", "", ""
           )
+        labels:
+          unit: "percent"
 
       - record: cpu_user_load
         expr: >
@@ -21,6 +23,8 @@ groups:
             ),
             "cpu", "", "", ""
           )
+        labels:
+          unit: "percent"
 
       - record: cpu_system_load
         expr: >
@@ -32,6 +36,8 @@ groups:
             ),
             "path", "", "", ""
           )
+        labels:
+          unit: "percent"
 
       - record: cpu_system_load
         expr: >
@@ -42,6 +48,8 @@ groups:
             ),
             "cpu", "", "", ""
           )
+        labels:
+          unit: "percent"
 
       - record: cpu_idle
         expr: >
@@ -53,6 +61,8 @@ groups:
             ),
             "path", "", "", ""
           )
+        labels:
+          unit: "percent"
 
       - record: cpu_idle
         expr: >
@@ -63,3 +73,5 @@ groups:
             ),
             "cpu", "", "", ""
           )
+        labels:
+          unit: "percent"

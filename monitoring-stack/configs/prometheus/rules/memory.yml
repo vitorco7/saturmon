@@ -1,108 +1,101 @@
 groups:
-- name: memory_normalization
-  rules:
-  - record: memory_current
-    expr: |
-      label_replace(
-        physical_mem_used{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "bytes"
+  - name: memory_normalization
+    rules:
+      - record: memory_current
+        expr: >
+          label_replace(
+            label_replace(
+              container_cgroup_memory_current{job="virtual_hosts"},
+              "instance", "", "", ""
+            ),
+            "path", "", "", ""
+          )
+        labels:
+          unit: "bytes"
 
-  - record: memory_current
-    expr: |
-      label_replace(
-        container_cgroup_memory_current{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
-    labels:
-      unit: "bytes"
+      - record: memory_current
+        expr: >
+          label_replace(
+            label_replace(
+              physical_mem_used{job="physical_host"},
+              "instance", "", "", ""
+            ),
+            "path", "", "", ""
+          )
+        labels:
+          unit: "bytes"
 
-  - record: memory_current
-    expr: |
-      label_replace(
-        label_replace(
-          dockerstats_memory_usage_bytes{job="docker_metrics"},
-          "id", "", ".*", ""
-        ),
-        "type", "docker", "", ""
-      )
-    labels:
-      unit: "bytes"
+      - record: memory_total
+        expr: >
+          label_replace(
+            label_replace(
+              container_cgroup_memory_max{job="virtual_hosts"},
+              "instance", "", "", ""
+            ),
+            "path", "", "", ""
+          )
+        labels:
+          unit: "bytes"
 
-  - record: memory_max
-    expr: |
-      label_replace(
-        label_replace(
-          container_cgroup_memory_max{job="virtual_hosts"},
-          "path", "", ".*", ""  # Remove path label
-        ),
-        "type", "virtual", "", ""
-      )
-    labels:
-      unit: "bytes"
+      - record: memory_total
+        expr: >
+          label_replace(
+            label_replace(
+              physical_mem_total{job="physical_host"},
+              "instance", "", "", ""
+            ),
+            "path", "", "", ""
+          )
+        labels:
+          unit: "bytes"
 
-  - record: memory_max
-    expr: |
-      label_replace(
-        physical_mem_total{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "bytes"
+      - record: memory_swap_total
+        expr: >
+          label_replace(
+            label_replace(
+              container_cgroup_memory_swap_max{job="virtual_hosts"},
+              "instance", "", "", ""
+            ),
+            "path", "", "", ""
+          )
+        labels:
+          unit: "bytes"
 
-  - record: memory_max
-    expr: |
-      label_replace(
-        label_replace(
-          dockerstats_memory_limit_bytes{job="docker_metrics"},
-          "id", "", ".*", ""  # Remove container ID
-        ),
-        "type", "docker", "", ""
-      )
-    labels:
-      unit: "bytes"
+      - record: memory_swap_total
+        expr: >
+          label_replace(
+            label_replace(
+              physical_mem_swap_total{job="physical_host"},
+              "instance", "", "", ""
+            ),
+            "path", "", "", ""
+          )
+        labels:
+          unit: "bytes"
 
-  - record: memory_swap_max
-    expr: |
-      label_replace(
-        container_cgroup_memory_swap_max{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
-    labels:
-      unit: "bytes"
+      - record: memory_swap_free
+        expr: >
+          label_replace(
+            label_replace(
+              (
+                container_cgroup_memory_swap_max{job="virtual_hosts"}
+                - container_cgroup_memory_swap_current{job="virtual_hosts"}
+              ),
+              "instance", "", "", ""
+            ),
+            "path", "", "", ""
+          )
+        labels:
+          unit: "bytes"
 
-  - record: memory_swap_max
-    expr: |
-      label_replace(
-        physical_mem_swap_total{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "bytes"
-
-  - record: memory_swap_current
-    expr: |
-      label_replace(
-        label_replace(
-          container_cgroup_memory_swap_current{job="virtual_hosts"},
-          "path", "", ".*", ""
-        ),
-        "type", "virtual", "", ""
-      )
-    labels:
-      unit: "bytes"
-
-  - record: memory_swap_current
-    expr: |
-      label_replace(
-        (
-          physical_mem_swap_total{job="physical_host"}
-          -
-          physical_mem_swap_free{job="physical_host"}
-        ),
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "bytes"
+      - record: memory_swap_free
+        expr: >
+          label_replace(
+            label_replace(
+              physical_mem_swap_free{job="physical_host"},
+              "instance", "", "", ""
+            ),
+            "path", "", "", ""
+          )
+        labels:
+          unit: "bytes"
