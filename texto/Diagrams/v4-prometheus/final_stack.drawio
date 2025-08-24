@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0" version="28.1.1">
   <diagram name="Page-1" id="qWtlDdQ_t1fBnjkW_Zxo">
-    <mxGraphModel dx="983" dy="482" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="466" dy="699" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -16,10 +16,10 @@
         <mxCell id="qdicqklqseitMeA9HOgt-35" value="PostgreSQL" style="rounded=1;whiteSpace=wrap;html=1;direction=south;horizontal=0;" parent="1" vertex="1">
           <mxGeometry x="574" y="180" width="30" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="lUUjA-uuORZBkmxthw0I-2" value="iPerf3" style="rounded=1;whiteSpace=wrap;html=1;direction=south;horizontal=0;" vertex="1" parent="1">
+        <mxCell id="lUUjA-uuORZBkmxthw0I-2" value="iPerf3" style="rounded=1;whiteSpace=wrap;html=1;direction=south;horizontal=0;" parent="1" vertex="1">
           <mxGeometry x="606" y="180" width="30" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="U9kXUO95Qb_7b-UgX0e_-20" value="Hardware&lt;br&gt;(Desktop do autor)" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;gradientDirection=south;glass=0;" parent="1" vertex="1">
+        <mxCell id="U9kXUO95Qb_7b-UgX0e_-20" value="Hardware&lt;br&gt;(Notebook Corporativo)" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;gradientDirection=south;glass=0;" parent="1" vertex="1">
           <mxGeometry x="508.13" y="410" width="561.87" height="50" as="geometry" />
         </mxCell>
         <mxCell id="U9kXUO95Qb_7b-UgX0e_-21" value="Host OS&lt;br&gt;&lt;div&gt;(Ubuntu Desktop)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;glass=0;" parent="1" vertex="1">
