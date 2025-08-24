@@ -37,7 +37,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     env_file:
-      - .env_test_branches.secrets
+      - .env.secrets
     networks:
       - devices_network
     depends_on:
@@ -58,6 +58,7 @@ services:
       - "3000:3000"
     env_file:
       - .env
+      - .env.secrets
     networks:
       - devices_network
     volumes:
@@ -69,12 +70,33 @@ services:
     depends_on:
       prometheus:
         condition: service_healthy
+      postgres:
+        condition: service_healthy
+
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 45s
       timeout: 15s
       retries: 5
       start_period: 90s
+
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    env_file:
+      - .env.secrets
+    volumes:
+      - ./volumes/postgres/data:/var/lib/postgresql/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - devices_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U grafana"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 0s
 
   iperf3:
     container_name: iperf3

@@ -153,7 +153,6 @@ Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo 
 
 Os valores atribuídos às limitações de memória foram definidos a partir de cálculos estimativos, considerando a carga potencial gerada pelo \foreign{script} de geração de carga, acrescida do consumo médio do sistema operacional e do agente Telegraf. Durante os testes iniciais, esses parâmetros foram ajustados empiricamente, de modo a assegurar a operação estável dos contêineres dentro dos limites estabelecidos.
 
-% O código fonte do Docker Compose e dos Dockerfiles empregados na criação desses dispositivos virtuais encontra-se disponível no Apêndice \ref{apendiceA}.
 \break
 
 \subsection{Agentes}
@@ -245,7 +244,9 @@ Como mencionado no Capítulo \ref{chap2}, o Prometheus Expression Browser oferec
 
 Assim como nos demais serviços, a inclusão do Grafana ao Docker Compose envolveu apenas a definição das configurações básicas. Neste caso, é importante destacar a utilização da diretiva \verb|volumes|, que aponta para dois caminhos específicos: \verb|grafana/dashboard-json| e \verb|grafana/provisioning|. O primeiro armazena os arquivos JSON dos \foreign{dashboards}, que serão importados automaticamente pelo Grafana durante a inicialização. O segundo contém as configurações de provisionamento, usadas para automatizar a integração de fontes de dados e \foreign{dashboards}. Esse mecanismo é essencial para a automação do projeto, pois garante que todas as configurações necessárias --- tanto das integrações com fontes de dados, como o Prometheus, quanto dos \foreign{dashboards} --- sejam carregadas automaticamente ao iniciar o contêiner, dispensando procedimentos manuais pela interface web.
 
-Adicionalmente, a imagem oficial do Grafana utilizada no projeto já inclui o banco de dados SQLite, responsável por armazenar as configurações realizadas por meio da interface gráfica. As configurações aplicadas via provisionamento são acessíveis em modo \foreign{read-only} na interface e não podem ser modificadas manualmente. Já as alterações feitas diretamente pela interface gráfica são gravadas no SQLite, mas não são replicadas para os arquivos de provisionamento nem registradas em versionamento. Em situações de conflito entre as configurações do provisionamento e as definidas pela interface gráfica, prevalecem aquelas estabelecidas pelo provisionamento.
+Adicionalmente, a imagem oficial do Grafana já incorpora o banco de dados SQLite, responsável pelo armazenamento das configurações realizadas por meio da interface gráfica. \textcolor{red}{ Considerando seu baixo custo computacional e a conveniência de estar integrado nativamente ao Grafana, definiu-se pela adoção do SQLite para esta finalidade ao longo do desenvolvimento do trabalho.}
+
+As configurações aplicadas via provisionamento são acessíveis em modo \foreign{read-only} na interface e não podem ser modificadas manualmente. Já as alterações feitas diretamente pela interface gráfica são gravadas no SQLite, mas não são replicadas para os arquivos de provisionamento nem registradas em versionamento. Em situações de conflito entre as configurações do provisionamento e as definidas pela interface gráfica, prevalecem aquelas estabelecidas pelo provisionamento.
 
 \subsection{Testes de saturação}
 \label{subsection:TestesSaturacao}
