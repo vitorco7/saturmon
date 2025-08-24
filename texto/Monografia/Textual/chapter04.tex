@@ -9,9 +9,10 @@
 \begin{enumerate}  
   \item comentar sobre sobre as coisas que o provisioning já adiantou (datasource padrão, por exemplo);
   \item a normalização dos dados usando o Pormetheus Recording Rules
-  \item Criação dos filtros globais;
+  \item Criação dos filtros globais (Grafana Variables);
   \item Regras globais (span e refresh rate);
   \item Falar de cada gráfico, justificando visualizações, comentando sobre as queries/cálculos e colocar imagens;
+  \item Quando chegar em CPU, explicar o porquê de haver picos acima de 100\% mesmo com a limitação de cpu (olhar pasta docs/cpu\_shares)
   \item Quando chegar na seção de disco, apresentar o estudo de caĺculo do df (motivação e resultados);
   \item Chegando na parte de redes, justificar o porquê de nao termos dados de drop e erro de pacotes (apresentar o estudo de caso de camadas de rede e aplicação);
   \item Fechamento explicando a exportação do JSON e seu versionamento e carregamento automatico via docker volume;
@@ -28,7 +29,8 @@
   \item Como utilizei, a primeiro momenot, a UI do Grafana para criar os alertas (isso era interessante pq vinculava automaticamente o alerta ao respectivo gráfico);
   \item Como, assim como no dashboard, eu exportava e versionava tudo via JSON;
   \item Problemas do SQLite e a migração para o Postgres (explicitar como a migração foi fácil graças ao provisionamento, versionamento, uso do Docker e TSDB fazendo o trabalho de persistência);
-  \item Eventual abandono do Postgres e rollback para SQLite, e a migração para o Alertmanager+TSDB (enfatizar como tudo fica embutido no Prometheus e como isso simplifica a arquitetura);
+  \item Migração para o Alertmanager+TSDB (enfatizar como tudo fica embutido no Prometheus e como isso simplifica a arquitetura);
+  \item EDITAR DIAGRAMAS (SQLite vira POSTGRES)
 \end{enumerate}
 
 
