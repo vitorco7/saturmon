@@ -269,7 +269,6 @@ O \foreign{script} executa um \foreign{loop} estruturado em dois blocos principa
 
 Além da aleatoriedade nas durações, a carga aplicada nos testes também é definida de maneira aleatória. No stress-ng, essa carga corresponde ao número de \foreign{workers}, ou seja, processos ou \foreign{threads} inicializados para executar os testes. Antes de cada execução de bloco, novas cargas são estabelecidas. Nas figuras os \foreign{scripts} são representados pelo símbolo \includegraphics[height=0.8em]{Imagens/chap03/input_black.png}.
 
-{\color{red}
 Inicialmente, todos os dispositivos virtuais executavam o \foreign{script} de geração de carga (\verb|load_simulator|) simultaneamente após a inicialização dos contêineres. Essa abordagem mostrou-se inadequada, uma vez que a geração simultânea de carga causava travamentos e instabilidades no \foreign{host}. Para contornar essa limitação, foi desenvolvido um \foreign{script} coordenador (\verb|load_coordinator|) responsável por gerenciar a execução sequencial rotativa do simulador de carga.
 
 O \verb|load_coordinator| implementa um mecanismo de \foreign{leader election} (eleição de líder), no qual apenas um dispositivo virtual é designado como ativo para gerar carga em cada momento, enquanto os demais permanecem em estado de espera. A ordem de execução é determinada pela sequência crescente dos dispositivos em funcionamento.
@@ -279,11 +278,9 @@ O processo operacional funciona da seguinte forma: ao inicializar, cada disposit
 A distribuição do \verb|load_coordinator| aos dispositivos virtuais é realizada por meio de \verb|docker volume| no Docker Compose, implementando duas funcionalidades simultâneas: o carregamento individual em cada contêiner para execução local e o compartilhamento entre todos os dispositivos, permitindo acesso coordenado ao mesmo \foreign{script} e possibilitando a sincronização interativa para determinação do dispositivo ativo.
 
 A mudança do paradigma de execuções assíncronas e simultâneas para síncronas e sequenciais eliminou os travamentos e instabilidades no \foreign{host}, garantindo a estabilidade do ambiente de monitoramento.
-}
 
 \begin{figure}[H]
 \centering
-\color{red}
 \setlength{\abovecaptionskip}{-10pt}
 \includegraphics[width=\textwidth]{Imagens/chap03/load_flowchart.pdf}
 \caption{Fluxograma dos testes de carga.}
@@ -349,8 +346,6 @@ A seleção das métricas a serem monitoradas pautou-se nos seguintes critérios
 \item \textbf{Comparabilidade}: Sempre que possível, optou-se por métricas comparáveis entre os dispositivos virtualizados e físicos. Embora nem todas apresentem correspondência exata, buscou-se garantir um nível de equivalência. Ressalta-se, contudo, que algumas métricas importantes --- como determinadas métricas de disco --- não estão disponíveis nos dispositivos virtuais, mas foram mantidas pela sua relevância para o monitoramento.
 \end{enumerate}
 
-{\color{red}
-
 Embora o Capítulo \ref{chap2} aborde as métricas e grandezas de interesse, ele o faz sob a perspectiva de sua apresentação no \foreign{dashboard}. Esta seção foca na exposição das métricas em formato bruto (\foreign{raw}), isto é, conforme são extraídas diretamente dos arquivos de sistema.
 
 Com o objetivo de otimizar o desempenho, foram aplicados filtros no arquivo \verb|telegraf.conf| de cada agente, permitindo uma coleta seletiva e direcionada. Essa abordagem evita a captura de métricas indesejadas, conforme exemplificado a seguir:
@@ -361,10 +356,8 @@ Com o objetivo de otimizar o desempenho, foram aplicados filtros no arquivo \ver
 \end{lstlisting}
 
 A Tabela \ref{tab:metricas-selecionadas} apresenta as métricas selecionadas organizadas por categoria, incluindo seus respectivos rótulos e nomenclaturas específicas conforme coletadas no \foreign{host} e nos dispositivos virtuais. As células vazias indicam duas situações distintas: a indisponibilidade da métrica para coleta no ambiente específico (como as métricas de disco em dispositivos virtuais) ou a dispensabilidade de coleta direta, uma vez que tais dados podem ser derivados indiretamente por meio de cálculos baseados em outras métricas já coletadas, como no caso das métricas de Memória Swap. Os procedimentos de cálculo serão detalhados no Capítulo \ref{chap4}.
-}
 
 \begin{table}[H]
-\color{red}
 \centering
 \caption{Métricas selecionadas.}
 \label{tab:metricas-selecionadas}

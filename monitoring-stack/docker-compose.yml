@@ -18,10 +18,10 @@ services:
       - devices_network
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/ready"]
-      interval: 5s
+      interval: 10s
       timeout: 3s
-      retries: 10
-      start_period: 0s
+      retries: 5
+      start_period: 5s
 
   alertmanager:
     container_name: alertmanager
@@ -45,10 +45,10 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:9093/-/ready"]
-      interval: 5s
+      interval: 15s
       timeout: 3s
-      retries: 10
-      start_period: 10s
+      retries: 5
+      start_period: 15s
 
   grafana:
     container_name: grafana
@@ -72,13 +72,29 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
-
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 45s
       timeout: 15s
       retries: 5
       start_period: 90s
+
+  renderer:
+    image: grafana/grafana-image-renderer:v4.0.10
+    container_name: grafana-image-renderer
+    ports:
+      - "8081:8081"
+    networks:
+      - devices_network
+    depends_on:
+      grafana:
+        condition: service_healthy
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8081/"]
+    #   interval: 60s
+    #   timeout: 15s
+    #   retries: 3
+    #   start_period: 30s
 
   postgres:
     container_name: postgres
@@ -93,10 +109,10 @@ services:
       - devices_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U grafana"]
-      interval: 5s
+      interval: 10s
       timeout: 3s
-      retries: 10
-      start_period: 0s
+      retries: 5
+      start_period: 5s
 
   iperf3:
     container_name: iperf3
@@ -110,11 +126,12 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    healthcheck:
-      test: ["CMD", "pgrep", "iperf3"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    # healthcheck:
+    #   test: ["CMD", "pgrep", "iperf3"]
+    #   interval: 45s
+    #   timeout: 5s
+    #   retries: 3
+    #   start_period: 5s
 
   virtual_device_1:
     container_name: device_1
@@ -137,9 +154,10 @@ services:
       - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
+      interval: 60s
+      timeout: 5s
       retries: 3
+      start_period: 10s
 
   virtual_device_2:
     container_name: device_2
@@ -162,9 +180,10 @@ services:
       - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
+      interval: 60s
+      timeout: 5s
       retries: 3
+      start_period: 10s
 
   virtual_device_3:
     container_name: device_3
@@ -187,9 +206,10 @@ services:
       - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
+      interval: 60s
+      timeout: 5s
       retries: 3
+      start_period: 10s
 
   virtual_device_4:
     container_name: device_4
@@ -212,9 +232,10 @@ services:
       - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
+      interval: 60s
+      timeout: 5s
       retries: 3
+      start_period: 10s
 
   virtual_device_5:
     container_name: device_5
@@ -237,9 +258,10 @@ services:
       - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
-      interval: 30s
-      timeout: 10s
+      interval: 60s
+      timeout: 5s
       retries: 3
+      start_period: 10s
 
 volumes:
   load_coordinator:
