@@ -2,14 +2,34 @@ groups:
 - name: diskio_normalization
   rules:
   - record: diskio_write
-    expr: container_cgroup_io_stat_8:16_wbytes{job="virtual_hosts"}
+    expr: >-
+      label_replace(
+        label_replace(
+          rate({__name__=~"container_cgroup_io_stat_.*_wbytes", job="virtual_hosts"}[1m]),
+          "instance", "", "instance", ".*"
+        ),
+        "path", "", "path", ".*"
+      )
     labels:
       disk_partition: "container"
+      unit: "bytes/sec"
 
-  - record: diskio_read
-    expr: container_cgroup_io_stat_8:16_rbytes{job="virtual_hosts"}
+
+groups:
+- name: diskio_normalization
+  rules:
+  - record: diskio_write
+    expr: >-
+      label_replace(
+        label_replace(
+          rate({__name__=~"container_cgroup_io_stat_.*_wbytes", job="virtual_hosts"}[1m]),
+          "instance", "", "instance", ".*"
+        ),
+        "path", "", "path", ".*"
+      )
     labels:
       disk_partition: "container"
+      unit: "bytes/sec"
 
   - record: diskio_write
     expr: physical_diskio_write_bytes{job="physical_host"}
