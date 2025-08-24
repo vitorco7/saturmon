@@ -60,7 +60,7 @@ while $RUNNING; do
     # Check if this device should be active
     if ! is_active_device; then
         echo "$(timestamp) [INFO] This device is not active, waiting..."
-        for i in $(seq 1 3); do
+        for i in $(seq 1 5); do
             if ! $RUNNING; then break 2; fi
             sleep 1
         done

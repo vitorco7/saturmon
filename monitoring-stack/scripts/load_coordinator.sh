@@ -236,6 +236,9 @@ set_next_device() {
       if [ "${DEVICES[$i]}" = "${current}" ]; then
         # Calculate next index with wrap-around
         next_index=$(( (i + 1) % ${#DEVICES[@]} ))
+        # Add cooldown before activating next device
+        log "Cooling down system for 3 seconds before activating next device"
+        sleep 3
         echo "${DEVICES[$next_index]}" > ${ACTIVE_FILE}
         log "Set next active device: ${DEVICES[$next_index]}"
         found=true
