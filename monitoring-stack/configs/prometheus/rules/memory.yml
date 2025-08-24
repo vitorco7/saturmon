@@ -11,7 +11,7 @@ groups:
             "path", "", "", ""
           )
         labels:
-          unit: "bytes"
+          unit: bytes
 
       - record: memory_current
         expr: >
@@ -23,7 +23,7 @@ groups:
             "path", "", "", ""
           )
         labels:
-          unit: "bytes"
+          unit: bytes
 
       - record: memory_total
         expr: >
@@ -35,7 +35,7 @@ groups:
             "path", "", "", ""
           )
         labels:
-          unit: "bytes"
+          unit: bytes
 
       - record: memory_total
         expr: >
@@ -47,7 +47,7 @@ groups:
             "path", "", "", ""
           )
         labels:
-          unit: "bytes"
+          unit: bytes
 
       - record: memory_swap_total
         expr: >
@@ -59,7 +59,7 @@ groups:
             "path", "", "", ""
           )
         labels:
-          unit: "bytes"
+          unit: bytes
 
       - record: memory_swap_total
         expr: >
@@ -71,7 +71,7 @@ groups:
             "path", "", "", ""
           )
         labels:
-          unit: "bytes"
+          unit: bytes
 
       - record: memory_swap_free
         expr: >
@@ -86,7 +86,7 @@ groups:
             "path", "", "", ""
           )
         labels:
-          unit: "bytes"
+          unit: bytes
 
       - record: memory_swap_free
         expr: >
@@ -98,4 +98,4 @@ groups:
             "path", "", "", ""
           )
         labels:
-          unit: "bytes"
+          unit: bytes

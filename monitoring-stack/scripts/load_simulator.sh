@@ -162,6 +162,18 @@ while $RUNNING; do
     stress-ng --hdd 1 --hdd-opts wr-seq --timeout "$stress_time" &
     wait $! || true
     
+    # Random Read Stress
+    echo "$(timestamp) [INFO] [Disk I/O Random Read] Duration: $stress_time"
+    stress-ng --hdd 1 --hdd-opts rd-rnd --timeout "$stress_time" &
+    wait $! || true
+    
+    if ! $RUNNING; then break; fi
+    
+    # Sequential Read Stress
+    echo "$(timestamp) [INFO] [Disk I/O Sequential Read] Duration: $stress_time"
+    stress-ng --hdd 1 --hdd-opts rd-seq --timeout "$stress_time" &
+    wait $! || true
+    
     echo "$(timestamp) [INFO] === Completed Disk I/O Tests ==="
 
     # 4. Network Tests
@@ -234,6 +246,8 @@ while $RUNNING; do
     stress-ng --pipe "$cpu_pipe_workers" --timeout "$stress_time" & PIDS+=($!)
     stress-ng --hdd 1 --hdd-opts wr-rnd --timeout "$stress_time" & PIDS+=($!)
     stress-ng --hdd 1 --hdd-opts wr-seq --timeout "$stress_time" & PIDS+=($!)
+    stress-ng --hdd 1 --hdd-opts rd-rnd --timeout "$stress_time" & PIDS+=($!)
+    stress-ng --hdd 1 --hdd-opts rd-seq --timeout "$stress_time" & PIDS+=($!)
     
     # Run iperf3 client test to iperf3 server (parallel)
     (iperf3 -c iperf3 -t "$stress_time" || echo "iperf3 test failed (parallel)") & PIDS+=($!)

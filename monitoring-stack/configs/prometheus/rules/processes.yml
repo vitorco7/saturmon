@@ -3,56 +3,25 @@ groups:
   rules:
   - record: processes_total
     expr: |
-      label_replace(
-        physical_processes_total{job="physical_host"},
-        "type", "physical", "", ""
-      )
-
-  - record: processes_total
-    expr: |
-      label_replace(
-        container_processes_total{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      {__name__=~"container_processes_total|physical_processes_total", job=~"virtual_hosts|physical_host"}
+    labels:
+      unit: units
 
   - record: processes_running
     expr: |
-      label_replace(
-        physical_processes_running{job="physical_host"},
-        "type", "physical", "", ""
-      )
-
-  - record: processes_running
-    expr: |
-      label_replace(
-        container_processes_running{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      {__name__=~"container_processes_running|physical_processes_running", job=~"virtual_hosts|physical_host"}
+    labels:
+      unit: units
 
   - record: processes_sleeping
     expr: |
-      label_replace(
-        physical_processes_sleeping{job="physical_host"},
-        "type", "physical", "", ""
-      )
-
-  - record: processes_sleeping
-    expr: |
-      label_replace(
-        container_processes_sleeping{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      {__name__=~"container_processes_sleeping|physical_processes_sleeping", job=~"virtual_hosts|physical_host"}
+    labels:
+      unit: units
 
   - record: processes_zombies
     expr: |
-      label_replace(
-        physical_processes_zombies{job="physical_host"},
-        "type", "physical", "", ""
-      )
-
-  - record: processes_zombies
-    expr: |
-      label_replace(
-        container_processes_zombies{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      {__name__=~"container_processes_zombies|physical_processes_zombies", job=~"virtual_hosts|physical_host"}
+    labels:
+      unit: units
+      
