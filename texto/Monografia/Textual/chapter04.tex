@@ -1,10 +1,27 @@
 \chapter{Aplicação de Monitoramento}
 \label{chap4}
 
+{\color{red}
+Após o detalhamento da arquitetura e dos componentes do sistema de monitoramento, este capítulo apresenta as aplicações práticas da solução desenvolvida. São abordados os dois mecanismos principais responsáveis pela visualização e notificação das métricas coletadas: os \foreign{dashboards} e os sistemas de alertas.
+
+Na primeira seção, é detalhado o dashboard implementado, incluindo os gráficos e visualizações criados, os códigos PromQL utilizados nas consultas correspondentes e os procedimentos de processamento dos dados. A segunda seção descreve o sistema de alertas, abrangendo as regras de disparo de notificações, a configuração dos pontos e canais de contato, bem como a experiência prática obtida com os diferentes sistemas de alertas disponíveis no ecossistema adotado. A terceira seção apresenta um caso de uso prático, ilustrando a aplicação do sistema de monitoramento em um cenário real.
+
+\section{Dashboards}
+\label{section:Dashboards}
+
+\begin{figure}[h]
+\centering
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/by-blocks/dashboard_diagram.pdf}
+\caption{Visualização.}
+\label{fig:DiagramaVisualizacao}
+\end{figure}
+
+
+}
 
 {\color{blue}
 \section{Dashboards}
-\label{section:Dashboards}
 
 \begin{enumerate}  
   \item comentar sobre sobre as coisas que o provisioning já adiantou (datasource padrão, por exemplo);
@@ -56,18 +73,11 @@ O caso de uso seria o monitoramento ( exemplo: eu estou monitorando a minha maqu
 
 % Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema de controle de tráfego \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|). Enquanto isso, o \foreign{plugin} \verb|inputs.net| do Telegraf a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Ou seja, 
 
-\begin{figure}[H]
-\centering
-\setlength{\abovecaptionskip}{-20pt}
-\includegraphics[width=\textwidth]{Imagens/chap03/by-blocks/dashboard_diagram.pdf}
-\caption{Visualização.}
-\label{fig:DiagramaVisualizacao}
-\end{figure}
 
 \begin{figure}[H]
 \centering
 \setlength{\abovecaptionskip}{-20pt}
-\includegraphics[width=\textwidth]{Imagens/chap03/by-blocks/alerts_diagram.pdf}
+\includegraphics[width=\textwidth]{Imagens/chap04/by-blocks/alerts_diagram.pdf}
 \caption{Notificações e Arquitetura Final.}
 \label{fig:DiagramaAlertas}
 \end{figure}
