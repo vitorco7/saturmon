@@ -7,7 +7,7 @@ groups:
         expr: |
           100 * (
             memory_current{job=~".*", alias=~".*"} /
-            on(alias, job) memory_max{job=~".*", alias=~".*"}
+            on(alias, job) memory_total{job=~".*", alias=~".*"}
           ) >= 85
         for: 1m
         labels:
@@ -21,7 +21,7 @@ groups:
         expr: |
           100 * (
             memory_swap_current{job=~".*", alias=~".*"} /
-            on(alias, job) memory_swap_max{job=~".*", alias=~".*"}
+            on(alias, job) memory_swap_total{job=~".*", alias=~".*"}
           ) >= 85
         for: 5m
         labels:
@@ -36,7 +36,7 @@ groups:
     interval: 60s
     rules:
       - alert: HighCPUUserLoad
-        expr: cpu_user_load{job=~".*", alias=~".*", cpu=~".*"} >= 85
+        expr: cpu_user_load{job=~".*", alias=~".*"} >= 85
         for: 5m
         labels:
           severity: warning
@@ -46,7 +46,7 @@ groups:
           description: "Over the last 5 minutes, the average cpu load on {{ $labels.alias }}-{{ $labels.cpu }} was above 85%."
 
       - alert: HighCPUSystemLoad
-        expr: cpu_system_load{job=~".*", alias=~".*", cpu=~".*"} >= 85
+        expr: cpu_system_load{job=~".*", alias=~".*"} >= 85
         for: 5m
         labels:
           severity: warning
@@ -57,9 +57,9 @@ groups:
 
       - alert: HighCPUTotalLoad
         expr: |
-          (100 - cpu_idle{job!="virtual_hosts", alias=~".*", cpu=~".*"}) >= 85
+          (100 - cpu_idle{job!="virtual_hosts", alias=~".*"}) >= 85
           or
-          (absent(cpu_idle{job!="virtual_hosts", alias=~".*", cpu=~".*"}) and on() vector(85))
+          (absent(cpu_idle{job!="virtual_hosts", alias=~".*"}) and on() vector(85))
         for: 5m
         labels:
           severity: warning
