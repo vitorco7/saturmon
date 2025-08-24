@@ -5,7 +5,7 @@ groups:
         expr: >
           label_replace(
             label_replace(
-              irate(container_cgroup_cpu_stat_user_usec{job="virtual_hosts"}[15s]) 
+              irate(container_cgroup_cpu_stat_user_usec{job="virtual_hosts"}[30s]) 
               / 1e6 * 100,
               "instance", "", "", ""
             ),
@@ -30,7 +30,7 @@ groups:
         expr: >
           label_replace(
             label_replace(
-              irate(container_cgroup_cpu_stat_system_usec{job="virtual_hosts"}[15s]) 
+              irate(container_cgroup_cpu_stat_system_usec{job="virtual_hosts"}[30s]) 
               / 1e6 * 100,
               "instance", "", "", ""
             ),
@@ -55,7 +55,7 @@ groups:
         expr: >
           label_replace(
             label_replace(
-              irate(container_cgroup_cpu_idle{job="virtual_hosts"}[15s]) 
+              irate(container_cgroup_cpu_idle{job="virtual_hosts"}[30s]) 
               / 1e6 * 100,
               "instance", "", "", ""
             ),

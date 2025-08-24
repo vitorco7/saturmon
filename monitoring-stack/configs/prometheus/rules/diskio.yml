@@ -14,7 +14,7 @@ groups:
   - record: diskio_write
     expr: >
       irate(
-        {__name__=~"container_wbytes_normalized|physical_diskio_write_bytes"}[10s]
+        {__name__=~"container_wbytes_normalized|physical_diskio_write_bytes"}[30s]
         )
     labels:
       unit: "bytes/sec"
@@ -32,7 +32,7 @@ groups:
   - record: diskio_read
     expr: >
       irate(
-        {__name__=~"container_rbytes_normalized|physical_diskio_read_bytes"}[10s]
+        {__name__=~"container_rbytes_normalized|physical_diskio_read_bytes"}[30s]
         )
     labels:
       unit: "bytes/sec"

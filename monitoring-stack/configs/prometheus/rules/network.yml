@@ -3,144 +3,64 @@ groups:
   rules:
   - record: net_bytes_recv
     expr: |
-      label_replace(
-        container_net_bytes_recv{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      irate(
+        {__name__=~"container_net_bytes_recv|physical_net_bytes_recv"}[30s]
+        )
     labels:
-      unit: "bytes"
+      unit: "bytes/sec"
 
   - record: net_bytes_sent
     expr: |
-      label_replace(
-        container_net_bytes_sent{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      irate(
+        {__name__=~"container_net_bytes_sent|physical_net_bytes_sent"}[30s]
+        )
     labels:
-      unit: "bytes"
+      unit: "bytes/sec"
 
   - record: net_packets_recv
     expr: |
-      label_replace(
-        container_net_packets_recv{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      irate(
+        {__name__=~"container_net_packets_recv|physical_net_packets_recv"}[30s]
+        )
     labels:
-      unit: "packets"
+      unit: "packets/sec"
 
   - record: net_packets_sent
     expr: |
-      label_replace(
-        container_net_packets_sent{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      irate(
+        {__name__=~"container_net_packets_sent|physical_net_packets_sent"}[30s]
+        )
     labels:
-      unit: "packets"
+      unit: "packets/sec"
 
   - record: net_drop_in
     expr: |
-      label_replace(
-        container_net_drop_in{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      irate(
+        {__name__=~"container_net_drop_in|physical_net_drop_in"}[30s]
+        )
     labels:
-      unit: "packets"
+      unit: "packets/sec"
 
   - record: net_drop_out
     expr: |
-      label_replace(
-        container_net_drop_out{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      irate(
+        {__name__=~"container_net_drop_out|physical_net_drop_out"}[30s]
+        )
     labels:
-      unit: "packets"
+      unit: "packets/sec"
 
   - record: net_err_in
     expr: |
-      label_replace(
-        container_net_err_in{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      irate(
+        {__name__=~"container_net_err_in|physical_net_err_in"}[30s]
+        )
     labels:
-      unit: "packets"
+      unit: "packets/sec"
 
   - record: net_err_out
     expr: |
-      label_replace(
-        container_net_err_out{job="virtual_hosts"},
-        "type", "virtual", "", ""
-      )
+      irate(
+        {__name__=~"container_net_err_out|physical_net_err_out"}[30s]
+        )
     labels:
-      unit: "packets"
-
-  - record: net_bytes_recv
-    expr: |
-      label_replace(
-        physical_net_bytes_recv{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "bytes"
-
-  - record: net_bytes_sent
-    expr: |
-      label_replace(
-        physical_net_bytes_sent{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "bytes"
-
-  - record: net_packets_recv
-    expr: |
-      label_replace(
-        physical_net_packets_recv{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "packets"
-
-  - record: net_packets_sent
-    expr: |
-      label_replace(
-        physical_net_packets_sent{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "packets"
-
-  - record: net_drop_in
-    expr: |
-      label_replace(
-        physical_net_drop_in{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "packets"
-
-  - record: net_drop_out
-    expr: |
-      label_replace(
-        physical_net_drop_out{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "packets"
-
-  - record: net_err_in
-    expr: |
-      label_replace(
-        physical_net_err_in{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "packets"
-
-  - record: net_err_out
-    expr: |
-      label_replace(
-        physical_net_err_out{job="physical_host"},
-        "type", "physical", "", ""
-      )
-    labels:
-      unit: "packets"
+      unit: "packets/sec"

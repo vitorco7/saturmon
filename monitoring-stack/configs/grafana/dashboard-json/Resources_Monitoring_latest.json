@@ -204,7 +204,7 @@
             "h": 9,
             "w": 8,
             "x": 0,
-            "y": 45
+            "y": 10
           },
           "id": 25,
           "interval": "5s",
@@ -273,7 +273,7 @@
             "h": 9,
             "w": 8,
             "x": 8,
-            "y": 45
+            "y": 10
           },
           "id": 27,
           "interval": "5s",
@@ -342,7 +342,7 @@
             "h": 9,
             "w": 8,
             "x": 16,
-            "y": 45
+            "y": 10
           },
           "id": 30,
           "interval": "5s",
@@ -426,7 +426,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 2
+            "y": 109
           },
           "id": 1,
           "interval": "5s",
@@ -502,7 +502,7 @@
             "h": 8,
             "w": 6,
             "x": 6,
-            "y": 2
+            "y": 109
           },
           "id": 5,
           "interval": "5s",
@@ -576,7 +576,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 2
+            "y": 109
           },
           "id": 8,
           "interval": "5s",
@@ -698,7 +698,7 @@
       "type": "row"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -706,218 +706,219 @@
         "y": 2
       },
       "id": 15,
-      "panels": [],
-      "title": "Disks (Physical Devices Only)",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "green",
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "semi-dark-red"
-              },
-              {
-                "color": "#EAB839",
-                "value": 15
-              },
-              {
-                "color": "semi-dark-green",
-                "value": 40
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 10,
-        "x": 0,
-        "y": 3
-      },
-      "id": 14,
-      "interval": "1m",
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "11.6.0",
-      "targets": [
+      "panels": [
         {
-          "editorMode": "code",
-          "expr": "100 * (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} /\n  on (job, alias, disk_partition)\n  (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} +\n  physical_disk_used{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"})\n\n)\n",
-          "legendFormat": "{{alias}}-{{disk_partition}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Free Partition Space",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
           },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "green",
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "fieldMinMax": false,
+              "mappings": [],
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "color": "semi-dark-red"
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 15
+                  },
+                  {
+                    "color": "semi-dark-green",
+                    "value": 40
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 10,
+            "x": 0,
+            "y": 110
+          },
+          "id": 14,
+          "interval": "1m",
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "100 * (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} /\n  on (job, alias, disk_partition)\n  (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} +\n  physical_disk_used{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"})\n\n)\n",
+              "legendFormat": "{{alias}}-{{disk_partition}}",
+              "range": true,
+              "refId": "A"
             }
-          },
-          "decimals": 1,
-          "mappings": []
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 6,
-        "x": 10,
-        "y": 3
-      },
-      "id": 13,
-      "interval": "1m",
-      "options": {
-        "displayLabels": [
-          "value"
-        ],
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "pieType": "pie",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
           ],
-          "fields": "",
-          "values": false
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.6.0",
-      "targets": [
-        {
-          "editorMode": "code",
-          "expr": "100 * (\n  physical_disk_used{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} /\n  on (job, alias, disk_partition)\n  (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} +\n  physical_disk_used{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"})\n\n)\n",
-          "legendFormat": "{{alias}}-{{disk_partition}}-Used",
-          "range": true,
-          "refId": "% Used"
+          "title": "Free Partition Space",
+          "type": "gauge"
         },
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "code",
-          "expr": "100 * (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} /\n  on (job, alias, disk_partition)\n  (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} +\n  physical_disk_used{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"})\n\n)\n",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "{{alias}}-{{disk_partition}}-Free",
-          "range": true,
-          "refId": "% Free"
-        }
-      ],
-      "title": "Disk Usage",
-      "type": "piechart"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "decimals": 1,
+              "mappings": []
+            },
+            "overrides": []
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 8,
-        "x": 16,
-        "y": 3
-      },
-      "id": 16,
-      "interval": "1m",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
+          "gridPos": {
+            "h": 10,
+            "w": 6,
+            "x": 10,
+            "y": 110
+          },
+          "id": 13,
+          "interval": "1m",
+          "options": {
+            "displayLabels": [
+              "value"
+            ],
+            "legend": {
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "100 * (\n  physical_disk_used{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} /\n  on (job, alias, disk_partition)\n  (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} +\n  physical_disk_used{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"})\n\n)\n",
+              "legendFormat": "{{alias}}-{{disk_partition}}-Used",
+              "range": true,
+              "refId": "% Used"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "code",
+              "expr": "100 * (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} /\n  on (job, alias, disk_partition)\n  (\n  physical_disk_free{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"} +\n  physical_disk_used{job=\"physical_host\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"})\n\n)\n",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "{{alias}}-{{disk_partition}}-Free",
+              "range": true,
+              "refId": "% Free"
+            }
           ],
-          "fields": "",
-          "values": false
+          "title": "Disk Usage",
+          "type": "piechart"
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.6.0",
-      "targets": [
         {
-          "editorMode": "code",
-          "expr": "physical_disk_inodes_free{job=~\"$job\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"}",
-          "legendFormat": "{{alias}}-{{disk_partition}}",
-          "range": true,
-          "refId": "A"
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 16,
+            "y": 110
+          },
+          "id": 16,
+          "interval": "1m",
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.6.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "physical_disk_inodes_free{job=~\"$job\", alias=~\"$alias\", disk_partition=~\"$disk_partition\"}",
+              "legendFormat": "{{alias}}-{{disk_partition}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Free Inodes",
+          "type": "stat"
         }
       ],
-      "title": "Free Inodes",
-      "type": "stat"
+      "title": "Disks (Physical Devices Only)",
+      "type": "row"
     },
     {
       "collapsed": true,
@@ -925,7 +926,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 3
       },
       "id": 22,
       "panels": [
@@ -956,7 +957,7 @@
             "h": 8,
             "w": 5,
             "x": 0,
-            "y": 14
+            "y": 175
           },
           "id": 20,
           "interval": "5s",
@@ -1020,7 +1021,7 @@
             "h": 8,
             "w": 7,
             "x": 5,
-            "y": 14
+            "y": 175
           },
           "id": 23,
           "interval": "5s",
@@ -1093,7 +1094,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 14
+            "y": 175
           },
           "id": 31,
           "interval": "5s",
@@ -1135,7 +1136,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 4
       },
       "id": 36,
       "panels": [
@@ -1166,7 +1167,7 @@
             "h": 14,
             "w": 4,
             "x": 0,
-            "y": 959
+            "y": 1120
           },
           "id": 40,
           "interval": "10s",
@@ -1243,7 +1244,7 @@
             "h": 14,
             "w": 4,
             "x": 4,
-            "y": 959
+            "y": 1120
           },
           "id": 39,
           "interval": "10s",
@@ -1320,7 +1321,7 @@
             "h": 14,
             "w": 4,
             "x": 8,
-            "y": 959
+            "y": 1120
           },
           "id": 43,
           "interval": "10s",
@@ -1396,7 +1397,7 @@
             "h": 14,
             "w": 4,
             "x": 12,
-            "y": 959
+            "y": 1120
           },
           "id": 45,
           "interval": "10s",
@@ -1482,7 +1483,7 @@
             "h": 14,
             "w": 4,
             "x": 16,
-            "y": 959
+            "y": 1120
           },
           "id": 48,
           "interval": "10s",
@@ -1577,7 +1578,7 @@
             "h": 14,
             "w": 4,
             "x": 20,
-            "y": 959
+            "y": 1120
           },
           "id": 47,
           "interval": "10s",
@@ -1708,7 +1709,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 1027
+            "y": 1188
           },
           "id": 46,
           "interval": "10s",
@@ -1898,7 +1899,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 5
       },
       "id": 33,
       "panels": [
@@ -1936,7 +1937,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 24
+            "y": 185
           },
           "id": 35,
           "interval": "5s",
@@ -2092,7 +2093,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 6
       },
       "id": 7,
       "panels": [
@@ -2184,7 +2185,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 17
+            "y": 7
           },
           "id": 10,
           "interval": "5s",
@@ -2319,7 +2320,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 26
+            "y": 16
           },
           "id": 2,
           "interval": "5s",
@@ -2435,7 +2436,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 26
+            "y": 16
           },
           "id": 6,
           "interval": "5s",
@@ -2543,7 +2544,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 35
+            "y": 25
           },
           "id": 18,
           "interval": "2m",
@@ -2633,7 +2634,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 35
+            "y": 25
           },
           "id": 19,
           "interval": "5s",
@@ -2739,7 +2740,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 44
+            "y": 34
           },
           "id": 21,
           "interval": "5s",
@@ -2832,7 +2833,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 44
+            "y": 34
           },
           "id": 34,
           "interval": "5s",
@@ -2973,10 +2974,10 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 52
+            "y": 42
           },
           "id": 38,
-          "interval": "10s",
+          "interval": "5s",
           "options": {
             "legend": {
               "calcs": [],
@@ -2994,7 +2995,7 @@
           "targets": [
             {
               "editorMode": "code",
-              "expr": "rate(net_bytes_recv{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval]) * 8",
+              "expr": "net_bytes_recv{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"} * 8",
               "legendFormat": "{{alias}}-{{interface}}-Inbound",
               "range": true,
               "refId": "Received"
@@ -3005,7 +3006,7 @@
                 "uid": "PBFA97CFB590B2093"
               },
               "editorMode": "code",
-              "expr": "rate(net_bytes_sent{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval]) * 8",
+              "expr": "net_bytes_sent{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"} * 8",
               "hide": false,
               "legendFormat": "{{alias}}-{{interface}}-Outbound",
               "range": true,
@@ -3075,7 +3076,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 52
+            "y": 42
           },
           "id": 42,
           "interval": "10s",
@@ -3184,10 +3185,10 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 61
+            "y": 51
           },
           "id": 41,
-          "interval": "10s",
+          "interval": "5",
           "options": {
             "legend": {
               "calcs": [],
@@ -3205,7 +3206,7 @@
           "targets": [
             {
               "editorMode": "code",
-              "expr": "rate(net_drop_in{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
+              "expr": "net_drop_in{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}",
               "legendFormat": "{{alias}}-{{interface}}-Inbound",
               "range": true,
               "refId": "Received"
@@ -3216,7 +3217,7 @@
                 "uid": "PBFA97CFB590B2093"
               },
               "editorMode": "code",
-              "expr": "rate(net_drop_out{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
+              "expr": "net_drop_out{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}",
               "hide": false,
               "legendFormat": "{{alias}}-{{interface}}-Outbound",
               "range": true,
@@ -3288,10 +3289,10 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 61
+            "y": 51
           },
           "id": 44,
-          "interval": "10s",
+          "interval": "5s",
           "options": {
             "legend": {
               "calcs": [],
@@ -3309,7 +3310,7 @@
           "targets": [
             {
               "editorMode": "code",
-              "expr": "rate(net_err_in{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
+              "expr": "net_err_in{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}",
               "legendFormat": "{{alias}}-{{interface}}-Inbound",
               "range": true,
               "refId": "Received"
@@ -3320,7 +3321,7 @@
                 "uid": "PBFA97CFB590B2093"
               },
               "editorMode": "code",
-              "expr": "rate(net_err_out{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__interval])",
+              "expr": "net_err_out{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}",
               "hide": false,
               "legendFormat": "{{alias}}-{{interface}}-Outbound",
               "range": true,

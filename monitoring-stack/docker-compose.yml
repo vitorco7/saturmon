@@ -123,15 +123,18 @@ services:
       context: .
     image: ${UBUNTU_DEVICE_IMG}
     hostname: device1
-    cpus: "0.6"
-    mem_limit: "1024m"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.6'
+          memory: 1024M
     networks:
       - devices_network
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
-      - load_coordinator:/var/run/load_coordinator      
+      - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -145,15 +148,18 @@ services:
       context: .
     image: ${UBUNTU_DEVICE_IMG}
     hostname: device2
-    cpus: "0.6"
-    mem_limit: "900m"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.6'
+          memory: 900M
     networks:
       - devices_network
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
-      - load_coordinator:/var/run/load_coordinator      
+      - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
@@ -167,21 +173,24 @@ services:
       context: .
     image: ${UBUNTU_DEVICE_IMG}
     hostname: device3
-    cpus: "0.7"
-    mem_limit: "800m"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.7'
+          memory: 800M
     networks:
       - devices_network
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
-      - load_coordinator:/var/run/load_coordinator      
+      - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
       timeout: 10s
       retries: 3
-      
+
   virtual_device_4:
     container_name: device_4
     build:
@@ -189,21 +198,24 @@ services:
       context: .
     image: ${ALPINE_DEVICE_IMG}
     hostname: device4
-    cpus: "0.5"
-    mem_limit: "886m"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 886M
     networks:
       - devices_network
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
-      - load_coordinator:/var/run/load_coordinator      
+      - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
       timeout: 10s
       retries: 3
-      
+
   virtual_device_5:
     container_name: device_5
     build:
@@ -211,15 +223,18 @@ services:
       context: .
     image: ${ALPINE_DEVICE_IMG}
     hostname: device5
-    cpus: "0.6"
-    mem_limit: "750m"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.6'
+          memory: 750M
     networks:
       - devices_network
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ./scripts/load_coordinator.sh:/usr/local/bin/load_coordinator.sh:ro
-      - load_coordinator:/var/run/load_coordinator      
+      - load_coordinator:/var/run/load_coordinator
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9273/metrics"]
       interval: 30s
