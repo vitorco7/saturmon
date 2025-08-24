@@ -180,7 +180,7 @@ Altamente configurável, o Telegraf pode ser facilmente integrado a diferentes s
 
 Instalou-se uma instância do Telegraf em cada contêiner de dispositivo virtual (via Dockerfile) e, adicionalmente, uma instância no \foreign{host} do projeto, com a finalidade de enriquecer os dados coletados. Para garantir uma configuração padronizada, foram definidos dois arquivos \verb|telegraf.conf| distintos: um aplicado aos contêineres e outro ao \foreign{host}.
 
-As configurações foram escritas em formato TOML \abbrev{TOML}{\foreign{Tom's Obvious, Minimal Language}}, de modo que todos os dispositivos compartilham os mesmos parâmetros globais e de saída. Já as configurações de entrada foram ajustadas conforme o papel de cada instância -- diferenciando o \foreign{host} dos dispositivos virtuais.
+As configurações foram escritas em formato TOML\abbrev{TOML}{\foreign{Tom's Obvious, Minimal Language}}, de modo que todos os dispositivos compartilham os mesmos parâmetros globais e de saída. Já as configurações de entrada foram ajustadas conforme o papel de cada instância -- diferenciando o \foreign{host} dos dispositivos virtuais.
 
 Informações mais detalhadas podem ser consultadas no repositório do projeto \citep{vitorcossetti2025}. Destaca-se, entretanto, os parâmetros: o uso de \verb|interval = "5s"|, que define a coleta de métricas a cada cinco segundos -- em sincronia com o intervalo de \foreign{scraping} do Prometheus -- e a utilização do \foreign{plugin} \verb|outputs.prometheus_client|, que expõe as métricas no formato Prometheus, permitindo ao mesmo realizar o \foreign{scraping} no \foreign{endpoint} \verb|/metrics| do Telegraf.
 
@@ -232,6 +232,10 @@ Além disso, há uma importante sincronia entre os intervalos de \foreign{scrapi
 \subsection{Grafana}
 \label{subsection:GrafanaVisualizacao}
 
+Como mencionado no Capítulo \ref{chap2}, o Prometheus Expression Browser oferece uma interface web básica para visualização de métricas, porém essa interface apresenta limitações e não atende às demandas para visualizações avançadas. Por esse motivo, o próximo passo do projeto foi integrar o Grafana.
+
+Assim como nos demais serviços, a inclusão do Grafana ao Docker Compose envolveu apenas a definição das configurações básicas. Neste caso, é importante destacar a utilização da diretiva \verb|volumes|, que aponta para dois caminhos específicos: \verb|grafana/dashboard-json| e \verb|grafana/provisioning|. O primeiro armazena os arquivos JSON dos \foreign{dashboards}, que serão importados automaticamente pelo Grafana durante a inicialização. O segundo contém as configurações de provisionamento, usadas para automatizar a integração de fontes de dados e \foreign{dashboards}. Esse mecanismo é essencial para a automação do projeto, pois garante que todas as configurações necessárias --- tanto das integrações com fontes de dados, como o Prometheus, quanto dos \foreign{dashboards} --- sejam carregadas automaticamente ao iniciar o contêiner, dispensando procedimentos manuais pela interface web.
+
 \begin{figure}[H]
 \centering
 % \setlength{\abovecaptionskip}{-20pt}
@@ -240,16 +244,18 @@ Além disso, há uma importante sincronia entre os intervalos de \foreign{scrapi
 \label{fig:DiagramaGrafana}
 \end{figure}
 
-Como mencionado no Capítulo \ref{chap2}, o Prometheus Expression Browser oferece uma interface web básica para visualização de métricas, porém essa interface apresenta limitações e não atende às demandas para visualizações avançadas. Por esse motivo, o próximo passo do projeto foi integrar o Grafana.
-
-Assim como nos demais serviços, a inclusão do Grafana ao Docker Compose envolveu apenas a definição das configurações básicas. Neste caso, é importante destacar a utilização da diretiva \verb|volumes|, que aponta para dois caminhos específicos: \verb|grafana/dashboard-json| e \verb|grafana/provisioning|. O primeiro armazena os arquivos JSON dos \foreign{dashboards}, que serão importados automaticamente pelo Grafana durante a inicialização. O segundo contém as configurações de provisionamento, usadas para automatizar a integração de fontes de dados e \foreign{dashboards}. Esse mecanismo é essencial para a automação do projeto, pois garante que todas as configurações necessárias --- tanto das integrações com fontes de dados, como o Prometheus, quanto dos \foreign{dashboards} --- sejam carregadas automaticamente ao iniciar o contêiner, dispensando procedimentos manuais pela interface web.
-
 Adicionalmente, a imagem oficial do Grafana já incorpora o banco de dados SQLite, responsável pelo armazenamento das configurações realizadas por meio da interface gráfica. \textcolor{red}{ Considerando seu baixo custo computacional e a conveniência de estar integrado nativamente ao Grafana, definiu-se pela adoção do SQLite para esta finalidade ao longo do desenvolvimento do trabalho.}
 
 As configurações aplicadas via provisionamento são acessíveis em modo \foreign{read-only} na interface e não podem ser modificadas manualmente. Já as alterações feitas diretamente pela interface gráfica são gravadas no SQLite, mas não são replicadas para os arquivos de provisionamento nem registradas em versionamento. Em situações de conflito entre as configurações do provisionamento e as definidas pela interface gráfica, prevalecem aquelas estabelecidas pelo provisionamento.
 
 \subsection{Testes de saturação}
 \label{subsection:TestesSaturacao}
+
+Os dispositivos virtuais, por si só, não produzem dados suficientes para uma análise qualitativa ou quantitativa eficaz do sistema de monitoramento. Por esse motivo, foram implementados testes de saturação, consistindo na geração de carga adicional sobre os dispositivos virtuais para simular cenários de uso intenso e coletar as métricas correspondentes.
+
+Num primeiro momento, a introdução de carga foi realizada exclusivamente com o stress-ng, integrado aos Dockerfiles dos dispositivos virtuais. Desenvolveu-se um \foreign{script} Bash que executa o stress-ng com diferentes parâmetros, simulando variados tipos de carga (CPU, memória, I/O, etc.) e níveis de intensidade. Esse \foreign{script} é executado em segundo plano, simultaneamente à execução do agente Telegraf, garantindo a geração contínua de carga durante a coleta das métricas.
+
+Apesar do bom desempenho na geração de carga computacional, o stress-ng mostrou-se insuficiente para simular tráfego de rede de forma realista. Para superar essa limitação, foi incorporado o iPerf3 ao projeto. Como esta ferramenta opera no modelo cliente-servidor e não permite a atuação simultânea nessas funções, foi criado um contêiner dedicado para funcionar como servidor iPerf3. Em paralelo, cada dispositivo virtual passou a contar com uma instância do iPerf3 configurada como cliente. Dessa maneira, tornou-se possível gerar tráfego de rede entre os dispositivos virtuais e o servidor iPerf3, aprimorando a simulação de carga.
 
 \begin{figure}[H]
 \centering
@@ -258,12 +264,6 @@ As configurações aplicadas via provisionamento são acessíveis em modo \forei
 \caption{Ferramentas de saturação.}
 \label{fig:DiagramaSaturacao}
 \end{figure}
-
-Os dispositivos virtuais, por si só, não produzem dados suficientes para uma análise qualitativa ou quantitativa eficaz do sistema de monitoramento. Por esse motivo, foram implementados testes de saturação, consistindo na geração de carga adicional sobre os dispositivos virtuais para simular cenários de uso intenso e coletar as métricas correspondentes.
-
-Num primeiro momento, a introdução de carga foi realizada exclusivamente com o stress-ng, integrado aos Dockerfiles dos dispositivos virtuais. Desenvolveu-se um \foreign{script} Bash que executa o stress-ng com diferentes parâmetros, simulando variados tipos de carga (CPU, memória, I/O, etc.) e níveis de intensidade. Esse \foreign{script} é executado em segundo plano, simultaneamente à execução do agente Telegraf, garantindo a geração contínua de carga durante a coleta das métricas.
-
-Apesar do bom desempenho na geração de carga computacional, o stress-ng mostrou-se insuficiente para simular tráfego de rede de forma realista. Para superar essa limitação, foi incorporado o iPerf3 ao projeto. Como esta ferramenta opera no modelo cliente-servidor e não permite a atuação simultânea nessas funções, foi criado um contêiner dedicado para funcionar como servidor iPerf3. Em paralelo, cada dispositivo virtual passou a contar com uma instância do iPerf3 configurada como cliente. Dessa maneira, tornou-se possível gerar tráfego de rede entre os dispositivos virtuais e o servidor iPerf3, aprimorando a simulação de carga sobre o ambiente de rede.
 
 O \foreign{script} executa um \foreign{loop} estruturado em dois blocos principais: inicialmente, realiza uma série de testes sequenciais, seguidos pela repetição desses testes de forma paralela e simultânea. No início de cada bloco, os valores de duração dos testes (\verb|stress_time|) e do tempo de espera entre um bloco e outro (\verb|sleep_time|) são definidos aleatoriamente, com objetivo de conferir um caráter caótico aos experimentos, aproximando-os das condições reais de operação. Embora os valores sejam aleatórios eles obedecem intervalos previamente estabelecidos, de modo a favorecer a otimização dos testes.
 
@@ -275,13 +275,14 @@ O \verb|load_coordinator| implementa um mecanismo de \foreign{leader election} (
 
 O processo operacional funciona da seguinte forma: ao inicializar, cada dispositivo verifica sua posição na lista ordenada. O primeiro dispositivo executa o \verb|load_simulator| e realiza todos os testes de saturação, enquanto os demais aguardam sua vez. Ao concluir o ciclo completo (término dos testes paralelos), o próximo dispositivo da lista assume a função ativa. Esse processo se repete sequencialmente até que todos os dispositivos tenham executado seus ciclos, retornando então ao primeiro para reiniciar a rotação.
 
+
 A distribuição do \verb|load_coordinator| aos dispositivos virtuais é realizada por meio de \verb|docker volume| no Docker Compose, implementando duas funcionalidades simultâneas: o carregamento individual em cada contêiner para execução local e o compartilhamento entre todos os dispositivos, permitindo acesso coordenado ao mesmo \foreign{script} e possibilitando a sincronização interativa para determinação do dispositivo ativo.
 
 A mudança do paradigma de execuções assíncronas e simultâneas para síncronas e sequenciais eliminou os travamentos e instabilidades no \foreign{host}, garantindo a estabilidade do ambiente de monitoramento.
 
 \begin{figure}[H]
 \centering
-\setlength{\abovecaptionskip}{-10pt}
+% \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[width=\textwidth]{Imagens/chap03/load_flowchart.pdf}
 \caption{Fluxograma dos testes de carga.}
 \label{fig:FluxogramaCarga}
@@ -306,7 +307,7 @@ Também estudou-se a simulação de dispositivos móveis por meio de emuladores 
 
 Ao longo do projeto, dois equipamentos estiveram à disponibilidade do autor: um desktop pessoal e um \foreign{notebook} corporativo, conforme mencionado em \ref{subsection:EscopoReformulado}. As especificações desses equipamentos estão detalhadas na Tabela \ref{tab:available-hardware}.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Especificações de hardware dos equipamentos disponíveis.}
 \label{tab:available-hardware}
@@ -349,6 +350,8 @@ A seleção das métricas a serem monitoradas pautou-se nos seguintes critérios
 Embora o Capítulo \ref{chap2} aborde as métricas e grandezas de interesse, ele o faz sob a perspectiva de sua apresentação no \foreign{dashboard}. Esta seção foca na exposição das métricas em formato bruto (\foreign{raw}), isto é, conforme são extraídas diretamente dos arquivos de sistema.
 
 Com o objetivo de otimizar o desempenho, foram aplicados filtros no arquivo \verb|telegraf.conf| de cada agente, permitindo uma coleta seletiva e direcionada. Essa abordagem evita a captura de métricas indesejadas, conforme exemplificado a seguir:
+
+\newpage
 
 \begin{lstlisting}[caption={Exemplo de filtragem de métricas selecionadas.}, label={lst:exemplo-filtro}]
 [[inputs.processes]] 
