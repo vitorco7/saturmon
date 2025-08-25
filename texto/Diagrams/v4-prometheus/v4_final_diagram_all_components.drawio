@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0" version="28.1.1">
   <diagram name="Page-1" id="xIOkTCL3K24IWR9tix57">
-    <mxGraphModel dx="983" dy="482" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1188" dy="583" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" style="" parent="0" />
@@ -178,8 +178,8 @@
         <mxCell id="NnatkJBT9xsz4FV3scjZ-41" value="Alertmanager" style="html=1;whiteSpace=wrap;shadow=0;" parent="1" vertex="1">
           <mxGeometry x="597.5" y="962.5" width="80" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="NnatkJBT9xsz4FV3scjZ-46" value="PostgreSQL" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;shadow=0;fontSize=10;" parent="1" vertex="1">
-          <mxGeometry x="474.32" y="918.75" width="57.63" height="55" as="geometry" />
+        <mxCell id="NnatkJBT9xsz4FV3scjZ-46" value="MySQL" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;shadow=0;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="477.15000000000003" y="918.75" width="51.95" height="55" as="geometry" />
         </mxCell>
         <mxCell id="NnatkJBT9xsz4FV3scjZ-66" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;flowAnimation=0;curved=0;dashed=1;startArrow=classic;startFill=1;dashPattern=8 8;shadow=0;" parent="1" source="NnatkJBT9xsz4FV3scjZ-49" target="NnatkJBT9xsz4FV3scjZ-14" edge="1">
           <mxGeometry relative="1" as="geometry" />
