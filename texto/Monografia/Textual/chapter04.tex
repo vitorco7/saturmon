@@ -53,9 +53,10 @@ Na primeira seção, é detalhado o dashboard implementado, incluindo os gráfic
   \item Configuração das regras de notificação e os pontos de contato;
   \item Como utilizei, a primeiro momenot, a UI do Grafana para criar os alertas (isso era interessante pq vinculava automaticamente o alerta ao respectivo gráfico);
   \item Como, assim como no dashboard, eu exportava e versionava tudo via JSON;
-  \item Problemas do SQLite e a migração para o Postgres (explicitar como a migração foi fácil graças ao provisionamento, versionamento, uso do Docker e TSDB fazendo o trabalho de persistência);
+  \item Problemas do SQLite e a migração para o Postgres e dps para MYSQL (explicitar como a migração foi fácil graças ao provisionamento, versionamento, uso do Docker e TSDB fazendo o trabalho de persistência);
   \item Migração para o Alertmanager+TSDB (enfatizar como tudo fica embutido no Prometheus e como isso simplifica a arquitetura);
-  \item EDITAR DIAGRAMAS (SQLite vira POSTGRES)
+  \item Em algum lugar mencionar o Granafa Unified Alerting ser capaz de interpretar o alerts.yml do prometheus e automaticamente criar os alertas Grafana-Managed
+  \item Mencionar em algum lugar que a primeira configuração do mysql demorou mto (188s)
 \end{enumerate}
 
 
