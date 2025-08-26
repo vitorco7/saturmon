@@ -88,14 +88,14 @@ groups:
 
 \newpage
 
-\begin{lstlisting}[caption={Métricas de CPU - Carga de usuário obtidas do Telegraf}, label={lst:telegraf-cpu-user-load}]
+\begin{lstlisting}[caption={Métricas de CPU "Carga de usuário"\ pré-normalização}, label={lst:telegraf-cpu-user-load}]
   physical_cpu_usage_user{alias="Host Machine", cpu="cpu-total", host="6RW9K03", instance="172.17.0.1:9273", job="physical_host"}	16.283422459908643
 
   container_cgroup_cpu_stat_user_usec{alias="Ubuntu 1", host="device1", instance="device_1:9273", job="virtual_hosts", path="/sys/fs/cgroup/"}
      32102389
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Métricas Normalizadas no Prometheus}, label={lst:normalized-cpu-user-load}]
+\begin{lstlisting}[caption={Métricas de CPU "Carga de usuário"\ normalizadas}, label={lst:normalized-cpu-user-load}]
   cpu_user_load{alias="Host Machine", host="6RW9K03", job="physical_host", unit="percent"}	5.620946432860638 
   cpu_user_load{alias="Ubuntu 1", host="device1", job="virtual_hosts", unit="percent"}	
      0.59546
@@ -144,7 +144,7 @@ Outra configuração global relevante refere-se aos intervalos de atualização 
 \section{Caso de Uso}
 \label{section:CasosDeUso}
 
-Um caso de uso para este projeto é o monitoramento da saturação dos equipamentos do próprio autor. Com o dashboard e notificações de alertas desenvolvidos nestre trabalho, foi possível identificar causadores de travamentos, como picos de "Aguardo de I/O" da CPU e "Utilização I/O" de disco quando executando os testes de saturação dos contêineres de forma assíncrona, o que motivou para a mudança para a execução síncrona dos testes, conforme detalhado na Seção \ref{subsection:TestesSaturacao}. 
+Um caso de uso para este projeto é o monitoramento da saturação dos equipamentos do próprio autor. Com o dashboard e notificações de alertas desenvolvidos nestre trabalho, foi possível identificar causadores de travamentos, como picos de "Aguardo de I/O"\ da CPU e "Utilização I/O"\ de disco quando executando os testes de saturação dos contêineres de forma assíncrona, o que motivou para a mudança para a execução síncrona dos testes, conforme detalhado em \ref{subsection:TestesSaturacao}. 
 }
 
 % foram feitas tentativas de utilização de ferramentas de \foreign{chaos-engineering} como Pumba e ChaosBlade e até mesmo tentativas de manipulação direta de iptables para gerar tráfego de rede, mas essas ferramentas não se mostraram adequadas para este trabalho.

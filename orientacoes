@@ -1,5 +1,9 @@
 Orientação 20250826
 
+Subseção 4.3 --> palavras mencionadas em "" perdem espaçamento. Exemplo:  ”Utilização I/O”de d
+
+Código Fonte 4.4 e 4.5 --> alteração da legenda para "pré" e "pós" normalização
+
 Preciso de um título para o trabalho, e um nome para o repositorio do github (pode ser o mesmo do título do trabalho)?
 
 Estava revisando o texto e notei que eu formatei todas as palavras estrangeiras em itálico (scraping, dashboard, host, etc.). No inpicio eu achei bom pela padronização, mas agora acho que ficou meio poluído visualmente. O que você acha?
