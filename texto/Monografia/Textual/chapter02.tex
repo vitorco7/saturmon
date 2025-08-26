@@ -427,12 +427,17 @@ Outro diferencial do Prometheus é seu suporte a mecanismos de descoberta autom�
 
 Diferentemente do Zabbix, que conta com uma interface web nativa para configurações, as configurações do Prometheus devem ser feitas diretamente via arquivos YAML. Para um experiência gráfica mais completa, vê-se necessária a integração de outras ferramentas, como por exemplo o Grafana, que é a aplicação recomendada oficialmente.
 
-\section{Bancos de Dados}
+\section{Sistemas Gerenciadores de Banco de Dados}
 \label{section:BancosDados}
 
 Os bancos de dados são outro componente fundamental em arquiteturas de monitoramento, uma vez que são responsáveis por armazenar informações críticas como métricas coletadas, eventos, \foreign{logs}, configurações e histórico de alertas. A escolha adequada do sistema de gerenciamento de banco de dados impacta diretamente o desempenho, a escalabilidade e a confiabilidade da solução implementada.
 
-No contexto deste projeto, a natureza das informações coletadas --- predominantemente séries temporais --- exige a avaliação de diferentes abordagens de armazenamento, incluindo bancos de dados relacionais tradicionais e soluções especializadas em dados temporais. As subseções a seguir apresentam os bancos de dados analisados para o projeto, destacando suas principais características.
+No contexto deste projeto, a natureza das informações coletadas --- predominantemente séries temporais --- exige a avaliação de diferentes abordagens de armazenamento, incluindo bancos de dados relacionais tradicionais e soluções especializadas em dados temporais.
+
+%inserir a tabela comparativa entre os SGBDS
+
+
+As subseções a seguir apresentam os bancos de dados analisados para o projeto, destacando suas principais características.
 
 \subsection{MySQL}
 \label{subsection:MySQL}

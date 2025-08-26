@@ -1,8 +1,7 @@
 \chapter{Aplicação de Monitoramento}
 \label{chap4}
 
-{\color{red}
-Após o detalhamento da arquitetura e dos componentes do sistema de monitoramento, este capítulo apresenta as aplicações práticas da solução desenvolvida. São abordados os dois mecanismos principais responsáveis pela visualização e notificação das métricas coletadas: o dashboard e o sistema de alertas.
+Após o detalhamento da arquitetura e dos componentes do sistema de monitoramento, este capítulo apresenta a aplicação prática da solução desenvolvida. São abordados os dois mecanismos principais responsáveis pela visualização e notificação das métricas coletadas: o dashboard e o sistema de alertas.
 
 Na primeira seção, é detalhado o dashboard implementado, incluindo os gráficos e visualizações criados, os códigos PromQL utilizados nas consultas correspondentes e os procedimentos de processamento dos dados. A segunda seção descreve o sistema de alertas, abrangendo as regras de disparo de notificações, a configuração dos pontos e canais de contato, bem como a experiência prática obtida com os diferentes sistemas de alertas disponíveis no ecossistema adotado. A terceira seção apresenta um caso de uso prático, ilustrando a aplicação do sistema de monitoramento em um cenário real.
 
@@ -11,7 +10,7 @@ Na primeira seção, é detalhado o dashboard implementado, incluindo os gráfic
 
 Conforme mencionado ao longo deste trabalho, os princípios de IaC são fundamentais para assegurar a reprodutibilidade e o versionamento de toda a infraestrutura desenvolvida. Essa abordagem abrange não apenas os componentes centrais do projeto, mas também os dashboards e sistemas de alertas configurados. Por meio de arquivos declarativos YAML, são definidas e versionadas as configurações internas, o processamento de dados, as consultas PromQL e as regras de alertas (conforme será detalhado na Seção \ref{section:Alertas}), automatizando integralmente o fluxo de trabalho.
 
-A configuração do Prometheus como fonte de dados padrão do Grafana foi realizada através do arquivo \verb|datasource.yaml|, enquanto as configurações internas específicas do dashboard foram estabelecidas no arquivo \verb|dashboards.yml|, conforme demonstrado nos Códigos Fonte \ref{lst:default-datasource} e \ref{lst:dashboards-yml}, respectivamente.
+A configuração do Prometheus como fonte de dados padrão do Grafana foi realizada através do arquivo \verb|datasource.yaml|, enquanto as configurações internas específicas do dashboard foram estabelecidas no arquivo \verb|dashboards.yml|, conforme apresentado nos Códigos Fonte \ref{lst:default-datasource} e \ref{lst:dashboards-yml}, respectivamente.
 
 \begin{lstlisting}[caption={Arquivo datasource.yml}, label={lst:default-datasource}]
 apiVersion: 1
@@ -45,11 +44,12 @@ Embora computacionalmente mais eficientes, as \texttt{Recording Rules} apresenta
 
 Na normalização dos dados no Prometheus, são realizadas duas operações principais, quando aplicáveis: a conversão de métricas com diferentes unidades (como microssegundos, bytes, contagens) para formatos padronizados, como percentuais; e a transformação de métricas provenientes de diferentes hosts para um formato consistente, possibilitando comparações e visualizações agregadas.
 
-Um exemplo prático dessa normalização é a métrica de uso de CPU "Carga de usuário" no host físico, ela representa uma porcentagem de utilização por tempo total, enquanto nos dispositivos virtuais é expressa como um valor acumulado em microssegundos desde a inicialização do contêiner correspondente. Para unificar essas métricas, utiliza-se a consulta PromQL demonstrada no Código Fonte \ref{lst:cpu_user_load}..
+Um exemplo prático dessa normalização é a métrica de uso de CPU "Carga de usuário" no host físico, ela representa uma porcentagem de utilização por tempo total, enquanto nos dispositivos virtuais é expressa como um valor acumulado em microssegundos desde a inicialização do contêiner correspondente. Para unificar essas métricas, utiliza-se a consulta PromQL apresentada no Código Fonte \ref{lst:cpu_user_load}. Além disso, esta normalização incluiu a padronização e otimização de labels, e a unificação das métricas numa única métrica consolidada: \verb|cpu_user_load|.
 
-Além disso, esta normalização incluiu a padronização e otimização de labels, e a unificação das métricas numa única métrica consolidada: \verb|cpu_user_load|.
+{\color{red}
 
-As funções \verb|label_replace| são empregadas para manipular as labels, enquanto a função \verb|irate| calcula a taxa de variação das duas amostras mais recentes da janela de tempo definida --- neste caso, 30 segundos, conforme recomendação da literatura, que sugere um período no mínimo duas vezes maior que o intervalo de scraping, para calcular a variação por segundo. Essa taxa é convertida de microssegundos para segundos por meio da divisão por 1e6 e, em seguida, multiplicada por 100 para obter o valor em percentual.
+As funções \verb|label_replace| são empregadas para manipular as labels, enquanto a função \verb|irate| calcula a taxa de variação das duas amostras mais recentes da janela de tempo definida --- neste caso, 30 segundos, conforme a frequência de Nyquist. Essa taxa é convertida de microssegundos para segundos por meio da divisão por $10^{6}$ e, em seguida, multiplicada por 100 para obter o valor em percentual.
+}
 
 A métrica final \verb|cpu_user_load| é, então, utilizada nos gráficos do Grafana, oferecendo uma visão integrada do uso de CPU tanto para hosts físicos quanto para contêineres.
 
@@ -88,20 +88,20 @@ groups:
 
 \newpage
 
-\begin{lstlisting}[caption={Métricas de CPU "Carga de usuário"\ pré-normalização}, label={lst:telegraf-cpu-user-load}]
+\begin{lstlisting}[caption={Métricas de CPU \myenquote{Carga de usuário} pré-normalização}, label={lst:telegraf-cpu-user-load}]
   physical_cpu_usage_user{alias="Host Machine", cpu="cpu-total", host="6RW9K03", instance="172.17.0.1:9273", job="physical_host"}	16.283422459908643
 
   container_cgroup_cpu_stat_user_usec{alias="Ubuntu 1", host="device1", instance="device_1:9273", job="virtual_hosts", path="/sys/fs/cgroup/"}
      32102389
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Métricas de CPU "Carga de usuário"\ normalizadas}, label={lst:normalized-cpu-user-load}]
+\begin{lstlisting}[caption={Métricas de CPU \myenquote{Carga de usuário} normalizadas}, label={lst:normalized-cpu-user-load}]
   cpu_user_load{alias="Host Machine", host="6RW9K03", job="physical_host", unit="percent"}	5.620946432860638 
   cpu_user_load{alias="Ubuntu 1", host="device1", job="virtual_hosts", unit="percent"}	
      0.59546
 \end{lstlisting}
 
-O restante dos arquivos de \verb|Recording Rules| do Prometheus podem ser encontrados no repositório do projeto \citep{vitorcossetti2025}, na pasta \verb|configs/prometheus/rules|, 
+O restante dos arquivos de \verb|Recording Rules| do Prometheus podem ser encontrados no repositório do projeto \citep{vitorcossetti2025}, na pasta \verb|configs/prometheus/rules|.
 
 Seguindo a abordagem híbrida e após o processamento dos dados no Prometheus, inicia-se a construção dos dashboards por meio da interface web do Grafana. Inicialmente, são criadas as \verb|Grafana Variables|, que atuam como filtros globais para todos os gráficos, permitindo a seleção dinâmica de parâmetros para uma visualização e interpretação mais eficientes dos dados. As variáveis configuradas estão listadas na Tabela \ref{tab:grafana-variables}:
 
@@ -109,7 +109,6 @@ Seguindo a abordagem híbrida e após o processamento dos dados no Prometheus, i
 \centering
 \caption{Grafana Variables.}
 \label{tab:grafana-variables}
-\color{red}
 \begin{tabular}{cl}
 \toprule
 \textbf{Variável} & \textbf{Filtro aplicado} \\
@@ -134,18 +133,15 @@ Outra configuração global relevante refere-se aos intervalos de atualização 
 \end{figure}
 
 
-}
 
 \section{Alertas e Notificações}
 \label{section:Alertas}
 
 
-{\color{red}
 \section{Caso de Uso}
 \label{section:CasosDeUso}
 
-Um caso de uso para este projeto é o monitoramento da saturação dos equipamentos do próprio autor. Com o dashboard e notificações de alertas desenvolvidos nestre trabalho, foi possível identificar causadores de travamentos, como picos de "Aguardo de I/O"\ da CPU e "Utilização I/O"\ de disco quando executando os testes de saturação dos contêineres de forma assíncrona, o que motivou para a mudança para a execução síncrona dos testes, conforme detalhado em \ref{subsection:TestesSaturacao}. 
-}
+Um caso de uso para este projeto é o monitoramento da saturação dos equipamentos do próprio autor. Com o dashboard e notificações de alertas desenvolvidos nestre trabalho, foi possível identificar causadores de travamentos, como picos de \myenquote{Aguardo de I/O} da CPU e \myenquote{Utilização I/O} de disco quando executando os testes de saturação dos contêineres de forma assíncrona, o que motivou para a mudança para a execução síncrona dos testes, conforme detalhado em \ref{subsection:TestesSaturacao}.
 
 % foram feitas tentativas de utilização de ferramentas de \foreign{chaos-engineering} como Pumba e ChaosBlade e até mesmo tentativas de manipulação direta de iptables para gerar tráfego de rede, mas essas ferramentas não se mostraram adequadas para este trabalho.
 
