@@ -4,6 +4,11 @@ Preciso de um título para o trabalho, e um nome para o repositorio do github (p
 
 Estava revisando o texto e notei que eu formatei todas as palavras estrangeiras em itálico (scraping, dashboard, host, etc.). No inpicio eu achei bom pela padronização, mas agora acho que ficou meio poluído visualmente. O que você acha?
 
+E nesta altura do campeonato, mesmo depois de todas as implementações, encontrei instancias de data base lock. Migrei SQLite -> Postgres -> MySQL (o MySQL é mais leve e pela documentação mais bem integrado ao Grafana). Eu acho que seria interessante adicionar no capítulo 2 uma tabela comparativa de requisitos mínimos de cada DB (consigo fazer isso rápido sem esforço).
+
+Discutir necessidade do gŕafico "network-cumulative" - acho que nao agrega valor
+
+Eu consigo exportar os gŕaficos em PNG pra adicioná-los ao texto, mas como tornar as informações legíveis se o texto ficará em preto e branco?
 
 Orientação 20250819
 
