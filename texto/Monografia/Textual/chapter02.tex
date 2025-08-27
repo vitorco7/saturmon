@@ -19,20 +19,20 @@ As seções do decorrer deste capítulo categorizam as etapas conceituais para a
 
 A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, podem causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
 
-Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa \foreign{(desktops)}, ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
+Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa (desktops), ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
 
 A seguir, serão apresentadas algumas opções de hardware avaliadas para compor uma plataforma de monitoramento.
 
 \subsection{Next Unit of Computing (NUC)}
 \label{subsection:NUC}
 
-O Intel \foreign{Next Unit of Computing} (NUC)\abbrev{NUC}{\foreign{Next Unit of Computing}} \citep{nuc2025} configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de \foreign{desktops} convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
+O Intel \foreign{Next Unit of Computing} (NUC)\abbrev{NUC}{\foreign{Next Unit of Computing}} \citep{nuc2025} configura-se como uma linha de computadores compactos desenvolvida pela Intel, baseada na arquitetura x86-64. Seu principal propósito é proporcionar desempenho próximo ao de desktops convencionais, porém em um formato significativamente reduzido. Essa proposta de miniaturização alia potência computacional e economia de espaço.
 
 No NUC destaca-se a possibilidade de executar sistemas operacionais completos, como diversas distribuições Linux e o Microsoft Windows, sem as restrições frequentemente observadas em dispositivos embarcados baseados em arquitetura Advanced RISC Machine (ARM)\abbrev{ARM}{\foreign{Advanced RISC Machine}}. Essa compatibilidade amplia as possibilidades de uso, facilitando a adoção de soluções de virtualização e a execução simultânea de múltiplos contêineres e serviços, aspectos relevantes para cenários de monitoramento e automação.
 
 Outro ponto relevante é o suporte a recursos de hardware mais robustos em comparação aos computadores de placa única. O NUC permite configurações com processadores de maior desempenho, maior quantidade de memória \foreign{Random Access Memory} (RAM)\abbrev{RAM}{\foreign{Random Access Memory}}, opções avançadas de armazenamento, como unidades \foreign{Solid State Drive} (SSD) NVMe, interfaces modernas de conectividade e em alguns casos até mesmo placas gráficas dedicadas. Tais características tornam o dispositivo apto a lidar com cargas de trabalho mais exigentes, especialmente em situações que demandam coleta intensiva de métricas ou visualização analítica em tempo real.
 
-Dessa forma, o Intel NUC pode ser compreendido como uma solução intermediária entre os computadores de placa única, como o Raspberry Pi e o Orange Pi, e os \foreign{desktops} tradicionais, reunindo portabilidade e desempenho em um único equipamento.
+Dessa forma, o Intel NUC pode ser compreendido como uma solução intermediária entre os computadores de placa única, como o Raspberry Pi e o Orange Pi, e os desktops tradicionais, reunindo portabilidade e desempenho em um único equipamento.
 
 \subsection{Raspberry Pi}
 \label{subsection:RaspberryPi}
@@ -118,7 +118,7 @@ Com sua estabilidade, suporte a longo prazo (LTS)\abbrev{LTS}{\foreign{Long Term
 
 O Raspberry Pi OS \citep{raspisftwr2025}, anteriormente conhecido como Raspbian, é a distribuição Linux oficial mantida pela Raspberry Pi Foundation, projetada especificamente para uso nos computadores de placa única (SBCs) da linha Raspberry Pi. Baseada no Debian, essa distribuição é otimizada para arquitetura ARM e visa oferecer uma experiência estável, leve e compatível com o conjunto de hardware embarcado disponível nesses dispositivos.
 
-Assim como o Ubuntu, o Raspberry Pi OS está disponível em diferentes versões, incluindo uma variante com ambiente gráfico completo (Raspberry Pi OS \foreign{with desktop}) e uma versão reduzida, voltada para servidores e sistemas embarcados (Raspberry Pi OS Lite), o que implica nas mesmas vantagens mencionadas em \ref{subsection:UbuntuServer}.
+Assim como o Ubuntu, o Raspberry Pi OS está disponível em diferentes versões, incluindo uma variante com ambiente gráfico completo (Raspberry Pi OS com desktop) e uma versão reduzida, voltada para servidores e sistemas embarcados (Raspberry Pi OS Lite), o que implica nas mesmas vantagens mencionadas em \ref{subsection:UbuntuServer}.
 
 No que diz respeito ao gerenciamento de pacotes, o Raspberry Pi OS também utiliza o gerenciador APT, herdado do Debian, com acesso aos repositórios oficiais da distribuição base. Entretanto, incorpora ajustes e otimizações voltadas ao hardware do Raspberry Pi, como a configuração prévia de parâmetros de inicialização (\foreign{boot}) via cartão SD e ajustes de desempenho voltados à compatibilidade com os periféricos e interfaces do dispositivo.
 
@@ -210,13 +210,13 @@ Durante a execução de uma aplicação, o sistema operacional transfere os dado
 
 Entretanto, quando a quantidade de aplicações ou processos em execução excede a capacidade da RAM física disponível, o sistema pode sofrer degradação de desempenho, instabilidade e falhas em serviços. Em situações críticas, o sistema operacional pode recorrer à finalização forçada de processos para liberar memória --- um mecanismo conhecido como \foreign{Out-of-Memory Killer} (OOM-Killer)\abbrev{OOM}{\foreign{Out of Memory}}.
 
-Para mitigar tais situações, o sistema operacional recorre à utilização de memória de troca (\foreign{swap memory}) (em bytes), que consiste em uma área disco de armazenamento para funcionar como uma extensão virtual da RAM. Embora o uso de \foreign{swap} permita continuar a execução dos processos mesmo após o esgotamento da memória física, seu desempenho é consideravelmente inferior, podendo resultar em lentidão perceptível do sistema.
+Para mitigar tais situações, o sistema operacional recorre à utilização de memória de swap (em bytes), que consiste em uma área disco de armazenamento para funcionar como uma extensão virtual da RAM. Embora o uso de swap permita continuar a execução dos processos mesmo após o esgotamento da memória física, seu desempenho é consideravelmente inferior, podendo resultar em lentidão perceptível do sistema.
 
 Valores de carga elevados na memória de troca são indicativos de degradação do sistema e saturação da memória RAM.
 
 \begin{table}[H]
 \centering
-\caption{Comparativo entre Memória RAM e Memória de Troca (Swap).}
+\caption{Comparativo entre Memória RAM e Memória de Swap.}
 \label{tab:comparativo-ram-swap}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabularx}{\textwidth}{@{}p{4cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
@@ -322,7 +322,7 @@ O cAdvisor é normalmente executado como um contêiner próprio, com acesso ao h
 \subsection{Telegraf}
 \label{subsection:Telegraf}
 
-O Telegraf \citep{telegraf2025} é um agente de coleta de métricas da InfluxData escrito em Go, projetado sob o modelo \foreign{plugin-driven}. Ele coleta dados de fontes variadas (sistemas operacionais, bancos, contêineres, serviços) via \foreign{plugins} de \foreign{input} e envia para diversos destinos (InfluxDB, Prometheus, Kafka etc.) via \foreign{plugins} de \foreign{output}.
+O Telegraf \citep{telegraf2025} é um agente de coleta de métricas da InfluxData escrito em Go, projetado sob o modelo \foreign{plugin-driven}. Ele coleta dados de fontes variadas (sistemas operacionais, bancos, contêineres, serviços) via \foreign{plugins} de entrada e envia para diversos destinos (InfluxDB, Prometheus, Kafka etc.) via \foreign{plugins} de saída.
 
 O Telegraf pode operar tanto em modo \foreign{push} quanto em modo \foreign{pull} e arquitetura modular o torna particularmente interessante para ambientes heterogêneos e para integração com múltiplas ferramentas.
 
@@ -417,9 +417,9 @@ Para simplificar a configuração em ambientes heterogêneos, o Zabbix dispõe d
 
 O Prometheus \citep{prometheus2025} é um sistema de monitoramento e alerta de código aberto desenvolvido inicialmente pela SoundCloud, mas atulamente não possui um "proprietário". Trata-se de um projeto independente mantido por uma comunidade de contribuidores com uma governança formalizada pela Cloud Native Computing Foundation (CNCF)\abbrev{CNCF}{Cloud Native Computing Foundation}. Projetado para atender aos desafios de ambientes \foreign{cloud-native} e arquiteturas baseadas em microsserviços, o Prometheus estrutura-se em torno do modelo de coleta ativa (\foreign{pull}) e do armazenamento eficiente de séries temporais.
 
-A arquitetura do Prometheus é composta por diversos componentes especializados que operam de forma distribuída. O servidor Prometheus constitui o componente central, responsável por descobrir alvos de monitoramento, coletar métricas através de \foreign{scraping} HTTP\abbrev{HTTP}{\foreign{Hypertext Transfer Protocol}}, armazenar dados em sua base de dados de séries temporais (TSDB)\abbrev{TSDB}{\foreign{Time Series Database}} interna e disponibilizar esses dados para consultas via PromQL (Prometheus Query Language). Os exportadores funcionam como intermediários, traduzindo métricas de sistemas existentes (MySQL, PostgreSQL, servidores web, sistemas operacionais) para o formato de exposição do Prometheus. O Alertmanager opera como serviço separado, recebendo alertas do servidor Prometheus e gerenciando seu roteamento, agrupamento e entrega através de múltiplos canais de notificação.
+A arquitetura do Prometheus é composta por diversos componentes especializados que operam de forma distribuída. O servidor Prometheus constitui o componente central, responsável por descobrir alvos de monitoramento, coletar métricas através de \foreign{scraping} HTTP\abbrev{HTTP}{\foreign{Hypertext Transfer Protocol}}, armazenar dados em seu Banco de Dados para Séries Temporais (TSDB)\abbrev{TSDB}{\foreign{Time Series Database}} interno e disponibilizar esses dados para consultas via PromQL (Prometheus Query Language). Os exportadores funcionam como intermediários, traduzindo métricas de sistemas existentes (MySQL, PostgreSQL, servidores web, sistemas operacionais) para o formato de exposição do Prometheus. O Alertmanager opera como serviço separado, recebendo alertas do servidor Prometheus e gerenciando seu roteamento, agrupamento e entrega através de múltiplos canais de notificação.
 
-O \foreign{Time Series Database} (TSDB) interno representa uma das principais inovações do Prometheus. Otimizado especificamente para dados de séries temporais, o TSDB utiliza técnicas de compressão (\foreign{delta encoding, double-delta encoding, bitpacking}) para reduzir o uso em disco. A arquitetura do TSDB separa dados recentes (\foreign{head block} em memória) de dados históricos (blocos persistentes em disco), garantindo acesso rápido a métricas atuais enquanto mantém eficiência para consultas históricas. O \foreign{write-ahead log} (WAL)\abbrev{WAL}{\foreign{Write-Ahead Log}} garante durabilidade dos dados, enquanto políticas de retenção automáticas (padrão de 15 dias) controlam o uso de armazenamento.
+O TSDB interno representa uma das principais inovações do Prometheus. Otimizado especificamente para dados de séries temporais, o TSDB utiliza técnicas de compressão (\foreign{delta encoding, double-delta encoding, bitpacking}) para reduzir o uso em disco. A arquitetura do TSDB separa dados recentes (\foreign{head block} em memória) de dados históricos (blocos persistentes em disco), garantindo acesso rápido a métricas atuais enquanto mantém eficiência para consultas históricas. O \foreign{write-ahead log} (WAL)\abbrev{WAL}{\foreign{Write-Ahead Log}} garante durabilidade dos dados, enquanto políticas de retenção automáticas (padrão de 15 dias) controlam o uso de armazenamento.
 
 O modelo de dados do Prometheus é baseado em métricas multidimensionais, onde cada série temporal é identificada por um nome de métrica e um conjunto de labels (pares chave-valor) que fornecem contexto adicional. Este modelo permite consultas flexíveis e agregações complexas através do PromQL, uma linguagem de consulta especializada que suporta operações matemáticas, estatísticas e análises temporais. A capacidade de correlacionar múltiplas métricas e calcular taxas, percentis e médias móveis torna o Prometheus especialmente adequado para análise de saturação e detecção de anomalias.
 
@@ -441,10 +441,10 @@ O MySQL \citep{mysql2025} é um sistema de gerenciamento de banco de dados relac
 
 Em cenários de monitoramento, o MySQL apresenta vantagens quando há necessidade de consultas complexas envolvendo múltiplas junções, geração de relatórios analíticos e integração com ferramentas de inteligência de negócio. Entretanto, por se tratar de um banco relacional tradicional, seu desempenho em operações de escrita intensiva e concorrente pode ser inferior ao de soluções especializadas em séries temporais. Nesses casos, torna-se recomendável a aplicação de técnicas de otimização --- como particionamento de tabelas, uso de índices adequados e ajustes de parâmetros de \foreign{buffer} --- para atender a ambientes com alta frequência de ingestão de métricas.
 
-\subsection{Time Series DataBase (TSDB)}
+\subsection{Banco de Dados para Séries Temporais (TSDB)}
 \label{subsection:TSDB}
 
-Time Series Database (TSDB) \citep{tigerdata2024} refere-se a uma categoria especializada de sistemas de banco de dados otimizados para armazenar, consultar e analisar dados organizados cronologicamente. Diferentemente dos bancos relacionais tradicionais, os TSDBs são otimizados para cargas de trabalho caracterizadas por inserções sequenciais de alta frequência, consultas baseadas em intervalos temporais e operações de agregação temporal.
+TSDB \citep{tigerdata2024} refere-se a uma categoria especializada de sistemas de banco de dados otimizados para armazenar, consultar e analisar dados organizados cronologicamente. Diferentemente dos bancos relacionais tradicionais, os TSDBs são otimizados para cargas de trabalho caracterizadas por inserções sequenciais de alta frequência, consultas baseadas em intervalos temporais e operações de agregação temporal.
 
 A arquitetura típica de um TSDB incorpora otimizações específicas para dados temporais, como mencionado na subseção \ref{subsection:Prometheus}. Entre os principais representantes dessa categoria, destacam-se o InfluxDB --- com sua linguagem de consulta InfluxQL e suporte nativo a \foreign{tags} para metadados ---, o TimescaleDB --- uma extensão do PostgreSQL que preserva compatibilidade com SQL padrão ---, e o Prometheus TSDB (interno ao sistema de monitoramento homônimo).
 
@@ -473,7 +473,7 @@ Após a coleta de métricas e o processamento dos respectivos dados, torna-se ne
 
 Uma abordagem amplamente adotada para essa finalidade é a utilização de painéis interativos (\foreign{dashboards}) que combinam diferentes tipos de gráficos, medidores e indicadores visuais, proporcionando elevado grau de customização e auxiliando os usuários em análises e tomadas de decisão baseadas em dados. Estes painéis agregam métricas em visualizações unificadas, facilitando a identificação de padrões, tendências e anomalias nos sistemas monitorados
 
-A seguir, apresentam-se três soluções de visualização: a interface web integrada do Zabbix (Zabbix UI) \abbrev{UI}{\foreign{User Interface}}, a interface web embutida (\foreign{Expression Browser}) do Prometheus  e o Grafana, uma plataforma especializada na visualização de dados e métricas provenientes de fontes externas.
+A seguir, apresentam-se três soluções de visualização: a interface web integrada do Zabbix (Zabbix UI) \abbrev{UI}{\foreign{User Interface}}, a interface web embutida Expression Browser do Prometheus e o Grafana, uma plataforma especializada na visualização de dados e métricas provenientes de fontes externas.
 
 \subsection{Zabbix UI}
 \label{subsection:ZabbixUI}
@@ -489,11 +489,11 @@ Embora não ofereça o mesmo nível de flexibilidade visual e personalização a
 \subsection{Prometheus Expression Browser}
 \label{subsection:PrometheusExpressionBrowser}
 
-O Prometheus dispõe de uma interface web embutida conhecida como \foreign{Expression Browser} \citep{promexpbrwsr2025}, cujo principal propósito é permitir a consulta direta de métricas por meio da linguagem PromQL. Essa interface serve como ferramenta básica para inspeção e depuração de séries temporais coletadas pelo Prometheus, sendo especialmente útil durante o desenvolvimento de consultas e na validação da integridade dos dados recebidos.
+O Prometheus dispõe de uma interface web embutida conhecida como Expression Browser \citep{promexpbrwsr2025}, cujo principal propósito é permitir a consulta direta de métricas por meio da linguagem PromQL. Essa interface serve como ferramenta básica para inspeção e depuração de séries temporais coletadas pelo Prometheus, sendo especialmente útil durante o desenvolvimento de consultas e na validação da integridade dos dados recebidos.
 
-Por meio dessa interface, é possível realizar buscas manuais de métricas, aplicar filtros com base em \foreign{labels}, realizar agregações, calcular taxas e derivadas, entre outras operações matemáticas compatíveis com PromQL. A ferramenta oferece duas visualizações principais: uma aba \foreign{Table} que exibe resultados em formato tabular com timestamps e valores correspondentes, e uma aba \foreign{Graph} que gera gráficos temporais básicos para análise visual. Usuários podem navegar através do histórico temporal modificando o tempo de avaliação através de controles dedicados, permitindo análise retrospectiva de métricas
+Por meio dessa interface, é possível realizar buscas manuais de métricas, aplicar filtros com base em \foreign{labels}, realizar agregações, calcular taxas e derivadas, entre outras operações matemáticas compatíveis com PromQL. A ferramenta oferece duas visualizações principais: uma aba \myenquote{Table} que exibe resultados em formato tabular com timestamps e valores correspondentes, e uma aba \myenquote{Graph} que gera gráficos temporais básicos para análise visual. Usuários podem navegar através do histórico temporal modificando o tempo de avaliação através de controles dedicados, permitindo análise retrospectiva de métricas
 
-Apesar de sua utilidade técnica e da baixa complexidade de uso, o \foreign{Expression Browser} não foi projetado para monitoramento contínuo, tampouco para a construção de painéis interativos complexos. Dessa forma, seu papel se restringe majoritariamente à verificação pontual de métricas e à formulação de expressões que posteriormente serão integradas em ferramentas de visualização mais avançadas, como o Grafana.
+Apesar de sua utilidade técnica e da baixa complexidade de uso, o Expression Browser não foi projetado para monitoramento contínuo, tampouco para a construção de painéis interativos complexos. Dessa forma, seu papel se restringe majoritariamente à verificação pontual de métricas e à formulação de expressões que posteriormente serão integradas em ferramentas de visualização mais avançadas, como o Grafana.
 
 \subsection{Grafana}
 \label{subsection:Grafana}
