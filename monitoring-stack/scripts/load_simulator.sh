@@ -226,7 +226,7 @@ while $RUNNING; do
     else
         vm_bytes=$((RANDOM % 163 + 350))M # 350–512MB/worker
     fi
-    hdd_bytes=$((RANDOM % 30 + 20))M # Disk I/O size between 20-50MB
+    hdd_bytes=$((RANDOM % 11 + 15))M # Disk I/O size between 15-25MB
     system_workers=2
     
     echo "$(timestamp) [INFO] CPU: $cpu_workers, VM: $vm_workers x $vm_bytes, HDD: $hdd_bytes, System: $system_workers"
@@ -244,8 +244,17 @@ while $RUNNING; do
     stress-ng --cache "$cpu_cache_workers" --timeout "$stress_time" & PIDS+=($!)
     stress-ng --matrix "$cpu_float_workers" --timeout "$stress_time" & PIDS+=($!)
     stress-ng --pipe "$cpu_pipe_workers" --timeout "$stress_time" & PIDS+=($!)
-    stress-ng --hdd 1 --hdd-opts wr-rnd --timeout "$stress_time" & PIDS+=($!)
-    stress-ng --hdd 1 --hdd-opts wr-seq --timeout "$stress_time" & PIDS+=($!)
+
+    if [ $((RANDOM % 2)) -eq 0 ]; then
+        echo "$(timestamp) [INFO] [Parallel] Running random write disk test"
+        stress-ng --hdd 1 --hdd-opts wr-rnd --timeout "$stress_time" & PIDS+=($!)
+    else
+        echo "$(timestamp) [INFO] [Parallel] Running sequential write disk test"
+        stress-ng --hdd 1 --hdd-opts wr-seq --timeout "$stress_time" & PIDS+=($!)
+    fi
+
+    # stress-ng --hdd 1 --hdd-opts wr-rnd --timeout "$stress_time" & PIDS+=($!)
+    # stress-ng --hdd 1 --hdd-opts wr-seq --timeout "$stress_time" & PIDS+=($!)
     stress-ng --hdd 1 --hdd-opts rd-rnd --timeout "$stress_time" & PIDS+=($!)
     stress-ng --hdd 1 --hdd-opts rd-seq --timeout "$stress_time" & PIDS+=($!)
     
