@@ -15,21 +15,21 @@ groups:
           team: sre
         annotations:
           summary: "Memory load >= 85%"
-          description: "Over the last 5 minutes, the average memory load was above 85% of the maximum memory on {{ $labels.alias }}."
+          description: "Over the last 5 minutes, the average memory load was above 85% of the maximum memory available on {{ $labels.alias }}."
 
-      - alert: HighMemorySwapLoad
+      - alert: FreeSwapMemoryLow
         expr: |
           100 * (
-            memory_swap_current{job=~".*", alias=~".*"} /
+            memory_swap_free{job=~".*", alias=~".*"} /
             on(alias, job) memory_swap_total{job=~".*", alias=~".*"}
-          ) >= 85
+          ) <= 15
         for: 5m
         labels:
           severity: warning
           team: sre
         annotations:
-          summary: "Memory Swap Load >= 85%"
-          description: "Over the last 5 minutes, the average memory swap load was above 85% of the maximum swap memory on {{ $labels.alias }}."
+          summary: "Memory Swap Free <= 15%"
+          description: "Over the last 5 minutes, the average free swap memory was below 15% of the maximum swap available on {{ $labels.alias }}."
 
   # CPU Alerts
   - name: cpu_alerts

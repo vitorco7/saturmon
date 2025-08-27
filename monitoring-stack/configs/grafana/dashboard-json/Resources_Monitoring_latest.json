@@ -204,7 +204,7 @@
             "h": 9,
             "w": 8,
             "x": 0,
-            "y": 10
+            "y": 64
           },
           "id": 25,
           "interval": "5s",
@@ -273,7 +273,7 @@
             "h": 9,
             "w": 8,
             "x": 8,
-            "y": 10
+            "y": 64
           },
           "id": 27,
           "interval": "5s",
@@ -342,7 +342,7 @@
             "h": 9,
             "w": 8,
             "x": 16,
-            "y": 10
+            "y": 64
           },
           "id": 30,
           "interval": "5s",
@@ -426,7 +426,7 @@
             "h": 8,
             "w": 6,
             "x": 0,
-            "y": 109
+            "y": 163
           },
           "id": 1,
           "interval": "5s",
@@ -502,7 +502,7 @@
             "h": 8,
             "w": 6,
             "x": 6,
-            "y": 109
+            "y": 163
           },
           "id": 5,
           "interval": "5s",
@@ -576,7 +576,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 109
+            "y": 163
           },
           "id": 8,
           "interval": "5s",
@@ -745,7 +745,7 @@
             "h": 10,
             "w": 10,
             "x": 0,
-            "y": 110
+            "y": 164
           },
           "id": 14,
           "interval": "1m",
@@ -803,7 +803,7 @@
             "h": 10,
             "w": 6,
             "x": 10,
-            "y": 110
+            "y": 164
           },
           "id": 13,
           "interval": "1m",
@@ -882,7 +882,7 @@
             "h": 10,
             "w": 8,
             "x": 16,
-            "y": 110
+            "y": 164
           },
           "id": 16,
           "interval": "1m",
@@ -957,7 +957,7 @@
             "h": 8,
             "w": 5,
             "x": 0,
-            "y": 175
+            "y": 229
           },
           "id": 20,
           "interval": "5s",
@@ -1021,7 +1021,7 @@
             "h": 8,
             "w": 7,
             "x": 5,
-            "y": 175
+            "y": 229
           },
           "id": 23,
           "interval": "5s",
@@ -1094,7 +1094,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 175
+            "y": 229
           },
           "id": 31,
           "interval": "5s",
@@ -1167,7 +1167,7 @@
             "h": 14,
             "w": 4,
             "x": 0,
-            "y": 1120
+            "y": 1174
           },
           "id": 40,
           "interval": "10s",
@@ -1244,7 +1244,7 @@
             "h": 14,
             "w": 4,
             "x": 4,
-            "y": 1120
+            "y": 1174
           },
           "id": 39,
           "interval": "10s",
@@ -1321,7 +1321,7 @@
             "h": 14,
             "w": 4,
             "x": 8,
-            "y": 1120
+            "y": 1174
           },
           "id": 43,
           "interval": "10s",
@@ -1397,7 +1397,7 @@
             "h": 14,
             "w": 4,
             "x": 12,
-            "y": 1120
+            "y": 1174
           },
           "id": 45,
           "interval": "10s",
@@ -1483,7 +1483,7 @@
             "h": 14,
             "w": 4,
             "x": 16,
-            "y": 1120
+            "y": 1174
           },
           "id": 48,
           "interval": "10s",
@@ -1578,7 +1578,7 @@
             "h": 14,
             "w": 4,
             "x": 20,
-            "y": 1120
+            "y": 1174
           },
           "id": 47,
           "interval": "10s",
@@ -1709,7 +1709,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 1188
+            "y": 1242
           },
           "id": 46,
           "interval": "10s",
@@ -1937,7 +1937,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 185
+            "y": 239
           },
           "id": 35,
           "interval": "5s",
@@ -3098,7 +3098,7 @@
             {
               "editorMode": "code",
               "exemplar": false,
-              "expr": "increase(net_bytes_recv{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__range])",
+              "expr": "increase({__name__=~\"container_net_bytes_recv|physical_net_bytes_recv\", job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__range])\n# increase(net_bytes_recv{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__range])\n",
               "instant": false,
               "legendFormat": "{{alias}}-{{interface}}-Inbound",
               "range": true,
@@ -3111,7 +3111,7 @@
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "increase(net_bytes_sent{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__range])",
+              "expr": "increase({__name__=~\"container_net_bytes_sent|physical_net_bytes_sent\", job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__range])\n# increase(net_bytes_sent{job=~\"$job\", alias=~\"$alias\", interface=~\"$interface\"}[$__range])",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -3455,6 +3455,6 @@
   "timezone": "browser",
   "title": "Resources Monitoring",
   "uid": "bekb70hhnfh8ga",
-  "version": 2,
+  "version": 6,
   "weekStart": "sunday"
 }
