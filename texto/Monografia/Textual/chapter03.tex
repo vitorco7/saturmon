@@ -53,9 +53,9 @@ Devido a esses fatores, verificou-se a necessidade de reavaliar o escopo e busca
 \subsection{Escopo Reformulado - Monitoramento Amplo}
 \label{subsection:EscopoReformulado}
 
-Até então, os sistemas operacionais dos \foreign{hosts} disponíveis eram distintos (o \foreign{desktop} com um sistema não-Linux e o \foreign{notebook} com Ubuntu Desktop). Considerando as limitações encontradas na abordagem inicial, optou-se por instalar o Ubuntu Server no desktop como SO para experimentação.
+Até então, os sistemas operacionais dos \foreign{hosts} disponíveis eram distintos (o \foreign{desktop} com um sistema não-Linux e o notebook com Ubuntu Desktop). Considerando as limitações encontradas na abordagem inicial, optou-se por instalar o Ubuntu Server no desktop como SO para experimentação.
 
-Conforme relatado na literatura, o Ubuntu Server demonstrou desempenho satisfatório e baixo consumo de recursos. Contudo, havia dois equipamentos sendo utilizados no desenvolvimento do projeto: 1 -- \foreign{desktop} do próprio autor, sem qualquer restrição para troca e alteração de hardware e software; 2 -- \foreign{notebook} corporativo em que o sistema operacional não poderia ser alterado. Visando padronizar os ambientes de desenvolvimento, decidiu-se por padronizar o SO no Ubuntu Desktop em ambos os dispositivos.
+Conforme relatado na literatura, o Ubuntu Server demonstrou desempenho satisfatório e baixo consumo de recursos. Contudo, havia dois equipamentos sendo utilizados no desenvolvimento do projeto: 1 -- \foreign{desktop} do próprio autor, sem qualquer restrição para troca e alteração de hardware e software; 2 -- notebook corporativo em que o sistema operacional não poderia ser alterado. Visando padronizar os ambientes de desenvolvimento, decidiu-se por padronizar o SO no Ubuntu Desktop em ambos os dispositivos.
 
 No decorrer dessas alterações, a abordagem de monitoramento foi ampliada para contemplar não apenas servidores, mas também uma ampla variedade de dispositivos conectados à rede. Essa redefinição proporcionou maior versatilidade ao projeto, tornando desnecessária a aquisição de servidores físicos e possibilitando a utilização de contêineres tanto para a simulação de dispositivos quanto para a implementação da \foreign{stack} de monitoramento. Com isso, o processo de desenvolvimento tornou-se mais prático, ágil e modular, além de permitir um aproveitamento mais eficiente dos recursos computacionais disponíveis. Cabe destacar ainda que, ao adotar contêineres não só para testes, mas também para toda a infraestrutura de monitoramento, a discussão sobre a necessidade de hardware específico, como NUC ou Raspberry Pi, perdeu relevância neste contexto, já que a solução desenvolvida pode ser executada em qualquer máquina compatível com tecnologias de conteinerização.
 
@@ -305,7 +305,7 @@ Também estudou-se a simulação de dispositivos móveis por meio de emuladores 
 \section{Infraestrutura}
 \label{section:Infraestrutura}
 
-Ao longo do projeto, dois equipamentos estiveram à disponibilidade do autor: um desktop pessoal e um \foreign{notebook} corporativo, conforme mencionado em \ref{subsection:EscopoReformulado}. As especificações desses equipamentos estão detalhadas na Tabela \ref{tab:available-hardware}.
+Ao longo do projeto, dois equipamentos estiveram à disponibilidade do autor: um desktop pessoal e um notebook corporativo, conforme mencionado em \ref{subsection:EscopoReformulado}. As especificações desses equipamentos estão detalhadas na Tabela \ref{tab:available-hardware}.
 
 \begin{table}[htbp]
 \centering
@@ -325,9 +325,9 @@ SO & Ubuntu Desktop 24 & Ubuntu Desktop 20 \\
 
 As práticas adotadas ao longo deste projeto possibilitaram um desenvolvimento multiplataforma prático e eficiente. Cada equipamento implementou o projeto por meio de clones locais do repositório e executou os mesmos comandos Docker Compose para iniciar toda a infraestrutura de monitoramento. A possibilidade de rodar o mesmo projeto em diferentes máquinas, sem necessidade de instalações manuais ou configurações complexas, destacou-se como uma das principais vantagens do desenvolvimento.
 
-A escolha do Ubuntu Desktop como sistema operacional base para ambos os equipamentos foi motivada por sua estabilidade, ampla adoção na comunidade de desenvolvedores e compatibilidade com as ferramentas utilizadas no projeto, onde o \foreign{notebook} operava com a versão 20 e o \foreign{desktop} com a versão 24.
+A escolha do Ubuntu Desktop como sistema operacional base para ambos os equipamentos foi motivada por sua estabilidade, ampla adoção na comunidade de desenvolvedores e compatibilidade com as ferramentas utilizadas no projeto, onde o notebook operava com a versão 20 e o \foreign{desktop} com a versão 24.
 
-Entretanto, a partir de determinado momento, o \foreign{desktop} começou a apresentar instabilidades e travamentos de origem desconhecida. Esses problemas tiveram impacto negativo na coleta de dados e, consequentemente, nas visualizações, ocasionando \foreign{gaps} nas curvas dos gráficos e perda de informações. Diante desse contexto, decidiu-se consolidar o \foreign{notebook} como equipamento principal para o desenvolvimento do projeto, descartando o uso do \foreign{desktop}.
+Entretanto, a partir de determinado momento, o \foreign{desktop} começou a apresentar instabilidades e travamentos de origem desconhecida. Esses problemas tiveram impacto negativo na coleta de dados e, consequentemente, nas visualizações, ocasionando \foreign{gaps} nas curvas dos gráficos e perda de informações. Diante desse contexto, decidiu-se consolidar o notebook como equipamento principal para o desenvolvimento do projeto, descartando o uso do \foreign{desktop}.
 
 
 
@@ -336,9 +336,9 @@ Entretanto, a partir de determinado momento, o \foreign{desktop} começou a apre
 
 As métricas apresentadas neste trabalho são extraídas por meio da leitura de arquivos de sistema do Linux. Particularmente para métricas de CPU, memória e disco dos dispositivos virtuais, a coleta ocorre a partir de arquivos localizados no diretório \verb|/sys/fs/cgroup|.
 
-Durante o desenvolvimento multiplataforma, especialmente na etapa de configuração manual dos parâmetros do \verb|inputs.exec| do Telegraf, foram identificadas inconsistências e erros na leitura das métricas entre as implementações feitas no \foreign{notebook} e no \foreign{desktop}. Como apresentado em \ref{section:Infraestrutura}, o fato do \foreign{notebook} operar com o Ubuntu 20 implica que, por padrão, o mesmo apresenta a versão 1 do \foreign{cgroups}, enquanto o \foreign{desktop}, com Ubuntu 24, utiliza a versão 2.
+Durante o desenvolvimento multiplataforma, especialmente na etapa de configuração manual dos parâmetros do \verb|inputs.exec| do Telegraf, foram identificadas inconsistências e erros na leitura das métricas entre as implementações feitas no notebook e no \foreign{desktop}. Como apresentado em \ref{section:Infraestrutura}, o fato do notebook operar com o Ubuntu 20 implica que, por padrão, o mesmo apresenta a versão 1 do \foreign{cgroups}, enquanto o \foreign{desktop}, com Ubuntu 24, utiliza a versão 2.
 
-A disparidade entre versões do \foreign{cgroups} resultou em diferenças estruturais nos arquivos de leitura das métricas, impossibilitando o uso de um arquivo de configuração único e padronizado devido a falhas recorrentes na coleta. Esse problema foi solucionado com a atualização do \foreign{cgroups} do \foreign{notebook} para a versão 2, harmonizando as estruturas dos arquivos e, consequentemente, permitindo a padronização das configurações de coleta. Cabe ressaltar que a versão do \foreign{cgroups} dos dispositivos virtuais é determinada pelo \foreign{kernel} do \foreign{host}, razão pela qual todos também passaram a operar na versão 2 após a atualização.
+A disparidade entre versões do \foreign{cgroups} resultou em diferenças estruturais nos arquivos de leitura das métricas, impossibilitando o uso de um arquivo de configuração único e padronizado devido a falhas recorrentes na coleta. Esse problema foi solucionado com a atualização do \foreign{cgroups} do notebook para a versão 2, harmonizando as estruturas dos arquivos e, consequentemente, permitindo a padronização das configurações de coleta. Cabe ressaltar que a versão do \foreign{cgroups} dos dispositivos virtuais é determinada pelo \foreign{kernel} do \foreign{host}, razão pela qual todos também passaram a operar na versão 2 após a atualização.
 
 A seleção das métricas a serem monitoradas pautou-se nos seguintes critérios:
 \begin{enumerate}
