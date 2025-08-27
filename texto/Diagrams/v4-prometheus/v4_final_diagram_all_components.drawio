@@ -178,8 +178,8 @@
         <mxCell id="NnatkJBT9xsz4FV3scjZ-41" value="Alertmanager" style="html=1;whiteSpace=wrap;shadow=0;" parent="1" vertex="1">
           <mxGeometry x="597.5" y="962.5" width="80" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="NnatkJBT9xsz4FV3scjZ-46" value="MySQL" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;shadow=0;fontSize=12;" parent="1" vertex="1">
-          <mxGeometry x="477.15000000000003" y="918.75" width="51.95" height="55" as="geometry" />
+        <mxCell id="NnatkJBT9xsz4FV3scjZ-46" value="PostgreSQL" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;shadow=0;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="473.58" y="918.75" width="59.1" height="55" as="geometry" />
         </mxCell>
         <mxCell id="NnatkJBT9xsz4FV3scjZ-66" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;flowAnimation=0;curved=0;dashed=1;startArrow=classic;startFill=1;dashPattern=8 8;shadow=0;" parent="1" source="NnatkJBT9xsz4FV3scjZ-49" target="NnatkJBT9xsz4FV3scjZ-14" edge="1">
           <mxGeometry relative="1" as="geometry" />
