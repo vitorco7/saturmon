@@ -226,7 +226,7 @@ while $RUNNING; do
     else
         vm_bytes=$((RANDOM % 163 + 350))M # 350–512MB/worker
     fi
-    hdd_bytes=$((RANDOM % 50 + 100))M # Disk I/O size between 100MB to 150MB
+    hdd_bytes=$((RANDOM % 30 + 20))M # Disk I/O size between 20-50MB
     system_workers=2
     
     echo "$(timestamp) [INFO] CPU: $cpu_workers, VM: $vm_workers x $vm_bytes, HDD: $hdd_bytes, System: $system_workers"
