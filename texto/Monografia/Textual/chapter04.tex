@@ -46,10 +46,7 @@ Na normalização dos dados no Prometheus, são realizadas duas operações prin
 
 Um exemplo prático dessa normalização é a métrica de uso de CPU "Carga de usuário" no host físico, ela representa uma porcentagem de utilização por tempo total, enquanto nos dispositivos virtuais é expressa como um valor acumulado em microssegundos desde a inicialização do contêiner correspondente. Para unificar essas métricas, utiliza-se a consulta PromQL apresentada no Código Fonte \ref{lst:cpu_user_load}. Além disso, esta normalização incluiu a padronização e otimização de labels, e a unificação das métricas numa única métrica consolidada: \verb|cpu_user_load|.
 
-{\color{red}
-
 As funções \verb|label_replace| são empregadas para manipular as labels, enquanto a função \verb|irate| calcula a taxa de variação das duas amostras mais recentes da janela de tempo definida --- neste caso, 30 segundos, conforme a frequência de Nyquist. Essa taxa é convertida de microssegundos para segundos por meio da divisão por $10^{6}$ e, em seguida, multiplicada por 100 para obter o valor em percentual.
-}
 
 A métrica final \verb|cpu_user_load| é, então, utilizada nos gráficos do Grafana, oferecendo uma visão integrada do uso de CPU tanto para hosts físicos quanto para contêineres.
 

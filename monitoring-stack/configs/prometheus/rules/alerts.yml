@@ -112,3 +112,13 @@ groups:
         annotations:
           summary: "Disk I/O Load >= 85%"
           description: "Over the last 5 minutes, the average disk i/o was above 85% on {{ $labels.alias }}-{{ $labels.disk_partition }}."
+
+      # - alert: TestAlertPipeline
+      #   expr: up{job="physical_host"} == 1  # Always true for running targets
+      #   for: 10s
+      #   labels:
+      #     severity: info
+      #     team: sre
+      #   annotations:
+      #     summary: "Test alert - pipeline verification"
+      #     description: "This alert should always fire to test the alerting pipeline"
