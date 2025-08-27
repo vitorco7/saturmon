@@ -92,8 +92,8 @@ while $RUNNING; do
     fi
     
     hdd_workers=1
-    hdd_bytes=$((RANDOM % 50 + 100))M # Disk I/O size between 100MB to 150MB
-
+    hdd_bytes=$((RANDOM % 31 + 30))M # Disk I/O size between 30MB to 60MB
+    
     #### Block 1: Serial Stress Tests ####
     
     # 1. CPU Tests
