@@ -17,7 +17,7 @@ As seções do decorrer deste capítulo categorizam as etapas conceituais para a
 \section{Hardware}
 \label{section:Hardware}
 
-A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, podem causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
+A escolha do hardware que compõe a plataforma de monitoramento é determinante para que o projeto atinja os objetivos estabelecidos no escopo definido na Seção \ref{section:Objetivos}. Equipamentos com recursos limitados de memória, por exemplo, podem causar gargalos tanto na telemetria quanto no processamento e visualização dos dados coletados, comprometendo a confiabilidade do sistema.
 
 Por outro lado, o uso de máquinas físicas tradicionais, como computadores de mesa (desktops), ou de máquinas virtuais hospedadas em servidores, embora possam atender aos requisitos de desempenho e memória, não contemplam a necessidade de portabilidade exigida pelo projeto. Dessa forma, torna-se fundamental selecionar um hardware que reúna características específicas de modo a atender plenamente aos requisitos funcionais e operacionais definidos anteriormente.
 
@@ -59,7 +59,7 @@ Porém, essa diversidade também implica em desafios. Um dos principais refere-s
 \label{section:SistemasOperacionais}
 
 Como mencionado no início deste capítulo, o sistema operacional a ser utilizado deve ser de código aberto. Diante disso, 
-foram consideradas distribuições Linux. A seguir, a tabela \ref{tab:requisitos-minimos} apresenta um comparativo dos requisitos de hardware mínimos para cada sistema operacional.
+foram consideradas distribuições Linux. A seguir, a Tabela \ref{tab:requisitos-minimos} apresenta um comparativo dos requisitos de hardware mínimos para cada sistema operacional.
 
 \begin{table}[H]
 \centering
@@ -446,7 +446,7 @@ Em cenários de monitoramento, o MySQL apresenta vantagens quando há necessidad
 
 TSDB \citep{tigerdata2024} refere-se a uma categoria especializada de sistemas de banco de dados otimizados para armazenar, consultar e analisar dados organizados cronologicamente. Diferentemente dos bancos relacionais tradicionais, os TSDBs são otimizados para cargas de trabalho caracterizadas por inserções sequenciais de alta frequência, consultas baseadas em intervalos temporais e operações de agregação temporal.
 
-A arquitetura típica de um TSDB incorpora otimizações específicas para dados temporais, como mencionado na subseção \ref{subsection:Prometheus}. Entre os principais representantes dessa categoria, destacam-se o InfluxDB --- com sua linguagem de consulta InfluxQL e suporte nativo a \foreign{tags} para metadados ---, o TimescaleDB --- uma extensão do PostgreSQL que preserva compatibilidade com SQL padrão ---, e o Prometheus TSDB (interno ao sistema de monitoramento homônimo).
+A arquitetura típica de um TSDB incorpora otimizações específicas para dados temporais, como mencionado na Subseção \ref{subsection:Prometheus}. Entre os principais representantes dessa categoria, destacam-se o InfluxDB --- com sua linguagem de consulta InfluxQL e suporte nativo a \foreign{tags} para metadados ---, o TimescaleDB --- uma extensão do PostgreSQL que preserva compatibilidade com SQL padrão ---, e o Prometheus TSDB (interno ao sistema de monitoramento homônimo).
 
 A adoção de TSDBs é especialmente recomendada em arquiteturas \foreign{cloud-native}, sistemas distribuídos e ambientes com geração contínua de dados métricos em alta frequência.
 
