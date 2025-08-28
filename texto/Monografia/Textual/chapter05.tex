@@ -1,28 +1,21 @@
 \chapter{Conclusão}
 \label{chap5}
 
+{\color{red}
 \section{Considerações Finais}
 \label{section:ConsideracoesFinais}
 
+Este trabalho atingiu com êxito o objetivo de desenvolver uma plataforma completa de monitoramento de dispositivos, capaz de coletar, armazenar, processar e apresentar visualizações e notificações de dados e métricas pertinentes à observabilidade de saturação de dispositivos. A solução proposta demonstrou eficácia no auxílio à detecção de gargalos sistêmicos e na identificação de oportunidades de otimização. Consequentemente, contribuiu para o aprimoramento do desempenho e da eficiência operacional dos dispositivos monitorados.
+
+A arquitetura adotada, fundamentada em contêineres Docker, revelou-se flexível e escalável. Esta abordagem possibilitou uma implantação simplificada e facilitou a adaptação a diferentes ambientes operacionais. A implementação de paradigmas de Infraestrutura como Código acelerou os processos de configuração, manutenção, replicação, migração e recuperação da plataforma, resultando em redução significativa do tempo e dos recursos necessários para essas operações.
+
+Adicionalmente, a adoção exclusiva de ferramentas de código aberto proporcionou duplo benefício: minimizou os custos associados ao desenvolvimento e operação da plataforma e assegurou elevado grau de personalização dos componentes utilizados. Esta estratégia resultou em maior adaptabilidade da solução às necessidades específicas do contexto de aplicação.
 
 \section{Trabalhos Futuros}
 \label{section:TrabalhosFuturos}
 
-Placeholder
-% \begin{figure}[H]
-% \centering
-% \color{red}
-% \setlength{\abovecaptionskip}{-20pt}
-% \includegraphics[width=\textwidth]{Imagens/chap04/final_diagram.pdf}
-% \caption{Arquitetura final.}
-% \label{fig:DiagramaFinal}
-% \end{figure}
+A integração de mecanismos de monitoramento para dispositivos móveis representa uma oportunidade significativa de desenvolvimento, especialmente considerando a ausência de suporte oficial para tais dispositivos.
 
-%comentar as discussoes para validação comparativa, que eventualmente foi desconsidarada por nao ter equipamento
+Paralelamente, a implementação da solução em plataformas físicas dedicadas, como dispositivos Intel NUC ou Raspberry Pi, constituiria uma validação importante da viabilidade técnica e comercial da proposta. Tal implementação permitiria avaliar o desempenho em condições reais de operação e forneceria subsídios para o desenvolvimento de um eventual produto comercializável no mercado de IoT.
 
-
-% Mas fica a reflexão: faz sentido comparar métricas entre dispositivos virtuais? Quando o objetivo era comparar máquinas físicas versus containers, essa comparação qualitativa era justificável. Porém, ao comparar container versus container, será que essa análise ainda se sustenta? Há valor prático em comparar dispositivos virtuais entre si nesses termos?
-
-% --> Realmente não faz sentido, logo não é necessário fazer esse levantamento.
-
-%TODO: Em trabalhos futuros a análise de viabilidade de implementação em NUC ou Raspberry Pi
+}
