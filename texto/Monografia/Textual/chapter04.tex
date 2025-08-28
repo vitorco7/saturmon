@@ -287,25 +287,67 @@ Assim, decidiu-se migrar o sistema de alertas para o Alertmanager, integrando-o 
 
 Após a integração do Alertmanager, todas as configurações previamente realizadas no Grafana foram migradas sem dificuldades, considerando que ambas as plataformas utilizam arquivos YAML para configuração. Em seguida, realizou-se o \foreign{rollback} do banco de dados do Grafana para SQLite, visando simplificar a arquitetura e reduzir o custo computacional do sistema. Embora com frequência significativamente menor, eventuais falhas de \foreign{database lock} foram novamente detectadas, corroborando a recomendação da literatura contra a utilização do SQLite em cenários de alto volume de escrita concorrente, o que tornou necessário manter o PostgreSQL como SGDB\abbrev{SGDB}{Sistema Gerenciador de Banco de Dados} do Grafana.
 
-Pode-se questionar por que não retornar ao uso do Grafana como gerenciador de alertas, considerando que a manutenção de um banco de dados adicional mostrou-se inevitável e a adição do Alertmanager introduziu complexidade extra. A resposta reside no fato de que, para cada alerta criado no Grafana, uma consulta PromQL percorre todo o fluxo descrito na Seção \ref{section:Dashboard}, podendo aumentar significativamente o custo computacional do sistema, especialmente em ambientes de alta escalabilidade com múltiplos alertas e gráficos. Por outro lado, no Alertmanager, os alertas são gerados diretamente pelo Prometheus, eliminando a necessidade de consultas adicionais e reduzindo o impacto no desempenho do sistema. Portanto, a otimização na execução das regras de alertas justifica o custo do contêiner adicional do Alertmanager.
+Pode-se questionar por quê não retornar ao uso do Grafana como gerenciador de alertas, considerando que a manutenção de um banco de dados adicional mostrou-se inevitável e a adição do Alertmanager introduziu complexidade extra. A resposta reside no fato de que, para cada alerta criado no Grafana, uma consulta PromQL percorre todo o fluxo descrito na Seção \ref{section:Dashboard}, podendo aumentar significativamente o custo computacional do sistema, especialmente em ambientes de alta escalabilidade com múltiplos alertas e gráficos. Por outro lado, no Alertmanager, os alertas são gerados diretamente pelo Prometheus, eliminando a necessidade de consultas adicionais e reduzindo o impacto no desempenho do sistema. Portanto, a otimização na execução das regras de alertas justifica o custo do contêiner adicional do Alertmanager.
 
 \begin{figure}[H]
 \centering
 \setlength{\abovecaptionskip}{-20pt}
 \includegraphics[width=\textwidth]{Imagens/chap04/by-blocks/alerts_diagram.pdf}
-\caption{Notificações e Arquitetura Final.}
+\caption{Notificações e Diagrama Final.}
 \label{fig:DiagramaAlertas}
+\end{figure}
+
+Um exemplo de alerta implementado é o alta carga de escrita/leitura em disco, cuja regra é apresentada no Código Fonte \ref{lst:HighDiskIOAlert}:
+
+\newpage
+
+\begin{lstlisting}[caption={Alerta para alta carga de escrita/leitura em disco}, label={lst:HighDiskIOAlert}]
+groups:
+  - name: disk_alerts
+    interval: 180s
+    rules:
+      - alert: HighDiskIO
+        expr: physical_diskio_io_util{job=~".*", alias=~".*", disk_partition=~".*"} >= 85
+        for: 10m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "Disk I/O Load >= 85%"
+          description: "Over the last 10 minutes, the disk i/o was above 85% on {{ $labels.alias }}-{{ $labels.disk_partition }}."
+\end{lstlisting}
+
+O código \ref{lst:HighDiskIOAlert} define um alerta agrupado em \verb|disk_alerts|, que é avaliado a cada 180 segundos. A regra do alerta, denominada \verb|HighDiskIO|, é disparada quando a métrica \verb|physical_diskio_io_util| atinge ou ultrapassa 85\% por um período de 10 minutos. O alerta é categorizado com o rótulo de severidade \verb|warning| e direcionado à equipe \myenquote{sre}. As anotações fornecem um resumo e uma descrição detalhada do alerta, incluindo informações dinâmicas sobre o dispositivo e a partição afetados.
+
+Ou seja, numa janela de 10 minutos, coletam-se amostras a cada 180 segundos e, se todas as amostras indicarem que a métrica de utilização de I/O de disco está igual ou acima de 85\%, o alerta será disparado.
+
+A Figura \ref{fig:alert_prometheus} apresenta o alerta em execução no Prometheus, enquanto a Figura \ref{fig:alert_alertmanager} ilustra dois alertas disparando no Alertmanager. Já a Figura \ref{fig:alert_email} exibe um exemplo de alerta recebido via e-mail. 
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/alerts/alert_prometheus.png}
+\caption{Alerta no Prometheus.}
+\label{fig:alert_prometheus}
 \end{figure}
 
 \begin{figure}[H]
 \centering
+\color{red}
 \setlength{\abovecaptionskip}{-20pt}
-\includegraphics[width=\textwidth]{Imagens/chap04/final_stack.pdf}
-\caption{\foreign{Stack} final.}
-\label{fig:StackFinal}
+\includegraphics[width=\textwidth]{Imagens/chap04/alerts/alert_alertmanager.png}
+\caption{Alertas no Alertmanager.}
+\label{fig:alert_alertmanager}
 \end{figure}
 
-
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/alerts/alert_email.png}
+\caption{Exemplo de alerta via email.}
+\label{fig:alert_email}
+\end{figure}
 
 
 
@@ -320,6 +362,14 @@ Pode-se questionar por que não retornar ao uso do Grafana como gerenciador de a
 
 Um caso de uso para este projeto é o monitoramento da saturação dos equipamentos do próprio autor. Com o dashboard e notificações de alertas desenvolvidos nestre trabalho, foi possível identificar causadores de travamentos, como picos de \myenquote{Aguardo de I/O} da CPU e \myenquote{Utilização I/O} de disco quando executando os testes de saturação dos contêineres de forma assíncrona, o que motivou para a mudança para a execução síncrona dos testes, conforme detalhado em \ref{subsection:TestesSaturacao}.
 
-
+{\color{red}
+A Figura \ref{fig:StackFinal} apresenta a arquitetura final do sistema de monitoramento, incluindo todos os componentes, implementações e integrações descritas ao longo deste trabalho. Na Seção \ref{subsection:VersõesIniciais}, detalhou-se a evolução da arquitetura desde suas versões iniciais até a configuração com Docker, Prometheus e Grafana. Na Subseção \ref{subsection:DispositivosVirtuais}, descreveu-se a implementação dos dispositivos virtuais por meio de contêineres Docker. Na Subseção \ref{subsection:Agentes}, abordou-se a configuração dos agentes de coleta de métricas utilizando o Telegraf. Em \ref{subsection:TestesSaturacao}, detalhou-se a metodologia de testes de saturação aplicada aos dispositivos virtuais. Por fim, na Seção \ref{section:Alertas} foi detalhada a implementação do sistema de alertas, a necessidade da adoção de um SGDB capaz de operar com múltiplas tarefas concorrentes, como o PostgreSQL, e a utilização de notificações por meio do Alertmanager.}
+\begin{figure}[H]
+\centering
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/final_stack.pdf}
+\caption{\foreign{Stack} final.}
+\label{fig:StackFinal}
+\end{figure}
 
 

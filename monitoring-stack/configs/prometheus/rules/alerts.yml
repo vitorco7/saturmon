@@ -111,7 +111,7 @@ groups:
           team: sre
         annotations:
           summary: "Disk I/O Load >= 85%"
-          description: "Over the last 5 minutes, the average disk i/o was above 85% on {{ $labels.alias }}-{{ $labels.disk_partition }}."
+          description: "Over the last 10 minutes, the disk i/o was above 85% on {{ $labels.alias }}-{{ $labels.disk_partition }}."
 
       # - alert: TestAlertPipeline
       #   expr: up{job="physical_host"} == 1  # Always true for running targets
