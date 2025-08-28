@@ -236,6 +236,8 @@ Assim, apesar da limitação, a figura evidencia que o contêiner pode apresenta
 
 Por fim, na figura \ref{fig:roundrobin}, observa-se a sequência rotativa de execução dos testes de saturação, conforme detalhado na Seção \ref{subsection:TestesSaturacao}. Essa rotação é evidenciada pelos picos alternados de utilização de memória entre os dispositivos virtuais, demonstrando que os testes foram executados de forma síncrona e sequencial, conforme implementado.
 
+Após o desemvolvimento do \foreign{dashboard}, o mesmo foi exportado em formato JSON e versionado no repositório do projeto \citep{vitorcossetti2025}, na pasta \verb|configs/grafana/dashboards|. A configuração do Grafana foi ajustada para carregá-lo automaticamente via volume Docker, conforme detalhado no Capítulo \ref{chap3}.
+
 \begin{figure}[H]
 \centering
 \color{red}
@@ -255,7 +257,7 @@ Por fim, na figura \ref{fig:roundrobin}, observa-se a sequência rotativa de exe
 \end{figure}
 
 
-}
+
 
 
 
@@ -269,45 +271,23 @@ Por fim, na figura \ref{fig:roundrobin}, observa-se a sequência rotativa de exe
 \section{Alertas e Notificações}
 \label{section:Alertas}
 
+Para o sistema de alertas, inicialmente foram exploradas as funcionalidades nativas do Grafana, que permitem a criação de alertas diretamente na interface web. Essa abordagem inicial foi adotada devido à sua simplicidade e integração direta com os gráficos do dashboard, facilitando a associação visual entre os dados monitorados e os alertas correspondentes.
 
-\section{Caso de Uso}
-\label{section:CasosDeUso}
+Como canais de comunicação, foram configurados o envio de e-mails e notificações por aplicativo de mensagens. A configuração do canal de e-mail utilizou o servidor SMTP do Gmail, enquanto a integração com o aplicativo foi realizada por meio da criação de um bot específico para esse propósito. Entretanto, a integração com o aplicativo apresentou desafios técnicos que resultaram em erros, inviabilizando seu uso para notificações, restando somente o canal de e-mail funcional.
 
-Um caso de uso para este projeto é o monitoramento da saturação dos equipamentos do próprio autor. Com o dashboard e notificações de alertas desenvolvidos nestre trabalho, foi possível identificar causadores de travamentos, como picos de \myenquote{Aguardo de I/O} da CPU e \myenquote{Utilização I/O} de disco quando executando os testes de saturação dos contêineres de forma assíncrona, o que motivou para a mudança para a execução síncrona dos testes, conforme detalhado em \ref{subsection:TestesSaturacao}.
+Além dos pontos de contato e canais, foram definidas políticas de notificação e regras de alerta baseadas em limiares específicos para as métricas monitoradas. Essas regras foram configuradas para disparar notificações quando determinados parâmetros ultrapassassem valores críticos durante um período estabelecido.
 
-{\color{blue}
-\section{Dashboard}
+No entanto, essa abordagem apresentou uma limitação crítica. O Grafana, em sua configuração padrão, utiliza o banco de dados SQLite, o que implica que o gerenciamento de alertas, notificações, estados, \foreign{logging} e outros serviços sujeitos a alta frequência de escrita são armazenados em um banco de dados não otimizado para grandes volumes de operações concorrentes. Essa limitação tornou-se evidente quando o sistema passou a apresentar falhas constantes devido a erros de \foreign{database lock}, como \foreign{max-retries-reached}.
 
-\begin{enumerate}  
-  \item OK $\rightarrow$ comentar sobre sobre as coisas que o provisioning já adiantou (datasource padrão, por exemplo);
-  \item OK $\rightarrow$ a normalização dos dados usando o Pormetheus Recording Rules
-  \item OK $\rightarrow$ Criação dos filtros globais (Grafana Variables);
-  \item OK $\rightarrow$ Regras globais (span e refresh rate);
-  \item OK $\rightarrow$ Falar de cada gráfico, justificando visualizações, comentando sobre as queries/cálculos e colocar imagens;
-  \item Quando chegar em CPU, explicar o porquê de haver picos acima de 100\% mesmo com a limitação de cpu (olhar pasta docs/cpu\_shares)
-  \item OK $\rightarrow$ Quando chegar na seção de disco, apresentar o estudo de caĺculo do df (motivação e resultados);
-  \item OK $\rightarrow$ Chegando na parte de redes, justificar o porquê de nao termos dados de drop e erro de pacotes (apresentar o estudo de caso de camadas de rede e aplicação);
-  \item Fechamento explicando a exportação do JSON e seu versionamento e carregamento automatico via docker volume;
-\end{enumerate}
+Diante dessa criticidade, optou-se pela migração do banco de dados do Grafana para PostgreSQL. Essa migração foi facilitada pela abordagem de IaC adotada, bem como pelo fato de o armazenamento persistente dos dados coletados ficar sob responsabilidade do Prometheus, que já utilizava o TSDB. A migração foi realizada de forma simples, adicionando um contêiner baseado na imagem oficial do PostgreSQL e configurando os parâmetros do Grafana para integração com o novo banco e uso de volumes Docker. Após a migração, o sistema apresentou melhora significativa na estabilidade e no desempenho, eliminando os erros de \foreign{database lock} e permitindo uma gestão mais eficiente dos alertas e notificações.
 
+Entretanto, essa migração evidenciou uma questão arquitetural. A solução inicialmente adotada, embora funcional, introduzia complexidade adicional ao requerer a manutenção de dois bancos de dados distintos: o TSDB do Prometheus e o PostgreSQL do Grafana. Essa complexidade poderia ser evitada com a adoção do Alertmanager, ferramenta nativa do Prometheus para gerenciamento de alertas. O Alertmanager é projetado especificamente para lidar com alertas gerados pelo Prometheus, oferecendo funcionalidades avançadas de roteamento, agrupamento e silenciamento de alertas, além de suporte nativo a múltiplos canais de notificação.
 
-\section{draft-Alertas e Notificações}
-\label{section:draft-Alertas}
-\begin{enumerate}
-  \item Comentar sobre o Alertmanager e a sua configuração;
-  \item Explicar como adicionei o servidor smtp do gmail e as tentativas falhas com o Telegram;
-  \item Configuração das regras de notificação e os pontos de contato;
-  \item Como utilizei, a primeiro momenot, a UI do Grafana para criar os alertas (isso era interessante pq vinculava automaticamente o alerta ao respectivo gráfico);
-  \item Como, assim como no dashboard, eu exportava e versionava tudo via JSON;
-  \item Problemas do SQLite e a migração para o Postgres e dps para MYSQL (explicitar como a migração foi fácil graças ao provisionamento, versionamento, uso do Docker e TSDB fazendo o trabalho de persistência);
-  \item Migração para o Alertmanager+TSDB (enfatizar como tudo fica embutido no Prometheus e como isso simplifica a arquitetura);
-  \item Em algum lugar mencionar o Granafa Unified Alerting ser capaz de interpretar o alerts.yml do prometheus e automaticamente criar os alertas Grafana-Managed
-\end{enumerate}
+Assim, decidiu-se migrar o sistema de alertas para o Alertmanager, integrando-o diretamente com o Prometheus. A implementação dessa mudança enfrentou alguns desafios, uma vez que o contêiner do Alertmanager, baseado na imagem oficial, apresentava dificuldades na leitura dos arquivos de configuração do projeto. Essas limitações foram superadas mediante a criação de um novo contêiner Alpine customizado, configurado com o Alertmanager e ferramentas essenciais como \verb|curl| e \verb|gettext|, além de um script para automatizar a leitura e validação dos arquivos de configuração em tempo de execução. Apesar da complexidade adicional introduzida para contornar as limitações da imagem oficial, essa solução permitiu uma integração eficiente do Alertmanager com o restante da arquitetura.
 
+Após a integração do Alertmanager, todas as configurações previamente realizadas no Grafana foram migradas sem dificuldades, considerando que ambas as plataformas utilizam arquivos YAML para configuração. Em seguida, realizou-se o \foreign{rollback} do banco de dados do Grafana para SQLite, visando simplificar a arquitetura e reduzir o custo computacional do sistema. Embora com frequência significativamente menor, eventuais falhas de \foreign{database lock} foram novamente detectadas, corroborando a recomendação da literatura contra a utilização do SQLite em cenários de alto volume de escrita concorrente, o que tornou necessário manter o PostgreSQL como SGDB\abbrev{SGDB}{Sistema Gerenciador de Banco de Dados} do Grafana.
 
-}
-
-
+Pode-se questionar por que não retornar ao uso do Grafana como gerenciador de alertas, considerando que a manutenção de um banco de dados adicional mostrou-se inevitável e a adição do Alertmanager introduziu complexidade extra. A resposta reside no fato de que, para cada alerta criado no Grafana, uma consulta PromQL percorre todo o fluxo descrito na Seção \ref{section:Dashboard}, podendo aumentar significativamente o custo computacional do sistema, especialmente em ambientes de alta escalabilidade com múltiplos alertas e gráficos. Por outro lado, no Alertmanager, os alertas são gerados diretamente pelo Prometheus, eliminando a necessidade de consultas adicionais e reduzindo o impacto no desempenho do sistema. Portanto, a otimização na execução das regras de alertas justifica o custo do contêiner adicional do Alertmanager.
 
 \begin{figure}[H]
 \centering
@@ -317,7 +297,6 @@ Um caso de uso para este projeto é o monitoramento da saturação dos equipamen
 \label{fig:DiagramaAlertas}
 \end{figure}
 
-
 \begin{figure}[H]
 \centering
 \setlength{\abovecaptionskip}{-20pt}
@@ -325,4 +304,22 @@ Um caso de uso para este projeto é o monitoramento da saturação dos equipamen
 \caption{\foreign{Stack} final.}
 \label{fig:StackFinal}
 \end{figure}
+
+
+
+
+
+
+
+
+
+}
+
+\section{Caso de Uso}
+\label{section:CasosDeUso}
+
+Um caso de uso para este projeto é o monitoramento da saturação dos equipamentos do próprio autor. Com o dashboard e notificações de alertas desenvolvidos nestre trabalho, foi possível identificar causadores de travamentos, como picos de \myenquote{Aguardo de I/O} da CPU e \myenquote{Utilização I/O} de disco quando executando os testes de saturação dos contêineres de forma assíncrona, o que motivou para a mudança para a execução síncrona dos testes, conforme detalhado em \ref{subsection:TestesSaturacao}.
+
+
+
 
