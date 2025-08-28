@@ -120,7 +120,6 @@ Seguindo a abordagem híbrida e após o processamento dos dados no Prometheus, i
 
 Outra configuração global relevante refere-se aos intervalos de atualização e tempo aplicados a todos os gráficos. O intervalo de atualização define a frequência com que os dados são atualizados, enquanto o período temporal especifica o intervalo de tempo exibido nos gráficos. Embora esses parâmetros possam ser ajustados conforme a necessidade do usuário, para garantir um monitoramento próximo ao tempo real e sincronizado com as configurações de scraping do Telegraf e do Prometheus, o intervalo de atualização foi definido para 5 segundos e o período temporal para 5 minutos. Adicionalmente, tais valores podem ser modificados individualmente para cada gráfico, sendo que as configurações específicas prevalecem sobre as globais.
 
-
 \begin{figure}[ht]
 \centering
 \setlength{\abovecaptionskip}{-20pt}
@@ -128,6 +127,142 @@ Outra configuração global relevante refere-se aos intervalos de atualização 
 \caption{Visualização.}
 \label{fig:DiagramaVisualizacao}
 \end{figure}
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/home.png}
+\caption{Dashboard - Visão Geral.}
+\label{fig:dashboard-home}
+\end{figure}
+
+{\color{red}
+A Figura \ref{fig:dashboard-home} apresenta a visão geral do dashboard, desenvolvido para fornecer uma representação imediata e concisa do estado de saturação do sistema, permitindo ao usuário identificar rapidamente sinais de saturação elevada. Na parte superior, encontram-se os botões que possibilitam a interação do usuário com os dados. Do canto superior esquerdo até o centro estão as \verb|Grafana Variables|, listadas na Tabela \ref{tab:grafana-variables}, que funcionam como filtros seletivos. Do centro até o canto superior direito, estão localizados os seletores de janelamento histórico e frequência de atualização do dashboard.
+
+O dashboard é organizado em seções horizontais que funcionam como um \foreign{dropdown}, segmentando as informações por categoria de métrica. No exemplo mostrado na Figura \ref{fig:dashboard-home}, a seção \myenquote{Memory} está expandida, exibindo gráficos e visualizações relacionados às métricas de memória coletadas. Esta mesma lógica aplica-se às demais seções, com exceção da seção \myenquote{Trends Over Time}.
+
+Na seção \myenquote{Trends Over Time}, são exibidos gráficos de séries temporais para análise de dados históricos. Diferentemente das outras seções, aqui são apresentadas visualizações de todas as métricas coletadas. Essa ampliação do escopo permite que o usuário realize correlações entre as métricas, facilitando a investigação de problemas, como pode ser observado na Figura \ref{fig:dashboard-timeseries}.
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/trends_over_time.png}
+\caption{Séries Temporais.}
+\label{fig:dashboard-timeseries}
+\end{figure}
+
+Na seção de CPU, ilustrada na Figura \ref{fig:dashboard-cpu}, 
+têm-se gráficos de carga de usuário, carga de sistema, aguardo por I/O, carga total e cargas diversas, específicas de cada dispositivo. No entanto, como apresentado na Tabela \ref{tab:metricas-selecionadas}, algumas métricas não estão presentes em todos os dispositivos, como é o caso da métrica de aguardo por I/O, que não é coletada nos dispositivos virtuais.
+
+Uma observação relevante é que, apesar da métrica de tempo ocioso estar disponível, para contêineres ela sempre apresenta o valor zero, em função da forma como o cgroup gerencia os recursos, impedindo assim o cálculo das métrica de carga total e cargas diversas, que dependem direta e indiretamente do tempo ocioso, respectivamente.
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/cpu.png}
+\caption{Seção de CPU.}
+\label{fig:dashboard-cpu}
+\end{figure}
+
+Na seção de memórias (ilustrada na Figura \ref{fig:dashboard-memory}), são apresentados gráficos de uso da memória RAM e memória swap disponível, enquanto na seção de Disco I/O (Figura \ref{fig:dashboard-diskio}), encontram-se gráficos de operações de leitura e escrita em disco. Destaca-se que nesta subseção observa-se a indisponibilidade de dados provenientes dos dispositivos Alpine. Isso ocorre devido a uma incompatibilidade entre a definição geral do \verb|inputs.cgroups| do Telegraf e a estrutura de cgroups do Alpine, o que provoca um erro de \foreign{parse} durante a leitura das métricas. Embora uma possível solução seja a criação de um arquivo de configuração específico para o Alpine, decidiu-se não implementá-la. Para fins ilustrativos, foi aplicado o filtro \verb|Device = Host Machine|, que seleciona o dispositivo físico.
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/memory.png}
+\caption{Seção de Memórias.}
+\label{fig:dashboard-memory}
+\end{figure}
+
+\vspace{1cm}
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/diskio.png}
+\caption{Seção de Disco I/O.}
+\label{fig:dashboard-diskio}
+\end{figure}
+
+Por conta das particularidades das métricas de disco --- como discrepâncias em disponibilidade, optou-se por separar métricas de disco em duas seções: as de leitura e escrita das métricas, apresentadas anteriormente, e as de espaço livre e utilizado em disco, além da quantidade de INODES livres, são apresentadas na seção de Disco (Figura \ref{fig:dashboard-disk}). 
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/disk.png}
+\caption{Seção de Disco.}
+\label{fig:dashboard-disk}
+\end{figure}
+
+Uma observação importante, embora pouco intuitiva, refere-se à métrica de espaço total em disco. Embora esteja disponível, essa métrica não é a mais adequada para os cálculos dos gráficos. Para determinar o espaço total utilizado, conforme explicitado em nota na documentação do plugin \verb|inputs.disk| \citep{inputsdisk2025}, utiliza-se a soma dos valores de espaço livre e utilizado, descartando-se o valor da métrica de espaço total. Isso ocorre porque a métrica de espaço total reportada pelos sistemas de arquivos pode incluir blocos reservados para o superusuário (\foreign{root}) e outras finalidades do sistema, que não estão disponíveis para usuários comuns, enquanto a soma \myenquote{livre + utilizado} representa de forma mais fiel o espaço efetivamente utilizável.
+
+Para validar a precisão dos dados, realizou-se a comparação entre os valores de espaço livre e utilizado coletados pelo Telegraf e os valores fornecidos pelo comando \verb|df -h| do Linux, uma das ferramentas mais utilizadas para essa finalidade. Os resultados indicaram que os valores obtidos pelo Telegraf apresentaram uma margem de erro inferior a 1\% quando comparados aos valores fornecidos pelo comando \verb|df -h|, provando a confiabilidade das métricas coletadas.
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/network.png}
+\caption{Seção de Rede.}
+\label{fig:dashboard-network}
+\end{figure}
+
+A Figura \ref{fig:dashboard-network} apresenta a seção de Rede, na qual, mais uma vez para fins ilustrativos, aplicou-se o filtro de dispositivos, nesta ocasião selecionando dos dispositivos \myenquote{Host Machine} e \myenquote{Ubuntu 2}. Essa seção exibe valores instantâneos e acumulativos de tráfego de rede, bem como as quantidades de pacotes descartados ou com erros.
+
+A ausência de dados sobre pacotes descartados ou com erros nos dispositivos virtuais está relacionada à camada de coleta dessas métricas. Tentativas de utilização das ferramentas de \foreign{chaos-engineering} Pumba e ChaosBlade, bem como manipulações diretas no \verb|iptables| para geração de tráfego de rede, mostraram-se inadequadas para este estudo.
+
+Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|), enquanto o \foreign{plugin} \verb|inputs.net| do Telegraf opera a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Por tanto, por estarem em camadas distintas, o Telegraf é incapaz de captar as informações de pacotes descartados ou com erros contabilizados pelo sistema.
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/processes.png}
+\caption{Seção de Processos.}
+\label{fig:dashboard-processes}
+\end{figure}
+
+Finalmente, a Figura \ref{fig:dashboard-processes} exibe uma tabela com as quantidades dos processos selecionados, conforme especificado na Tabela \ref{tab:metricas-selecionadas} da Seção \ref{section:DiscussaoMetricas} do capítulo anterior.
+
+Retornando à seção de séries temporais, destacam-se dois gráficos específicos: o uso de CPU e o uso de RAM. Na Figura \ref{fig:dashboard-cpu144}, observa-se que a carga de usuário da CPU no dispositivo virtual 3 ultrapassou 100\%. Embora possa parecer contraditório, visto que na Tabela \ref{tab:EspecificaçõesDispositivosVirtuais} foi estabelecido um limite máximo de utilização de 70\% para um único núcleo de CPU, esse fenômeno decorre das limitações do Docker na imposição de limites de CPU.
+
+Assim, apesar da limitação, a figura evidencia que o contêiner pode apresentar picos de utilização superiores a 100\%, ou seja, utilizar mais de um núcleo de CPU. No caso específico apresentado, o valor de 144\% indica que o contêiner utilizou o equivalente a 1,44 núcleos de CPU.
+
+Por fim, na figura \ref{fig:roundrobin}, observa-se a sequência rotativa de execução dos testes de saturação, conforme detalhado na Seção \ref{subsection:TestesSaturacao}. Essa rotação é evidenciada pelos picos alternados de utilização de memória entre os dispositivos virtuais, demonstrando que os testes foram executados de forma síncrona e sequencial, conforme implementado.
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/cpu144.png}
+\caption{Pico de 144\% de carga de usuário para CPU.}
+\label{fig:dashboard-cpu144}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\color{red}
+\setlength{\abovecaptionskip}{-20pt}
+\includegraphics[width=\textwidth]{Imagens/chap04/dashboard/round_robin_sequence.png}
+\caption{Sequência rotativa de execução de carga.}
+\label{fig:roundrobin}
+\end{figure}
+
+
+}
+
+
+
+
+
+
+
 
 
 
@@ -140,10 +275,6 @@ Outra configuração global relevante refere-se aos intervalos de atualização 
 
 Um caso de uso para este projeto é o monitoramento da saturação dos equipamentos do próprio autor. Com o dashboard e notificações de alertas desenvolvidos nestre trabalho, foi possível identificar causadores de travamentos, como picos de \myenquote{Aguardo de I/O} da CPU e \myenquote{Utilização I/O} de disco quando executando os testes de saturação dos contêineres de forma assíncrona, o que motivou para a mudança para a execução síncrona dos testes, conforme detalhado em \ref{subsection:TestesSaturacao}.
 
-% foram feitas tentativas de utilização de ferramentas de \foreign{chaos-engineering} como Pumba e ChaosBlade e até mesmo tentativas de manipulação direta de iptables para gerar tráfego de rede, mas essas ferramentas não se mostraram adequadas para este trabalho.
-
-% Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema de controle de tráfego \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|). Enquanto isso, o \foreign{plugin} \verb|inputs.net| do Telegraf a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Ou seja, 
-
 {\color{blue}
 \section{Dashboard}
 
@@ -152,10 +283,10 @@ Um caso de uso para este projeto é o monitoramento da saturação dos equipamen
   \item OK $\rightarrow$ a normalização dos dados usando o Pormetheus Recording Rules
   \item OK $\rightarrow$ Criação dos filtros globais (Grafana Variables);
   \item OK $\rightarrow$ Regras globais (span e refresh rate);
-  \item Falar de cada gráfico, justificando visualizações, comentando sobre as queries/cálculos e colocar imagens;
+  \item OK $\rightarrow$ Falar de cada gráfico, justificando visualizações, comentando sobre as queries/cálculos e colocar imagens;
   \item Quando chegar em CPU, explicar o porquê de haver picos acima de 100\% mesmo com a limitação de cpu (olhar pasta docs/cpu\_shares)
-  \item Quando chegar na seção de disco, apresentar o estudo de caĺculo do df (motivação e resultados);
-  \item Chegando na parte de redes, justificar o porquê de nao termos dados de drop e erro de pacotes (apresentar o estudo de caso de camadas de rede e aplicação);
+  \item OK $\rightarrow$ Quando chegar na seção de disco, apresentar o estudo de caĺculo do df (motivação e resultados);
+  \item OK $\rightarrow$ Chegando na parte de redes, justificar o porquê de nao termos dados de drop e erro de pacotes (apresentar o estudo de caso de camadas de rede e aplicação);
   \item Fechamento explicando a exportação do JSON e seu versionamento e carregamento automatico via docker volume;
 \end{enumerate}
 
@@ -171,7 +302,6 @@ Um caso de uso para este projeto é o monitoramento da saturação dos equipamen
   \item Problemas do SQLite e a migração para o Postgres e dps para MYSQL (explicitar como a migração foi fácil graças ao provisionamento, versionamento, uso do Docker e TSDB fazendo o trabalho de persistência);
   \item Migração para o Alertmanager+TSDB (enfatizar como tudo fica embutido no Prometheus e como isso simplifica a arquitetura);
   \item Em algum lugar mencionar o Granafa Unified Alerting ser capaz de interpretar o alerts.yml do prometheus e automaticamente criar os alertas Grafana-Managed
-  \item Mencionar em algum lugar que a primeira configuração do mysql demorou mto (188s)
 \end{enumerate}
 
 
