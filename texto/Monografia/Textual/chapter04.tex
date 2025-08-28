@@ -364,6 +364,7 @@ Um caso de uso para este projeto é o monitoramento da saturação dos equipamen
 
 {\color{red}
 A Figura \ref{fig:StackFinal} apresenta a arquitetura final do sistema de monitoramento, incluindo todos os componentes, implementações e integrações descritas ao longo deste trabalho. Na Seção \ref{subsection:VersõesIniciais}, detalhou-se a evolução da arquitetura desde suas versões iniciais até a configuração com Docker, Prometheus e Grafana. Na Subseção \ref{subsection:DispositivosVirtuais}, descreveu-se a implementação dos dispositivos virtuais por meio de contêineres Docker. Na Subseção \ref{subsection:Agentes}, abordou-se a configuração dos agentes de coleta de métricas utilizando o Telegraf. Em \ref{subsection:TestesSaturacao}, detalhou-se a metodologia de testes de saturação aplicada aos dispositivos virtuais. Por fim, na Seção \ref{section:Alertas} foi detalhada a implementação do sistema de alertas, a necessidade da adoção de um SGDB capaz de operar com múltiplas tarefas concorrentes, como o PostgreSQL, e a utilização de notificações por meio do Alertmanager.}
+
 \begin{figure}[H]
 \centering
 \setlength{\abovecaptionskip}{-20pt}
