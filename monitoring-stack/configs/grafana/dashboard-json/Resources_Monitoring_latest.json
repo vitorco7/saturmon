@@ -204,7 +204,7 @@
             "h": 9,
             "w": 8,
             "x": 0,
-            "y": 335
+            "y": 34
           },
           "id": 25,
           "interval": "5s",
@@ -273,7 +273,7 @@
             "h": 9,
             "w": 8,
             "x": 8,
-            "y": 335
+            "y": 34
           },
           "id": 27,
           "interval": "5s",
@@ -342,7 +342,7 @@
             "h": 9,
             "w": 8,
             "x": 16,
-            "y": 335
+            "y": 34
           },
           "id": 30,
           "interval": "5s",
@@ -423,8 +423,8 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 6,
+            "h": 10,
+            "w": 7,
             "x": 0,
             "y": 2
           },
@@ -477,20 +477,19 @@
               },
               "decimals": 1,
               "mappings": [],
-              "max": 100,
               "thresholds": {
                 "mode": "percentage",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "red"
                   },
                   {
-                    "color": "#EAB839",
-                    "value": 60
+                    "color": "#eab839",
+                    "value": 15
                   },
                   {
-                    "color": "red",
-                    "value": 85
+                    "color": "green",
+                    "value": 40
                   }
                 ]
               },
@@ -499,9 +498,9 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 6,
+            "h": 10,
+            "w": 7,
+            "x": 7,
             "y": 2
           },
           "id": 5,
@@ -530,14 +529,14 @@
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "100 * (\n  (memory_swap_total{job=~\"$job\", alias=~\"$alias\"} - memory_swap_free{job=~\"$job\", alias=~\"$alias\"})\n  /\n  on(alias, job)\n  memory_swap_total{job=~\"$job\", alias=~\"$alias\"}\n)\n",
+              "expr": "100 * \n(\n  memory_swap_free{job=~\"$job\", alias=~\"$alias\"}\n  /on(alias, job)\n  memory_swap_total{job=~\"$job\", alias=~\"$alias\"}\n)\n\n# 100 * (\n#   (memory_swap_total{job=~\"$job\", alias=~\"$alias\"} - memory_swap_free{job=~\"$job\", alias=~\"$alias\"})\n#   /\n#   on(alias, job)\n#   memory_swap_total{job=~\"$job\", alias=~\"$alias\"}\n# )\n",
               "instant": false,
               "legendFormat": "{{alias}} {{name}}",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Swap Load",
+          "title": "Swap Free",
           "type": "gauge"
         },
         {
@@ -573,9 +572,9 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
+            "h": 10,
+            "w": 10,
+            "x": 14,
             "y": 2
           },
           "id": 8,
@@ -682,10 +681,10 @@
                 "includeByName": {},
                 "indexByName": {},
                 "renameByName": {
-                  "Value #A": "Memory Current",
-                  "Value #B": "Memory Max",
-                  "Value #C": "Memory Swap Free",
-                  "Value #D": "Memory Swap Max",
+                  "Value #A": "Current",
+                  "Value #B": "Max",
+                  "Value #C": "Swap Free",
+                  "Value #D": "Swap Max",
                   "alias": "Device"
                 }
               }
@@ -745,7 +744,7 @@
             "h": 10,
             "w": 10,
             "x": 0,
-            "y": 11
+            "y": 19
           },
           "id": 14,
           "interval": "1m",
@@ -803,7 +802,7 @@
             "h": 10,
             "w": 6,
             "x": 10,
-            "y": 11
+            "y": 19
           },
           "id": 13,
           "interval": "1m",
@@ -882,7 +881,7 @@
             "h": 10,
             "w": 8,
             "x": 16,
-            "y": 11
+            "y": 19
           },
           "id": 16,
           "interval": "1m",
@@ -957,7 +956,7 @@
             "h": 8,
             "w": 5,
             "x": 0,
-            "y": 55
+            "y": 350
           },
           "id": 20,
           "interval": "5s",
@@ -1021,7 +1020,7 @@
             "h": 8,
             "w": 7,
             "x": 5,
-            "y": 55
+            "y": 350
           },
           "id": 23,
           "interval": "5s",
@@ -1094,7 +1093,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 55
+            "y": 350
           },
           "id": 31,
           "interval": "5s",
@@ -1167,7 +1166,7 @@
             "h": 14,
             "w": 4,
             "x": 0,
-            "y": 23
+            "y": 821
           },
           "id": 40,
           "interval": "10s",
@@ -1244,7 +1243,7 @@
             "h": 14,
             "w": 4,
             "x": 4,
-            "y": 23
+            "y": 821
           },
           "id": 39,
           "interval": "10s",
@@ -1321,7 +1320,7 @@
             "h": 14,
             "w": 4,
             "x": 8,
-            "y": 23
+            "y": 821
           },
           "id": 43,
           "interval": "10s",
@@ -1397,7 +1396,7 @@
             "h": 14,
             "w": 4,
             "x": 12,
-            "y": 23
+            "y": 821
           },
           "id": 45,
           "interval": "10s",
@@ -1483,7 +1482,7 @@
             "h": 14,
             "w": 4,
             "x": 16,
-            "y": 23
+            "y": 821
           },
           "id": 48,
           "interval": "10s",
@@ -1578,7 +1577,7 @@
             "h": 14,
             "w": 4,
             "x": 20,
-            "y": 23
+            "y": 821
           },
           "id": 47,
           "interval": "10s",
@@ -1709,7 +1708,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 37
+            "y": 835
           },
           "id": 46,
           "interval": "10s",
@@ -1937,7 +1936,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 214
+            "y": 1133
           },
           "id": 35,
           "interval": "5s",
@@ -2185,7 +2184,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 48
+            "y": 113
           },
           "id": 10,
           "interval": "5s",
@@ -2320,7 +2319,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 57
+            "y": 122
           },
           "id": 2,
           "interval": "5s",
@@ -2436,7 +2435,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 57
+            "y": 122
           },
           "id": 6,
           "interval": "5s",
@@ -2544,7 +2543,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 66
+            "y": 131
           },
           "id": 18,
           "interval": "2m",
@@ -2634,7 +2633,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 66
+            "y": 131
           },
           "id": 19,
           "interval": "5s",
@@ -2740,7 +2739,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 75
+            "y": 140
           },
           "id": 21,
           "interval": "5s",
@@ -2833,7 +2832,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 75
+            "y": 140
           },
           "id": 34,
           "interval": "5s",
@@ -2974,7 +2973,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 83
+            "y": 148
           },
           "id": 38,
           "interval": "5s",
@@ -3076,7 +3075,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 83
+            "y": 148
           },
           "id": 42,
           "interval": "10s",
@@ -3185,7 +3184,7 @@
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 92
+            "y": 157
           },
           "id": 41,
           "interval": "5",
@@ -3289,7 +3288,7 @@
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 92
+            "y": 157
           },
           "id": 44,
           "interval": "5s",
@@ -3455,6 +3454,6 @@
   "timezone": "browser",
   "title": "Resources Monitoring",
   "uid": "bekb70hhnfh8ga",
-  "version": 8,
+  "version": 10,
   "weekStart": "sunday"
 }
