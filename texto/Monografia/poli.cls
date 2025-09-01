@@ -287,35 +287,105 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 		% 	Departamento de \local@deptname\\
 		% \end{minipage}%
 		% \includegraphics[width=0.35\textwidth]{Imagens/Logo_EPUFRJ_2020.png}\par
-		\vspace*{10mm}
+		% \vspace*{10mm}
 		\sloppy\nohyphens{\MakeUppercase\local@title}\par
 		\vspace*{7mm}
 		{\@authname\ \@authsurn}\par
 	\end{center}\par
 	\vspace*{4mm}
 	\frontpage@maintext
-	\vspace*{8mm}
-	\noindent\local@approvedname:\par
-	\begin{center}
-		\begin{flushright}
-			\vskip16\p@ \baselineskip12pt
-			\eqparbox{signture@list}{\hrulefill}\\
-			\eqparbox{signture@list}{\protect%\centering%
-				\ \ \ \ \ \ \ \ \ \ \@adtitle\ \@adname\ \@adsurn, \@addegree\ \ \ \ \ \ \ \ \ \ }\\
-			\ifthenelse{\equal{\@coadname}{\@empty}}{}{%
-				\vskip26\p@ \baselineskip12pt
-				\eqparbox{signture@list}{\hrulefill}\\
-				\eqparbox{signture@list}{\protect%\centering%
-					\ \ \ \ \ \ \ \ \ \ \@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree\ \ \ \ \ \ \ \ \ \ }\\}
-			\count1=0
-			\@whilenum \count1<\@examiner \do {
-				\vskip26\p@ \baselineskip12pt
-				\eqparbox{signture@list}{\hrulefill}\\
-				\eqparbox{signture@list}{\protect%\centering%
-					\ \ \ \ \ \ \ \ \ \ \csname S:\the\count1 \endcsname\ \ \ \ \ \ \ \ \ \ }\\
-				\advance\count1 by 1}
-		\end{flushright}
-	\end{center}
+	\vspace{1cm}
+		Autor:
+			\vspace{0.5cm}
+			\begin{flushright}
+				\parbox{10cm}{
+					\hrulefill
+
+
+					\vspace{-.375cm}
+					\centering{\@authname\ \@authsurn}
+
+
+					\vspace{0.1cm}
+				}
+			\end{flushright}
+			
+			
+		Orientador:
+			\vspace{0.5cm}
+			\begin{flushright}
+				\parbox{10cm}{
+					\hrulefill
+
+
+					\vspace{-.375cm}
+					\centering{\@adtitle\ \@adname\ \@adsurn, \@addegree}
+
+
+					\vspace{0.1cm}
+				}
+			\end{flushright}
+
+		\ifthenelse{\equal{\@coadname}{\@empty}}{}{%      
+		Co-orientadora:
+			\vspace{0.5cm}
+			\begin{flushright}
+				\parbox{10cm}{
+					\hrulefill
+
+
+					\vspace{-.375cm}
+					\centering{\@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree}
+
+
+					\vspace{0.1cm}
+				}
+			\end{flushright}
+		}
+
+		\count1=0
+		\@whilenum \count1<\@examiner \do {
+		Examinador:
+			\vspace{0.5cm}
+			\begin{flushright}
+				\parbox{10cm}{
+					\hrulefill
+
+
+					\vspace{-.375cm}
+					\centering{\csname S:\the\count1 \endcsname}
+
+
+					\vspace{0.1cm}
+				}
+			\end{flushright}
+			
+		\advance\count1 by 1}			
+								
+			\vfill
+
+	% \vspace*{8mm}
+	% \noindent\local@approvedname:\par
+	% \begin{center}
+	% 	\begin{flushright}
+	% 		\vskip16\p@ \baselineskip12pt
+	% 		\eqparbox{signture@list}{\hrulefill}\\
+	% 		\eqparbox{signture@list}{\protect%\centering%
+	% 			\ \ \ \ \ \ \ \ \ \ \@adtitle\ \@adname\ \@adsurn, \@addegree\ \ \ \ \ \ \ \ \ \ }\\
+	% 		\ifthenelse{\equal{\@coadname}{\@empty}}{}{%
+	% 			\vskip26\p@ \baselineskip12pt
+	% 			\eqparbox{signture@list}{\hrulefill}\\
+	% 			\eqparbox{signture@list}{\protect%\centering%
+	% 				\ \ \ \ \ \ \ \ \ \ \@coadtitle\ \@coadname\ \@coadsurn, \@coaddegree\ \ \ \ \ \ \ \ \ \ }\\}
+	% 		\count1=0
+	% 		\@whilenum \count1<\@examiner \do {
+	% 			\vskip26\p@ \baselineskip12pt
+	% 			\eqparbox{signture@list}{\hrulefill}\\
+	% 			\eqparbox{signture@list}{\protect%\centering%
+	% 				\ \ \ \ \ \ \ \ \ \ \csname S:\the\count1 \endcsname\ \ \ \ \ \ \ \ \ \ }\\
+	% 			\advance\count1 by 1}
+	% 	\end{flushright}
+	% \end{center}
 	\vspace*{\fill}
 	\frontpage@bottomtext}
 \newcommand\config@hypersetup{%
