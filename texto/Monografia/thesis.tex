@@ -27,7 +27,6 @@
 \usepackage{array}
 \usepackage{diagbox}
 \usepackage[numbers]{natbib}
-% \usepackage{todonotes}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{xurl}
@@ -52,54 +51,55 @@
 \newcommand{\myenquote}[1]{``#1''}
 
 \begin{document}
-  % \title{Monitoramento de Recursos e Infraestrutura Computacional}
-  % \foreigntitle{TCC Title}
-  % \author{Vitor}{Viganôr Cossetti}
-  % \advisor{Prof.}{Flávio}{Luis de Mello}{D.Sc.}
-  % \coadvisor{Prof.}{Fernanda}{Duarte Vilela Reis de Oliveira}{D.Sc.}
-  % \examiner{Prof.}{Nome Completo}{Ph.D.}
-  % \examiner{Prof.}{Nome Completo}{D.Sc.}
-  % %\examiner{Prof.}{Nome Completo}{D.Sc.}
-  % \department{DEL} %UTTILIZE A SIGLA DO SEU DEPARTAMENTO MODIFICAR OS NOMES DE CURSO, DEPARTAMENTO E OBTENÇÃO DE GRAU (Obs: caso tenha algum equívoco nesses argumentos, necessário modificar o arquivo poli.cls no local que faz a leitura deste argumento)
-  % \date{3}{2025}
-  % \keyword{keyword1}
-  % \keyword{keyword2}
-  % \keyword{keyword3}
-  % \keyword{keyword4}
-  % \maketitle
+  \title{Monitoramento de Recursos e Infraestrutura Computacional}
+  \foreigntitle{TCC Title}
+  \author{Vitor}{Viganôr Cossetti}
+  \advisor{Prof.}{Flávio}{Luis de Mello}{D.Sc.}
+  \coadvisor{Prof.}{Fernanda}{Duarte Vilela Reis de Oliveira}{D.Sc.}
+  \examiner{Prof.}{Nome Completo}{Ph.D.}
+  \examiner{Prof.}{Nome Completo}{D.Sc.}
+  %\examiner{Prof.}{Nome Completo}{D.Sc.}
+  \department{DEL} %UTTILIZE A SIGLA DO SEU DEPARTAMENTO MODIFICAR OS NOMES DE CURSO, DEPARTAMENTO E OBTENÇÃO DE GRAU (Obs: caso tenha algum equívoco nesses argumentos, necessário modificar o arquivo poli.cls no local que faz a leitura deste argumento)
+  \date{9}{2025}
+  \keyword{keyword1}
+  \keyword{keyword2}
+  \keyword{keyword3}
+  \keyword{keyword4}
+  \maketitle
+  \setboolean{maledoc}{true}
 
-  % \frontmatter
-  % % \include{Pre-textual/dedic}
-  % % \include{Pre-textual/thanks}
-  % % \include{Pre-textual/resumo}
-  % % \include{Pre-textual/abstract}
-  % \renewcommand{\indexname}{Lista de Siglas}
-  % \printloabbreviations
-  % \tableofcontents
-  % \listoffigures
-  % \listoftables
-  % \printlosymbols
-
-  \mainmatter
-  \renewcommand{\indexname}{Lista de Abreviaturas e Siglas}
+  \frontmatter
+  \include{Pre-textual/copyright}
+  \include{Pre-textual/dedic}
+  \include{Pre-textual/thanks}
+  \include{Pre-textual/resumo}
+  \include{Pre-textual/abstract}
+  
+  \renewcommand{\indexname}{Abreviaturas e Siglas}
+  \begingroup
+  \renewcommand{\addcontentsline}[3]{}
   \printloabbreviations
+  \endgroup
+
   \tableofcontents
+
+  \begingroup
+  \renewcommand{\addcontentsline}[3]{}
   \listoffigures
   \listoftables
-  % \printlosymbols
+  \endgroup
 
-    \include{Textual/chapter01}
-    \include{Textual/chapter02}
-    \include{Textual/chapter03}
-    \include{Textual/chapter04}
-    \include{Textual/chapter05}
-  %   \include{Textual/chapter06}
+  \mainmatter
+  \include{Textual/chapter01}
+  \include{Textual/chapter02}
+  \include{Textual/chapter03}
+  \include{Textual/chapter04}
+  \include{Textual/chapter05}
 
   \backmatter
-  % \nocite{*}
   \bibliographystyle{coppe}
   \bibliography{thesis}
   \addcontentsline{toc}{chapter}{Bibliografia}
-  \appendix
-  \include{Pos-textual/appenA}
+  % \appendix
+  % \include{Pos-textual/appenA}
 \end{document}

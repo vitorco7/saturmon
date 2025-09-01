@@ -278,15 +278,15 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 \newcommand\makefrontpage{%
 	\begin{center}
 		\noindent% just to prevent indentation narrowing the line width for this line
-		\includegraphics[width=0.15\textwidth]{Imagens/Logo_UFRJ.png}%
-		\begin{minipage}[b]{0.7\textwidth}
-			\centering
-			\textit{\textbf{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO}}\\
-			\vspace{2 mm}
-            \textbf{Escola Politécnica}\\
-			Departamento de \local@deptname\\
-		\end{minipage}%
-		\includegraphics[width=0.35\textwidth]{Imagens/Logo_EPUFRJ_2020.png}\par
+		% \includegraphics[width=0.15\textwidth]{Imagens/Logo_UFRJ.png}%
+		% \begin{minipage}[b]{0.7\textwidth}
+		% 	\centering
+		% 	\textit{\textbf{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO}}\\
+		% 	\vspace{2 mm}
+        %     \textbf{Escola Politécnica}\\
+		% 	Departamento de \local@deptname\\
+		% \end{minipage}%
+		% \includegraphics[width=0.35\textwidth]{Imagens/Logo_EPUFRJ_2020.png}\par
 		\vspace*{10mm}
 		\sloppy\nohyphens{\MakeUppercase\local@title}\par
 		\vspace*{7mm}
@@ -622,12 +622,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 					como parte dos requisitos necessários {\` a} obtenção do título de  \local@degname.}
 			}
 			\newcommand\frontpage@maintext{
-				\noindent {\MakeUppercase\local@doctype} FINAL
-				SUBMETIDO
-				\sloppy\nohyphens{AO CORPO DOCENTE DO DEPARTAMENTO DE \MakeUppercase\local@deptname\
-					DA ESCOLA POLITÉCNICA DA \MakeUppercase\local@universityname\ COMO
-					PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE
-					{\MakeUppercase\local@jobname. \par}}	
+				\noindent {\MakeUppercase\local@doctype} DE GRADUAÇÃO SUBMETIDO \sloppy\nohyphens{AO CORPO DOCENTE DO CURSO DE \MakeUppercase\local@deptname\ DA ESCOLA POLITÉCNICA DA \MakeUppercase\local@universityname\ COMO PARTE DOS REQUISITOS NECESSÁRIOS PARA A OBTENÇÃO DO GRAU DE {\MakeUppercase\local@jobname. \par}}	
 			}
 			\newcommand\frontpage@bottomtext{%
 				\begin{center}
