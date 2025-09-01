@@ -42,6 +42,10 @@
     showstringspaces=false
 }
 \usepackage{adjustbox}
+\makeatletter
+\newcommand{\fullauthor}{\@authname\ \@authsurn}
+\newcommand{\fulltitle}{\local@title}
+\makeatother
 
 \makelosymbols
 \makeloabbreviations
@@ -59,7 +63,7 @@
   \examiner{Prof.}{Nome Completo}{Ph.D.}
   \examiner{Prof.}{Nome Completo}{D.Sc.}
   %\examiner{Prof.}{Nome Completo}{D.Sc.}
-  \department{DEL} %UTTILIZE A SIGLA DO SEU DEPARTAMENTO MODIFICAR OS NOMES DE CURSO, DEPARTAMENTO E OBTENÇÃO DE GRAU (Obs: caso tenha algum equívoco nesses argumentos, necessário modificar o arquivo poli.cls no local que faz a leitura deste argumento)
+  \department{DEL} %UTILIZE A SIGLA DO SEU DEPARTAMENTO MODIFICAR OS NOMES DE CURSO, DEPARTAMENTO E OBTENÇÃO DE GRAU (Obs: caso tenha algum equívoco nesses argumentos, necessário modificar o arquivo poli.cls no local que faz a leitura deste argumento)
   \date{9}{2025}
   \keyword{keyword1}
   \keyword{keyword2}
