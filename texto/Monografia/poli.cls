@@ -361,8 +361,7 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 			\end{flushright}
 			
 		\advance\count1 by 1}			
-								
-			\vfill
+		\vfill
 
 	% \vspace*{8mm}
 	% \noindent\local@approvedname:\par
@@ -696,10 +695,16 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 			}
 			\newcommand\frontpage@bottomtext{%
 				\begin{center}
-					{\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
-					{\MakeUppercase\local@monthname\ DE \number\year}
+					{\local@cityname}\par
+					{\local@monthname\ de \number\year}
 				\end{center}%
 			}
+			% \newcommand\frontpage@bottomtext{%
+			% 	\begin{center}
+			% 		{\MakeUppercase{\local@cityname, \local@statename\ -- \local@countryname}}\par
+			% 		{\MakeUppercase\local@monthname\ DE \number\year}
+			% 	\end{center}%
+			% }
 			\newcommand\abstract@toptext{%
 				\noindent Resumo do Projeto de Graduação apresentado
 				\sloppy\nohyphens{{\` a} Escola Politécnica/UFRJ como parte dos requisitos
