@@ -244,12 +244,15 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 	\pagenumbering{alph}
 	\config@hypersetup
 	\begin{titlepage}
-		\begin{flushleft}
-			\setlength\baselineskip{0pt}
-			\setlength\parskip{1mm}
-			\makebox[20mm][c]{%
-				\includegraphics[width =0.5\linewidth]{Imagens/Logo_EPUFRJ_2020.png}}\par
-		\end{flushleft}
+		\noindent
+		\begin{minipage}[m]{0.45\textwidth}
+			\includegraphics[width=0.9\textwidth]{Imagens/Logo_UFRJ_horizontal_completa.png}
+		\end{minipage}%
+		\hfill
+		\begin{minipage}[m]{0.45\textwidth}
+			\raggedleft
+			\includegraphics[width=0.9\textwidth]{Imagens/Logo_EPUFRJ_2020.png}
+		\end{minipage}
 		\begin{center}
 			\nohyphens{\MakeUppercase\local@title}\par
 			\vspace*{28mm}

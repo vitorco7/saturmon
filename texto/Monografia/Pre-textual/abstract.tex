@@ -7,11 +7,11 @@
 \vspace{0.5cm}
 
 \paragraph{}
-
+{\color{red}
 This work presents the development of a comprehensive solution for monitoring computational resource saturation based exclusively on open-source tools and Infrastructure as Code paradigms. The solution encompasses data collection, processing, storage, visualization, and notifications, implemented through a containerized architecture using Docker, featuring five virtual devices with different hardware specifications and Linux distributions (Ubuntu and Alpine) to simulate a heterogeneous network. The system employs Telegraf as the metrics collection agent, Prometheus as the central monitoring system with an integrated time series database (TSDB), Grafana for data visualization and Alertmanager as the alert manager. For load generation, controlled saturation tests were conducted using stress-ng and iPerf3, with automated sequential rotating coordination to avoid host overload. A dashboard divided into categories presents typical metrics for system saturation monitoring such as CPU, memory, disk, network, and processes, offering graphical visualizations and historical analyses, while the alert system provides email notifications based on PromQL rules. The results demonstrate that the developed solution effectively detects saturation conditions, providing support for decision-making in IT infrastructure management.
 
 \paragraph{}
 
 \noindent Keywords: infrastructure monitoring; computational saturation; infrastructure as code; open source; containerization.
-
+}
 \pagebreak

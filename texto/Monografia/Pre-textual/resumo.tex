@@ -4,10 +4,10 @@
 \vspace{0.5cm}
 
 \paragraph{}
-
+{\color{red}
 Este trabalho apresenta o desenvolvimento de uma solução completa de monitoramento de saturação de recursos computacionais baseada exclusivamente em ferramentas de código aberto e paradigmas de Infraestrutura como Código. A solução abrange coleta de dados, processamento, armazenamento, visualizações e notificações, sendo implementada utilizando uma arquitetura contêinerizada com Docker, contemplando cinco dispositivos virtuais com diferentes especificações de \foreign{hardware} e distribuições Linux (Ubuntu e Alpine) para simular uma rede heterogênea. O sistema emprega o Telegraf como agente de coleta de métricas, o Prometheus como sistema central de monitoramento com banco de dados de séries temporais (TSDB) integrado, o Grafana para visualização de dados e o Alertmanager como gerenciador de alertas. Para geração de carga, foram implementados testes de saturação controlados utilizando stress-ng e iPerf3, com coordenação sequencial rotativa automatizada de modo a evitar sobrecarga do \foreign{host}. Com um dashboard secionado em categorias, apresentam-se métricas típicas ao monitoramento de saturação de sistemas, como CPU, memória, disco, rede e processos, oferecendo visualizações gráficas e análises históricas, enquanto o sistema de alertas oferece notificações por email baseadas em regras PromQL. Os resultados obtidos demonstram que a solução desenvolvida é capaz de detectar efetivamente condições de saturação, fornecendo subsídios para tomadas de decisão na gestão de infraestrutura de TI.
 
 \paragraph{}
 \noindent Palavras-Chave: monitoramento de infraestrutura; saturação computacional; infraestrutura como código; código aberto; conteinerização.
-
+}
 \pagebreak
