@@ -140,9 +140,9 @@ Denominados como dispositivos virtuais 1 a 5, eles foram configurados de acordo 
 \hline
 \textbf{Dispositivo Virtual} & \textbf{Distribuição Linux} & \textbf{CPU (\%)} & \textbf{Memória (MB)} \\
 \hline
-1 & Ubuntu 24 & 60 & 1024 \\
-2 & Ubuntu 24 & 60 & 900 \\
-3 & Ubuntu 24 & 70 & 800 \\
+1 & Ubuntu 24.04 & 60 & 1024 \\
+2 & Ubuntu 24.04 & 60 & 900 \\
+3 & Ubuntu 24.04 & 70 & 800 \\
 4 & Alpine 3.21 & 50 & 886 \\
 5 & Alpine 3.21 & 60 & 750 \\
 \hline
@@ -318,14 +318,14 @@ Ao longo do projeto, dois equipamentos estiveram à disponibilidade do autor: um
 CPU   & Intel Core i5-7600   & Intel Core i7-8565U \\
 RAM   & 16GB                 & 32GB                \\
 Disco & 500GB (SSD)            & 250GB (SSD)          \\
-SO & Ubuntu Desktop 24 & Ubuntu Desktop 20 \\
+SO & Ubuntu Desktop 24.04 & Ubuntu Desktop 20.04 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 As práticas adotadas ao longo deste projeto possibilitaram um desenvolvimento multiplataforma prático e eficiente. Cada equipamento implementou o projeto por meio de clones locais do repositório e executou os mesmos comandos Docker Compose para iniciar toda a infraestrutura de monitoramento. A possibilidade de rodar o mesmo projeto em diferentes máquinas, sem necessidade de instalações manuais ou configurações complexas, destacou-se como uma das principais vantagens do desenvolvimento.
 
-A escolha do Ubuntu Desktop como sistema operacional base para ambos os equipamentos foi motivada por sua estabilidade, ampla adoção na comunidade de desenvolvedores e compatibilidade com as ferramentas utilizadas no projeto, onde o notebook operava com a versão 20 e o \foreign{desktop} com a versão 24.
+A escolha do Ubuntu Desktop como sistema operacional base para ambos os equipamentos foi motivada por sua estabilidade, ampla adoção na comunidade de desenvolvedores e compatibilidade com as ferramentas utilizadas no projeto, onde o notebook operava com a versão 20.04 e o \foreign{desktop} com a versão 24.04.
 
 Entretanto, a partir de determinado momento, o \foreign{desktop} começou a apresentar instabilidades e travamentos de origem desconhecida. Esses problemas tiveram impacto negativo na coleta de dados e, consequentemente, nas visualizações, ocasionando \foreign{gaps} nas curvas dos gráficos e perda de informações. Diante desse contexto, decidiu-se consolidar o notebook como equipamento principal para o desenvolvimento do projeto, descartando o uso do \foreign{desktop}.
 
@@ -336,7 +336,7 @@ Entretanto, a partir de determinado momento, o \foreign{desktop} começou a apre
 
 As métricas apresentadas neste trabalho são extraídas por meio da leitura de arquivos de sistema do Linux. Particularmente para métricas de CPU, memória e disco dos dispositivos virtuais, a coleta ocorre a partir de arquivos localizados no diretório \verb|/sys/fs/cgroup|.
 
-Durante o desenvolvimento multiplataforma, especialmente na etapa de configuração manual dos parâmetros do \verb|inputs.exec| do Telegraf, foram identificadas inconsistências e erros na leitura das métricas entre as implementações feitas no notebook e no \foreign{desktop}. Como apresentado em \ref{section:Infraestrutura}, o fato do notebook operar com o Ubuntu 20 implica que, por padrão, o mesmo apresenta a versão 1 do \foreign{cgroups}, enquanto o \foreign{desktop}, com Ubuntu 24, utiliza a versão 2.
+Durante o desenvolvimento multiplataforma, especialmente na etapa de configuração manual dos parâmetros do \verb|inputs.exec| do Telegraf, foram identificadas inconsistências e erros na leitura das métricas entre as implementações feitas no notebook e no \foreign{desktop}. Como apresentado em \ref{section:Infraestrutura}, o fato do notebook operar com o Ubuntu 20 implica que, por padrão, o mesmo apresenta a versão 1 do \foreign{cgroups}, enquanto o \foreign{desktop}, com Ubuntu 24.04, utiliza a versão 2.
 
 A disparidade entre versões do \foreign{cgroups} resultou em diferenças estruturais nos arquivos de leitura das métricas, impossibilitando o uso de um arquivo de configuração único e padronizado devido a falhas recorrentes na coleta. Esse problema foi solucionado com a atualização do \foreign{cgroups} do notebook para a versão 2, harmonizando as estruturas dos arquivos e, consequentemente, permitindo a padronização das configurações de coleta. Cabe ressaltar que a versão do \foreign{cgroups} dos dispositivos virtuais é determinada pelo \foreign{kernel} do \foreign{host}, razão pela qual todos também passaram a operar na versão 2 após a atualização.
 
