@@ -4,11 +4,34 @@ Fechar título
 
 Definir nome para o repositório (baseado no título)
 
-Validar estrutura do pre textual
-
-Agendar banca?
+saturmon
 
 Como deve ser a apresentação? Estrutura, roteiro, etc.
+
+25 minutos para a apresentação do projeto, o resto são perguntas
+Nao da pra falar de tudo em 25 minutos, mas vc pode detalhar respondendo uma pergunta
+
+1 slide para tema
+1 para objetivo
+1 para Justificativa
+tirar esses 3 da propria monografia - coloca 1 frase ou 1 topico do proprio capítulo 1 - os topicos sao para me lembrar, nao pode ficar mto verboso
+
+fundamentação teorica - 2 ou 3 slides {
+
+1 deles sobre os trabalhos relacionados
+Os outros em condenso todo o restante do capitulo 2
+}
+
+Slides sobre o trabalho em si (caps 3 e 4){
+ - 1 slide para cada diagrama (pula direto para o que foi feito, n precisa apresentar as versoes iniciais)
+- Dashboard -> 2 slides - 1 para as seçoes (como está no texto) e +1 com a screenshot dos graficos de serie temporal
+
+- Se souber encaixar, colocar 1 imagem do alerta do email 
+}
+
+Slides finais - 1 slide de consideraçoes finais e outro de trabalhos futuros
+
+Sobre as figuras dos diagramas - nao se aprofundar, mas pontuar o quanto impactam nas tomadas de decisão - comentar sobre o que aconteceu, nao precisa falar como. Exemplo: historia dos bancos -> SQLite -> postgres -> tsdb. Relatar os fatos, o como deixo para as perguntas da banca
 
 
 Orientação 20250826
