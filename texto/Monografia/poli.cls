@@ -188,9 +188,10 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 	\renewcommand\foreign@advisorstring{Advisors}%
 }
 \newcount\@examiner\@examiner0
-\newcommand\examiner[3]{%
-	\global\@namedef{S:\expandafter\the\@examiner}{#1\ #2, #3}
-	\global\advance\@examiner by 1
+\newcommand\examiner[4]{%
+    \global\@namedef{S:\expandafter\the\@examiner}{#2\ #3\ #4}
+    \global\@namedef{G:\expandafter\the\@examiner}{#1}
+    \global\advance\@examiner by 1
 }
 \renewcommand\author[2]{%
 	\global\def\@authname{#1}
@@ -346,24 +347,31 @@ top=2.5cm,bottom=2.5cm,left=3.0cm,right=3.0cm]{geometry}
 			\end{flushright}
 		}
 
-		\count1=0
-		\@whilenum \count1<\@examiner \do {
 		Examinador:
 			\vspace{0.5cm}
 			\begin{flushright}
 				\parbox{10cm}{
 					\hrulefill
 
-
 					\vspace{-.375cm}
-					\centering{\csname S:\the\count1 \endcsname}
-
+					\centering{Daniel Moreira Guimarães}
 
 					\vspace{0.1cm}
 				}
 			\end{flushright}
 			
-		\advance\count1 by 1}			
+		Examinadora:
+			\vspace{0.5cm}
+			\begin{flushright}
+				\parbox{10cm}{
+					\hrulefill
+
+					\vspace{-.375cm}
+					\centering{Maria Bianca Monteiro Irace}
+
+					\vspace{0.1cm}
+				}
+			\end{flushright}
 		\vfill
 
 	% \vspace*{8mm}
