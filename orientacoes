@@ -11,6 +11,26 @@ Burocracias
 Esses 3 documentos eu envio para o Teodosio
 
 
+Rascunho
+
+slide 4 - falar 1 frase para cntextualizar virtualizaçao e agentes/exportadores
+
+sobre cada tópico - menciono apenas o que eu usei
+
+virtualização - conceito de emular um sistema de forma virtual dentro de um sistema operacional host
+
+escolhi o docker pois ele implementa a virtualização através de containers com arquivos de texto declarativo.
+
+aproveitar o docker para falar de IaC, que permitiu praticidade, facil manutençao, replicabilidade e verisonamento
+
+agentes - processos que rodam coletando métricas dentro de um sistema
+
+
+
+slide 7 - explicar a nuvenzinha (um artifício visual para representar um rede virtual isolada)
+
+slide 8 - ser mais conciso e objetivo na explicaçao (ficou um tanto longa)
+
 
 
 Orientação 20250902
