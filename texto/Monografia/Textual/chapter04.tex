@@ -211,7 +211,7 @@ A Figura \ref{fig:dashboard-network} apresenta a seção de Rede, na qual, mais 
 
 A ausência de dados sobre pacotes descartados ou com erros nos dispositivos virtuais está relacionada à camada de coleta dessas métricas. Tentativas de utilização das ferramentas de \foreign{chaos-engineering} Pumba e ChaosBlade, bem como manipulações diretas no \verb|iptables| para geração de tráfego de rede, mostraram-se inadequadas para este estudo.
 
-Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|), enquanto o \foreign{plugin} \verb|inputs.net| do Telegraf opera a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Por tanto, por estarem em camadas distintas, o Telegraf é incapaz de captar as informações de pacotes descartados ou com erros contabilizados pelo sistema.
+Por debaixo dos panos, ferramentas de \foreign{chaos testing} utilizam para testes de rede o módulo \verb|netem| do sistema \verb|tc| do Linux. Esse sistema opera na camada de controle de tráfego (\verb|qdisc|), enquanto o \foreign{plugin} \verb|inputs.net| do Telegraf opera a partir da leitura do \verb|procfs/net/dev|, que se encontra na camada de interface de rede. Portanto, por estarem em camadas distintas, o Telegraf é incapaz de captar as informações de pacotes descartados ou com erros contabilizados pelo sistema.
 
 \begin{figure}[H]
 \centering
@@ -229,7 +229,7 @@ A contabilização de CPU mede continuamente os ciclos consumidos em todos os n�
 
 Por fim, na figura \ref{fig:roundrobin}, observa-se a sequência rotativa de execução dos testes de saturação, conforme detalhado na Seção \ref{subsection:TestesSaturacao}. Essa rotação é evidenciada pelos picos alternados de utilização de memória entre os dispositivos virtuais, demonstrando que os testes foram executados de forma síncrona e sequencial, conforme implementado.
 
-Após o desemvolvimento do \foreign{dashboard}, o mesmo foi exportado em formato JSON e versionado no repositório do projeto \citep{vitorcossetti2025}, na pasta \verb|configs/grafana/dashboards|. A configuração do Grafana foi ajustada para carregá-lo automaticamente via volume Docker, conforme detalhado no Capítulo \ref{chap3}.
+Após o desenvolvimento do \foreign{dashboard}, o mesmo foi exportado em formato JSON e versionado no repositório do projeto \citep{vitorcossetti2025}, na pasta \verb|configs/grafana/dashboards|. A configuração do Grafana foi ajustada para carregá-lo automaticamente via volume Docker, conforme detalhado no Capítulo \ref{chap3}.
 
 \begin{figure}[H]
 \centering

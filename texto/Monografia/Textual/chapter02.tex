@@ -189,7 +189,7 @@ Para maior aprofundamento nas técnicas e mecanismos de aquisição das métrica
 \subsection{CPU}
 \label{subsection:CPU}
 
-As métricas de utilização da CPU \citep{cpumetrics2025} são fundamentadas na medição de tempo. Conforme discutido por Harris-Birtill e Harris-Birtill \citep{harris-birtill2021}, o tempo computacional necessário para a execução de uma tarefa constitui uma métrica essencial para avaliar o desempenho de sistemas computacionais, especialmente no que diz respeito à sua capacidade de atender a restrições temporais específicas. Em arquiteturas sequenciais, nas quais apenas uma instrução é processada por vez, a quantificação e categorização do tempo consumido por diferentes tipos de tarefas (usuário, sistema, ocioso, interrupções, entre outros) tornam-se fundamentais para o diagnóstico de desempenho e a detecção de situações de saturação.
+As métricas de utilização da CPU \citep{cpumetrics2025} são fundamentadas na medição de tempo. Conforme discutido por Harris-Birtill e Harris-Birtill \citep{harris-birtill2021}, o tempo computacional necessário para a execução de uma tarefa constitui uma métrica essencial para avaliar o desempenho de sistemas computacionais, especialmente no que diz respeito à sua capacidade de atender a restrições temporais específicas. Em arquiteturas sequenciais, nas quais apenas uma instrução é processada por vez, a quantificação e categorização do tempo consumido por diferentes tipos de tarefas (usuário, sistema, ocioso, interrupções, entre outros) tornam-se fundamentais para o diagnóstico de desempenho e a detecção de situações de saturação. Das métricas de CPU, destacam-se:
 
 \begin{itemize}
 \item \textbf{user}: tempo (em \%) em que a CPU esteve executando processos no espaço do usuário, ou seja, aplicações não relacionadas ao sistema operacional;
@@ -204,7 +204,7 @@ As métricas de utilização da CPU \citep{cpumetrics2025} são fundamentadas na
 \subsection{Memória}
 \label{subsection:Memoria}
 
-A memória RAM \citep{memorymetrics2025} é um recurso volátil, quantificado em bytes, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso à dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
+A memória RAM \citep{memorymetrics2025} é um recurso volátil, quantificado em bytes, que provê ao sistema um espaço para armazenamento temporário de informações, auxiliando as tarefas da CPU provendo acesso a dados e instruções com maior rapidez. Quando uma aplicação é executada, o sistema operacional carrega-a do disco de armazenamento para a RAM, e então a CPU consulta as informações necessárias diretamente da RAM. 
 
 Durante a execução de uma aplicação, o sistema operacional transfere os dados e instruções correspondentes do disco de armazenamento para a RAM, de modo que a CPU possa acessá-los de forma eficiente. Quanto maior a quantidade de memória RAM disponível, maior é a capacidade do sistema de manter múltiplos processos ativos simultaneamente, minimizando a necessidade de acessos ao disco e, consequentemente, otimizando o desempenho geral.
 
@@ -212,7 +212,7 @@ Entretanto, quando a quantidade de aplicações ou processos em execução exced
 
 Para mitigar tais situações, o sistema operacional recorre à utilização de memória de swap (em bytes), que consiste em uma área disco de armazenamento para funcionar como uma extensão virtual da RAM. Embora o uso de swap permita continuar a execução dos processos mesmo após o esgotamento da memória física, seu desempenho é consideravelmente inferior, podendo resultar em lentidão perceptível do sistema.
 
-Valores de carga elevados na memória de troca são indicativos de degradação do sistema e saturação da memória RAM.
+Valores de carga elevados na memória de swap são indicativos de degradação do sistema e saturação da memória RAM.
 
 \begin{table}[H]
 \centering
@@ -310,7 +310,7 @@ Algumas de suas características são a execução de \foreign{plugins} Go, faci
 
 O Node Exporter \citep{nodeexporter2025} é um exportador oficial do ecossistema Prometheus escrito em Go. Projetado para coleta de métricas de hardware e sistema operacional de máquinas Linux, ele utiliza chamadas do \foreign{kernel} via \verb|/proc|, bibliotecas Go e expõe métricas de sistema operacional no padrão de formatação nativa do Prometheus, no \foreign{endpoint} HTTP \verb|/metrics|.
 
-Ele pode ser instalado no diretamente no dispositivo, ou pode ser executado em contêiner. 
+Ele pode ser instalado diretamente no dispositivo, ou pode ser executado em contêiner. 
 
 \subsection{cAdvisor}
 \label{subsection:cAdvisor}
